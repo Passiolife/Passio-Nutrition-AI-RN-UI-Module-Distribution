@@ -1,0 +1,23 @@
+[
+  {
+    "engagement": 1,
+    "eventTimeStamp": "2022-05-20T07:28:58.078Z",
+    "passioID": "XXX0946",
+    "screenType": "quickScan",
+    "uuid": "9e8c9a63-91b5-43c5-a33b-01100f985f46"
+  },
+  {
+    "engagement": 4,
+    "eventTimeStamp": "2022-05-20T07:29:06.660Z",
+    "passioID": "XXX0946",
+    "screenType": "search",
+    "uuid": "d8e8ffb5-f72f-4d2f-b022-092b58d9dd2e"
+  },
+  {
+    "engagement": 5,
+    "eventTimeStamp": "2022-05-20T07:30:59.310Z",
+    "passioID": "VEG0023",
+    "screenType": "search",
+    "uuid": "80964c67-18f4-4b47-ac54-42b062025aa6"
+  }
+]

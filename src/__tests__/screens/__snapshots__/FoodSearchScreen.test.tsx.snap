@@ -1,0 +1,545 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`search view Renders correctly with no data 1`] = `
+[
+  <View
+    style={
+      {
+        "backgroundColor": "#286CE2",
+        "height": 20,
+      }
+    }
+  />,
+  <RCTSafeAreaView
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "backgroundColor": "#FFFFFF",
+          "flex": 1,
+        }
+      }
+    >
+      <View
+        style={
+          [
+            {
+              "backgroundColor": "#286CE2",
+              "justifyContent": "space-between",
+              "paddingHorizontal": 20,
+              "paddingVertical": 10,
+            },
+            {
+              "alignItems": "center",
+              "flexDirection": "row",
+            },
+          ]
+        }
+      >
+        <View
+          style={
+            [
+              {
+                "alignItems": "center",
+                "flexDirection": "row",
+              },
+              {
+                "backgroundColor": "#FFFFFF",
+                "borderRadius": 12,
+                "flex": 1,
+                "marginEnd": 16,
+                "paddingHorizontal": 10,
+              },
+            ]
+          }
+        >
+          <Image
+            resizeMode="contain"
+            source={
+              {
+                "testUri": "../../../src/assets/ic_search_gray_2x.png",
+              }
+            }
+            style={
+              {
+                "height": 25,
+                "width": 25,
+              }
+            }
+          />
+          <View
+            style={
+              {
+                "backgroundColor": "white",
+                "flex": 1,
+                "fontSize": 16,
+              }
+            }
+          >
+            <View>
+              <TextInput
+                onChangeText={[Function]}
+                placeholder="search here"
+                style={
+                  [
+                    {
+                      "backgroundColor": "#EFF0F6",
+                      "borderColor": "#D9DBE9",
+                      "borderRadius": 10,
+                      "borderWidth": 1,
+                      "height": 40,
+                      "paddingHorizontal": 8,
+                    },
+                    {},
+                    {
+                      "backgroundColor": "white",
+                      "borderRadius": 0,
+                      "borderWidth": 0,
+                      "fontSize": 16,
+                    },
+                  ]
+                }
+                testID="testSearchInput"
+                value=""
+              />
+            </View>
+          </View>
+          <View
+            accessibilityState={
+              {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": undefined,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              {
+                "alignItems": "center",
+                "backgroundColor": "#286CE2",
+                "borderRadius": 50,
+                "height": 22,
+                "justifyContent": "center",
+                "opacity": 1,
+                "padding": 5,
+                "width": 22,
+              }
+            }
+          >
+            <Image
+              resizeMode="contain"
+              source={
+                {
+                  "testUri": "../../../src/assets/ic_close_white.png",
+                }
+              }
+              style={
+                {
+                  "height": 10,
+                  "width": 10,
+                }
+              }
+            />
+          </View>
+        </View>
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            {
+              "opacity": 1,
+            }
+          }
+        >
+          <Text
+            style={
+              {
+                "color": "#FFFFFF",
+                "fontSize": 16,
+                "paddingVertical": 10,
+              }
+            }
+          >
+            Cancel
+          </Text>
+        </View>
+      </View>
+      <Text
+        style={
+          {
+            "color": "#003389",
+            "fontSize": 24,
+            "fontWeight": "400",
+            "marginVertical": 20,
+            "textAlign": "center",
+          }
+        }
+      >
+        Recent
+      </Text>
+      <RCTScrollView
+        ListEmptyComponent={[Function]}
+        contentContainerStyle={
+          {
+            "paddingBottom": 25,
+          }
+        }
+        data={[]}
+        getItem={[Function]}
+        getItemCount={[Function]}
+        keyExtractor={[Function]}
+        onContentSizeChange={[Function]}
+        onLayout={[Function]}
+        onMomentumScrollBegin={[Function]}
+        onMomentumScrollEnd={[Function]}
+        onScroll={[Function]}
+        onScrollBeginDrag={[Function]}
+        onScrollEndDrag={[Function]}
+        removeClippedSubviews={false}
+        renderItem={[Function]}
+        scrollEventThrottle={0.0001}
+        stickyHeaderIndices={[]}
+        viewabilityConfigCallbackPairs={[]}
+      >
+        <View>
+          <View
+            style={
+              {
+                "alignItems": "center",
+                "flex": 1,
+                "height": 1244,
+                "justifyContent": "center",
+              }
+            }
+          >
+            <Text>
+              No recently logged foods
+            </Text>
+          </View>
+        </View>
+      </RCTScrollView>
+    </View>
+  </RCTSafeAreaView>,
+]
+`;
+
+exports[`search view Renders correctly with search results 1`] = `
+[
+  <View
+    style={
+      {
+        "backgroundColor": "#286CE2",
+        "height": 20,
+      }
+    }
+  />,
+  <RCTSafeAreaView
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "backgroundColor": "#FFFFFF",
+          "flex": 1,
+        }
+      }
+    >
+      <View
+        style={
+          [
+            {
+              "backgroundColor": "#286CE2",
+              "justifyContent": "space-between",
+              "paddingHorizontal": 20,
+              "paddingVertical": 10,
+            },
+            {
+              "alignItems": "center",
+              "flexDirection": "row",
+            },
+          ]
+        }
+      >
+        <View
+          style={
+            [
+              {
+                "alignItems": "center",
+                "flexDirection": "row",
+              },
+              {
+                "backgroundColor": "#FFFFFF",
+                "borderRadius": 12,
+                "flex": 1,
+                "marginEnd": 16,
+                "paddingHorizontal": 10,
+              },
+            ]
+          }
+        >
+          <Image
+            resizeMode="contain"
+            source={
+              {
+                "testUri": "../../../src/assets/ic_search_gray_2x.png",
+              }
+            }
+            style={
+              {
+                "height": 25,
+                "width": 25,
+              }
+            }
+          />
+          <View
+            style={
+              {
+                "backgroundColor": "white",
+                "flex": 1,
+                "fontSize": 16,
+              }
+            }
+          >
+            <View>
+              <TextInput
+                onChangeText={[Function]}
+                placeholder="search here"
+                style={
+                  [
+                    {
+                      "backgroundColor": "#EFF0F6",
+                      "borderColor": "#D9DBE9",
+                      "borderRadius": 10,
+                      "borderWidth": 1,
+                      "height": 40,
+                      "paddingHorizontal": 8,
+                    },
+                    {},
+                    {
+                      "backgroundColor": "white",
+                      "borderRadius": 0,
+                      "borderWidth": 0,
+                      "fontSize": 16,
+                    },
+                  ]
+                }
+                testID="testSearchInput"
+                value=""
+              />
+            </View>
+          </View>
+          <View
+            accessibilityState={
+              {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": undefined,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              {
+                "alignItems": "center",
+                "backgroundColor": "#286CE2",
+                "borderRadius": 50,
+                "height": 22,
+                "justifyContent": "center",
+                "opacity": 1,
+                "padding": 5,
+                "width": 22,
+              }
+            }
+          >
+            <Image
+              resizeMode="contain"
+              source={
+                {
+                  "testUri": "../../../src/assets/ic_close_white.png",
+                }
+              }
+              style={
+                {
+                  "height": 10,
+                  "width": 10,
+                }
+              }
+            />
+          </View>
+        </View>
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            {
+              "opacity": 1,
+            }
+          }
+        >
+          <Text
+            style={
+              {
+                "color": "#FFFFFF",
+                "fontSize": 16,
+                "paddingVertical": 10,
+              }
+            }
+          >
+            Cancel
+          </Text>
+        </View>
+      </View>
+      <Text
+        style={
+          {
+            "color": "#003389",
+            "fontSize": 24,
+            "fontWeight": "400",
+            "marginVertical": 20,
+            "textAlign": "center",
+          }
+        }
+      >
+        Recent
+      </Text>
+      <RCTScrollView
+        ListEmptyComponent={[Function]}
+        contentContainerStyle={
+          {
+            "paddingBottom": 25,
+          }
+        }
+        data={[]}
+        getItem={[Function]}
+        getItemCount={[Function]}
+        keyExtractor={[Function]}
+        onContentSizeChange={[Function]}
+        onLayout={[Function]}
+        onMomentumScrollBegin={[Function]}
+        onMomentumScrollEnd={[Function]}
+        onScroll={[Function]}
+        onScrollBeginDrag={[Function]}
+        onScrollEndDrag={[Function]}
+        removeClippedSubviews={false}
+        renderItem={[Function]}
+        scrollEventThrottle={0.0001}
+        stickyHeaderIndices={[]}
+        viewabilityConfigCallbackPairs={[]}
+      >
+        <View>
+          <View
+            style={
+              {
+                "alignItems": "center",
+                "flex": 1,
+                "height": 1244,
+                "justifyContent": "center",
+              }
+            }
+          >
+            <Text>
+              No recently logged foods
+            </Text>
+          </View>
+        </View>
+      </RCTScrollView>
+    </View>
+  </RCTSafeAreaView>,
+]
+`;

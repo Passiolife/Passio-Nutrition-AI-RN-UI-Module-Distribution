@@ -1,0 +1,65 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FavoriteFoodLog Screen Renders correctly when favorites are present 1`] = `
+<View
+  style={
+    {
+      "alignSelf": "center",
+      "flex": 1,
+      "flexDirection": "row",
+      "justifyContent": "center",
+    }
+  }
+>
+  <ActivityIndicator
+    accessibilityIgnoresInvertColors={false}
+    color="#123456"
+    size="large"
+  />
+  <Text
+    style={
+      {
+        "alignSelf": "center",
+        "color": "#4A4A4A",
+        "fontSize": 18,
+        "fontWeight": "600",
+        "paddingHorizontal": 16,
+      }
+    }
+  >
+    Please Wait....
+  </Text>
+</View>
+`;
+
+exports[`FavoriteFoodLog Screen Renders correctly with no data 1`] = `
+<View
+  style={
+    {
+      "alignSelf": "center",
+      "flex": 1,
+      "flexDirection": "row",
+      "justifyContent": "center",
+    }
+  }
+>
+  <ActivityIndicator
+    accessibilityIgnoresInvertColors={false}
+    color="#123456"
+    size="large"
+  />
+  <Text
+    style={
+      {
+        "alignSelf": "center",
+        "color": "#4A4A4A",
+        "fontSize": 18,
+        "fontWeight": "600",
+        "paddingHorizontal": 16,
+      }
+    }
+  >
+    Please Wait....
+  </Text>
+</View>
+`;

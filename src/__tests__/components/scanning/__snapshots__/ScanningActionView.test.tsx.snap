@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ScanningActionView renders correctly 1`] = `
+<View
+  style={
+    {
+      "flex": 1,
+      "height": 25,
+      "left": 20,
+      "position": "absolute",
+      "top": 52,
+      "width": 25,
+    }
+  }
+>
+  <View
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+  >
+    <Image
+      resizeMode="contain"
+      source={
+        {
+          "testUri": "../../../lib/commonjs/assets/ic_close_white.png",
+        }
+      }
+      style={
+        {
+          "height": 24,
+          "width": 24,
+        }
+      }
+    />
+  </View>
+</View>
+`;

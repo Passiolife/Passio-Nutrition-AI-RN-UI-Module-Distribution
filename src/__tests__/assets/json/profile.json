@@ -1,0 +1,10 @@
+{
+  "caloriesTarget": 2100,
+  "carbsPercentage": 55,
+  "proteinPercentage": 20,
+  "fatPercentage": 25,
+  "units": "imperial",
+  "gender": "male",
+  "height": 182.88,
+  "weight": 63
+}

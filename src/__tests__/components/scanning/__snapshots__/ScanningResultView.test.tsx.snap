@@ -1,0 +1,264 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ScanningResultView renders correctly 1`] = `
+<View
+  style={
+    {
+      "alignSelf": "center",
+      "backgroundColor": "#FFFFFF",
+      "borderRadius": 10,
+      "bottom": 120,
+      "elevation": 15,
+      "flex": 1,
+      "minHeight": 180,
+      "padding": 5,
+      "position": "absolute",
+      "shadowColor": "black",
+      "shadowOffset": {
+        "height": 2,
+        "width": 0,
+      },
+      "shadowOpacity": 0.1,
+      "shadowRadius": 10,
+      "width": 726,
+    }
+  }
+>
+  <View
+    config={
+      {
+        "directionalOffsetThreshold": 500,
+        "velocityThreshold": 0.05,
+      }
+    }
+    onMoveShouldSetResponder={[Function]}
+    onMoveShouldSetResponderCapture={[Function]}
+    onResponderEnd={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderReject={[Function]}
+    onResponderRelease={[Function]}
+    onResponderStart={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    onStartShouldSetResponderCapture={[Function]}
+    onSwipeRight={[Function]}
+    testID="testGestureRecognizer"
+  >
+    <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        {
+          "opacity": 1,
+        }
+      }
+    >
+      <View
+        style={
+          {
+            "alignContent": "center",
+            "alignItems": "flex-start",
+            "flexDirection": "row",
+          }
+        }
+      >
+        <View
+          style={
+            {
+              "backgroundColor": "#EEEEEE",
+              "borderRadius": 30,
+              "height": 60,
+              "marginHorizontal": 8,
+              "marginVertical": 8,
+              "overflow": "hidden",
+              "width": 60,
+            }
+          }
+        >
+          <Text>
+            mockPassioIcon
+          </Text>
+        </View>
+        <Text
+          style={
+            {
+              "alignSelf": "center",
+              "color": "#333333",
+              "fontSize": 18,
+              "fontWeight": "600",
+              "textTransform": "capitalize",
+              "width": "75%",
+            }
+          }
+        >
+          half avocado
+        </Text>
+      </View>
+    </View>
+  </View>
+  <View
+    style={
+      {
+        "bottom": -60,
+        "flexDirection": "row",
+        "justifyContent": "center",
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+      }
+    }
+  >
+    <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={false}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        {
+          "backgroundColor": "#286CE2",
+          "borderRadius": 24,
+          "marginHorizontal": 12,
+          "opacity": 1,
+          "overflow": "hidden",
+          "padding": 10,
+          "right": 0,
+          "shadowColor": "#000000",
+          "shadowOffset": {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.8,
+          "shadowRadius": 2,
+        }
+      }
+    >
+      <Image
+        source={
+          {
+            "testUri": "../../../lib/commonjs/assets/ic_close_blue.png",
+          }
+        }
+        style={
+          {
+            "height": 16,
+            "tintColor": "white",
+            "width": 16,
+          }
+        }
+      />
+    </View>
+    <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        {
+          "backgroundColor": "#286CE2",
+          "borderRadius": 24,
+          "marginHorizontal": 12,
+          "opacity": 1,
+          "overflow": "hidden",
+          "padding": 10,
+          "right": 0,
+          "shadowColor": "#000000",
+          "shadowOffset": {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.8,
+          "shadowRadius": 2,
+        }
+      }
+    >
+      <Image
+        source={
+          {
+            "testUri": "../../../lib/commonjs/assets/icons/white_right.png",
+          }
+        }
+        style={
+          {
+            "height": 16,
+            "tintColor": "white",
+            "width": 16,
+          }
+        }
+      />
+    </View>
+  </View>
+</View>
+`;

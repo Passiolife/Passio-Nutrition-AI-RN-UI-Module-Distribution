@@ -1,0 +1,21 @@
+import { Alert } from 'react-native';
+
+interface Props {
+  onDelete: () => void;
+  onClose: () => void;
+}
+
+export const DeleteFoodLogAlert = (props: Props) => {
+  Alert.alert('Are you sure want to delete this from your log?', undefined, [
+    {
+      text: 'Cancel',
+      onPress: () => props.onClose(),
+      style: 'cancel',
+    },
+    {
+      text: 'Delete',
+      onPress: () => props.onDelete(),
+      style: 'destructive',
+    },
+  ]);
+};

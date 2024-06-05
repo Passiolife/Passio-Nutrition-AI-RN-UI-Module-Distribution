@@ -1,0 +1,69 @@
+import { StyleSheet } from 'react-native';
+import type { Branding } from '../../contexts';
+import { scaleHeight, scaleWidth, scaledSize } from '../../utils';
+
+const tutorialStyle = ({ white }: Branding) =>
+  StyleSheet.create({
+    background: {
+      flex: 1,
+      backgroundColor: 'rgba(0, 0, 0, 0.4)',
+    },
+    title: {
+      fontSize: 20,
+      backgroundColor: 'rgba(247, 247, 247, 1)',
+      paddingTop: 48,
+      paddingVertical: 16,
+      paddingHorizontal: 16,
+    },
+    bottomTitle: {
+      paddingTop: 16,
+    },
+    bottomMessage: {
+      paddingBottom: 16,
+    },
+    message: {
+      fontSize: 14,
+      paddingVertical: 16,
+      paddingHorizontal: 16,
+      backgroundColor: 'white',
+    },
+    topMessageContainer: {
+      position: 'absolute',
+      right: 0,
+      left: 0,
+      overflow: 'hidden',
+      top: 0,
+      borderBottomLeftRadius: 18,
+      borderBottomRightRadius: 18,
+    },
+    bottomMessageContainer: {
+      position: 'absolute',
+      right: 0,
+      left: 0,
+      overflow: 'hidden',
+      borderTopStartRadius: 18,
+      borderTopEndRadius: 18,
+      bottom: 0,
+    },
+    optionMainContainer: {
+      backgroundColor: white,
+      flexDirection: 'row',
+      alignSelf: 'flex-end',
+      overflow: 'hidden',
+      borderRadius: scaledSize(6),
+    },
+    optionContainer: {
+      paddingVertical: scaleHeight(16),
+      flexDirection: 'row',
+    },
+    optionTitle: {
+      marginStart: scaleWidth(12),
+    },
+    optionIcon: {
+      height: scaleHeight(20),
+      width: scaleWidth(20),
+      marginStart: scaleWidth(12),
+    },
+  });
+
+export default tutorialStyle;

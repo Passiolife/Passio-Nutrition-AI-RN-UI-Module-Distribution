@@ -1,0 +1,6 @@
+export enum Fonts {
+  BOLD = 'PASSIO_BOLD',
+  MEDIUM = 'PASSIO_MEDIUM',
+  REGULAR = 'PASSIO_REGULAR',
+  SEMIBOLD = 'PASSIO_SEMI_BOLD',
+}

@@ -1,0 +1,326 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`QuickSuggestion should render correctly 1`] = `
+<View
+  style={
+    [
+      {
+        "height": 300,
+        "paddingBottom": 80,
+      },
+      undefined,
+    ]
+  }
+>
+  <Text
+    style={
+      {
+        "color": "#4E4B66",
+        "fontSize": 17,
+        "fontWeight": "700",
+        "paddingBottom": 16,
+        "paddingHorizontal": 16,
+      }
+    }
+  >
+    Quick Suggestions
+  </Text>
+  <RCTScrollView>
+    <View>
+      <View
+        style={
+          {
+            "flexDirection": "row",
+            "flexWrap": "wrap",
+            "width": "100%",
+          }
+        }
+      >
+        <View
+          style={
+            {
+              "height": 60,
+            }
+          }
+        >
+          <View
+            accessibilityState={
+              {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": undefined,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              {
+                "opacity": 1,
+              }
+            }
+          >
+            <View
+              style={
+                {
+                  "alignContent": "center",
+                  "alignItems": "flex-start",
+                  "backgroundColor": "#FFFFFF",
+                  "borderRadius": 24,
+                  "flexDirection": "row",
+                  "height": 45,
+                  "margin": 8,
+                }
+              }
+            >
+              <View
+                style={
+                  {
+                    "alignSelf": "center",
+                    "borderRadius": 16,
+                    "marginLeft": 4,
+                    "overflow": "hidden",
+                    "width": 32,
+                  }
+                }
+              >
+                <Text>
+                  mockPassioIcon
+                </Text>
+              </View>
+              <Text
+                ellipsizeMode="tail"
+                numberOfLines={2}
+                style={
+                  {
+                    "alignSelf": "center",
+                    "color": "#333333",
+                    "fontSize": 13,
+                    "fontWeight": "400",
+                    "lineHeight": 16,
+                    "marginHorizontal": 5,
+                    "marginRight": 10,
+                    "maxWidth": 150,
+                    "textTransform": "capitalize",
+                  }
+                }
+              >
+                banana
+              </Text>
+              <Image
+                source={
+                  {
+                    "testUri": "../../../src/assets/icons/add_blue.png",
+                  }
+                }
+                style={
+                  {
+                    "alignSelf": "center",
+                    "height": 32,
+                    "margin": 16,
+                    "width": 32,
+                  }
+                }
+              />
+            </View>
+          </View>
+        </View>
+        <View
+          style={
+            {
+              "height": 60,
+            }
+          }
+        >
+          <View
+            accessibilityState={
+              {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": undefined,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              {
+                "opacity": 1,
+              }
+            }
+          >
+            <View
+              style={
+                {
+                  "alignContent": "center",
+                  "alignItems": "flex-start",
+                  "backgroundColor": "#FFFFFF",
+                  "borderRadius": 24,
+                  "flexDirection": "row",
+                  "height": 45,
+                  "margin": 8,
+                }
+              }
+            >
+              <View
+                style={
+                  {
+                    "alignSelf": "center",
+                    "borderRadius": 16,
+                    "marginLeft": 4,
+                    "overflow": "hidden",
+                    "width": 32,
+                  }
+                }
+              >
+                <Text>
+                  mockPassioIcon
+                </Text>
+              </View>
+              <Text
+                ellipsizeMode="tail"
+                numberOfLines={2}
+                style={
+                  {
+                    "alignSelf": "center",
+                    "color": "#333333",
+                    "fontSize": 13,
+                    "fontWeight": "400",
+                    "lineHeight": 16,
+                    "marginHorizontal": 5,
+                    "marginRight": 10,
+                    "maxWidth": 150,
+                    "textTransform": "capitalize",
+                  }
+                }
+              >
+                turmeric
+              </Text>
+              <Image
+                source={
+                  {
+                    "testUri": "../../../src/assets/icons/add_blue.png",
+                  }
+                }
+                style={
+                  {
+                    "alignSelf": "center",
+                    "height": 32,
+                    "margin": 16,
+                    "width": 32,
+                  }
+                }
+              />
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </RCTScrollView>
+</View>
+`;
+
+exports[`QuickSuggestion should show no quick suggestion message  1`] = `
+<View
+  style={
+    [
+      {
+        "height": 300,
+        "paddingBottom": 80,
+      },
+      undefined,
+    ]
+  }
+>
+  <Text
+    style={
+      {
+        "color": "#4E4B66",
+        "fontSize": 17,
+        "fontWeight": "700",
+        "paddingBottom": 16,
+        "paddingHorizontal": 16,
+      }
+    }
+  >
+    Quick Suggestions
+  </Text>
+  <View />
+  <Text
+    style={
+      {
+        "alignSelf": "center",
+        "color": "#333333",
+        "fontSize": 17,
+        "fontWeight": "700",
+        "marginTop": 50,
+        "paddingHorizontal": 32,
+      }
+    }
+  >
+    You have no quick suggestions
+  </Text>
+  <Text
+    style={
+      {
+        "alignSelf": "center",
+        "color": "#333333",
+        "fontSize": 15,
+        "fontWeight": "400",
+        "paddingHorizontal": 32,
+        "textAlign": "justify",
+      }
+    }
+  >
+    Recent items you log with quick scan,
+ multiscan, or search will appear here.
+  </Text>
+  <RCTScrollView>
+    <View>
+      <View
+        style={
+          {
+            "flexDirection": "row",
+            "flexWrap": "wrap",
+            "width": "100%",
+          }
+        }
+      />
+    </View>
+  </RCTScrollView>
+</View>
+`;

@@ -1,0 +1,222 @@
+[
+  {
+    "type": "breakfast",
+    "passioID": "MEA0013"
+  },
+  {
+    "type": "breakfast",
+    "passioID": "ING0090"
+  },
+  {
+    "type": "breakfast",
+    "passioID": "ING0124"
+  },
+  {
+    "type": "breakfast",
+    "passioID": "ING0128"
+  },
+  {
+    "type": "breakfast",
+    "passioID": "VEG0235"
+  },
+  {
+    "type": "breakfast",
+    "passioID": "VEG0368"
+  },
+  {
+    "type": "breakfast",
+    "passioID": "VEG2075"
+  },
+  {
+    "type": "breakfast",
+    "passioID": "BAK0176"
+  },
+  {
+    "type": "breakfast",
+    "passioID": "VEG0038"
+  },
+  {
+    "type": "breakfast",
+    "passioID": "BAK0307"
+  },
+  {
+    "type": "breakfast",
+    "passioID": "BAK0222"
+  },
+  {
+    "type": "breakfast",
+    "passioID": "1000367"
+  },
+  {
+    "type": "breakfast",
+    "passioID": "GRA0027"
+  },
+  {
+    "type": "lunch",
+    "passioID": "ING0063"
+  },
+  {
+    "type": "lunch",
+    "passioID": "BEV0036"
+  },
+  {
+    "type": "lunch",
+    "passioID": "BEV0147"
+  },
+  {
+    "type": "lunch",
+    "passioID": "MEA0008"
+  },
+  {
+    "type": "lunch",
+    "passioID": "VEG0118"
+  },
+  {
+    "type": "lunch",
+    "passioID": "VEG0233"
+  },
+  {
+    "type": "lunch",
+    "passioID": "VEG0029"
+  },
+  {
+    "type": "lunch",
+    "passioID": "DAI0031"
+  },
+  {
+    "type": "lunch",
+    "passioID": "1001399"
+  },
+  {
+    "type": "lunch",
+    "passioID": "DAI0054"
+  },
+  {
+    "type": "lunch",
+    "passioID": "VEG0023"
+  },
+  {
+    "type": "lunch",
+    "passioID": "VEG0070"
+  },
+  {
+    "type": "lunch",
+    "passioID": "VEG0025"
+  },
+  {
+    "type": "lunch",
+    "passioID": "VEG3319"
+  },
+  {
+    "type": "dinner",
+    "passioID": "SEA0013"
+  },
+  {
+    "type": "dinner",
+    "passioID": "SEA0006"
+  },
+  {
+    "type": "dinner",
+    "passioID": "SEA0001"
+  },
+  {
+    "type": "dinner",
+    "passioID": "MID0123"
+  },
+  {
+    "type": "dinner",
+    "passioID": "MEA4424"
+  },
+  {
+    "type": "dinner",
+    "passioID": "DAI0080"
+  },
+  {
+    "type": "dinner",
+    "passioID": "DAI0137"
+  },
+  {
+    "type": "dinner",
+    "passioID": "DAI0110"
+  },
+  {
+    "type": "dinner",
+    "passioID": "VEG9922"
+  },
+  {
+    "type": "dinner",
+    "passioID": "VEG0122"
+  },
+  {
+    "type": "dinner",
+    "passioID": "VEG0494"
+  },
+  {
+    "type": "dinner",
+    "passioID": "VEG0241"
+  },
+  {
+    "type": "dinner",
+    "passioID": "VEG0104"
+  },
+  {
+    "type": "snack",
+    "passioID": "MEA0052"
+  },
+  {
+    "type": "snack",
+    "passioID": "MEA0135"
+  },
+  {
+    "type": "snack",
+    "passioID": "MEA9015"
+  },
+  {
+    "type": "snack",
+    "passioID": "MEA0221"
+  },
+  {
+    "type": "snack",
+    "passioID": "MEA0027"
+  },
+  {
+    "type": "snack",
+    "passioID": "MEA0205"
+  },
+  {
+    "type": "snack",
+    "passioID": "NUT0001"
+  },
+  {
+    "type": "snack",
+    "passioID": "NUT0005"
+  },
+  {
+    "type": "snack",
+    "passioID": "NUT0023"
+  },
+  {
+    "type": "snack",
+    "passioID": "NUT0036"
+  },
+  {
+    "type": "snack",
+    "passioID": "NUT0022"
+  },
+  {
+    "type": "snack",
+    "passioID": "VEG0052"
+  },
+  {
+    "type": "snack",
+    "passioID": "BAK0059"
+  },
+  {
+    "type": "snack",
+    "passioID": "VEG0399"
+  },
+  {
+    "type": "snack",
+    "passioID": "VEG0294"
+  }
+]

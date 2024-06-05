@@ -1,0 +1,340 @@
+{
+  "selectedQuantity": 1,
+  "servingUnits": [
+    {
+      "mass": 136,
+      "unit": "cup, chopped"
+    },
+    {
+      "mass": 8.5,
+      "unit": "tbsp"
+    },
+    {
+      "mass": 50,
+      "unit": "large"
+    }
+  ],
+  "entityType": null,
+  "servingSizes": [
+    {
+      "quantity": 2,
+      "unit": "large"
+    },
+    {
+      "quantity": 1,
+      "unit": "cup, chopped"
+    }
+  ],
+  "foodItems": [
+    {
+      "magnesium": 10,
+      "vitaminEAdded": 0,
+      "vitaminE": 1,
+      "vitaminB6": 0.1,
+      "vitaminB12": 1.1,
+      "vitaminC": 0,
+      "potassium": 126,
+      "iodine": 0,
+      "calcium": 50,
+      "alcohol": 0,
+      "vitaminD": 2.2,
+      "sugarAlcohol": 0,
+      "sugarAdded": 0,
+      "computedWeight": {
+        "value": 136,
+        "unit": "g"
+      },
+      "monounsaturatedFat": 4.1,
+      "sugar": 0,
+      "sodium": 124,
+      "vitaminA": 520,
+      "fiber": 0,
+      "transFat": 0,
+      "saturatedFat": 3.3,
+      "fat": 10.6,
+      "calories": 155,
+      "siblings": [
+        {
+          "quantity": 1,
+          "unitName": "medium",
+          "name": "egg, whole, raw",
+          "passioID": "1603211204505"
+        },
+        {
+          "quantity": 2,
+          "unitName": "egg",
+          "name": "egg, whole, boiled or poached",
+          "passioID": "1603211581777"
+        },
+        {
+          "name": "great day farms, organic hard-boiled eggs",
+          "passioID": "1603211581829"
+        },
+        {
+          "name": "hickman's family farms, fresh hard boiled peeled eggs",
+          "passioID": "1603211579272"
+        },
+        {
+          "name": "kirkland, organic hard-boiled eggs",
+          "passioID": "1603211579266"
+        },
+        {
+          "name": "vital farms, pasture-raised hard boiled eggs",
+          "passioID": "1603211579268"
+        },
+        {
+          "name": "vital farms, hard boiled eggs",
+          "passioID": "1603211581828"
+        },
+        {
+          "name": "pete & gerry's organics, organic medium hard-boiled eggs",
+          "passioID": "1603211581827"
+        },
+        {
+          "name": "wilcox, organic hard-boiled eggs",
+          "passioID": "1603211579269"
+        },
+        {
+          "name": "organic hard-boiled eggs",
+          "passioID": "1603211579267"
+        },
+        {
+          "name": "topco, cage free hard boiled eggs",
+          "passioID": "1603211581824"
+        },
+        {
+          "name": "kroger, free range hard boiled eggs",
+          "passioID": "1603211581823"
+        },
+        {
+          "name": "weis, hard boiled eggs",
+          "passioID": "1603211581830"
+        },
+        {
+          "name": "pete & gerry's organics, hard-boiled organic eggs",
+          "passioID": "1603211581822"
+        }
+      ],
+      "cholesterol": 373,
+      "polyunsaturatedFat": 1.4,
+      "parents": [
+        {
+          "name": "runny egg",
+          "passioID": "MEA0016"
+        },
+        {
+          "name": "eggs in shell",
+          "passioID": "MEA0009"
+        },
+        {
+          "name": "sliced hard boiled egg",
+          "passioID": "MEA0017"
+        },
+        {
+          "name": "hard boiled egg",
+          "passioID": "MEA0008"
+        },
+        {
+          "name": "breakfast egg",
+          "passioID": "MEA5218"
+        },
+        {
+          "name": "diced eggs",
+          "passioID": "MEA0023"
+        },
+        {
+          "name": "hard boiled easter egg",
+          "passioID": "XXX9329"
+        }
+      ],
+      "iron": 1.2,
+      "servingUnits": [
+        {
+          "mass": 136,
+          "unit": "cup, chopped"
+        },
+        {
+          "mass": 8.5,
+          "unit": "tbsp"
+        },
+        {
+          "mass": 50,
+          "unit": "large"
+        }
+      ],
+      "vitaminB12Added": 0,
+      "servingSizes": [
+        {
+          "quantity": 2,
+          "unit": "large"
+        },
+        {
+          "quantity": 1,
+          "unit": "cup, chopped"
+        }
+      ],
+      "protein": 12.6,
+      "entityType": "item",
+      "carbs": 1.1,
+      "selectedUnit": "cup, chopped",
+      "selectedQuantity": 1,
+      "name": "egg, whole, cooked, hard-boiled",
+      "passioID": "1603211567715",
+      "phosphorus": 172,
+      "imageName": "MEA0016.jpg",
+      "nutrients": [
+        {
+          "id": "magnesium",
+          "amount": 13,
+          "unit": "mg"
+        },
+        {
+          "id": "vitaminEAdded",
+          "amount": 0,
+          "unit": "mg"
+        },
+        {
+          "id": "vitaminE",
+          "amount": 1,
+          "unit": "mg"
+        },
+        {
+          "id": "vitaminB6",
+          "amount": 0,
+          "unit": "mg"
+        },
+        {
+          "id": "vitaminB12",
+          "amount": 1,
+          "unit": "ug"
+        },
+        {
+          "id": "vitaminC",
+          "amount": 0,
+          "unit": "mg"
+        },
+        {
+          "id": "potassium",
+          "amount": 171,
+          "unit": "mg"
+        },
+        {
+          "id": "iodine",
+          "amount": 0,
+          "unit": "ug"
+        },
+        {
+          "id": "calcium",
+          "amount": 68,
+          "unit": "mg"
+        },
+        {
+          "id": "alcohol",
+          "amount": 0,
+          "unit": "g"
+        },
+        {
+          "id": "vitaminD",
+          "amount": 2,
+          "unit": "mg"
+        },
+        {
+          "id": "sugarAlcohol",
+          "amount": 0,
+          "unit": "g"
+        },
+        {
+          "id": "sugarAdded",
+          "amount": 0,
+          "unit": "g"
+        },
+        {
+          "id": "monounsaturatedFat",
+          "amount": 5,
+          "unit": "g"
+        },
+        {
+          "id": "sugar",
+          "amount": 0,
+          "unit": "g"
+        },
+        {
+          "id": "sodium",
+          "amount": 168,
+          "unit": "mg"
+        },
+        {
+          "id": "vitaminA",
+          "amount": 707,
+          "unit": "IU"
+        },
+        {
+          "id": "fiber",
+          "amount": 0,
+          "unit": "g"
+        },
+        {
+          "id": "transFat",
+          "amount": 0,
+          "unit": "g"
+        },
+        {
+          "id": "saturatedFat",
+          "amount": 4,
+          "unit": "g"
+        },
+        {
+          "id": "fat",
+          "amount": 14,
+          "unit": "g"
+        },
+        {
+          "id": "calories",
+          "amount": 210,
+          "unit": "kcal"
+        },
+        {
+          "id": "cholesterol",
+          "amount": 507,
+          "unit": "mg"
+        },
+        {
+          "id": "polyunsaturatedFat",
+          "amount": 1,
+          "unit": "g"
+        },
+        {
+          "id": "iron",
+          "amount": 1,
+          "unit": "mg"
+        },
+        {
+          "id": "vitaminB12Added",
+          "amount": 0,
+          "unit": "ug"
+        },
+        {
+          "id": "protein",
+          "amount": 17,
+          "unit": "g"
+        },
+        {
+          "id": "carbs",
+          "amount": 1,
+          "unit": "g"
+        },
+        {
+          "id": "phosphorus",
+          "amount": 233,
+          "unit": "mg"
+        }
+      ]
+    }
+  ],
+  "passioID": "1603211567715",
+  "imageName": "MEA0016.jpg",
+  "meal": "snack",
+  "name": "Choose the value",
+  "selectedUnit": "cup, chopped",
+  "uuid": "c12db665-1db0-4486-8e79-6a9a4d33bed8"
+}

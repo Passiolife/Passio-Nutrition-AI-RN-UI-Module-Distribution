@@ -1,0 +1,868 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`recipes RecipesListView Renders correctly 1`] = `
+<RCTScrollView
+  contentContainerStyle={
+    {
+      "paddingBottom": 150,
+      "paddingVertical": 15,
+    }
+  }
+  data={
+    [
+      {
+        "ingredients": [
+          {
+            "barcode": null,
+            "computedWeight": {
+              "unit": "g",
+              "value": 500,
+            },
+            "entityType": "item",
+            "imageName": "MEA0505.jpg",
+            "ingredientsDescription": null,
+            "name": "Scrambled Eggs",
+            "nutrients": [
+              {
+                "amount": 1000,
+                "id": "calories",
+                "unit": "kcal",
+              },
+              {
+                "amount": 200,
+                "id": "carbs",
+                "unit": "g",
+              },
+              {
+                "amount": 150,
+                "id": "protein",
+                "unit": "g",
+              },
+              {
+                "amount": 75,
+                "id": "fat",
+                "unit": "g",
+              },
+            ],
+            "passioID": "MEA0505",
+            "selectedQuantity": "500",
+            "selectedUnit": "grams",
+            "servingSizes": [
+              {
+                "quantity": 100,
+                "unit": "g",
+              },
+            ],
+            "servingUnits": [
+              {
+                "mass": 1,
+                "unit": "g",
+              },
+            ],
+          },
+        ],
+        "name": "Scrambled Eggs",
+        "totalServings": 10,
+        "uuid": "123-5225-dcds-4555",
+      },
+      {
+        "ingredients": [
+          {
+            "barcode": null,
+            "computedWeight": {
+              "unit": "g",
+              "value": 500,
+            },
+            "entityType": "item",
+            "imageName": "MEA0505.jpg",
+            "ingredientsDescription": null,
+            "name": "Scrambled Eggs",
+            "nutrients": [
+              {
+                "amount": 1000,
+                "id": "calories",
+                "unit": "kcal",
+              },
+              {
+                "amount": 200,
+                "id": "carbs",
+                "unit": "g",
+              },
+              {
+                "amount": 150,
+                "id": "protein",
+                "unit": "g",
+              },
+              {
+                "amount": 75,
+                "id": "fat",
+                "unit": "g",
+              },
+            ],
+            "passioID": "MEA0505",
+            "selectedQuantity": "500",
+            "selectedUnit": "grams",
+            "servingSizes": [
+              {
+                "quantity": 100,
+                "unit": "g",
+              },
+            ],
+            "servingUnits": [
+              {
+                "mass": 1,
+                "unit": "g",
+              },
+            ],
+          },
+        ],
+        "name": "Eggs",
+        "totalServings": 15,
+        "uuid": "5569-5225-VDXZ-4555",
+      },
+    ]
+  }
+  getItem={[Function]}
+  getItemCount={[Function]}
+  keyExtractor={[Function]}
+  onContentSizeChange={[Function]}
+  onLayout={[Function]}
+  onMomentumScrollBegin={[Function]}
+  onMomentumScrollEnd={[Function]}
+  onScroll={[Function]}
+  onScrollBeginDrag={[Function]}
+  onScrollEndDrag={[Function]}
+  removeClippedSubviews={false}
+  renderItem={[Function]}
+  scrollEventThrottle={0.0001}
+  stickyHeaderIndices={[]}
+  style={
+    {
+      "backgroundColor": "#FFFFFF",
+    }
+  }
+  testID="testRecipeList"
+  viewabilityConfigCallbackPairs={[]}
+>
+  <View>
+    <View
+      onFocusCapture={[Function]}
+      onLayout={[Function]}
+      style={null}
+    >
+      <View>
+        <View
+          collapsable={false}
+          handlerTag={1}
+          handlerType="PanGestureHandler"
+          onGestureHandlerEvent={[Function]}
+          onGestureHandlerStateChange={[Function]}
+          onLayout={[Function]}
+          style={
+            {
+              "marginHorizontal": 16,
+              "overflow": "hidden",
+              "paddingVertical": 5,
+            }
+          }
+        >
+          <View
+            collapsable={false}
+            style={
+              {
+                "bottom": 0,
+                "flexDirection": "row-reverse",
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+                "transform": [
+                  {
+                    "translateX": -10000,
+                  },
+                ],
+              }
+            }
+          >
+            <View
+              collapsable={false}
+              style={
+                {
+                  "flexDirection": "row",
+                  "marginRight": 10,
+                  "transform": [
+                    {
+                      "translateX": 60,
+                    },
+                  ],
+                }
+              }
+            >
+              <View
+                accessibilityState={
+                  {
+                    "busy": undefined,
+                    "checked": undefined,
+                    "disabled": undefined,
+                    "expanded": undefined,
+                    "selected": undefined,
+                  }
+                }
+                accessibilityValue={
+                  {
+                    "max": undefined,
+                    "min": undefined,
+                    "now": undefined,
+                    "text": undefined,
+                  }
+                }
+                accessible={true}
+                collapsable={false}
+                focusable={true}
+                onClick={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  {
+                    "backgroundColor": "#fd3c2f",
+                    "borderBottomRightRadius": 16,
+                    "borderTopRightRadius": 16,
+                    "opacity": 1,
+                  }
+                }
+              >
+                <View
+                  style={
+                    [
+                      {
+                        "alignItems": "center",
+                        "flex": 1,
+                        "justifyContent": "center",
+                        "width": 85,
+                      },
+                    ]
+                  }
+                >
+                  <Text
+                    style={
+                      {
+                        "color": "white",
+                        "fontWeight": "600",
+                      }
+                    }
+                  >
+                    Delete
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <View
+              onLayout={[Function]}
+            />
+          </View>
+          <View
+            collapsable={false}
+            handlerTag={2}
+            handlerType="TapGestureHandler"
+            onGestureHandlerEvent={[Function]}
+            onGestureHandlerStateChange={[Function]}
+            pointerEvents="auto"
+            style={
+              {
+                "alignItems": "center",
+                "backgroundColor": "#FFFFFF",
+                "borderColor": "#EFF0F6",
+                "borderRadius": 42,
+                "borderWidth": 1,
+                "flexDirection": "row",
+                "justifyContent": "space-between",
+                "marginVertical": 2,
+                "paddingHorizontal": 12,
+                "paddingVertical": 8,
+                "transform": [
+                  {
+                    "translateX": -0,
+                  },
+                ],
+              }
+            }
+          >
+            <View
+              style={
+                [
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderRadius": 16,
+                    "elevation": 4,
+                    "shadowColor": "#00000029",
+                    "shadowOffset": {
+                      "height": 2.5,
+                      "width": 1.5,
+                    },
+                    "shadowOpacity": 1,
+                    "shadowRadius": 2.85,
+                  },
+                  [
+                    {
+                      "flexDirection": "row",
+                    },
+                    {
+                      "borderRadius": 16,
+                      "elevation": 0,
+                      "paddingHorizontal": 12,
+                      "shadowColor": "#fff",
+                      "shadowOffset": {
+                        "height": 0,
+                        "width": 0,
+                      },
+                      "shadowOpacity": 1,
+                      "shadowRadius": 0,
+                    },
+                  ],
+                ]
+              }
+            >
+              <View
+                accessibilityState={
+                  {
+                    "busy": undefined,
+                    "checked": undefined,
+                    "disabled": undefined,
+                    "expanded": undefined,
+                    "selected": undefined,
+                  }
+                }
+                accessibilityValue={
+                  {
+                    "max": undefined,
+                    "min": undefined,
+                    "now": undefined,
+                    "text": undefined,
+                  }
+                }
+                accessible={true}
+                collapsable={false}
+                focusable={true}
+                onClick={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  {
+                    "flex": 1,
+                    "opacity": 1,
+                  }
+                }
+              >
+                <View
+                  style={
+                    {
+                      "flex": 1,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      {
+                        "color": "#333333",
+                        "fontSize": 15,
+                        "fontWeight": "600",
+                      }
+                    }
+                  >
+                    Scrambled Eggs
+                  </Text>
+                  <Text
+                    style={
+                      {
+                        "color": "#949494",
+                        "fontSize": 14,
+                        "marginTop": 4,
+                      }
+                    }
+                  >
+                    Macros per serving:
+                  </Text>
+                  <View
+                    style={
+                      {
+                        "alignItems": "flex-start",
+                        "flex": 1,
+                        "flexDirection": "row",
+                        "flexWrap": "wrap",
+                        "marginTop": 4,
+                      }
+                    }
+                  >
+                    <Text
+                      style={
+                        {
+                          "color": "#333333",
+                          "fontSize": 13,
+                          "marginRight": 8,
+                        }
+                      }
+                      testID="testRecipeCaloriesPerTotalServing-123-5225-dcds-4555"
+                    >
+                      Calories: 100
+                    </Text>
+                    <Text
+                      style={
+                        {
+                          "color": "#333333",
+                          "fontSize": 13,
+                          "marginRight": 8,
+                        }
+                      }
+                      testID="testRecipeCarbsPerTotalServing-123-5225-dcds-4555"
+                    >
+                      Carbs: 20
+                    </Text>
+                    <Text
+                      style={
+                        {
+                          "color": "#333333",
+                          "fontSize": 13,
+                          "marginRight": 8,
+                        }
+                      }
+                      testID="testRecipeFatPerTotalServing-123-5225-dcds-4555"
+                    >
+                      Fat: 8
+                    </Text>
+                    <Text
+                      style={
+                        {
+                          "color": "#333333",
+                          "fontSize": 13,
+                          "marginRight": 8,
+                        }
+                      }
+                      testID="testRecipeProteinPerTotalServing-123-5225-dcds-4555"
+                    >
+                      Protein: 15
+                    </Text>
+                  </View>
+                </View>
+              </View>
+              <View
+                accessibilityState={
+                  {
+                    "busy": undefined,
+                    "checked": undefined,
+                    "disabled": undefined,
+                    "expanded": undefined,
+                    "selected": undefined,
+                  }
+                }
+                accessibilityValue={
+                  {
+                    "max": undefined,
+                    "min": undefined,
+                    "now": undefined,
+                    "text": undefined,
+                  }
+                }
+                accessible={true}
+                collapsable={false}
+                focusable={true}
+                onClick={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  {
+                    "alignSelf": "center",
+                    "opacity": 1,
+                  }
+                }
+              >
+                <Text
+                  style={
+                    {
+                      "color": "#286CE2",
+                      "fontSize": 13,
+                      "fontWeight": "600",
+                    }
+                  }
+                >
+                  Log Item
+                </Text>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+    <View
+      onFocusCapture={[Function]}
+      onLayout={[Function]}
+      style={null}
+    >
+      <View>
+        <View
+          collapsable={false}
+          handlerTag={3}
+          handlerType="PanGestureHandler"
+          onGestureHandlerEvent={[Function]}
+          onGestureHandlerStateChange={[Function]}
+          onLayout={[Function]}
+          style={
+            {
+              "marginHorizontal": 16,
+              "overflow": "hidden",
+              "paddingVertical": 5,
+            }
+          }
+        >
+          <View
+            collapsable={false}
+            style={
+              {
+                "bottom": 0,
+                "flexDirection": "row-reverse",
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+                "transform": [
+                  {
+                    "translateX": -10000,
+                  },
+                ],
+              }
+            }
+          >
+            <View
+              collapsable={false}
+              style={
+                {
+                  "flexDirection": "row",
+                  "marginRight": 10,
+                  "transform": [
+                    {
+                      "translateX": 60,
+                    },
+                  ],
+                }
+              }
+            >
+              <View
+                accessibilityState={
+                  {
+                    "busy": undefined,
+                    "checked": undefined,
+                    "disabled": undefined,
+                    "expanded": undefined,
+                    "selected": undefined,
+                  }
+                }
+                accessibilityValue={
+                  {
+                    "max": undefined,
+                    "min": undefined,
+                    "now": undefined,
+                    "text": undefined,
+                  }
+                }
+                accessible={true}
+                collapsable={false}
+                focusable={true}
+                onClick={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  {
+                    "backgroundColor": "#fd3c2f",
+                    "borderBottomRightRadius": 16,
+                    "borderTopRightRadius": 16,
+                    "opacity": 1,
+                  }
+                }
+              >
+                <View
+                  style={
+                    [
+                      {
+                        "alignItems": "center",
+                        "flex": 1,
+                        "justifyContent": "center",
+                        "width": 85,
+                      },
+                    ]
+                  }
+                >
+                  <Text
+                    style={
+                      {
+                        "color": "white",
+                        "fontWeight": "600",
+                      }
+                    }
+                  >
+                    Delete
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <View
+              onLayout={[Function]}
+            />
+          </View>
+          <View
+            collapsable={false}
+            handlerTag={4}
+            handlerType="TapGestureHandler"
+            onGestureHandlerEvent={[Function]}
+            onGestureHandlerStateChange={[Function]}
+            pointerEvents="auto"
+            style={
+              {
+                "alignItems": "center",
+                "backgroundColor": "#FFFFFF",
+                "borderColor": "#EFF0F6",
+                "borderRadius": 42,
+                "borderWidth": 1,
+                "flexDirection": "row",
+                "justifyContent": "space-between",
+                "marginVertical": 2,
+                "paddingHorizontal": 12,
+                "paddingVertical": 8,
+                "transform": [
+                  {
+                    "translateX": -0,
+                  },
+                ],
+              }
+            }
+          >
+            <View
+              style={
+                [
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderRadius": 16,
+                    "elevation": 4,
+                    "shadowColor": "#00000029",
+                    "shadowOffset": {
+                      "height": 2.5,
+                      "width": 1.5,
+                    },
+                    "shadowOpacity": 1,
+                    "shadowRadius": 2.85,
+                  },
+                  [
+                    {
+                      "flexDirection": "row",
+                    },
+                    {
+                      "borderRadius": 16,
+                      "elevation": 0,
+                      "paddingHorizontal": 12,
+                      "shadowColor": "#fff",
+                      "shadowOffset": {
+                        "height": 0,
+                        "width": 0,
+                      },
+                      "shadowOpacity": 1,
+                      "shadowRadius": 0,
+                    },
+                  ],
+                ]
+              }
+            >
+              <View
+                accessibilityState={
+                  {
+                    "busy": undefined,
+                    "checked": undefined,
+                    "disabled": undefined,
+                    "expanded": undefined,
+                    "selected": undefined,
+                  }
+                }
+                accessibilityValue={
+                  {
+                    "max": undefined,
+                    "min": undefined,
+                    "now": undefined,
+                    "text": undefined,
+                  }
+                }
+                accessible={true}
+                collapsable={false}
+                focusable={true}
+                onClick={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  {
+                    "flex": 1,
+                    "opacity": 1,
+                  }
+                }
+              >
+                <View
+                  style={
+                    {
+                      "flex": 1,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      {
+                        "color": "#333333",
+                        "fontSize": 15,
+                        "fontWeight": "600",
+                      }
+                    }
+                  >
+                    Eggs
+                  </Text>
+                  <Text
+                    style={
+                      {
+                        "color": "#949494",
+                        "fontSize": 14,
+                        "marginTop": 4,
+                      }
+                    }
+                  >
+                    Macros per serving:
+                  </Text>
+                  <View
+                    style={
+                      {
+                        "alignItems": "flex-start",
+                        "flex": 1,
+                        "flexDirection": "row",
+                        "flexWrap": "wrap",
+                        "marginTop": 4,
+                      }
+                    }
+                  >
+                    <Text
+                      style={
+                        {
+                          "color": "#333333",
+                          "fontSize": 13,
+                          "marginRight": 8,
+                        }
+                      }
+                      testID="testRecipeCaloriesPerTotalServing-5569-5225-VDXZ-4555"
+                    >
+                      Calories: 67
+                    </Text>
+                    <Text
+                      style={
+                        {
+                          "color": "#333333",
+                          "fontSize": 13,
+                          "marginRight": 8,
+                        }
+                      }
+                      testID="testRecipeCarbsPerTotalServing-5569-5225-VDXZ-4555"
+                    >
+                      Carbs: 13
+                    </Text>
+                    <Text
+                      style={
+                        {
+                          "color": "#333333",
+                          "fontSize": 13,
+                          "marginRight": 8,
+                        }
+                      }
+                      testID="testRecipeFatPerTotalServing-5569-5225-VDXZ-4555"
+                    >
+                      Fat: 5
+                    </Text>
+                    <Text
+                      style={
+                        {
+                          "color": "#333333",
+                          "fontSize": 13,
+                          "marginRight": 8,
+                        }
+                      }
+                      testID="testRecipeProteinPerTotalServing-5569-5225-VDXZ-4555"
+                    >
+                      Protein: 10
+                    </Text>
+                  </View>
+                </View>
+              </View>
+              <View
+                accessibilityState={
+                  {
+                    "busy": undefined,
+                    "checked": undefined,
+                    "disabled": undefined,
+                    "expanded": undefined,
+                    "selected": undefined,
+                  }
+                }
+                accessibilityValue={
+                  {
+                    "max": undefined,
+                    "min": undefined,
+                    "now": undefined,
+                    "text": undefined,
+                  }
+                }
+                accessible={true}
+                collapsable={false}
+                focusable={true}
+                onClick={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  {
+                    "alignSelf": "center",
+                    "opacity": 1,
+                  }
+                }
+              >
+                <Text
+                  style={
+                    {
+                      "color": "#286CE2",
+                      "fontSize": 13,
+                      "fontWeight": "600",
+                    }
+                  }
+                >
+                  Log Item
+                </Text>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+</RCTScrollView>
+`;

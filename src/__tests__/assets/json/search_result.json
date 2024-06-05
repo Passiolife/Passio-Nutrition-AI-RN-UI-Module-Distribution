@@ -1,0 +1,271 @@
+[{
+  "foodItem": {
+    "potassium": 487.4,
+    "vitaminE": 2.1,
+    "selectedUnit": "avocado",
+    "iron": 0.6,
+    "servingUnits": [
+      {
+        "unitName": "cup",
+        "value": 146
+      },
+      {
+        "unitName": "cup, cubes",
+        "value": 150
+      },
+      {
+        "unitName": "cup, mashed or pureed",
+        "value": 230
+      },
+      {
+        "value": 146,
+        "unitName": "cup, sliced"
+      },
+      {
+        "unitName": "oz yields",
+        "value": 21
+      },
+      {
+        "unitName": "avocado, california (black skin)",
+        "value": 136
+      },
+      {
+        "unitName": "avocado, florida (green skin)",
+        "value": 304
+      },
+      {
+        "value": 201,
+        "unitName": "avocado"
+      },
+      {
+        "unitName": "slice",
+        "value": 10
+      },
+      {
+        "value": 1,
+        "unitName": "gram"
+      }
+    ],
+    "vitaminB6": 0.3,
+    "vitaminC": 10.1,
+    "name": "avocado, raw",
+    "calories": 160.8,
+    "siblings": [],
+    "fat": 14.7,
+    "imageName": "VEG2021.jpg",
+    "entityType": null,
+    "protein": 2,
+    "passioID": "1603211585376",
+    "calcium": 12.1,
+    "sodium": 7,
+    "magnesium": 29.1,
+    "computedWeight": {
+      "unit": "g",
+      "value": 100.5
+    },
+    "monounsaturatedFat": 9.8,
+    "sugar": 0.7,
+    "carbs": 8.6,
+    "saturatedFat": 2.1,
+    "selectedQuantity": 0.5,
+    "fiber": 6.7,
+    "parents": [
+      {
+        "name": "half avocado",
+        "passioID": "VEG2021"
+      },
+      {
+        "passioID": "VEG3021",
+        "name": "sliced avocado"
+      }
+    ],
+    "polyunsaturatedFat": 1.8,
+    "servingSizes": [
+      {
+        "unitName": "avocado",
+        "quantity": 0.5
+      },
+      {
+        "quantity": 1,
+        "unitName": "cup"
+      },
+      {
+        "quantity": 100,
+        "unitName": "gram"
+      }
+    ]
+  },
+  "name": "half avocado",
+  "children": [
+    {
+      "quantity": 0.5,
+      "unitName": "avocado",
+      "name": "avocado, raw",
+      "passioID": "1603211585376"
+    }
+  ],
+  "entityType": "group",
+  "imageName": "VEG2021.jpg",
+  "passioID": "VEG2021",
+  "parents": [
+    {
+      "name": "sliced fruits",
+      "passioID": "VEG0427"
+    }
+  ],
+  "siblings": [
+    {
+      "name": "peeled kiwi",
+      "passioID": "VEG7965"
+    },
+    {
+      "passioID": "VEG3056",
+      "name": "coconut meat"
+    },
+    {
+      "passioID": "VEG2258",
+      "name": "sliced dates"
+    },
+    {
+      "name": "papaya cubes",
+      "passioID": "VEG7077"
+    },
+    {
+      "passioID": "VEG3260",
+      "name": "sliced figs"
+    },
+    {
+      "name": "sliced avocado",
+      "passioID": "VEG3021"
+    },
+    {
+      "name": "sliced kiwi",
+      "passioID": "VEG5165"
+    },
+    {
+      "name": "half kiwi",
+      "passioID": "VEG8265"
+    },
+    {
+      "name": "sliced apples",
+      "passioID": "VEG2218"
+    },
+    {
+      "passioID": "VEG1075",
+      "name": "watermelon cubes"
+    },
+    {
+      "passioID": "VEG1280",
+      "name": "sliced horned melon"
+    },
+    {
+      "name": "squash cubes",
+      "passioID": "VEG0283"
+    },
+    {
+      "name": "sliced guava",
+      "passioID": "VEG8595"
+    },
+    {
+      "passioID": "VEG2074",
+      "name": "orange melon cubes"
+    },
+    {
+      "name": "peeled guava",
+      "passioID": "VEG8925"
+    },
+    {
+      "name": "sliced tamarillos",
+      "passioID": "VEG1982"
+    },
+    {
+      "name": "sliced passion fruit",
+      "passioID": "VEG0054"
+    },
+    {
+      "passioID": "VEG0074",
+      "name": "sliced melons"
+    },
+    {
+      "name": "fruit salad",
+      "passioID": "VEG0076"
+    },
+    {
+      "name": "sliced dragon fruit",
+      "passioID": "VEG2085"
+    },
+    {
+      "passioID": "VEG0568",
+      "name": "sliced stone fruits"
+    },
+    {
+      "name": "sliced star fruit",
+      "passioID": "VEG0565"
+    },
+    {
+      "name": "pomegranate kernels",
+      "passioID": "VEG6090"
+    },
+    {
+      "name": "sliced persimmons",
+      "passioID": "VEG7592"
+    },
+    {
+      "name": "pineapple cubes",
+      "passioID": "VEG2084"
+    },
+    {
+      "name": "half pomegranate",
+      "passioID": "VEG3990"
+    },
+    {
+      "name": "pineapple wedges",
+      "passioID": "VEG0084"
+    },
+    {
+      "passioID": "VEG0325",
+      "name": "canned pineapple slices"
+    },
+    {
+      "name": "half papaya",
+      "passioID": "VEG3077"
+    },
+    {
+      "name": "green melon cubes",
+      "passioID": "VEG3074"
+    },
+    {
+      "passioID": "VEG0564",
+      "name": "sliced babacos"
+    },
+    {
+      "passioID": "1000432",
+      "name": "durian meat"
+    },
+    {
+      "passioID": "VEG0138",
+      "name": "canned pears"
+    },
+    {
+      "name": "sliced squash",
+      "passioID": "VEG2239"
+    },
+    {
+      "name": "sliced pears",
+      "passioID": "VEG3081"
+    },
+    {
+      "passioID": "VEG0460",
+      "name": "sliced quinces"
+    },
+    {
+      "name": "sliced mangoes",
+      "passioID": "VEG2070"
+    },
+    {
+      "passioID": "VEG0075",
+      "name": "watermelon wedges"
+    }
+  ]
+}
+]

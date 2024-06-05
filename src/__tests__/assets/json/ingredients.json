@@ -1,0 +1,220 @@
+[
+  {
+    "iodine": 0,
+    "phosphorus": 39.5,
+    "magnesium": 34.6,
+    "vitaminB12": 0,
+    "vitaminC": 15.8,
+    "vitaminA": 0,
+    "vitaminB6": 0.2,
+    "vitaminD": 0,
+    "vitaminB12Added": 0,
+    "fiber": 2.7,
+    "sodium": 392.7,
+    "name": "stew",
+    "monounsaturatedFat": 1.3,
+    "cholesterol": 12.4,
+    "saturatedFat": 3.2,
+    "servingUnits": [
+      {
+        "mass": 247,
+        "unit": "cup"
+      }
+    ],
+    "protein": 2,
+    "fat": 5.3,
+    "polyunsaturatedFat": 0.3,
+    "calcium": 84,
+    "passioID": "1603211587923",
+    "calories": 76,
+    "potassium": 259.4,
+    "siblings": [
+      {
+        "unitName": "cup",
+        "name": "beef stew with potatoes, gravy",
+        "quantity": 1,
+        "passioID": "1603211587921"
+      },
+      {
+        "name": "spanish stew",
+        "passioID": "1603211587922"
+      }
+    ],
+    "vitaminE": 0.7,
+    "computedWeight": {
+      "value": 247,
+      "unit": "g"
+    },
+    "sugar": 0,
+    "servingSizes": [
+      {
+        "quantity": 1,
+        "unit": "cup"
+      }
+    ],
+    "transFat": 0,
+    "sugarAlcohol": 0,
+    "selectedUnit": "cup",
+    "iron": 0.7,
+    "sugarAdded": 0,
+    "selectedQuantity": 1,
+    "parents": [
+      {
+        "name": "stew",
+        "passioID": "PRE0089"
+      }
+    ],
+    "alcohol": 0,
+    "entityType": "item",
+    "carbs": 7.4,
+    "vitaminEAdded": 0,
+    "imageName": "PRE0089.jpg",
+    "nutrients": [
+      {
+        "id": "iodine",
+        "amount": 0,
+        "unit": "ug"
+      },
+      {
+        "id": "phosphorus",
+        "amount": 39.5,
+        "unit": "mg"
+      },
+      {
+        "id": "magnesium",
+        "amount": 34.6,
+        "unit": "mg"
+      },
+      {
+        "id": "vitaminB12",
+        "amount": 0,
+        "unit": "ug"
+      },
+      {
+        "id": "vitaminC",
+        "amount": 15.8,
+        "unit": "mg"
+      },
+      {
+        "id": "vitaminA",
+        "amount": 0,
+        "unit": "IU"
+      },
+      {
+        "id": "vitaminB6",
+        "amount": 0.2,
+        "unit": "mg"
+      },
+      {
+        "id": "vitaminD",
+        "amount": 0,
+        "unit": "mg"
+      },
+      {
+        "id": "vitaminB12Added",
+        "amount": 0,
+        "unit": "ug"
+      },
+      {
+        "id": "fiber",
+        "amount": 2.7,
+        "unit": "g"
+      },
+      {
+        "id": "sodium",
+        "amount": 392.7,
+        "unit": "mg"
+      },
+      {
+        "id": "monounsaturatedFat",
+        "amount": 1.3,
+        "unit": "g"
+      },
+      {
+        "id": "cholesterol",
+        "amount": 12.4,
+        "unit": "mg"
+      },
+      {
+        "id": "saturatedFat",
+        "amount": 3.2,
+        "unit": "g"
+      },
+      {
+        "id": "protein",
+        "amount": 2,
+        "unit": "g"
+      },
+      {
+        "id": "fat",
+        "amount": 5.3,
+        "unit": "g"
+      },
+      {
+        "id": "polyunsaturatedFat",
+        "amount": 0.3,
+        "unit": "g"
+      },
+      {
+        "id": "calcium",
+        "amount": 84,
+        "unit": "mg"
+      },
+      {
+        "id": "calories",
+        "amount": 76,
+        "unit": "kcal"
+      },
+      {
+        "id": "potassium",
+        "amount": 259.4,
+        "unit": "mg"
+      },
+      {
+        "id": "vitaminE",
+        "amount": 0.7,
+        "unit": "mg"
+      },
+      {
+        "id": "sugar",
+        "amount": 0,
+        "unit": "g"
+      },
+      {
+        "id": "transFat",
+        "amount": 0,
+        "unit": "g"
+      },
+      {
+        "id": "sugarAlcohol",
+        "amount": 0,
+        "unit": "g"
+      },
+      {
+        "id": "iron",
+        "amount": 0.7,
+        "unit": "mg"
+      },
+      {
+        "id": "sugarAdded",
+        "amount": 0,
+        "unit": "g"
+      },
+      {
+        "id": "alcohol",
+        "amount": 0,
+        "unit": "g"
+      },
+      {
+        "id": "carbs",
+        "amount": 7.4,
+        "unit": "g"
+      },
+      {
+        "id": "vitaminEAdded",
+        "amount": 0,
+        "unit": "mg"
+      }
+    ]
+  }
+]

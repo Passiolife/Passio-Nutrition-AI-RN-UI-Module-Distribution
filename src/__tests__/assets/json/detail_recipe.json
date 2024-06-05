@@ -1,0 +1,55 @@
+{
+  "uuid": "123-5225-dcds-4555",
+  "name": "Scrambled Eggs",
+  "totalServings": 10,
+  "ingredients": [
+    {
+      "passioID": "MEA0505",
+      "name": "Scrambled Eggs",
+      "imageName": "MEA0505.jpg",
+      "entityType": "item",
+      "selectedUnit": "grams",
+      "selectedQuantity": "500",
+      "computedWeight": {
+        "value": 500,
+        "unit": "g"
+      },
+      "ingredientsDescription": null,
+      "barcode": null,
+      "servingSizes": [
+        {
+          "quantity": 100.0,
+          "unit": "g"
+        }
+      ],
+      "servingUnits": [
+        {
+          "unit": "g",
+          "mass": 1.0
+        }
+      ],
+      "nutrients": [
+        {
+          "id": "calories",
+          "amount": 1000,
+          "unit": "kcal"
+        },
+        {
+          "id": "carbs",
+          "amount": 200,
+          "unit": "g"
+        },
+        {
+          "id": "protein",
+          "amount": 150,
+          "unit": "g"
+        },
+        {
+          "id": "fat",
+          "amount": 75,
+          "unit": "g"
+        }
+      ]
+    }
+  ]
+}

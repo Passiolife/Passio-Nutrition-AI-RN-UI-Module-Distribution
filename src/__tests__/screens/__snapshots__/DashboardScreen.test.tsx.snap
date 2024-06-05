@@ -1,0 +1,947 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Dashboard Screen : checked if user has completed onBoarding and render screen 1`] = `
+<RCTSafeAreaView
+  style={
+    {
+      "backgroundColor": "#FFFFFF",
+      "flex": 1,
+    }
+  }
+>
+  <View>
+    <View
+      style={
+        {
+          "alignSelf": "center",
+          "backgroundColor": "#FFFFFF",
+          "borderRadius": 18,
+          "elevation": 15,
+          "height": "auto",
+          "justifyContent": "space-between",
+          "marginTop": 16,
+          "padding": 5,
+          "paddingVertical": 24,
+          "shadowColor": "black",
+          "shadowOffset": {
+            "height": 2,
+            "width": 0,
+          },
+          "shadowOpacity": 0.1,
+          "shadowRadius": 10,
+          "width": 716,
+        }
+      }
+      testID="testViewNutritionDataCard"
+    >
+      <View>
+        <Text
+          style={
+            {
+              "color": "#333333",
+              "fontSize": 16,
+              "fontWeight": "normal",
+              "paddingEnd": 250,
+              "paddingStart": 16,
+            }
+          }
+        >
+          Nutrition Tracker
+        </Text>
+        <Text
+          style={
+            {
+              "color": "#333333",
+              "fontSize": 13,
+              "fontWeight": "400",
+              "paddingStart": 16,
+              "paddingTop": 4,
+            }
+          }
+        >
+          Today's macronutrients & calories
+        </Text>
+      </View>
+      <View
+        style={
+          {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+            "marginHorizontal": 16,
+            "marginVertical": 24,
+          }
+        }
+      >
+        <View
+          style={
+            {
+              "alignItems": "center",
+            }
+          }
+        >
+          <View
+            style={
+              [
+                {
+                  "alignItems": "center",
+                  "justifyContent": "center",
+                },
+                {
+                  "height": 142.85714285714286,
+                  "width": 142.85714285714286,
+                },
+              ]
+            }
+          >
+            <View
+              style={
+                [
+                  {
+                    "position": "absolute",
+                  },
+                  {
+                    "borderBottomWidth": 3.5,
+                    "borderLeftWidth": 3.5,
+                    "borderRadius": 71.42857142857143,
+                    "borderRightWidth": 3.5,
+                    "borderTopWidth": 3.5,
+                    "height": 142.85714285714286,
+                    "width": 142.85714285714286,
+                  },
+                  {
+                    "borderColor": "#e4e4e4",
+                    "borderWidth": 3.5,
+                  },
+                ]
+              }
+            />
+            <View
+              style={
+                [
+                  {
+                    "borderBottomColor": "transparent",
+                    "borderLeftColor": "transparent",
+                    "position": "absolute",
+                  },
+                  {
+                    "transform": [
+                      {
+                        "rotateZ": "-135deg",
+                      },
+                    ],
+                  },
+                  {
+                    "borderBottomWidth": 3.5,
+                    "borderLeftWidth": 3.5,
+                    "borderRadius": 71.42857142857143,
+                    "borderRightWidth": 3.5,
+                    "borderTopWidth": 3.5,
+                    "height": 142.85714285714286,
+                    "width": 142.85714285714286,
+                  },
+                  {
+                    "borderRightColor": "#f2bc34",
+                    "borderTopColor": "#f2bc34",
+                  },
+                  {
+                    "borderRightWidth": 3.5,
+                    "borderTopWidth": 3.5,
+                  },
+                ]
+              }
+            />
+            <View
+              style={
+                [
+                  {
+                    "borderBottomColor": "transparent",
+                    "borderLeftColor": "transparent",
+                    "position": "absolute",
+                  },
+                  {
+                    "borderBottomWidth": 3.5,
+                    "borderLeftWidth": 3.5,
+                    "borderRadius": 71.42857142857143,
+                    "borderRightWidth": 3.5,
+                    "borderTopWidth": 3.5,
+                    "height": 142.85714285714286,
+                    "width": 142.85714285714286,
+                  },
+                  {
+                    "borderRightColor": "#e4e4e4",
+                    "borderTopColor": "#e4e4e4",
+                  },
+                  {
+                    "transform": [
+                      {
+                        "rotateZ": "-135deg",
+                      },
+                    ],
+                  },
+                ]
+              }
+            />
+            <View
+              style={
+                {
+                  "alignItems": "center",
+                  "justifyContent": "center",
+                }
+              }
+            >
+              <Text
+                style={
+                  {
+                    "color": "#333333",
+                    "fontSize": 13,
+                    "fontWeight": "600",
+                    "textAlign": "center",
+                  }
+                }
+              >
+                0
+              </Text>
+              <View
+                style={
+                  {
+                    "borderBottomColor": "#333333",
+                    "borderBottomWidth": 0.5,
+                    "width": 45,
+                  }
+                }
+              />
+              <Text
+                style={
+                  {
+                    "color": "#333333",
+                    "fontSize": 13,
+                    "fontWeight": "400",
+                    "paddingHorizontal": 8,
+                    "textAlign": "center",
+                  }
+                }
+              >
+                2100
+                 
+                cal
+              </Text>
+            </View>
+          </View>
+          <Text
+            style={
+              {
+                "color": "#333333",
+                "fontSize": 13,
+                "fontWeight": "400",
+                "marginTop": 5,
+                "textTransform": "capitalize",
+              }
+            }
+          >
+            Calories
+          </Text>
+        </View>
+        <View
+          style={
+            {
+              "alignItems": "center",
+            }
+          }
+        >
+          <View
+            style={
+              [
+                {
+                  "alignItems": "center",
+                  "justifyContent": "center",
+                },
+                {
+                  "height": 142.85714285714286,
+                  "width": 142.85714285714286,
+                },
+              ]
+            }
+          >
+            <View
+              style={
+                [
+                  {
+                    "position": "absolute",
+                  },
+                  {
+                    "borderBottomWidth": 3.5,
+                    "borderLeftWidth": 3.5,
+                    "borderRadius": 71.42857142857143,
+                    "borderRightWidth": 3.5,
+                    "borderTopWidth": 3.5,
+                    "height": 142.85714285714286,
+                    "width": 142.85714285714286,
+                  },
+                  {
+                    "borderColor": "#e4e4e4",
+                    "borderWidth": 3.5,
+                  },
+                ]
+              }
+            />
+            <View
+              style={
+                [
+                  {
+                    "borderBottomColor": "transparent",
+                    "borderLeftColor": "transparent",
+                    "position": "absolute",
+                  },
+                  {
+                    "transform": [
+                      {
+                        "rotateZ": "-135deg",
+                      },
+                    ],
+                  },
+                  {
+                    "borderBottomWidth": 3.5,
+                    "borderLeftWidth": 3.5,
+                    "borderRadius": 71.42857142857143,
+                    "borderRightWidth": 3.5,
+                    "borderTopWidth": 3.5,
+                    "height": 142.85714285714286,
+                    "width": 142.85714285714286,
+                  },
+                  {
+                    "borderRightColor": "#4b99ff",
+                    "borderTopColor": "#4b99ff",
+                  },
+                  {
+                    "borderRightWidth": 3.5,
+                    "borderTopWidth": 3.5,
+                  },
+                ]
+              }
+            />
+            <View
+              style={
+                [
+                  {
+                    "borderBottomColor": "transparent",
+                    "borderLeftColor": "transparent",
+                    "position": "absolute",
+                  },
+                  {
+                    "borderBottomWidth": 3.5,
+                    "borderLeftWidth": 3.5,
+                    "borderRadius": 71.42857142857143,
+                    "borderRightWidth": 3.5,
+                    "borderTopWidth": 3.5,
+                    "height": 142.85714285714286,
+                    "width": 142.85714285714286,
+                  },
+                  {
+                    "borderRightColor": "#e4e4e4",
+                    "borderTopColor": "#e4e4e4",
+                  },
+                  {
+                    "transform": [
+                      {
+                        "rotateZ": "-135deg",
+                      },
+                    ],
+                  },
+                ]
+              }
+            />
+            <View
+              style={
+                {
+                  "alignItems": "center",
+                  "justifyContent": "center",
+                }
+              }
+            >
+              <Text
+                style={
+                  {
+                    "color": "#333333",
+                    "fontSize": 13,
+                    "fontWeight": "600",
+                    "textAlign": "center",
+                  }
+                }
+              >
+                0
+              </Text>
+              <View
+                style={
+                  {
+                    "borderBottomColor": "#333333",
+                    "borderBottomWidth": 0.5,
+                    "width": 45,
+                  }
+                }
+              />
+              <Text
+                style={
+                  {
+                    "color": "#333333",
+                    "fontSize": 13,
+                    "fontWeight": "400",
+                    "paddingHorizontal": 8,
+                    "textAlign": "center",
+                  }
+                }
+              >
+                289
+                 
+                g
+              </Text>
+            </View>
+          </View>
+          <Text
+            style={
+              {
+                "color": "#333333",
+                "fontSize": 13,
+                "fontWeight": "400",
+                "marginTop": 5,
+                "textTransform": "capitalize",
+              }
+            }
+          >
+            Carbs
+          </Text>
+        </View>
+        <View
+          style={
+            {
+              "alignItems": "center",
+            }
+          }
+        >
+          <View
+            style={
+              [
+                {
+                  "alignItems": "center",
+                  "justifyContent": "center",
+                },
+                {
+                  "height": 142.85714285714286,
+                  "width": 142.85714285714286,
+                },
+              ]
+            }
+          >
+            <View
+              style={
+                [
+                  {
+                    "position": "absolute",
+                  },
+                  {
+                    "borderBottomWidth": 3.5,
+                    "borderLeftWidth": 3.5,
+                    "borderRadius": 71.42857142857143,
+                    "borderRightWidth": 3.5,
+                    "borderTopWidth": 3.5,
+                    "height": 142.85714285714286,
+                    "width": 142.85714285714286,
+                  },
+                  {
+                    "borderColor": "#e4e4e4",
+                    "borderWidth": 3.5,
+                  },
+                ]
+              }
+            />
+            <View
+              style={
+                [
+                  {
+                    "borderBottomColor": "transparent",
+                    "borderLeftColor": "transparent",
+                    "position": "absolute",
+                  },
+                  {
+                    "transform": [
+                      {
+                        "rotateZ": "-135deg",
+                      },
+                    ],
+                  },
+                  {
+                    "borderBottomWidth": 3.5,
+                    "borderLeftWidth": 3.5,
+                    "borderRadius": 71.42857142857143,
+                    "borderRightWidth": 3.5,
+                    "borderTopWidth": 3.5,
+                    "height": 142.85714285714286,
+                    "width": 142.85714285714286,
+                  },
+                  {
+                    "borderRightColor": "#57d795",
+                    "borderTopColor": "#57d795",
+                  },
+                  {
+                    "borderRightWidth": 3.5,
+                    "borderTopWidth": 3.5,
+                  },
+                ]
+              }
+            />
+            <View
+              style={
+                [
+                  {
+                    "borderBottomColor": "transparent",
+                    "borderLeftColor": "transparent",
+                    "position": "absolute",
+                  },
+                  {
+                    "borderBottomWidth": 3.5,
+                    "borderLeftWidth": 3.5,
+                    "borderRadius": 71.42857142857143,
+                    "borderRightWidth": 3.5,
+                    "borderTopWidth": 3.5,
+                    "height": 142.85714285714286,
+                    "width": 142.85714285714286,
+                  },
+                  {
+                    "borderRightColor": "#e4e4e4",
+                    "borderTopColor": "#e4e4e4",
+                  },
+                  {
+                    "transform": [
+                      {
+                        "rotateZ": "-135deg",
+                      },
+                    ],
+                  },
+                ]
+              }
+            />
+            <View
+              style={
+                {
+                  "alignItems": "center",
+                  "justifyContent": "center",
+                }
+              }
+            >
+              <Text
+                style={
+                  {
+                    "color": "#333333",
+                    "fontSize": 13,
+                    "fontWeight": "600",
+                    "textAlign": "center",
+                  }
+                }
+              >
+                0
+              </Text>
+              <View
+                style={
+                  {
+                    "borderBottomColor": "#333333",
+                    "borderBottomWidth": 0.5,
+                    "width": 45,
+                  }
+                }
+              />
+              <Text
+                style={
+                  {
+                    "color": "#333333",
+                    "fontSize": 13,
+                    "fontWeight": "400",
+                    "paddingHorizontal": 8,
+                    "textAlign": "center",
+                  }
+                }
+              >
+                105
+                 
+                g
+              </Text>
+            </View>
+          </View>
+          <Text
+            style={
+              {
+                "color": "#333333",
+                "fontSize": 13,
+                "fontWeight": "400",
+                "marginTop": 5,
+                "textTransform": "capitalize",
+              }
+            }
+          >
+            Protein
+          </Text>
+        </View>
+        <View
+          style={
+            {
+              "alignItems": "center",
+            }
+          }
+        >
+          <View
+            style={
+              [
+                {
+                  "alignItems": "center",
+                  "justifyContent": "center",
+                },
+                {
+                  "height": 142.85714285714286,
+                  "width": 142.85714285714286,
+                },
+              ]
+            }
+          >
+            <View
+              style={
+                [
+                  {
+                    "position": "absolute",
+                  },
+                  {
+                    "borderBottomWidth": 3.5,
+                    "borderLeftWidth": 3.5,
+                    "borderRadius": 71.42857142857143,
+                    "borderRightWidth": 3.5,
+                    "borderTopWidth": 3.5,
+                    "height": 142.85714285714286,
+                    "width": 142.85714285714286,
+                  },
+                  {
+                    "borderColor": "#e4e4e4",
+                    "borderWidth": 3.5,
+                  },
+                ]
+              }
+            />
+            <View
+              style={
+                [
+                  {
+                    "borderBottomColor": "transparent",
+                    "borderLeftColor": "transparent",
+                    "position": "absolute",
+                  },
+                  {
+                    "transform": [
+                      {
+                        "rotateZ": "-135deg",
+                      },
+                    ],
+                  },
+                  {
+                    "borderBottomWidth": 3.5,
+                    "borderLeftWidth": 3.5,
+                    "borderRadius": 71.42857142857143,
+                    "borderRightWidth": 3.5,
+                    "borderTopWidth": 3.5,
+                    "height": 142.85714285714286,
+                    "width": 142.85714285714286,
+                  },
+                  {
+                    "borderRightColor": "#ee4b62",
+                    "borderTopColor": "#ee4b62",
+                  },
+                  {
+                    "borderRightWidth": 3.5,
+                    "borderTopWidth": 3.5,
+                  },
+                ]
+              }
+            />
+            <View
+              style={
+                [
+                  {
+                    "borderBottomColor": "transparent",
+                    "borderLeftColor": "transparent",
+                    "position": "absolute",
+                  },
+                  {
+                    "borderBottomWidth": 3.5,
+                    "borderLeftWidth": 3.5,
+                    "borderRadius": 71.42857142857143,
+                    "borderRightWidth": 3.5,
+                    "borderTopWidth": 3.5,
+                    "height": 142.85714285714286,
+                    "width": 142.85714285714286,
+                  },
+                  {
+                    "borderRightColor": "#e4e4e4",
+                    "borderTopColor": "#e4e4e4",
+                  },
+                  {
+                    "transform": [
+                      {
+                        "rotateZ": "-135deg",
+                      },
+                    ],
+                  },
+                ]
+              }
+            />
+            <View
+              style={
+                {
+                  "alignItems": "center",
+                  "justifyContent": "center",
+                }
+              }
+            >
+              <Text
+                style={
+                  {
+                    "color": "#333333",
+                    "fontSize": 13,
+                    "fontWeight": "600",
+                    "textAlign": "center",
+                  }
+                }
+              >
+                0
+              </Text>
+              <View
+                style={
+                  {
+                    "borderBottomColor": "#333333",
+                    "borderBottomWidth": 0.5,
+                    "width": 45,
+                  }
+                }
+              />
+              <Text
+                style={
+                  {
+                    "color": "#333333",
+                    "fontSize": 13,
+                    "fontWeight": "400",
+                    "paddingHorizontal": 8,
+                    "textAlign": "center",
+                  }
+                }
+              >
+                58
+                 
+                g
+              </Text>
+            </View>
+          </View>
+          <Text
+            style={
+              {
+                "color": "#333333",
+                "fontSize": 13,
+                "fontWeight": "400",
+                "marginTop": 5,
+                "textTransform": "capitalize",
+              }
+            }
+          >
+            Fat
+          </Text>
+        </View>
+      </View>
+      <View
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          {
+            "opacity": 1,
+          }
+        }
+      >
+        <Text
+          style={
+            [
+              {
+                "alignSelf": "center",
+                "borderRadius": 16,
+                "borderWidth": 1,
+                "color": "#000000",
+                "fontSize": 15,
+                "fontWeight": "500",
+                "marginHorizontal": 8,
+                "paddingHorizontal": 16,
+                "paddingVertical": 6,
+                "textAlign": "center",
+              },
+              {
+                "borderColor": "#123456",
+                "color": "#123456",
+              },
+            ]
+          }
+        >
+          Track Nutrition
+        </Text>
+      </View>
+    </View>
+  </View>
+</RCTSafeAreaView>
+`;
+
+exports[`Dashboard Screen : checked if user has not completed onBoarding and render screen  1`] = `
+<RCTSafeAreaView
+  style={
+    {
+      "backgroundColor": "#FFFFFF",
+      "flex": 1,
+    }
+  }
+>
+  <View>
+    <View
+      accessibilityIgnoresInvertColors={true}
+      style={
+        {
+          "alignSelf": "center",
+          "backgroundColor": "#8F0C5C",
+          "borderRadius": 16,
+          "elevation": 5,
+          "justifyContent": "space-between",
+          "marginHorizontal": 8,
+          "marginTop": 16,
+          "overflow": "hidden",
+          "padding": 5,
+          "paddingVertical": 24,
+          "shadowColor": "black",
+          "shadowOffset": {
+            "height": 2,
+            "width": 0,
+          },
+          "shadowOpacity": 0.1,
+          "shadowRadius": 10,
+        }
+      }
+    >
+      <Image
+        resizeMode="cover"
+        source={
+          {
+            "testUri": "../../../src/assets/bg_on_boarding_card.png",
+          }
+        }
+        style={
+          [
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+            },
+            {
+              "height": undefined,
+              "width": undefined,
+            },
+            undefined,
+          ]
+        }
+        testID="testViewOnBoardingCard"
+      />
+      <Text
+        style={
+          {
+            "color": "#FFFFFF",
+            "fontSize": 20,
+            "fontWeight": "normal",
+            "minHeight": 100,
+            "paddingEnd": 250,
+            "paddingStart": 16,
+          }
+        }
+      >
+        Track Your Nutrition and Meet Your Goals
+      </Text>
+      <View
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          {
+            "opacity": 1,
+          }
+        }
+      >
+        <Text
+          style={
+            {
+              "borderColor": "#FFFFFF",
+              "borderRadius": 16,
+              "borderWidth": 1.5,
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "fontWeight": "600",
+              "marginHorizontal": 16,
+              "marginTop": 24,
+              "paddingVertical": 8,
+              "textAlign": "center",
+              "width": 150,
+            }
+          }
+        >
+          Start Tracking
+        </Text>
+      </View>
+    </View>
+  </View>
+</RCTSafeAreaView>
+`;

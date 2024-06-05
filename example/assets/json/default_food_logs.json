@@ -1,0 +1,288 @@
+[
+  {
+    "name": "Scrambled Eggs",
+    "uuid": "49fd1bae-c868-40f3-1254-1442401",
+    "eventTimestamp": "2021-07-09T11:20:37.000Z",
+    "meal": "breakfast",
+    "imageName": "EGGS00012.jpeg",
+    "passioIDEntityType": "item",
+    "foodItems": [
+      {
+        "passioID": "MEA0505",
+        "name": "Scrambled Eggs",
+        "imageName": "MEA0505.jpg",
+        "entityType": "item",
+        "selectedUnit": "grams",
+        "selectedQuantity": "500",
+        "computedWeight": {
+          "value": 500,
+          "unit": "g"
+        },
+        "ingredientsDescription": null,
+        "barcode": null,
+        "servingSizes": [
+          {
+            "quantity": 100.0,
+            "unit": "g"
+          }
+        ],
+        "servingUnits": [
+          {
+            "unit": "g",
+            "mass": 1.0
+          }
+        ],
+        "nutrients": [
+          {
+            "id": "calories",
+            "amount": 1000,
+            "unit": "kcal"
+          },
+          {
+            "id": "carbs",
+            "amount": 200,
+            "unit": "g"
+          },
+          {
+            "id": "protein",
+            "amount": 150,
+            "unit": "g"
+          },
+          {
+            "id": "fat",
+            "amount": 75,
+            "unit": "g"
+          }
+        ]
+      }
+    ]
+  },{
+    "name": "Calzones",
+    "uuid": "49fd1bae-c868-40f3-1254-0f71f0915151",
+  "eventTimestamp": "2021-07-09T11:20:37.000Z",
+    "meal": "lunch",
+    "imageName": "EGGS00012.jpeg",
+    "passioIDEntityType": "item",
+    "foodItems": [
+      {
+        "passioID": "MEA0505",
+        "name": "Scrambled Eggs",
+        "imageName": "MEA0505.jpg",
+        "entityType": "item",
+        "selectedUnit": "grams",
+        "selectedQuantity": "500",
+        "computedWeight": {
+          "value": 500,
+          "unit": "g"
+        },
+        "ingredientsDescription": null,
+        "barcode": null,
+        "servingSizes": [
+          {
+            "quantity": 100.0,
+            "unit": "g"
+          }
+        ],
+        "servingUnits": [
+          {
+            "unit": "g",
+            "mass": 1.0
+          }
+        ],
+        "nutrients": [
+          {
+            "id": "calories",
+            "amount": 1000,
+            "unit": "kcal"
+          },
+          {
+            "id": "carbs",
+            "amount": 200,
+            "unit": "g"
+          },
+          {
+            "id": "protein",
+            "amount": 150,
+            "unit": "g"
+          },
+          {
+            "id": "fat",
+            "amount": 75,
+            "unit": "g"
+          }
+        ]
+      }
+    ]
+  },{
+    "name": "Seeds, nuts, grains and legumes",
+    "uuid": "49fd1bae-c868-40f3-1254-0f71f5151005",
+  "eventTimestamp": "2021-07-10T11:20:37.000Z",
+    "meal": "breakfast",
+    "imageName": "EGGS00012.jpeg",
+    "passioIDEntityType": "item",
+    "foodItems": [
+      {
+        "passioID": "MEA0505",
+        "name": "Scrambled Eggs",
+        "imageName": "MEA0505.jpg",
+        "entityType": "item",
+        "selectedUnit": "grams",
+        "selectedQuantity": "500",
+        "computedWeight": {
+          "value": 500,
+          "unit": "g"
+        },
+        "ingredientsDescription": null,
+        "barcode": null,
+        "servingSizes": [
+          {
+            "quantity": 100.0,
+            "unit": "g"
+          }
+        ],
+        "servingUnits": [
+          {
+            "unit": "g",
+            "mass": 1.0
+          }
+        ],
+        "nutrients": [
+          {
+            "id": "calories",
+            "amount": 1000,
+            "unit": "kcal"
+          },
+          {
+            "id": "carbs",
+            "amount": 200,
+            "unit": "g"
+          },
+          {
+            "id": "protein",
+            "amount": 150,
+            "unit": "g"
+          },
+          {
+            "id": "fat",
+            "amount": 75,
+            "unit": "g"
+          }
+        ]
+      }
+    ]
+  },{
+    "name": "Pastries",
+    "uuid": "49fd1bae-c868-40f3-1254-0f715150",
+  "eventTimestamp": "2021-07-11T11:20:37.000Z",
+    "meal": "snack",
+    "imageName": "EGGS00012.jpeg",
+    "passioIDEntityType": "item",
+    "foodItems": [
+      {
+        "passioID": "MEA0505",
+        "name": "Scrambled Eggs",
+        "imageName": "MEA0505.jpg",
+        "entityType": "item",
+        "selectedUnit": "grams",
+        "selectedQuantity": "500",
+        "computedWeight": {
+          "value": 500,
+          "unit": "g"
+        },
+        "ingredientsDescription": null,
+        "barcode": null,
+        "servingSizes": [
+          {
+            "quantity": 100.0,
+            "unit": "g"
+          }
+        ],
+        "servingUnits": [
+          {
+            "unit": "g",
+            "mass": 1.0
+          }
+        ],
+        "nutrients": [
+          {
+            "id": "calories",
+            "amount": 1000,
+            "unit": "kcal"
+          },
+          {
+            "id": "carbs",
+            "amount": 200,
+            "unit": "g"
+          },
+          {
+            "id": "protein",
+            "amount": 150,
+            "unit": "g"
+          },
+          {
+            "id": "fat",
+            "amount": 75,
+            "unit": "g"
+          }
+        ]
+      }
+    ]
+  },{
+    "name": "French bread",
+    "uuid": "49fd1bae-c868-40f3-1254-0f465150",
+  "eventTimestamp": "2021-07-12T11:20:37.000Z",
+    "meal": "dinner",
+    "imageName": "EGGS00012.jpeg",
+    "passioIDEntityType": "item",
+    "foodItems": [
+      {
+        "passioID": "MEA0505",
+        "name": "Scrambled Eggs",
+        "imageName": "MEA0505.jpg",
+        "entityType": "item",
+        "selectedUnit": "grams",
+        "selectedQuantity": "500",
+        "computedWeight": {
+          "value": 500,
+          "unit": "g"
+        },
+        "ingredientsDescription": null,
+        "barcode": null,
+        "servingSizes": [
+          {
+            "quantity": 100.0,
+            "unit": "g"
+          }
+        ],
+        "servingUnits": [
+          {
+            "unit": "g",
+            "mass": 1.0
+          }
+        ],
+        "nutrients": [
+          {
+            "id": "calories",
+            "amount": 1000,
+            "unit": "kcal"
+          },
+          {
+            "id": "carbs",
+            "amount": 200,
+            "unit": "g"
+          },
+          {
+            "id": "protein",
+            "amount": 150,
+            "unit": "g"
+          },
+          {
+            "id": "fat",
+            "amount": 75,
+            "unit": "g"
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,71 @@
+{
+  "name": "@passiolife/nutrition-ai-ui-ux-example",
+  "description": "Example app for @passiolife/nutrition-ai-ui-ux",
+  "version": "0.0.1",
+  "private": true,
+  "license": "UNLICENSED",
+  "scripts": {
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "bundle-ios": "react-native bundle --dev false --entry-file index.js --bundle-output ios/main.jsbundle --platform ios",
+    "start": "react-native start",
+    "test": "jest",
+    "bundle-android": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/",
+    "release-apk": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/build/intermediates/res/merged/release/ && rm -rf android/app/src/main/res/drawable-* && rm -rf android/app/src/main/res/raw/*",
+    "reinstall": "cd ..; yarn prepare && cd example; rm -rf node_modules/ && rm -rf yarn.lock && yarn && cd ios; pod install; cd .."
+  },
+  "dependencies": {
+    "@gorhom/bottom-sheet": "^4.6.1",
+    "@notifee/react-native": "^7.8.2",
+    "@passiolife/nutritionai-react-native-sdk-v3": "3.0.4",
+    "@react-native-async-storage/async-storage": "^1.21.0",
+    "@react-native-community/datetimepicker": "^7.6.3",
+    "@react-native-community/slider": "^4.5.0",
+    "@react-native-picker/picker": "^2.6.1",
+    "@react-native-voice/voice": "^3.2.4",
+    "@react-navigation/bottom-tabs": "^6.5.20",
+    "@react-navigation/native": "^6.1.17",
+    "@react-navigation/native-stack": "^6.9.26",
+    "@react-navigation/stack": "^6.3.29",
+    "jsc-android": "^250231.0.0",
+    "lottie-ios": "4.3.4",
+    "lottie-react-native": "6.4.1",
+    "luxon": "^3.4.4",
+    "react": "18.2.0",
+    "react-native": "0.73.2",
+    "react-native-blob-util": "^0.19.6",
+    "react-native-dotenv": "^3.4.11",
+    "react-native-gesture-handler": "^2.16.0",
+    "react-native-linear-gradient": "^2.8.3",
+    "react-native-modal-datetime-picker": "^17.1.0",
+    "react-native-pdf": "^6.7.4",
+    "react-native-reanimated": "^3.6.1",
+    "react-native-safe-area-context": "^4.8.2",
+    "react-native-screens": "^3.30.1",
+    "react-native-sqlite-storage": "^6.0.1",
+    "react-native-svg": "^15.1.0",
+    "victory-native": "^37.0.2"
+  },
+  "resolutions": {
+    "@types/react": "^18.2.0",
+    "react-native": "0.73.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.0",
+    "@babel/preset-env": "^7.20.0",
+    "@babel/runtime": "^7.20.0",
+    "@react-native/babel-preset": "0.73.19",
+    "@react-native/eslint-config": "0.73.2",
+    "@react-native/metro-config": "0.73.3",
+    "@react-native/typescript-config": "0.74.0",
+    "@types/luxon": "^3.4.0",
+    "@types/react": "^18.2.47",
+    "@types/react-native-sqlite-storage": "^6.0.5",
+    "babel-plugin-module-resolver": "^5.0.0",
+    "prettier": "3.1.1",
+    "typescript": "5.0.4"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

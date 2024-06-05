@@ -1,0 +1,2737 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Edit Food Log Screen Renders correctly 1`] = `
+<View
+  style={
+    {
+      "flex": 1,
+    }
+  }
+>
+  <View
+    accessibilityIgnoresInvertColors={true}
+    style={
+      {
+        "height": "auto",
+      }
+    }
+  >
+    <Image
+      source={
+        {
+          "testUri": "../../../src/assets/bg_header_4x.png",
+        }
+      }
+      style={
+        [
+          {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          },
+          {
+            "height": "auto",
+            "width": undefined,
+          },
+          undefined,
+        ]
+      }
+    />
+    <View
+      style={
+        {
+          "height": 20,
+        }
+      }
+    />
+    <View
+      body={
+        <Text
+          style={
+            {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "lineHeight": 19,
+              "textTransform": "capitalize",
+            }
+          }
+        >
+          orange tomatoes
+        </Text>
+      }
+      leftSide={
+        <TouchableOpacity
+          onPress={[Function]}
+        >
+          <Image
+            source={
+              {
+                "testUri": "../../../src/assets/icons/back.png",
+              }
+            }
+            style={
+              {
+                "height": 24,
+                "width": 24,
+              }
+            }
+          />
+        </TouchableOpacity>
+      }
+      style={
+        [
+          {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "height": 44,
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          {
+            "alignItems": "center",
+            "height": "100%",
+            "justifyContent": "center",
+            "width": "15%",
+          }
+        }
+      >
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            {
+              "opacity": 1,
+            }
+          }
+        >
+          <Image
+            source={
+              {
+                "testUri": "../../../src/assets/icons/back.png",
+              }
+            }
+            style={
+              {
+                "height": 24,
+                "width": 24,
+              }
+            }
+          />
+        </View>
+      </View>
+      <View
+        style={
+          {
+            "alignItems": "center",
+            "height": "100%",
+            "justifyContent": "center",
+            "width": "70%",
+          }
+        }
+      >
+        <Text
+          style={
+            {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "lineHeight": 19,
+              "textTransform": "capitalize",
+            }
+          }
+        >
+          orange tomatoes
+        </Text>
+      </View>
+      <View
+        style={
+          {
+            "alignItems": "center",
+            "height": "100%",
+            "justifyContent": "center",
+            "width": "15%",
+          }
+        }
+      />
+    </View>
+  </View>
+  <RCTScrollView>
+    <View>
+      <View
+        style={
+          {
+            "paddingHorizontal": 20,
+          }
+        }
+      >
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            {
+              "opacity": 1,
+            }
+          }
+        >
+          <View
+            style={
+              [
+                {
+                  "backgroundColor": "#FFFFFF",
+                  "borderRadius": 16,
+                  "elevation": 4,
+                  "shadowColor": "#00000029",
+                  "shadowOffset": {
+                    "height": 2.5,
+                    "width": 1.5,
+                  },
+                  "shadowOpacity": 1,
+                  "shadowRadius": 2.85,
+                },
+                {
+                  "marginTop": 12,
+                  "padding": 10,
+                  "paddingBottom": 20,
+                },
+              ]
+            }
+          >
+            <View
+              style={
+                {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                }
+              }
+            >
+              <View
+                style={
+                  {
+                    "alignSelf": "center",
+                    "borderRadius": 24,
+                    "marginLeft": 4,
+                    "overflow": "hidden",
+                    "width": 50,
+                  }
+                }
+              >
+                <Text>
+                  mockPassioIcon
+                </Text>
+              </View>
+              <View
+                style={
+                  {
+                    "flex": 1,
+                    "marginLeft": 10,
+                  }
+                }
+              >
+                <Text
+                  ellipsizeMode="tail"
+                  numberOfLines={2}
+                  style={
+                    {
+                      "color": "#286CE2",
+                      "fontSize": 20,
+                      "fontWeight": "400",
+                      "lineHeight": 24,
+                      "textTransform": "capitalize",
+                    }
+                  }
+                >
+                  orange tomatoes
+                </Text>
+                <Text
+                  style={
+                    {
+                      "color": "#333333",
+                      "fontSize": 13,
+                      "fontWeight": "400",
+                      "lineHeight": 16,
+                      "marginTop": 2,
+                      "textTransform": "capitalize",
+                    }
+                  }
+                >
+                  1 serving (100g)
+                </Text>
+              </View>
+            </View>
+            <View
+              style={
+                {
+                  "flexDirection": "row",
+                  "justifyContent": "space-between",
+                  "marginTop": 15,
+                }
+              }
+            >
+              <View
+                style={
+                  {
+                    "alignItems": "center",
+                  }
+                }
+              >
+                <Text
+                  style={
+                    {
+                      "color": "#333333",
+                      "fontSize": 13,
+                      "fontWeight": "600",
+                      "lineHeight": 16,
+                      "textTransform": "capitalize",
+                    }
+                  }
+                >
+                  Calories
+                </Text>
+                <Text
+                  style={
+                    {
+                      "color": "#333333",
+                      "fontSize": 24,
+                      "fontWeight": "300",
+                      "lineHeight": 29,
+                    }
+                  }
+                  testID="testNutrientCalories"
+                >
+                  150
+                </Text>
+              </View>
+              <View
+                style={
+                  {
+                    "alignItems": "center",
+                  }
+                }
+              >
+                <Text
+                  style={
+                    {
+                      "color": "#333333",
+                      "fontSize": 13,
+                      "fontWeight": "600",
+                      "lineHeight": 16,
+                      "textTransform": "capitalize",
+                    }
+                  }
+                >
+                  Carbs
+                </Text>
+                <Text
+                  style={
+                    {
+                      "color": "#333333",
+                      "fontSize": 24,
+                      "fontWeight": "300",
+                      "lineHeight": 29,
+                    }
+                  }
+                  testID="testNutrientCarbs"
+                >
+                  35
+                   g
+                </Text>
+              </View>
+              <View
+                style={
+                  {
+                    "alignItems": "center",
+                  }
+                }
+              >
+                <Text
+                  style={
+                    {
+                      "color": "#333333",
+                      "fontSize": 13,
+                      "fontWeight": "600",
+                      "lineHeight": 16,
+                      "textTransform": "capitalize",
+                    }
+                  }
+                >
+                  Protein
+                </Text>
+                <Text
+                  style={
+                    {
+                      "color": "#333333",
+                      "fontSize": 24,
+                      "fontWeight": "300",
+                      "lineHeight": 29,
+                    }
+                  }
+                  testID="testNutrientProtein"
+                >
+                  33
+                   g
+                </Text>
+              </View>
+              <View
+                style={
+                  {
+                    "alignItems": "center",
+                  }
+                }
+              >
+                <Text
+                  style={
+                    {
+                      "color": "#333333",
+                      "fontSize": 13,
+                      "fontWeight": "600",
+                      "lineHeight": 16,
+                      "textTransform": "capitalize",
+                    }
+                  }
+                >
+                  Fat
+                </Text>
+                <Text
+                  style={
+                    {
+                      "color": "#333333",
+                      "fontSize": 24,
+                      "fontWeight": "300",
+                      "lineHeight": 29,
+                    }
+                  }
+                  testID="testNutrientFat"
+                >
+                  12
+                   g
+                </Text>
+              </View>
+            </View>
+          </View>
+        </View>
+        <View
+          style={
+            [
+              {
+                "backgroundColor": "#FFFFFF",
+                "borderRadius": 16,
+                "elevation": 4,
+                "shadowColor": "#00000029",
+                "shadowOffset": {
+                  "height": 2.5,
+                  "width": 1.5,
+                },
+                "shadowOpacity": 1,
+                "shadowRadius": 2.85,
+              },
+              {
+                "flexDirection": "column",
+                "marginTop": 8,
+                "paddingBottom": 16,
+                "paddingTop": 8,
+              },
+            ]
+          }
+        >
+          <View
+            style={
+              {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "justifyContent": "space-between",
+              }
+            }
+          >
+            <Text
+              style={
+                {
+                  "color": "#333333",
+                  "fontSize": 13,
+                  "fontWeight": "600",
+                  "lineHeight": 16,
+                  "paddingHorizontal": 16,
+                }
+              }
+            >
+              Edit Amount
+            </Text>
+          </View>
+          <View
+            style={
+              {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "flexWrap": "nowrap",
+                "justifyContent": "flex-start",
+                "marginHorizontal": 16,
+                "marginTop": 10,
+              }
+            }
+          >
+            <View>
+              <TextInput
+                keyboardType="numeric"
+                onChangeText={[Function]}
+                style={
+                  [
+                    {
+                      "backgroundColor": "#EFF0F6",
+                      "borderColor": "#D9DBE9",
+                      "borderRadius": 10,
+                      "borderWidth": 1,
+                      "height": 40,
+                      "paddingHorizontal": 8,
+                    },
+                    {},
+                    {
+                      "minWidth": 50,
+                      "textAlign": "right",
+                    },
+                  ]
+                }
+                testID="testTextInputOfSelectedQuantity"
+                value="1"
+              />
+            </View>
+            <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={false}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                {
+                  "backgroundColor": "#286CE2",
+                  "borderRadius": 25,
+                  "justifyContent": "center",
+                  "marginStart": 16,
+                  "maxWidth": 150,
+                  "opacity": 1,
+                  "paddingHorizontal": 16,
+                  "paddingVertical": 8,
+                }
+              }
+            >
+              <Text
+                style={
+                  {
+                    "color": "#FFFFFF",
+                    "fontSize": 14,
+                    "textTransform": "capitalize",
+                  }
+                }
+              >
+                serving
+              </Text>
+            </View>
+            <Text
+              style={
+                {
+                  "color": "#333333",
+                  "fontSize": 15,
+                  "marginStart": 16,
+                }
+              }
+            >
+              (100 g )
+            </Text>
+          </View>
+          <View
+            style={
+              {
+                "marginHorizontal": 16,
+                "marginTop": 10,
+              }
+            }
+          >
+            <RNCSlider
+              disabled={false}
+              inverted={false}
+              lowerLimit={-9007199254740991}
+              maximumTrackTintColor="#CCCCCC"
+              maximumValue={5}
+              minimumTrackTintColor="#286CE2"
+              minimumValue={0}
+              onChange={[Function]}
+              onRNCSliderAccessibilityAction={null}
+              onRNCSliderSlidingComplete={null}
+              onRNCSliderSlidingStart={null}
+              onRNCSliderValueChange={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              step={0.5}
+              style={
+                {
+                  "height": 40,
+                }
+              }
+              tapToSeek={false}
+              thumbTintColor="#286CE2"
+              upperLimit={9007199254740991}
+              value={1}
+            />
+          </View>
+          <View
+            style={
+              {
+                "marginTop": 10,
+              }
+            }
+          >
+            <RCTScrollView
+              contentContainerStyle={
+                {
+                  "flexDirection": "row",
+                }
+              }
+              data={
+                [
+                  {
+                    "quantity": 1,
+                    "unit": "serving",
+                  },
+                ]
+              }
+              getItem={[Function]}
+              getItemCount={[Function]}
+              horizontal={true}
+              keyExtractor={[Function]}
+              onContentSizeChange={[Function]}
+              onLayout={[Function]}
+              onMomentumScrollBegin={[Function]}
+              onMomentumScrollEnd={[Function]}
+              onScroll={[Function]}
+              onScrollBeginDrag={[Function]}
+              onScrollEndDrag={[Function]}
+              removeClippedSubviews={false}
+              renderItem={[Function]}
+              scrollEventThrottle={0.0001}
+              showsHorizontalScrollIndicator={false}
+              stickyHeaderIndices={[]}
+              viewabilityConfigCallbackPairs={[]}
+            >
+              <View>
+                <View
+                  onFocusCapture={[Function]}
+                  onLayout={[Function]}
+                  style={
+                    [
+                      {
+                        "flexDirection": "row",
+                      },
+                      null,
+                    ]
+                  }
+                >
+                  <View
+                    style={
+                      [
+                        {
+                          "backgroundColor": "#FFFFFF",
+                          "borderRadius": 16,
+                          "elevation": 4,
+                          "shadowColor": "#00000029",
+                          "shadowOffset": {
+                            "height": 2.5,
+                            "width": 1.5,
+                          },
+                          "shadowOpacity": 1,
+                          "shadowRadius": 2.85,
+                        },
+                        [
+                          {
+                            "flexDirection": "column",
+                            "marginBottom": 8,
+                            "marginLeft": 8,
+                            "marginTop": 8,
+                          },
+                          {
+                            "backgroundColor": "#123456",
+                          },
+                        ],
+                      ]
+                    }
+                  >
+                    <View
+                      accessibilityState={
+                        {
+                          "busy": undefined,
+                          "checked": undefined,
+                          "disabled": undefined,
+                          "expanded": undefined,
+                          "selected": undefined,
+                        }
+                      }
+                      accessibilityValue={
+                        {
+                          "max": undefined,
+                          "min": undefined,
+                          "now": undefined,
+                          "text": undefined,
+                        }
+                      }
+                      accessible={true}
+                      collapsable={false}
+                      focusable={true}
+                      onClick={[Function]}
+                      onResponderGrant={[Function]}
+                      onResponderMove={[Function]}
+                      onResponderRelease={[Function]}
+                      onResponderTerminate={[Function]}
+                      onResponderTerminationRequest={[Function]}
+                      onStartShouldSetResponder={[Function]}
+                      style={
+                        {
+                          "opacity": 1,
+                          "overflow": "hidden",
+                        }
+                      }
+                    >
+                      <Text
+                        style={
+                          [
+                            {
+                              "fontSize": 14,
+                              "paddingHorizontal": 15,
+                              "paddingVertical": 7,
+                            },
+                            {
+                              "color": "#FFFFFF",
+                            },
+                          ]
+                        }
+                      >
+                        1 serving 
+                      </Text>
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </RCTScrollView>
+          </View>
+        </View>
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            {
+              "opacity": 1,
+            }
+          }
+        >
+          <View
+            style={
+              [
+                {
+                  "backgroundColor": "#FFFFFF",
+                  "borderRadius": 16,
+                  "elevation": 4,
+                  "shadowColor": "#00000029",
+                  "shadowOffset": {
+                    "height": 2.5,
+                    "width": 1.5,
+                  },
+                  "shadowOpacity": 1,
+                  "shadowRadius": 2.85,
+                },
+                {
+                  "flexDirection": "column",
+                  "marginTop": 8,
+                  "paddingBottom": 16,
+                  "paddingTop": 8,
+                },
+              ]
+            }
+          >
+            <Text
+              style={
+                {
+                  "color": "#333333",
+                  "fontSize": 13,
+                  "fontWeight": "600",
+                  "lineHeight": 16,
+                  "paddingHorizontal": 16,
+                }
+              }
+            >
+              Meal Time
+            </Text>
+            <View
+              style={
+                {
+                  "alignSelf": "center",
+                  "paddingHorizontal": 16,
+                  "paddingTop": 15,
+                }
+              }
+            >
+              <View
+                style={
+                  {
+                    "flexDirection": "row",
+                    "height": 30,
+                  }
+                }
+              >
+                <View
+                  accessibilityValue={
+                    {
+                      "max": undefined,
+                      "min": undefined,
+                      "now": undefined,
+                      "text": undefined,
+                    }
+                  }
+                  accessible={true}
+                  focusable={true}
+                  onClick={[Function]}
+                  onResponderGrant={[Function]}
+                  onResponderMove={[Function]}
+                  onResponderRelease={[Function]}
+                  onResponderTerminate={[Function]}
+                  onResponderTerminationRequest={[Function]}
+                  onStartShouldSetResponder={[Function]}
+                  style={
+                    [
+                      {
+                        "alignItems": "center",
+                        "backgroundColor": "#EEEEEE",
+                        "justifyContent": "center",
+                        "marginRight": 1,
+                        "width": 78,
+                      },
+                      {
+                        "borderBottomLeftRadius": 21,
+                        "borderTopLeftRadius": 21,
+                      },
+                      false,
+                      false,
+                    ]
+                  }
+                >
+                  <Text
+                    style={
+                      [
+                        {
+                          "color": "#333333",
+                          "fontSize": 13,
+                        },
+                        false,
+                      ]
+                    }
+                  >
+                    Breakfast
+                  </Text>
+                </View>
+                <View
+                  accessibilityValue={
+                    {
+                      "max": undefined,
+                      "min": undefined,
+                      "now": undefined,
+                      "text": undefined,
+                    }
+                  }
+                  accessible={true}
+                  focusable={true}
+                  onClick={[Function]}
+                  onResponderGrant={[Function]}
+                  onResponderMove={[Function]}
+                  onResponderRelease={[Function]}
+                  onResponderTerminate={[Function]}
+                  onResponderTerminationRequest={[Function]}
+                  onStartShouldSetResponder={[Function]}
+                  style={
+                    [
+                      {
+                        "alignItems": "center",
+                        "backgroundColor": "#EEEEEE",
+                        "justifyContent": "center",
+                        "marginRight": 1,
+                        "width": 78,
+                      },
+                      false,
+                      false,
+                      false,
+                    ]
+                  }
+                >
+                  <Text
+                    style={
+                      [
+                        {
+                          "color": "#333333",
+                          "fontSize": 13,
+                        },
+                        false,
+                      ]
+                    }
+                  >
+                    Lunch
+                  </Text>
+                </View>
+                <View
+                  accessibilityValue={
+                    {
+                      "max": undefined,
+                      "min": undefined,
+                      "now": undefined,
+                      "text": undefined,
+                    }
+                  }
+                  accessible={true}
+                  focusable={true}
+                  onClick={[Function]}
+                  onResponderGrant={[Function]}
+                  onResponderMove={[Function]}
+                  onResponderRelease={[Function]}
+                  onResponderTerminate={[Function]}
+                  onResponderTerminationRequest={[Function]}
+                  onStartShouldSetResponder={[Function]}
+                  style={
+                    [
+                      {
+                        "alignItems": "center",
+                        "backgroundColor": "#EEEEEE",
+                        "justifyContent": "center",
+                        "marginRight": 1,
+                        "width": 78,
+                      },
+                      false,
+                      false,
+                      {
+                        "backgroundColor": "#286CE2",
+                      },
+                    ]
+                  }
+                >
+                  <Text
+                    style={
+                      [
+                        {
+                          "color": "#333333",
+                          "fontSize": 13,
+                        },
+                        {
+                          "color": "#FFFFFF",
+                        },
+                      ]
+                    }
+                  >
+                    Dinner
+                  </Text>
+                </View>
+                <View
+                  accessibilityValue={
+                    {
+                      "max": undefined,
+                      "min": undefined,
+                      "now": undefined,
+                      "text": undefined,
+                    }
+                  }
+                  accessible={true}
+                  focusable={true}
+                  onClick={[Function]}
+                  onResponderGrant={[Function]}
+                  onResponderMove={[Function]}
+                  onResponderRelease={[Function]}
+                  onResponderTerminate={[Function]}
+                  onResponderTerminationRequest={[Function]}
+                  onStartShouldSetResponder={[Function]}
+                  style={
+                    [
+                      {
+                        "alignItems": "center",
+                        "backgroundColor": "#EEEEEE",
+                        "justifyContent": "center",
+                        "marginRight": 1,
+                        "width": 78,
+                      },
+                      false,
+                      {
+                        "borderBottomRightRadius": 21,
+                        "borderTopRightRadius": 21,
+                        "marginRight": 0,
+                      },
+                      false,
+                    ]
+                  }
+                >
+                  <Text
+                    style={
+                      [
+                        {
+                          "color": "#333333",
+                          "fontSize": 13,
+                        },
+                        false,
+                      ]
+                    }
+                  >
+                    Snack
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            {
+              "opacity": 1,
+            }
+          }
+        >
+          <View
+            style={
+              [
+                {
+                  "backgroundColor": "#FFFFFF",
+                  "borderRadius": 16,
+                  "elevation": 4,
+                  "shadowColor": "#00000029",
+                  "shadowOffset": {
+                    "height": 2.5,
+                    "width": 1.5,
+                  },
+                  "shadowOpacity": 1,
+                  "shadowRadius": 2.85,
+                },
+                {
+                  "flexDirection": "column",
+                  "marginTop": 8,
+                  "paddingBottom": 16,
+                  "paddingTop": 8,
+                },
+              ]
+            }
+          >
+            <Text
+              style={
+                {
+                  "color": "#333333",
+                  "fontSize": 13,
+                  "fontWeight": "600",
+                  "lineHeight": 16,
+                  "paddingHorizontal": 16,
+                }
+              }
+            >
+              Timestamp
+            </Text>
+            <View
+              style={
+                {
+                  "paddingHorizontal": 19,
+                  "paddingTop": 15,
+                }
+              }
+            >
+              <Text
+                style={
+                  {
+                    "alignSelf": "center",
+                    "color": "#286CE2",
+                    "fontSize": 15,
+                    "fontWeight": "400",
+                    "lineHeight": 18,
+                  }
+                }
+              >
+                Mon, Oct 4th 2021,  1:14 pm
+              </Text>
+            </View>
+          </View>
+        </View>
+        <View>
+          <View
+            style={
+              {
+                "flexDirection": "row",
+                "marginTop": 21,
+                "paddingBottom": 16,
+                "paddingTop": 8,
+              }
+            }
+          >
+            <View
+              style={
+                {
+                  "marginHorizontal": 16,
+                  "width": 24,
+                }
+              }
+            />
+            <Text
+              style={
+                [
+                  {
+                    "flex": 1,
+                    "fontSize": 24,
+                    "fontWeight": "400",
+                    "textAlign": "center",
+                  },
+                  {
+                    "color": "#123456",
+                  },
+                ]
+              }
+            >
+              Ingredients
+            </Text>
+            <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                {
+                  "alignItems": "center",
+                  "justifyContent": "center",
+                  "marginHorizontal": 16,
+                  "opacity": 1,
+                }
+              }
+            >
+              <Image
+                resizeMode="contain"
+                source={
+                  {
+                    "testUri": "../../../src/assets/icons/plus.png",
+                  }
+                }
+                style={
+                  {
+                    "height": 24,
+                    "width": 24,
+                  }
+                }
+              />
+            </View>
+          </View>
+          <View>
+            <RCTScrollView
+              data={
+                [
+                  {
+                    "calcium": 5.6,
+                    "calories": 17.8,
+                    "carbs": 3.5,
+                    "computedWeight": {
+                      "unit": "g",
+                      "value": 100,
+                    },
+                    "entityType": null,
+                    "fat": 0.2,
+                    "fiber": 1,
+                    "imageName": "VEG6245.jpg",
+                    "iron": 0.5,
+                    "magnesium": 8.9,
+                    "monounsaturatedFat": 0,
+                    "name": "tomatoes, orange, raw",
+                    "nutrients": [
+                      {
+                        "amount": 0,
+                        "id": "polyunsaturatedFat",
+                        "unit": "g",
+                      },
+                      {
+                        "amount": 0,
+                        "id": "iron",
+                        "unit": "mg",
+                      },
+                      {
+                        "amount": 1494,
+                        "id": "vitaminA",
+                        "unit": "IU",
+                      },
+                      {
+                        "amount": 0,
+                        "id": "fiber",
+                        "unit": "g",
+                      },
+                      {
+                        "amount": 30,
+                        "id": "protein",
+                        "unit": "g",
+                      },
+                      {
+                        "amount": 41,
+                        "id": "sodium",
+                        "unit": "mg",
+                      },
+                      {
+                        "amount": 7,
+                        "id": "magnesium",
+                        "unit": "mg",
+                      },
+                      {
+                        "amount": 5,
+                        "id": "fat",
+                        "unit": "g",
+                      },
+                      {
+                        "amount": 50,
+                        "id": "calories",
+                        "unit": "kcal",
+                      },
+                      {
+                        "amount": 3,
+                        "id": "calcium",
+                        "unit": "mg",
+                      },
+                      {
+                        "amount": 15,
+                        "id": "carbs",
+                        "unit": "g",
+                      },
+                      {
+                        "amount": 0,
+                        "id": "monounsaturatedFat",
+                        "unit": "g",
+                      },
+                      {
+                        "amount": 210,
+                        "id": "potassium",
+                        "unit": "mg",
+                      },
+                      {
+                        "amount": 0,
+                        "id": "saturatedFat",
+                        "unit": "g",
+                      },
+                      {
+                        "amount": 0,
+                        "id": "vitaminB6",
+                        "unit": "mg",
+                      },
+                      {
+                        "amount": 14,
+                        "id": "vitaminC",
+                        "unit": "mg",
+                      },
+                    ],
+                    "parents": [
+                      {
+                        "name": "orange tomatoes",
+                        "passioID": "VEG0529",
+                      },
+                    ],
+                    "passioID": "1603211205321",
+                    "polyunsaturatedFat": 0.1,
+                    "potassium": 235.3,
+                    "protein": 1.3,
+                    "saturatedFat": 0,
+                    "selectedQuantity": 1,
+                    "selectedUnit": "serving",
+                    "servingSizes": [
+                      {
+                        "quantity": 1,
+                        "unit": "tomato",
+                      },
+                      {
+                        "quantity": 100,
+                        "unit": "gram",
+                      },
+                    ],
+                    "servingUnits": [
+                      {
+                        "mass": 158,
+                        "unit": "cup, chopped",
+                      },
+                      {
+                        "mass": 111,
+                        "unit": "tomato",
+                      },
+                      {
+                        "mass": 1,
+                        "unit": "gram",
+                      },
+                      {
+                        "mass": 100,
+                        "unit": "serving",
+                      },
+                    ],
+                    "siblings": [],
+                    "sodium": 46.6,
+                    "vitaminA": 1660.6,
+                    "vitaminB6": 0.1,
+                    "vitaminC": 17.8,
+                  },
+                  {
+                    "calcium": 5.6,
+                    "calories": 17.8,
+                    "carbs": 3.5,
+                    "computedWeight": {
+                      "unit": "g",
+                      "value": 100,
+                    },
+                    "entityType": null,
+                    "fat": 0.2,
+                    "fiber": 1,
+                    "imageName": "VEG6245.jpg",
+                    "iron": 0.5,
+                    "magnesium": 8.9,
+                    "monounsaturatedFat": 0,
+                    "name": "tomatoes, orange, raw",
+                    "nutrients": [
+                      {
+                        "amount": 0,
+                        "id": "polyunsaturatedFat",
+                        "unit": "g",
+                      },
+                      {
+                        "amount": 0,
+                        "id": "iron",
+                        "unit": "mg",
+                      },
+                      {
+                        "amount": 1494,
+                        "id": "vitaminA",
+                        "unit": "IU",
+                      },
+                      {
+                        "amount": 0,
+                        "id": "fiber",
+                        "unit": "g",
+                      },
+                      {
+                        "amount": 3,
+                        "id": "protein",
+                        "unit": "g",
+                      },
+                      {
+                        "amount": 41,
+                        "id": "sodium",
+                        "unit": "mg",
+                      },
+                      {
+                        "amount": 7,
+                        "id": "magnesium",
+                        "unit": "mg",
+                      },
+                      {
+                        "amount": 7,
+                        "id": "fat",
+                        "unit": "g",
+                      },
+                      {
+                        "amount": 100,
+                        "id": "calories",
+                        "unit": "kcal",
+                      },
+                      {
+                        "amount": 3,
+                        "id": "calcium",
+                        "unit": "mg",
+                      },
+                      {
+                        "amount": 20,
+                        "id": "carbs",
+                        "unit": "g",
+                      },
+                      {
+                        "amount": 0,
+                        "id": "monounsaturatedFat",
+                        "unit": "g",
+                      },
+                      {
+                        "amount": 210,
+                        "id": "potassium",
+                        "unit": "mg",
+                      },
+                      {
+                        "amount": 0,
+                        "id": "saturatedFat",
+                        "unit": "g",
+                      },
+                      {
+                        "amount": 0,
+                        "id": "vitaminB6",
+                        "unit": "mg",
+                      },
+                      {
+                        "amount": 14,
+                        "id": "vitaminC",
+                        "unit": "mg",
+                      },
+                    ],
+                    "parents": [
+                      {
+                        "name": "orange tomatoes",
+                        "passioID": "VEG0529",
+                      },
+                    ],
+                    "passioID": "1603211205321",
+                    "polyunsaturatedFat": 0.1,
+                    "potassium": 235.3,
+                    "protein": 1.3,
+                    "saturatedFat": 0,
+                    "selectedQuantity": 1,
+                    "selectedUnit": "serving",
+                    "servingSizes": [
+                      {
+                        "quantity": 1,
+                        "unit": "tomato",
+                      },
+                      {
+                        "quantity": 100,
+                        "unit": "gram",
+                      },
+                    ],
+                    "servingUnits": [
+                      {
+                        "mass": 158,
+                        "unit": "cup, chopped",
+                      },
+                      {
+                        "mass": 111,
+                        "unit": "tomato",
+                      },
+                      {
+                        "mass": 100,
+                        "unit": "serving",
+                      },
+                    ],
+                    "siblings": [],
+                    "sodium": 46.6,
+                    "vitaminA": 1660.6,
+                    "vitaminB6": 0.1,
+                    "vitaminC": 17.8,
+                  },
+                ]
+              }
+              extraData={
+                [
+                  {
+                    "calcium": 5.6,
+                    "calories": 17.8,
+                    "carbs": 3.5,
+                    "computedWeight": {
+                      "unit": "g",
+                      "value": 100,
+                    },
+                    "entityType": null,
+                    "fat": 0.2,
+                    "fiber": 1,
+                    "imageName": "VEG6245.jpg",
+                    "iron": 0.5,
+                    "magnesium": 8.9,
+                    "monounsaturatedFat": 0,
+                    "name": "tomatoes, orange, raw",
+                    "nutrients": [
+                      {
+                        "amount": 0,
+                        "id": "polyunsaturatedFat",
+                        "unit": "g",
+                      },
+                      {
+                        "amount": 0,
+                        "id": "iron",
+                        "unit": "mg",
+                      },
+                      {
+                        "amount": 1494,
+                        "id": "vitaminA",
+                        "unit": "IU",
+                      },
+                      {
+                        "amount": 0,
+                        "id": "fiber",
+                        "unit": "g",
+                      },
+                      {
+                        "amount": 30,
+                        "id": "protein",
+                        "unit": "g",
+                      },
+                      {
+                        "amount": 41,
+                        "id": "sodium",
+                        "unit": "mg",
+                      },
+                      {
+                        "amount": 7,
+                        "id": "magnesium",
+                        "unit": "mg",
+                      },
+                      {
+                        "amount": 5,
+                        "id": "fat",
+                        "unit": "g",
+                      },
+                      {
+                        "amount": 50,
+                        "id": "calories",
+                        "unit": "kcal",
+                      },
+                      {
+                        "amount": 3,
+                        "id": "calcium",
+                        "unit": "mg",
+                      },
+                      {
+                        "amount": 15,
+                        "id": "carbs",
+                        "unit": "g",
+                      },
+                      {
+                        "amount": 0,
+                        "id": "monounsaturatedFat",
+                        "unit": "g",
+                      },
+                      {
+                        "amount": 210,
+                        "id": "potassium",
+                        "unit": "mg",
+                      },
+                      {
+                        "amount": 0,
+                        "id": "saturatedFat",
+                        "unit": "g",
+                      },
+                      {
+                        "amount": 0,
+                        "id": "vitaminB6",
+                        "unit": "mg",
+                      },
+                      {
+                        "amount": 14,
+                        "id": "vitaminC",
+                        "unit": "mg",
+                      },
+                    ],
+                    "parents": [
+                      {
+                        "name": "orange tomatoes",
+                        "passioID": "VEG0529",
+                      },
+                    ],
+                    "passioID": "1603211205321",
+                    "polyunsaturatedFat": 0.1,
+                    "potassium": 235.3,
+                    "protein": 1.3,
+                    "saturatedFat": 0,
+                    "selectedQuantity": 1,
+                    "selectedUnit": "serving",
+                    "servingSizes": [
+                      {
+                        "quantity": 1,
+                        "unit": "tomato",
+                      },
+                      {
+                        "quantity": 100,
+                        "unit": "gram",
+                      },
+                    ],
+                    "servingUnits": [
+                      {
+                        "mass": 158,
+                        "unit": "cup, chopped",
+                      },
+                      {
+                        "mass": 111,
+                        "unit": "tomato",
+                      },
+                      {
+                        "mass": 1,
+                        "unit": "gram",
+                      },
+                      {
+                        "mass": 100,
+                        "unit": "serving",
+                      },
+                    ],
+                    "siblings": [],
+                    "sodium": 46.6,
+                    "vitaminA": 1660.6,
+                    "vitaminB6": 0.1,
+                    "vitaminC": 17.8,
+                  },
+                  {
+                    "calcium": 5.6,
+                    "calories": 17.8,
+                    "carbs": 3.5,
+                    "computedWeight": {
+                      "unit": "g",
+                      "value": 100,
+                    },
+                    "entityType": null,
+                    "fat": 0.2,
+                    "fiber": 1,
+                    "imageName": "VEG6245.jpg",
+                    "iron": 0.5,
+                    "magnesium": 8.9,
+                    "monounsaturatedFat": 0,
+                    "name": "tomatoes, orange, raw",
+                    "nutrients": [
+                      {
+                        "amount": 0,
+                        "id": "polyunsaturatedFat",
+                        "unit": "g",
+                      },
+                      {
+                        "amount": 0,
+                        "id": "iron",
+                        "unit": "mg",
+                      },
+                      {
+                        "amount": 1494,
+                        "id": "vitaminA",
+                        "unit": "IU",
+                      },
+                      {
+                        "amount": 0,
+                        "id": "fiber",
+                        "unit": "g",
+                      },
+                      {
+                        "amount": 3,
+                        "id": "protein",
+                        "unit": "g",
+                      },
+                      {
+                        "amount": 41,
+                        "id": "sodium",
+                        "unit": "mg",
+                      },
+                      {
+                        "amount": 7,
+                        "id": "magnesium",
+                        "unit": "mg",
+                      },
+                      {
+                        "amount": 7,
+                        "id": "fat",
+                        "unit": "g",
+                      },
+                      {
+                        "amount": 100,
+                        "id": "calories",
+                        "unit": "kcal",
+                      },
+                      {
+                        "amount": 3,
+                        "id": "calcium",
+                        "unit": "mg",
+                      },
+                      {
+                        "amount": 20,
+                        "id": "carbs",
+                        "unit": "g",
+                      },
+                      {
+                        "amount": 0,
+                        "id": "monounsaturatedFat",
+                        "unit": "g",
+                      },
+                      {
+                        "amount": 210,
+                        "id": "potassium",
+                        "unit": "mg",
+                      },
+                      {
+                        "amount": 0,
+                        "id": "saturatedFat",
+                        "unit": "g",
+                      },
+                      {
+                        "amount": 0,
+                        "id": "vitaminB6",
+                        "unit": "mg",
+                      },
+                      {
+                        "amount": 14,
+                        "id": "vitaminC",
+                        "unit": "mg",
+                      },
+                    ],
+                    "parents": [
+                      {
+                        "name": "orange tomatoes",
+                        "passioID": "VEG0529",
+                      },
+                    ],
+                    "passioID": "1603211205321",
+                    "polyunsaturatedFat": 0.1,
+                    "potassium": 235.3,
+                    "protein": 1.3,
+                    "saturatedFat": 0,
+                    "selectedQuantity": 1,
+                    "selectedUnit": "serving",
+                    "servingSizes": [
+                      {
+                        "quantity": 1,
+                        "unit": "tomato",
+                      },
+                      {
+                        "quantity": 100,
+                        "unit": "gram",
+                      },
+                    ],
+                    "servingUnits": [
+                      {
+                        "mass": 158,
+                        "unit": "cup, chopped",
+                      },
+                      {
+                        "mass": 111,
+                        "unit": "tomato",
+                      },
+                      {
+                        "mass": 100,
+                        "unit": "serving",
+                      },
+                    ],
+                    "siblings": [],
+                    "sodium": 46.6,
+                    "vitaminA": 1660.6,
+                    "vitaminB6": 0.1,
+                    "vitaminC": 17.8,
+                  },
+                ]
+              }
+              getItem={[Function]}
+              getItemCount={[Function]}
+              keyExtractor={[Function]}
+              onContentSizeChange={[Function]}
+              onLayout={[Function]}
+              onMomentumScrollBegin={[Function]}
+              onMomentumScrollEnd={[Function]}
+              onScroll={[Function]}
+              onScrollBeginDrag={[Function]}
+              onScrollEndDrag={[Function]}
+              removeClippedSubviews={false}
+              renderItem={[Function]}
+              scrollEventThrottle={0.0001}
+              stickyHeaderIndices={[]}
+              viewabilityConfigCallbackPairs={[]}
+            >
+              <View>
+                <View
+                  onFocusCapture={[Function]}
+                  onLayout={[Function]}
+                  style={null}
+                >
+                  <View>
+                    <View
+                      collapsable={false}
+                      handlerTag={1}
+                      handlerType="PanGestureHandler"
+                      onGestureHandlerEvent={[Function]}
+                      onGestureHandlerStateChange={[Function]}
+                      onLayout={[Function]}
+                      style={
+                        {
+                          "elevation": 3,
+                          "marginTop": 0,
+                          "overflow": "hidden",
+                          "paddingVertical": 5,
+                          "shadowColor": "gray",
+                          "shadowOffset": {
+                            "height": 1,
+                            "width": 0,
+                          },
+                          "shadowOpacity": 0.5,
+                          "shadowRadius": 3,
+                        }
+                      }
+                    >
+                      <View
+                        collapsable={false}
+                        style={
+                          {
+                            "bottom": 0,
+                            "flexDirection": "row-reverse",
+                            "left": 0,
+                            "position": "absolute",
+                            "right": 0,
+                            "top": 0,
+                            "transform": [
+                              {
+                                "translateX": -10000,
+                              },
+                            ],
+                          }
+                        }
+                      >
+                        <View
+                          collapsable={false}
+                          style={
+                            {
+                              "flexDirection": "row",
+                              "transform": [
+                                {
+                                  "translateX": 68.04878048780488,
+                                },
+                              ],
+                            }
+                          }
+                        >
+                          <View
+                            accessibilityState={
+                              {
+                                "busy": undefined,
+                                "checked": undefined,
+                                "disabled": undefined,
+                                "expanded": undefined,
+                                "selected": undefined,
+                              }
+                            }
+                            accessibilityValue={
+                              {
+                                "max": undefined,
+                                "min": undefined,
+                                "now": undefined,
+                                "text": undefined,
+                              }
+                            }
+                            accessible={true}
+                            collapsable={false}
+                            focusable={true}
+                            onClick={[Function]}
+                            onResponderGrant={[Function]}
+                            onResponderMove={[Function]}
+                            onResponderRelease={[Function]}
+                            onResponderTerminate={[Function]}
+                            onResponderTerminationRequest={[Function]}
+                            onStartShouldSetResponder={[Function]}
+                            style={
+                              {
+                                "opacity": 1,
+                              }
+                            }
+                          >
+                            <View
+                              style={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "height": "100%",
+                                    "justifyContent": "center",
+                                    "width": 75,
+                                  },
+                                  {
+                                    "backgroundColor": "#009aff",
+                                  },
+                                ]
+                              }
+                            >
+                              <Text
+                                style={
+                                  {
+                                    "color": "white",
+                                    "fontWeight": "600",
+                                    "textAlign": "center",
+                                  }
+                                }
+                              >
+                                Edit
+                              </Text>
+                            </View>
+                          </View>
+                          <View
+                            accessibilityState={
+                              {
+                                "busy": undefined,
+                                "checked": undefined,
+                                "disabled": undefined,
+                                "expanded": undefined,
+                                "selected": undefined,
+                              }
+                            }
+                            accessibilityValue={
+                              {
+                                "max": undefined,
+                                "min": undefined,
+                                "now": undefined,
+                                "text": undefined,
+                              }
+                            }
+                            accessible={true}
+                            collapsable={false}
+                            focusable={true}
+                            onClick={[Function]}
+                            onResponderGrant={[Function]}
+                            onResponderMove={[Function]}
+                            onResponderRelease={[Function]}
+                            onResponderTerminate={[Function]}
+                            onResponderTerminationRequest={[Function]}
+                            onStartShouldSetResponder={[Function]}
+                            style={
+                              {
+                                "opacity": 1,
+                              }
+                            }
+                          >
+                            <View
+                              style={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "height": "100%",
+                                    "justifyContent": "center",
+                                    "width": 75,
+                                  },
+                                  {
+                                    "alignItems": "center",
+                                    "backgroundColor": "#fd3c2f",
+                                    "justifyContent": "center",
+                                  },
+                                ]
+                              }
+                            >
+                              <Text
+                                style={
+                                  {
+                                    "color": "white",
+                                    "fontWeight": "600",
+                                    "textAlign": "center",
+                                  }
+                                }
+                              >
+                                Delete
+                              </Text>
+                            </View>
+                          </View>
+                        </View>
+                        <View
+                          onLayout={[Function]}
+                        />
+                      </View>
+                      <View
+                        collapsable={false}
+                        handlerTag={2}
+                        handlerType="TapGestureHandler"
+                        onGestureHandlerEvent={[Function]}
+                        onGestureHandlerStateChange={[Function]}
+                        pointerEvents="auto"
+                        style={
+                          {
+                            "backgroundColor": "white",
+                            "borderRadius": 12,
+                            "flex": 1,
+                            "marginHorizontal": 4,
+                            "padding": 10,
+                            "transform": [
+                              {
+                                "translateX": -0,
+                              },
+                            ],
+                          }
+                        }
+                      >
+                        <View
+                          accessibilityState={
+                            {
+                              "busy": undefined,
+                              "checked": undefined,
+                              "disabled": undefined,
+                              "expanded": undefined,
+                              "selected": undefined,
+                            }
+                          }
+                          accessibilityValue={
+                            {
+                              "max": undefined,
+                              "min": undefined,
+                              "now": undefined,
+                              "text": undefined,
+                            }
+                          }
+                          accessible={true}
+                          collapsable={false}
+                          focusable={true}
+                          onClick={[Function]}
+                          onResponderGrant={[Function]}
+                          onResponderMove={[Function]}
+                          onResponderRelease={[Function]}
+                          onResponderTerminate={[Function]}
+                          onResponderTerminationRequest={[Function]}
+                          onStartShouldSetResponder={[Function]}
+                          style={
+                            {
+                              "alignContent": "space-around",
+                              "flexDirection": "row",
+                              "opacity": 1,
+                            }
+                          }
+                        >
+                          <View
+                            style={
+                              {
+                                "borderRadius": 50,
+                                "flexShrink": 0,
+                                "height": 50,
+                                "overflow": "hidden",
+                                "width": 50,
+                              }
+                            }
+                          >
+                            <Text>
+                              mockPassioIcon
+                            </Text>
+                          </View>
+                          <View
+                            style={
+                              {
+                                "flex": 1,
+                                "marginHorizontal": 10,
+                              }
+                            }
+                          >
+                            <Text
+                              numberOfLines={2}
+                              style={
+                                {
+                                  "color": "#333333",
+                                  "fontSize": 15,
+                                  "fontWeight": "600",
+                                  "textTransform": "capitalize",
+                                }
+                              }
+                            >
+                              tomatoes, orange, raw
+                            </Text>
+                            <Text
+                              style={
+                                {
+                                  "color": "#333333",
+                                  "fontSize": 14,
+                                  "fontWeight": "400",
+                                }
+                              }
+                            >
+                              1 serving (100 g)
+                            </Text>
+                            <Text
+                              style={
+                                {
+                                  "color": "#333333",
+                                  "fontSize": 14,
+                                  "fontWeight": "400",
+                                }
+                              }
+                            >
+                              50 Calories
+                            </Text>
+                          </View>
+                          <Image
+                            source={
+                              {
+                                "testUri": "../../../src/assets/ic_right_arrow.png",
+                              }
+                            }
+                            style={
+                              {
+                                "alignSelf": "center",
+                                "flexShrink": 0,
+                                "height": 24,
+                                "tintColor": "#949494",
+                                "width": 24,
+                              }
+                            }
+                          />
+                        </View>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+                <View
+                  onFocusCapture={[Function]}
+                  onLayout={[Function]}
+                  style={null}
+                >
+                  <View>
+                    <View
+                      collapsable={false}
+                      handlerTag={3}
+                      handlerType="PanGestureHandler"
+                      onGestureHandlerEvent={[Function]}
+                      onGestureHandlerStateChange={[Function]}
+                      onLayout={[Function]}
+                      style={
+                        {
+                          "elevation": 3,
+                          "marginTop": 0,
+                          "overflow": "hidden",
+                          "paddingVertical": 5,
+                          "shadowColor": "gray",
+                          "shadowOffset": {
+                            "height": 1,
+                            "width": 0,
+                          },
+                          "shadowOpacity": 0.5,
+                          "shadowRadius": 3,
+                        }
+                      }
+                    >
+                      <View
+                        collapsable={false}
+                        style={
+                          {
+                            "bottom": 0,
+                            "flexDirection": "row-reverse",
+                            "left": 0,
+                            "position": "absolute",
+                            "right": 0,
+                            "top": 0,
+                            "transform": [
+                              {
+                                "translateX": -10000,
+                              },
+                            ],
+                          }
+                        }
+                      >
+                        <View
+                          collapsable={false}
+                          style={
+                            {
+                              "flexDirection": "row",
+                              "transform": [
+                                {
+                                  "translateX": 68.04878048780488,
+                                },
+                              ],
+                            }
+                          }
+                        >
+                          <View
+                            accessibilityState={
+                              {
+                                "busy": undefined,
+                                "checked": undefined,
+                                "disabled": undefined,
+                                "expanded": undefined,
+                                "selected": undefined,
+                              }
+                            }
+                            accessibilityValue={
+                              {
+                                "max": undefined,
+                                "min": undefined,
+                                "now": undefined,
+                                "text": undefined,
+                              }
+                            }
+                            accessible={true}
+                            collapsable={false}
+                            focusable={true}
+                            onClick={[Function]}
+                            onResponderGrant={[Function]}
+                            onResponderMove={[Function]}
+                            onResponderRelease={[Function]}
+                            onResponderTerminate={[Function]}
+                            onResponderTerminationRequest={[Function]}
+                            onStartShouldSetResponder={[Function]}
+                            style={
+                              {
+                                "opacity": 1,
+                              }
+                            }
+                          >
+                            <View
+                              style={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "height": "100%",
+                                    "justifyContent": "center",
+                                    "width": 75,
+                                  },
+                                  {
+                                    "backgroundColor": "#009aff",
+                                  },
+                                ]
+                              }
+                            >
+                              <Text
+                                style={
+                                  {
+                                    "color": "white",
+                                    "fontWeight": "600",
+                                    "textAlign": "center",
+                                  }
+                                }
+                              >
+                                Edit
+                              </Text>
+                            </View>
+                          </View>
+                          <View
+                            accessibilityState={
+                              {
+                                "busy": undefined,
+                                "checked": undefined,
+                                "disabled": undefined,
+                                "expanded": undefined,
+                                "selected": undefined,
+                              }
+                            }
+                            accessibilityValue={
+                              {
+                                "max": undefined,
+                                "min": undefined,
+                                "now": undefined,
+                                "text": undefined,
+                              }
+                            }
+                            accessible={true}
+                            collapsable={false}
+                            focusable={true}
+                            onClick={[Function]}
+                            onResponderGrant={[Function]}
+                            onResponderMove={[Function]}
+                            onResponderRelease={[Function]}
+                            onResponderTerminate={[Function]}
+                            onResponderTerminationRequest={[Function]}
+                            onStartShouldSetResponder={[Function]}
+                            style={
+                              {
+                                "opacity": 1,
+                              }
+                            }
+                          >
+                            <View
+                              style={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "height": "100%",
+                                    "justifyContent": "center",
+                                    "width": 75,
+                                  },
+                                  {
+                                    "alignItems": "center",
+                                    "backgroundColor": "#fd3c2f",
+                                    "justifyContent": "center",
+                                  },
+                                ]
+                              }
+                            >
+                              <Text
+                                style={
+                                  {
+                                    "color": "white",
+                                    "fontWeight": "600",
+                                    "textAlign": "center",
+                                  }
+                                }
+                              >
+                                Delete
+                              </Text>
+                            </View>
+                          </View>
+                        </View>
+                        <View
+                          onLayout={[Function]}
+                        />
+                      </View>
+                      <View
+                        collapsable={false}
+                        handlerTag={4}
+                        handlerType="TapGestureHandler"
+                        onGestureHandlerEvent={[Function]}
+                        onGestureHandlerStateChange={[Function]}
+                        pointerEvents="auto"
+                        style={
+                          {
+                            "backgroundColor": "white",
+                            "borderRadius": 12,
+                            "flex": 1,
+                            "marginHorizontal": 4,
+                            "padding": 10,
+                            "transform": [
+                              {
+                                "translateX": -0,
+                              },
+                            ],
+                          }
+                        }
+                      >
+                        <View
+                          accessibilityState={
+                            {
+                              "busy": undefined,
+                              "checked": undefined,
+                              "disabled": undefined,
+                              "expanded": undefined,
+                              "selected": undefined,
+                            }
+                          }
+                          accessibilityValue={
+                            {
+                              "max": undefined,
+                              "min": undefined,
+                              "now": undefined,
+                              "text": undefined,
+                            }
+                          }
+                          accessible={true}
+                          collapsable={false}
+                          focusable={true}
+                          onClick={[Function]}
+                          onResponderGrant={[Function]}
+                          onResponderMove={[Function]}
+                          onResponderRelease={[Function]}
+                          onResponderTerminate={[Function]}
+                          onResponderTerminationRequest={[Function]}
+                          onStartShouldSetResponder={[Function]}
+                          style={
+                            {
+                              "alignContent": "space-around",
+                              "flexDirection": "row",
+                              "opacity": 1,
+                            }
+                          }
+                        >
+                          <View
+                            style={
+                              {
+                                "borderRadius": 50,
+                                "flexShrink": 0,
+                                "height": 50,
+                                "overflow": "hidden",
+                                "width": 50,
+                              }
+                            }
+                          >
+                            <Text>
+                              mockPassioIcon
+                            </Text>
+                          </View>
+                          <View
+                            style={
+                              {
+                                "flex": 1,
+                                "marginHorizontal": 10,
+                              }
+                            }
+                          >
+                            <Text
+                              numberOfLines={2}
+                              style={
+                                {
+                                  "color": "#333333",
+                                  "fontSize": 15,
+                                  "fontWeight": "600",
+                                  "textTransform": "capitalize",
+                                }
+                              }
+                            >
+                              tomatoes, orange, raw
+                            </Text>
+                            <Text
+                              style={
+                                {
+                                  "color": "#333333",
+                                  "fontSize": 14,
+                                  "fontWeight": "400",
+                                }
+                              }
+                            >
+                              1 serving (100 g)
+                            </Text>
+                            <Text
+                              style={
+                                {
+                                  "color": "#333333",
+                                  "fontSize": 14,
+                                  "fontWeight": "400",
+                                }
+                              }
+                            >
+                              100 Calories
+                            </Text>
+                          </View>
+                          <Image
+                            source={
+                              {
+                                "testUri": "../../../src/assets/ic_right_arrow.png",
+                              }
+                            }
+                            style={
+                              {
+                                "alignSelf": "center",
+                                "flexShrink": 0,
+                                "height": 24,
+                                "tintColor": "#949494",
+                                "width": 24,
+                              }
+                            }
+                          />
+                        </View>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </RCTScrollView>
+          </View>
+        </View>
+        <View
+          style={
+            {
+              "height": 50,
+            }
+          }
+        />
+      </View>
+    </View>
+  </RCTScrollView>
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "justifyContent": "space-evenly",
+        "marginBottom": 60,
+        "marginHorizontal": 32,
+        "marginVertical": 32,
+      }
+    }
+  >
+    <View
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        [
+          {
+            "alignItems": "center",
+            "backgroundColor": "transparent",
+            "borderColor": "#CB0042",
+            "borderWidth": 1,
+            "justifyContent": "center",
+            "minWidth": 100,
+            "paddingHorizontal": 16,
+          },
+          {
+            "borderRadius": 20,
+            "height": 30,
+          },
+          {
+            "borderRadius": 14,
+            "flex": 1,
+            "justifyContent": "center",
+            "marginHorizontal": 8,
+          },
+        ]
+      }
+    >
+      <Text
+        style={
+          [
+            {
+              "fontWeight": "400",
+            },
+            {
+              "fontSize": 15,
+              "lineHeight": 18,
+            },
+            {
+              "color": "#CB0042",
+            },
+          ]
+        }
+      >
+        Delete
+      </Text>
+    </View>
+    <View
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        [
+          {
+            "alignItems": "center",
+            "justifyContent": "center",
+            "minWidth": 100,
+            "paddingHorizontal": 16,
+          },
+          {
+            "borderRadius": 20,
+            "height": 30,
+          },
+          {
+            "backgroundColor": "#123456",
+            "borderColor": "#123456",
+            "borderWidth": 0,
+          },
+          {
+            "borderRadius": 14,
+            "flex": 1,
+            "justifyContent": "center",
+            "marginHorizontal": 8,
+          },
+        ]
+      }
+    >
+      <Text
+        style={
+          [
+            {
+              "fontWeight": "400",
+            },
+            {
+              "fontSize": 15,
+              "lineHeight": 18,
+            },
+            {
+              "color": "#FFFFFF",
+            },
+          ]
+        }
+      >
+        Favorite
+      </Text>
+    </View>
+    <View
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        [
+          {
+            "alignItems": "center",
+            "justifyContent": "center",
+            "minWidth": 100,
+            "paddingHorizontal": 16,
+          },
+          {
+            "borderRadius": 20,
+            "height": 30,
+          },
+          {
+            "backgroundColor": "#123456",
+            "borderColor": "#123456",
+            "borderWidth": 0,
+          },
+          {
+            "borderRadius": 14,
+            "flex": 1,
+            "justifyContent": "center",
+            "marginHorizontal": 8,
+          },
+        ]
+      }
+      testID="testButtonSave"
+    >
+      <Text
+        style={
+          [
+            {
+              "fontWeight": "400",
+            },
+            {
+              "fontSize": 15,
+              "lineHeight": 18,
+            },
+            {
+              "color": "#FFFFFF",
+            },
+          ]
+        }
+      >
+        Save
+      </Text>
+    </View>
+  </View>
+</View>
+`;

@@ -1,0 +1,20 @@
+module.exports = {
+  dependencies: {
+    'lottie-react-native': {},
+    'lottie-ios': {},
+    '@react-native-community/slider': {},
+    '@passiolife/nutritionai-react-native-sdk-v3': {},
+    '@react-native-community/datetimepicker': {},
+    'react-native-reanimated': {},
+    'react-native-gesture-handler': {},
+    'luxon': {},
+    'react-native-safe-area-context': {},
+    'react-native-linear-gradient': {},
+    'react-native-svg': {},
+    'react-native-sqlite-storage': {},
+    '@react-native-voice/voice': {},
+    '@notifee/react-native': {},
+    '@react-native-async-storage/async-storage': {},
+    'react-native-screens': {},
+  },
+};

@@ -1,0 +1,425 @@
+{
+  "isOpenFood": false,
+  "foodItem": {
+    "vitaminA": {
+      "value": 0,
+      "unit": "IU"
+    },
+    "iodine": {
+      "value": 0,
+      "unit": "ug"
+    },
+    "phosphorus": {
+      "value": 222.8,
+      "unit": "mg"
+    },
+    "magnesium": {
+      "value": 22.8,
+      "unit": "mg"
+    },
+    "vitaminEAdded": {
+      "value": 0,
+      "unit": "mg"
+    },
+    "vitaminB12": {
+      "value": 0.4,
+      "unit": "ug"
+    },
+    "vitaminC": {
+      "value": 1.1,
+      "unit": "mg"
+    },
+    "vitaminB6": {
+      "value": 0.1,
+      "unit": "mg"
+    },
+    "vitaminD": {
+      "value": 0,
+      "unit": "ug"
+    },
+    "vitaminB12Added": {
+      "value": 0,
+      "unit": "ug"
+    },
+    "fiber": {
+      "value": 2.1,
+      "unit": "g"
+    },
+    "sodium": {
+      "value": 594,
+      "unit": "mg"
+    },
+    "iron": {
+      "value": 2.3,
+      "unit": "mg"
+    },
+    "selectedQuantity": 1,
+    "sugarAdded": {
+      "value": 0,
+      "unit": "g"
+    },
+    "name": "pizza, extra cheese, thick crust",
+    "monounsaturatedFat": {
+      "value": 2.7,
+      "unit": "g"
+    },
+    "cholesterol": {
+      "value": 18.8,
+      "unit": "mg"
+    },
+    "saturatedFat": {
+      "value": 4.5,
+      "unit": "g"
+    },
+    "servingUnits": [
+      {
+        "value": 7.2,
+        "unitName": "surface inch"
+      },
+      {
+        "value": 154,
+        "unitName": "french bread"
+      },
+      {
+        "value": 116,
+        "unitName": "english muffin"
+      },
+      {
+        "value": 141,
+        "unitName": "piece"
+      },
+      {
+        "value": 232,
+        "unitName": "personal size pizza (5-7\" diameter)"
+      },
+      {
+        "value": 565,
+        "unitName": "small pizza (8-10\" diameter)"
+      },
+      {
+        "value": 792,
+        "unitName": "medium pizza (11-12\" diameter)"
+      },
+      {
+        "value": 1112,
+        "unitName": "large pizza (13-15\" diameter)"
+      },
+      {
+        "value": 1448,
+        "unitName": "extra-large pizza (16-18\" diameter)"
+      },
+      {
+        "value": 94,
+        "unitName": "piece, small pizza"
+      },
+      {
+        "value": 99,
+        "unitName": "piece, medium pizza"
+      },
+      {
+        "value": 141,
+        "unitName": "piece, large pizza"
+      },
+      {
+        "value": 145,
+        "unitName": "piece, extra-large pizza"
+      },
+      {
+        "value": 196,
+        "unitName": "bagel"
+      }
+    ],
+    "protein": {
+      "value": 11.3,
+      "unit": "g"
+    },
+    "fat": {
+      "value": 10.9,
+      "unit": "g"
+    },
+    "carbs": {
+      "value": 31.6,
+      "unit": "g"
+    },
+    "polyunsaturatedFat": {
+      "value": 2.6,
+      "unit": "g"
+    },
+    "calcium": {
+      "value": 201,
+      "unit": "mg"
+    },
+    "passioID": "1603211585344",
+    "calories": {
+      "value": 269.28,
+      "unit": "kcal"
+    },
+    "potassium": {
+      "value": 168.3,
+      "unit": "mg"
+    },
+    "siblings": [
+      {
+        "name": "breakfast pizza with egg",
+        "passioID": "1628606732911"
+      },
+      {
+        "name": "fast food, pizza chain, 14\" pizza, cheese topping, thick crust",
+        "passioID": "1603211199396"
+      },
+      {
+        "name": "fast food, pizza chain, 14\" pizza, cheese topping, regular crust",
+        "passioID": "1603211199395"
+      },
+      {
+        "name": "pizza, cheese, whole wheat thick crust",
+        "passioID": "1603211585365"
+      },
+      {
+        "name": "pizza, cheese, from frozen, thick crust",
+        "passioID": "1603211585306"
+      },
+      {
+        "name": "digiorno pizza, cheese topping, rising crust, frozen, baked",
+        "passioID": "1603211570615"
+      },
+      {
+        "name": "little caesars 14\" original round cheese pizza, regular crust",
+        "passioID": "1603211570616"
+      },
+      {
+        "name": "domino's 14\" cheese pizza, classic hand-tossed crust",
+        "passioID": "1603211570613"
+      },
+      {
+        "name": "pizza hut 14\" cheese pizza, hand-tossed crust",
+        "passioID": "1603211570620"
+      },
+      {
+        "name": "fast food, pizza chain, 14\" pizza, cheese topping, stuffed crust",
+        "passioID": "1603211199502"
+      },
+      {
+        "name": "white pizza, cheese, thin crust",
+        "passioID": "1603211585348"
+      },
+      {
+        "name": "papa john's 14\" cheese pizza, original crust",
+        "passioID": "1603211570612"
+      },
+      {
+        "name": "fast food, pizza chain, 14\" pizza, cheese topping, thin crust",
+        "passioID": "1603211199397"
+      },
+      {
+        "unitName": "slice",
+        "name": "domino's 14\" cheese pizza, crunchy thin crust",
+        "quantity": 1,
+        "passioID": "1603211199313"
+      },
+      {
+        "name": "pizza, cheese topping, regular crust, frozen, cooked",
+        "passioID": "1603211199567"
+      },
+      {
+        "name": "double cheese pizza, shakespeare's pizza",
+        "passioID": "1603211578133"
+      },
+      {
+        "name": "provel cheese pizza, imo's pizza",
+        "passioID": "1603211577157"
+      },
+      {
+        "name": "gourmet 6-cheese pizza",
+        "passioID": "1603211577161"
+      },
+      {
+        "name": "four cheese pizza, shakespeare's pizza",
+        "passioID": "1603211577625"
+      },
+      {
+        "name": "burrata & tomato pizza",
+        "passioID": "1603211576909"
+      },
+      {
+        "name": "artisan crust classic margherita",
+        "passioID": "1603211576910"
+      },
+      {
+        "name": "cheese thin crust pizza, austin's pizza",
+        "passioID": "1603211578132"
+      }
+    ],
+    "vitaminE": {
+      "value": 0.8,
+      "unit": "mg"
+    },
+    "computedWeight": {
+      "value": 99,
+      "unit": "g"
+    },
+    "sugar": {
+      "value": 0,
+      "unit": "g"
+    },
+    "servingSizes": [
+      {
+        "unitName": "piece, medium pizza",
+        "quantity": 1
+      },
+      {
+        "unitName": "english muffin",
+        "quantity": 0.5
+      },
+      {
+        "unitName": "bagel",
+        "quantity": 0.5
+      }
+    ],
+    "transFat": {
+      "value": 0,
+      "unit": "g"
+    },
+    "sugarAlcohol": {
+      "value": 0,
+      "unit": "g"
+    },
+    "selectedUnit": "piece, medium pizza",
+    "parents": [
+      {
+        "name": "cheese pizza",
+        "passioID": "PRE0020"
+      }
+    ],
+    "alcohol": {
+      "value": 0,
+      "unit": "g"
+    },
+    "entityType": "item"
+  },
+  "siblings": [
+    {
+      "name": "farinata",
+      "passioID": "NPA0004"
+    },
+    {
+      "name": "quiche",
+      "passioID": "PRE0097"
+    },
+    {
+      "name": "khachapuri",
+      "passioID": "MEA0119"
+    }
+  ],
+  "passioID": "PRE0046",
+  "children": [
+    {
+      "name": "cheese pizza",
+      "passioID": "PRE0020"
+    },
+    {
+      "name": "pepperoni pizza",
+      "passioID": "PRE0029"
+    },
+    {
+      "name": "ground beef pizza",
+      "passioID": "PRE0360"
+    },
+    {
+      "name": "pizza piccolinis",
+      "passioID": "1003250"
+    },
+    {
+      "name": "pizza margherita",
+      "passioID": "PRE0018"
+    },
+    {
+      "name": "grilled onion pizza",
+      "passioID": "1000670"
+    },
+    {
+      "name": "frozen mini pizzas",
+      "passioID": "1000101"
+    },
+    {
+      "name": "mini pizzas",
+      "passioID": "1000102"
+    },
+    {
+      "name": "jalapeno pizza",
+      "passioID": "1001900"
+    },
+    {
+      "name": "fugazza",
+      "passioID": "PRE0329"
+    },
+    {
+      "name": "hawaiian pizza",
+      "passioID": "PRE0019"
+    },
+    {
+      "name": "greek pizza",
+      "passioID": "PRE0021"
+    },
+    {
+      "name": "mushroom pizza",
+      "passioID": "PRE0033"
+    },
+    {
+      "name": "meat pizza",
+      "passioID": "1003037"
+    },
+    {
+      "name": "white pizza",
+      "passioID": "1000039"
+    },
+    {
+      "name": "seafood pizza",
+      "passioID": "PRE0032"
+    },
+    {
+      "name": "chicken pizza",
+      "passioID": "PRE0031"
+    },
+    {
+      "name": "raw pizzas",
+      "passioID": "PRE8846"
+    },
+    {
+      "name": "chicago pizza",
+      "passioID": "PRE0030"
+    },
+    {
+      "name": "frozen pizza baguette",
+      "passioID": "1000312"
+    },
+    {
+      "name": "pizza baguette",
+      "passioID": "1000313"
+    },
+    {
+      "name": "pizza caprese",
+      "passioID": "PRE0199"
+    },
+    {
+      "name": "vegetarian pizza",
+      "passioID": "1000629"
+    },
+    {
+      "name": "tuna pizza",
+      "passioID": "PRE0022"
+    },
+    {
+      "name": "pizza rucola",
+      "passioID": "PAS0075"
+    }
+  ],
+  "parents": [
+    {
+      "name": "flatbread foods",
+      "passioID": "NPA0003"
+    }
+  ],
+  "entityType": "item",
+  "name": "pizzas"
+}

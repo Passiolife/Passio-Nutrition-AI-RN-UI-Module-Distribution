@@ -1,0 +1,234 @@
+[
+  {
+    "name": "Scrambled Eggs",
+    "uuid": "49fd1bae-c868-40f3-8520-0f71f09a1ec2",
+    "eventTimestamp": "2021-07-09T15:06:20Z",
+    "meal": "breakfast",
+    "imageName": "EGGS00012.jpeg",
+    "passioIDEntityType": "item",
+    "foodItems": [
+      {
+        "passioID": "MEA0505",
+        "name": "Scrambled Eggs",
+        "imageName": "MEA0505.jpg",
+        "entityType": "item",
+        "selectedUnit": "grams",
+        "selectedQuantity": "500",
+        "computedWeight": {
+          "value": 500,
+          "unit": "g"
+        },
+        "ingredientsDescription": null,
+        "barcode": null,
+        "servingSizes": [
+          {
+            "quantity": 100.0,
+            "unit": "g"
+          }
+        ],
+        "servingUnits": [
+          {
+            "unit": "g",
+            "mass": 1.0
+          }
+        ],
+        "nutrients": [
+          {
+            "id": "calories",
+            "amount": 1000,
+            "unit": "kcal"
+          },
+          {
+            "id": "carbs",
+            "amount": 200,
+            "unit": "g"
+          },
+          {
+            "id": "protein",
+            "amount": 150,
+            "unit": "g"
+          },
+          {
+            "id": "fat",
+            "amount": 75,
+            "unit": "g"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Lemon rice",
+    "uuid": "49fd1bae-c868-40f3-8520-0455df11",
+    "eventTimestamp": "2021-07-09T15:06:20Z",
+    "meal": "lunch",
+    "imageName": "EGGS00012.jpeg",
+    "passioIDEntityType": "item",
+    "foodItems": [
+      {
+        "passioID": "MEA0505",
+        "name": "Scrambled Eggs",
+        "imageName": "MEA0505.jpg",
+        "entityType": "item",
+        "selectedUnit": "grams",
+        "selectedQuantity": "500",
+        "computedWeight": {
+          "value": 500,
+          "unit": "g"
+        },
+        "ingredientsDescription": null,
+        "barcode": null,
+        "servingSizes": [
+          {
+            "quantity": 100.0,
+            "unit": "g"
+          }
+        ],
+        "servingUnits": [
+          {
+            "unit": "g",
+            "mass": 1.0
+          }
+        ],
+        "nutrients": [
+          {
+            "id": "calories",
+            "amount": 1000,
+            "unit": "kcal"
+          },
+          {
+            "id": "carbs",
+            "amount": 200,
+            "unit": "g"
+          },
+          {
+            "id": "protein",
+            "amount": 150,
+            "unit": "g"
+          },
+          {
+            "id": "fat",
+            "amount": 75,
+            "unit": "g"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Twice-baked potatoes",
+    "uuid": "49fd1bae-c868-40f3-8520-0f71f09a1234",
+    "eventTimestamp": "2021-07-09T15:06:20Z",
+    "meal": "dinner",
+    "imageName": "EGGS00012.jpeg",
+    "passioIDEntityType": "item",
+    "foodItems": [
+      {
+        "passioID": "MEA0505",
+        "name": "Scrambled Eggs",
+        "imageName": "MEA0505.jpg",
+        "entityType": "item",
+        "selectedUnit": "grams",
+        "selectedQuantity": "500",
+        "computedWeight": {
+          "value": 500,
+          "unit": "g"
+        },
+        "ingredientsDescription": null,
+        "barcode": null,
+        "servingSizes": [
+          {
+            "quantity": 100.0,
+            "unit": "g"
+          }
+        ],
+        "servingUnits": [
+          {
+            "unit": "g",
+            "mass": 1.0
+          }
+        ],
+        "nutrients": [
+          {
+            "id": "calories",
+            "amount": 1000,
+            "unit": "kcal"
+          },
+          {
+            "id": "carbs",
+            "amount": 200,
+            "unit": "g"
+          },
+          {
+            "id": "protein",
+            "amount": 150,
+            "unit": "g"
+          },
+          {
+            "id": "fat",
+            "amount": 75,
+            "unit": "g"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Seeds, nuts, grains and legumes",
+    "uuid": "49fd1bae-c868-40f3-8520-0f71f09a105241",
+    "eventTimestamp": "2021-07-09T15:06:20Z",
+    "meal": "snack",
+    "imageName": "EGGS00012.jpeg",
+    "passioIDEntityType": "item",
+    "foodItems": [
+      {
+        "passioID": "MEA0505",
+        "name": "Scrambled Eggs",
+        "imageName": "MEA0505.jpg",
+        "entityType": "item",
+        "selectedUnit": "grams",
+        "selectedQuantity": "500",
+        "computedWeight": {
+          "value": 500,
+          "unit": "g"
+        },
+        "ingredientsDescription": null,
+        "barcode": null,
+        "servingSizes": [
+          {
+            "quantity": 100.0,
+            "unit": "g"
+          }
+        ],
+        "servingUnits": [
+          {
+            "unit": "g",
+            "mass": 1.0
+          }
+        ],
+        "nutrients": [
+          {
+            "id": "calories",
+            "amount": 1000,
+            "unit": "kcal"
+          },
+          {
+            "id": "carbs",
+            "amount": 200,
+            "unit": "g"
+          },
+          {
+            "id": "protein",
+            "amount": 150,
+            "unit": "g"
+          },
+          {
+            "id": "fat",
+            "amount": 75,
+            "unit": "g"
+          }
+        ]
+      }
+    ]
+  }
+]

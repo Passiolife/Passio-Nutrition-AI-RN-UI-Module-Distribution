@@ -1,0 +1,2578 @@
+[
+    {
+        "servingSize": 1,
+        "passioID": "1603211581770",
+        "name": "egg, white only, raw",
+        "unitQuantity": "1%egg white%(33.0 g) ",
+        "type": "breakfast",
+        "day": 1
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG4563",
+        "name": "spinach",
+        "unitQuantity": "8%oz%(226.64 g) ",
+        "type": "breakfast",
+        "day": 1
+    },
+    {
+        "servingSize": 1,
+        "passioID": "BEV0036",
+        "name": "coffee",
+        "unitQuantity": "8%fl oz%(236.8 g) ",
+        "type": "breakfast",
+        "day": 1
+    },
+    {
+        "servingSize": 1,
+        "passioID": "ING0090",
+        "name": "olive oil",
+        "unitQuantity": "1%tbsp%(15.0 g) ",
+        "type": "breakfast",
+        "day": 1
+    },
+    {
+        "servingSize": 1,
+        "passioID": "DIP0018",
+        "name": "peanut butter",
+        "unitQuantity": "1%tbsp%(16.0 g) ",
+        "type": "breakfast",
+        "day": 1
+    },
+    {
+        "servingSize": 1,
+        "passioID": "ING0001",
+        "name": "wholesome stevia packet",
+        "unitQuantity": "1%packet%(1.0 g) ",
+        "type": "breakfast",
+        "day": 1
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG0018",
+        "name": "apples",
+        "unitQuantity": "1%small%(157.0 g) ",
+        "type": "breakfast",
+        "day": 1
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1001221",
+        "name": "whole raw eggs",
+        "unitQuantity": "2%medium%(88.0 g) ",
+        "type": "breakfast",
+        "day": 1
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211457924",
+        "name": "food club, dry lentils",
+        "unitQuantity": "1%cup, dry%(128.0 g) ",
+        "type": "lunch",
+        "day": 1
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211199141",
+        "name": "quinoa, cooked",
+        "unitQuantity": "0.5%cup%(92.5 g) ",
+        "type": "lunch",
+        "day": 1
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG2142",
+        "name": "garlic cloves",
+        "unitQuantity": "2%clove%(6.0 g) ",
+        "type": "lunch",
+        "day": 1
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211585376",
+        "name": "avocado, raw",
+        "unitQuantity": "0.3%cup%(36.5 g) ",
+        "type": "lunch",
+        "day": 1
+    },
+    {
+        "servingSize": 1,
+        "passioID": "ING0090",
+        "name": "olive oil",
+        "unitQuantity": "1%tbsp%(15.0 g) ",
+        "type": "lunch",
+        "day": 1
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1628606734678",
+        "name": "kale, raw",
+        "unitQuantity": "1.5%cup%(37.5 g) ",
+        "type": "lunch",
+        "day": 1
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211582254",
+        "name": "squash, summer, yellow, raw",
+        "unitQuantity": "1%cup, sliced%(113.0 g) ",
+        "type": "dinner",
+        "day": 1
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211301155",
+        "name": "precious, reduced fat mozzarella string cheese",
+        "unitQuantity": "2%oz%(56.0 g) ",
+        "type": "dinner",
+        "day": 1
+    },
+    {
+        "servingSize": 1,
+        "passioID": "MEA4424",
+        "name": "roasted chicken breast",
+        "unitQuantity": "5%oz, cooked%(141.75 g) ",
+        "type": "dinner",
+        "day": 1
+    },
+    {
+        "servingSize": 1,
+        "passioID": "GRA0177",
+        "name": "dry farro",
+        "unitQuantity": "0.5%cup%(104.0 g) ",
+        "type": "dinner",
+        "day": 1
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG0364",
+        "name": "cooked cauliflower",
+        "unitQuantity": "1%cup chopped (1/2\" pieces)%(107.0 g) ",
+        "type": "dinner",
+        "day": 1
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1628606734678",
+        "name": "kale, raw",
+        "unitQuantity": "1%cup%(25.0 g) ",
+        "type": "snack",
+        "day": 1
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211552322",
+        "name": "frozen mango chunks",
+        "unitQuantity": "1%cup%(176.0 g) ",
+        "type": "snack",
+        "day": 1
+    },
+    {
+        "servingSize": 1,
+        "passioID": "BEV0268",
+        "name": "almond milk",
+        "unitQuantity": "1%cup%(240.0 g) ",
+        "type": "snack",
+        "day": 1
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211581561",
+        "name": "chia seeds",
+        "unitQuantity": "1%tbsp%(12.0 g) ",
+        "type": "snack",
+        "day": 1
+    },
+    {
+        "servingSize": 1,
+        "passioID": "DAI0115",
+        "name": "greek yogurt",
+        "unitQuantity": "1%cup%(245.0 g) ",
+        "type": "snack",
+        "day": 1
+    },
+    {
+        "servingSize": 1,
+        "passioID": "ING0001",
+        "name": "wholesome stevia packet",
+        "unitQuantity": "1%packet%(1.0 g) ",
+        "type": "breakfast",
+        "day": 2
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211581561",
+        "name": "chia seeds",
+        "unitQuantity": "1%tbsp%(12.0 g) ",
+        "type": "breakfast",
+        "day": 2
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211573964",
+        "name": "french toast, whole grain",
+        "unitQuantity": "0.5%slice, any size%(32.5 g) ",
+        "type": "breakfast",
+        "day": 2
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG2021",
+        "name": "half avocado",
+        "unitQuantity": "0.5%avocado%(100.5 g) ",
+        "type": "breakfast",
+        "day": 2
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1001221",
+        "name": "whole raw eggs",
+        "unitQuantity": "2%medium%(88.0 g) ",
+        "type": "breakfast",
+        "day": 2
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG6366",
+        "name": "berries",
+        "unitQuantity": "64%gram%(64.0 g) ",
+        "type": "breakfast",
+        "day": 2
+    },
+    {
+        "servingSize": 1,
+        "passioID": "BEV0036",
+        "name": "coffee",
+        "unitQuantity": "8%fl oz%(236.8 g) ",
+        "type": "breakfast",
+        "day": 2
+    },
+    {
+        "servingSize": 1,
+        "passioID": "PRE0424",
+        "name": "spinach salad",
+        "unitQuantity": "2%cup%(148.0 g) ",
+        "type": "lunch",
+        "day": 2
+    },
+    {
+        "servingSize": 1,
+        "passioID": "XXX0028",
+        "name": "raw chicken slices",
+        "unitQuantity": "5%oz%(141.25 g) ",
+        "type": "lunch",
+        "day": 2
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG0218",
+        "name": "carrots",
+        "unitQuantity": "0.3%cup chopped%(32.0 g) ",
+        "type": "lunch",
+        "day": 2
+    },
+    {
+        "servingSize": 1,
+        "passioID": "SAU0008",
+        "name": "mustard",
+        "unitQuantity": "1%tsp%(5.0 g) ",
+        "type": "lunch",
+        "day": 2
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211254040",
+        "name": "celery, raw",
+        "unitQuantity": "0.4%cup%(42.0 g) ",
+        "type": "lunch",
+        "day": 2
+    },
+    {
+        "servingSize": 1,
+        "passioID": "DIP2020",
+        "name": "mayonnaise",
+        "unitQuantity": "1%tbsp%(13.8 g) ",
+        "type": "lunch",
+        "day": 2
+    },
+    {
+        "servingSize": 1,
+        "passioID": "ING0099",
+        "name": "avocado oil",
+        "unitQuantity": "1%tbsp%(14.0 g) ",
+        "type": "lunch",
+        "day": 2
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG0195",
+        "name": "onions",
+        "unitQuantity": "0.4%sliced, cup%(60.0 g) ",
+        "type": "lunch",
+        "day": 2
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211547550",
+        "name": "ginger tea",
+        "unitQuantity": "226.8%gram%(226.8 g) ",
+        "type": "dinner",
+        "day": 2
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1002271",
+        "name": "oriental white vinegar",
+        "unitQuantity": "0.5%tsp%(2.5 g) ",
+        "type": "dinner",
+        "day": 2
+    },
+    {
+        "servingSize": 1,
+        "passioID": "ING0090",
+        "name": "olive oil",
+        "unitQuantity": "1%tbsp%(15.0 g) ",
+        "type": "dinner",
+        "day": 2
+    },
+    {
+        "servingSize": 1,
+        "passioID": "LEG7393",
+        "name": "dry white beans",
+        "unitQuantity": "0.5%cup%(90.0 g) ",
+        "type": "dinner",
+        "day": 2
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211491869",
+        "name": "fish, tilapia, raw",
+        "unitQuantity": "140%gram%(140.0 g) ",
+        "type": "dinner",
+        "day": 2
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1628606734678",
+        "name": "kale, raw",
+        "unitQuantity": "2%cup%(50.0 g) ",
+        "type": "dinner",
+        "day": 2
+    },
+    {
+        "servingSize": 1,
+        "passioID": "DAI0115",
+        "name": "greek yogurt",
+        "unitQuantity": "1.5%cup%(367.5 g) ",
+        "type": "snack",
+        "day": 2
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG0031",
+        "name": "blueberries",
+        "unitQuantity": "1%cup%(148.0 g) ",
+        "type": "snack",
+        "day": 2
+    },
+    {
+        "servingSize": 1,
+        "passioID": "ING0001",
+        "name": "wholesome stevia packet",
+        "unitQuantity": "1%packet%(1.0 g) ",
+        "type": "breakfast",
+        "day": 3
+    },
+    {
+        "servingSize": 1,
+        "passioID": "SPI0029",
+        "name": "dry cilantro",
+        "unitQuantity": "6%tsp%(2.4 g) ",
+        "type": "breakfast",
+        "day": 3
+    },
+    {
+        "servingSize": 1,
+        "passioID": "LEG7394",
+        "name": "dry black beans",
+        "unitQuantity": "0.5%cup%(97.0 g) ",
+        "type": "breakfast",
+        "day": 3
+    },
+    {
+        "servingSize": 1,
+        "passioID": "PRE8553",
+        "name": "scrambled tofu",
+        "unitQuantity": "113.4%gram%(113.4 g) ",
+        "type": "breakfast",
+        "day": 3
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211567604",
+        "name": "tortilla, whole wheat",
+        "unitQuantity": "1%medium%(45.0 g) ",
+        "type": "breakfast",
+        "day": 3
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG4563",
+        "name": "spinach",
+        "unitQuantity": "8%oz%(226.64 g) ",
+        "type": "breakfast",
+        "day": 3
+    },
+    {
+        "servingSize": 1,
+        "passioID": "BEV0036",
+        "name": "coffee",
+        "unitQuantity": "8%fl oz%(236.8 g) ",
+        "type": "breakfast",
+        "day": 3
+    },
+    {
+        "servingSize": 1,
+        "passioID": "BEV0268",
+        "name": "almond milk",
+        "unitQuantity": "0.1%cup%(30.0 g) ",
+        "type": "breakfast",
+        "day": 3
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG2021",
+        "name": "half avocado",
+        "unitQuantity": "0.5%avocado%(100.5 g) ",
+        "type": "breakfast",
+        "day": 3
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211199141",
+        "name": "quinoa, cooked",
+        "unitQuantity": "0.5%cup%(92.5 g) ",
+        "type": "lunch",
+        "day": 3
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211585358",
+        "name": "salmon, raw",
+        "unitQuantity": "5%oz, boneless, raw%(141.75 g) ",
+        "type": "lunch",
+        "day": 3
+    },
+    {
+        "servingSize": 1,
+        "passioID": "ING0090",
+        "name": "olive oil",
+        "unitQuantity": "1%tbsp%(15.0 g) ",
+        "type": "lunch",
+        "day": 3
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1002727",
+        "name": "sparkling water",
+        "unitQuantity": "12%oz%(354.96 g) ",
+        "type": "lunch",
+        "day": 3
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG0289",
+        "name": "asparagus",
+        "unitQuantity": "128%gram%(128.0 g) ",
+        "type": "lunch",
+        "day": 3
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG0107",
+        "name": "broccoli",
+        "unitQuantity": "1%cup chopped%(91.0 g) ",
+        "type": "lunch",
+        "day": 3
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1628606732467",
+        "name": "sesame seeds",
+        "unitQuantity": "2%tbsp%(18.0 g) ",
+        "type": "dinner",
+        "day": 3
+    },
+    {
+        "servingSize": 1,
+        "passioID": "MEA0205",
+        "name": "ground turkey",
+        "unitQuantity": "5%oz, cooked%(141.75 g) ",
+        "type": "dinner",
+        "day": 3
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG4563",
+        "name": "spinach",
+        "unitQuantity": "8%oz%(226.64 g) ",
+        "type": "dinner",
+        "day": 3
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG5222",
+        "name": "mushrooms",
+        "unitQuantity": "4%oz%(112.0 g) ",
+        "type": "dinner",
+        "day": 3
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211581658",
+        "name": "sweet potato",
+        "unitQuantity": "0.5%sliced, cup%(75.0 g) ",
+        "type": "dinner",
+        "day": 3
+    },
+    {
+        "servingSize": 1,
+        "passioID": "DAI0138",
+        "name": "low fat cottage cheese",
+        "unitQuantity": "1%cup%(226.0 g) ",
+        "type": "snack",
+        "day": 3
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG0040",
+        "name": "strawberries",
+        "unitQuantity": "0.5%cup%(76.0 g) ",
+        "type": "snack",
+        "day": 3
+    },
+    {
+        "servingSize": 1,
+        "passioID": "ING0001",
+        "name": "wholesome stevia packet",
+        "unitQuantity": "1%packet%(1.0 g) ",
+        "type": "breakfast",
+        "day": 4
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1001145",
+        "name": "cinnamon package",
+        "unitQuantity": "1%tsp%(2.6 g) ",
+        "type": "breakfast",
+        "day": 4
+    },
+    {
+        "servingSize": 1,
+        "passioID": "DIP0018",
+        "name": "peanut butter",
+        "unitQuantity": "1%tbsp%(16.0 g) ",
+        "type": "breakfast",
+        "day": 4
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211568290",
+        "name": "organic whole grain rolled oats",
+        "unitQuantity": "0.5%cup%(40.0 g) ",
+        "type": "breakfast",
+        "day": 4
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG0018",
+        "name": "apples",
+        "unitQuantity": "0.5%cup, sliced%(54.5 g) ",
+        "type": "breakfast",
+        "day": 4
+    },
+    {
+        "servingSize": 1,
+        "passioID": "BEV0036",
+        "name": "coffee",
+        "unitQuantity": "8%fl oz%(236.8 g) ",
+        "type": "breakfast",
+        "day": 4
+    },
+    {
+        "servingSize": 1,
+        "passioID": "BEV0268",
+        "name": "almond milk",
+        "unitQuantity": "0.1%cup%(30.0 g) ",
+        "type": "breakfast",
+        "day": 4
+    },
+    {
+        "servingSize": 1,
+        "passioID": "NUT0011",
+        "name": "flax seeds",
+        "unitQuantity": "2%tbsp, whole%(20.6 g) ",
+        "type": "breakfast",
+        "day": 4
+    },
+    {
+        "servingSize": 1,
+        "passioID": "BEV0264",
+        "name": "soy milk",
+        "unitQuantity": "0.5%cup%(120.0 g) ",
+        "type": "breakfast",
+        "day": 4
+    },
+    {
+        "servingSize": 1,
+        "passioID": "MEA0145",
+        "name": "liquid egg whites",
+        "unitQuantity": "8%tbsp%(122.64 g) ",
+        "type": "lunch",
+        "day": 4
+    },
+    {
+        "servingSize": 1,
+        "passioID": "DAI0034",
+        "name": "feta cheese",
+        "unitQuantity": "2%oz%(56.7 g) ",
+        "type": "lunch",
+        "day": 4
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1628606734678",
+        "name": "kale, raw",
+        "unitQuantity": "1%cup%(25.0 g) ",
+        "type": "lunch",
+        "day": 4
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG0086",
+        "name": "spaghetti squash",
+        "unitQuantity": "128%gram%(128.0 g) ",
+        "type": "lunch",
+        "day": 4
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211581658",
+        "name": "sweet potato",
+        "unitQuantity": "0.5%cup, mashed%(125.0 g) ",
+        "type": "lunch",
+        "day": 4
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG0110",
+        "name": "cooked squash cubes",
+        "unitQuantity": "1%cup, cubes%(205.0 g) ",
+        "type": "dinner",
+        "day": 4
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211547562",
+        "name": "simply organic, italian seasoning",
+        "unitQuantity": "3%tsp%(3.6 g) ",
+        "type": "dinner",
+        "day": 4
+    },
+    {
+        "servingSize": 1,
+        "passioID": "XXX0028",
+        "name": "raw chicken slices",
+        "unitQuantity": "5%oz%(141.25 g) ",
+        "type": "dinner",
+        "day": 4
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1001701",
+        "name": "marinara sauce",
+        "unitQuantity": "1%serving 1/2 cup%(132.0 g) ",
+        "type": "dinner",
+        "day": 4
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211503724",
+        "name": "chickpea pasta mac and cheese",
+        "unitQuantity": "4%oz%(113.16 g) ",
+        "type": "dinner",
+        "day": 4
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211584879",
+        "name": "onions, raw",
+        "unitQuantity": "0.5%cup, chopped%(80.0 g) ",
+        "type": "dinner",
+        "day": 4
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG2105",
+        "name": "bell peppers",
+        "unitQuantity": "4%ring (3\" dia, 1/4\" thick)%(40.0 g) ",
+        "type": "snack",
+        "day": 4
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211581194",
+        "name": "bacon, turkey, low sodium",
+        "unitQuantity": "134%gram%(134.0 g) ",
+        "type": "snack",
+        "day": 4
+    },
+    {
+        "servingSize": 1,
+        "passioID": "DIP0005",
+        "name": "guacamole",
+        "unitQuantity": "0.5%mini cup%(28.5 g) ",
+        "type": "snack",
+        "day": 4
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211224787",
+        "name": "cranberry, nuts & seeds granola snack mix bar",
+        "unitQuantity": "42.5%gram%(42.52 g) ",
+        "type": "breakfast",
+        "day": 5
+    },
+    {
+        "servingSize": 1,
+        "passioID": "BEV0268",
+        "name": "almond milk",
+        "unitQuantity": "28.3%gram%(28.3 g) ",
+        "type": "breakfast",
+        "day": 5
+    },
+    {
+        "servingSize": 1,
+        "passioID": "ING0001",
+        "name": "wholesome stevia packet",
+        "unitQuantity": "1%packet%(1.0 g) ",
+        "type": "breakfast",
+        "day": 5
+    },
+    {
+        "servingSize": 1,
+        "passioID": "BEV0036",
+        "name": "coffee",
+        "unitQuantity": "8%fl oz%(236.8 g) ",
+        "type": "breakfast",
+        "day": 5
+    },
+    {
+        "servingSize": 1,
+        "passioID": "ING0030",
+        "name": "on protein powder",
+        "unitQuantity": "1%scoop%(32.0 g) ",
+        "type": "breakfast",
+        "day": 5
+    },
+    {
+        "servingSize": 1,
+        "passioID": "BEV0264",
+        "name": "soy milk",
+        "unitQuantity": "1%cup%(240.0 g) ",
+        "type": "breakfast",
+        "day": 5
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG6366",
+        "name": "berries",
+        "unitQuantity": "100%gram%(100.0 g) ",
+        "type": "breakfast",
+        "day": 5
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211200405",
+        "name": "cauliflower, green, raw",
+        "unitQuantity": "1%cup%(64.0 g) ",
+        "type": "breakfast",
+        "day": 5
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1002271",
+        "name": "oriental white vinegar",
+        "unitQuantity": "1%tsp%(5.0 g) ",
+        "type": "lunch",
+        "day": 5
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG0167",
+        "name": "mixed greens",
+        "unitQuantity": "2%cup (assume loosely packed)%(70.0 g) ",
+        "type": "lunch",
+        "day": 5
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG7734",
+        "name": "grapes",
+        "unitQuantity": "1%cup%(151.0 g) ",
+        "type": "lunch",
+        "day": 5
+    },
+    {
+        "servingSize": 1,
+        "passioID": "XXX0028",
+        "name": "raw chicken slices",
+        "unitQuantity": "5%oz%(141.25 g) ",
+        "type": "lunch",
+        "day": 5
+    },
+    {
+        "servingSize": 1,
+        "passioID": "ING0099",
+        "name": "avocado oil",
+        "unitQuantity": "1%tsp%(4.5 g) ",
+        "type": "lunch",
+        "day": 5
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG0021",
+        "name": "avocado",
+        "unitQuantity": "0.3%cup, pureed%(57.5 g) ",
+        "type": "lunch",
+        "day": 5
+    },
+    {
+        "servingSize": 1,
+        "passioID": "LEG0015",
+        "name": "chickpeas",
+        "unitQuantity": "0.5%cup%(126.0 g) ",
+        "type": "lunch",
+        "day": 5
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211199141",
+        "name": "quinoa, cooked",
+        "unitQuantity": "0.5%cup%(92.5 g) ",
+        "type": "dinner",
+        "day": 5
+    },
+    {
+        "servingSize": 1,
+        "passioID": "PRE0090",
+        "name": "stuffed peppers",
+        "unitQuantity": "119%gram%(119.0 g) ",
+        "type": "dinner",
+        "day": 5
+    },
+    {
+        "servingSize": 1,
+        "passioID": "DAI0031",
+        "name": "mozzarella",
+        "unitQuantity": "2%oz%(56.7 g) ",
+        "type": "dinner",
+        "day": 5
+    },
+    {
+        "servingSize": 1,
+        "passioID": "MEA0205",
+        "name": "ground turkey",
+        "unitQuantity": "6%oz, cooked%(170.1 g) ",
+        "type": "dinner",
+        "day": 5
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG0245",
+        "name": "tomatoes",
+        "unitQuantity": "0.5%cup, chopped or sliced%(90.0 g) ",
+        "type": "dinner",
+        "day": 5
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG6366",
+        "name": "berries",
+        "unitQuantity": "43%gram%(43.0 g) ",
+        "type": "snack",
+        "day": 5
+    },
+    {
+        "servingSize": 1,
+        "passioID": "PAC0035",
+        "name": "packaged nut butters",
+        "unitQuantity": "1%tbsp%(16.0 g) ",
+        "type": "snack",
+        "day": 5
+    },
+    {
+        "servingSize": 1,
+        "passioID": "DAI0115",
+        "name": "greek yogurt",
+        "unitQuantity": "1.5%cup%(367.5 g) ",
+        "type": "snack",
+        "day": 5
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211581561",
+        "name": "chia seeds",
+        "unitQuantity": "1%tbsp%(12.0 g) ",
+        "type": "snack",
+        "day": 5
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1001145",
+        "name": "cinnamon package",
+        "unitQuantity": "1%tsp%(2.6 g) ",
+        "type": "snack",
+        "day": 5
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211585376",
+        "name": "avocado, raw",
+        "unitQuantity": "0.5%cup%(73.0 g) ",
+        "type": "breakfast",
+        "day": 6
+    },
+    {
+        "servingSize": 1,
+        "passioID": "BAK0344",
+        "name": "daves killer bread whole grains and seeds",
+        "unitQuantity": "2%slice%(90.0 g) ",
+        "type": "breakfast",
+        "day": 6
+    },
+    {
+        "servingSize": 1,
+        "passioID": "MEA0140",
+        "name": "poached eggs",
+        "unitQuantity": "2%large%(100.0 g) ",
+        "type": "breakfast",
+        "day": 6
+    },
+    {
+        "servingSize": 1,
+        "passioID": "BEV0268",
+        "name": "almond milk",
+        "unitQuantity": "28.3%gram%(28.3 g) ",
+        "type": "breakfast",
+        "day": 6
+    },
+    {
+        "servingSize": 1,
+        "passioID": "BEV0036",
+        "name": "coffee",
+        "unitQuantity": "8%fl oz%(236.8 g) ",
+        "type": "breakfast",
+        "day": 6
+    },
+    {
+        "servingSize": 1,
+        "passioID": "ING0001",
+        "name": "wholesome stevia packet",
+        "unitQuantity": "1%packet%(1.0 g) ",
+        "type": "breakfast",
+        "day": 6
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211199141",
+        "name": "quinoa, cooked",
+        "unitQuantity": "0.5%cup%(92.5 g) ",
+        "type": "lunch",
+        "day": 6
+    },
+    {
+        "servingSize": 1,
+        "passioID": "ING0090",
+        "name": "olive oil",
+        "unitQuantity": "1%tbsp%(15.0 g) ",
+        "type": "lunch",
+        "day": 6
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG0289",
+        "name": "asparagus",
+        "unitQuantity": "5%spears) | (%(93.0 g) ",
+        "type": "lunch",
+        "day": 6
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG0151",
+        "name": "bok choy",
+        "unitQuantity": "1%cup, shredded%(170.0 g) ",
+        "type": "lunch",
+        "day": 6
+    },
+    {
+        "servingSize": 1,
+        "passioID": "SAU0034",
+        "name": "soy sauce",
+        "unitQuantity": "3%tsp%(18.0 g) ",
+        "type": "lunch",
+        "day": 6
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1001855",
+        "name": "raw cod fillet",
+        "unitQuantity": "5%oz%(141.65 g) ",
+        "type": "lunch",
+        "day": 6
+    },
+    {
+        "servingSize": 1,
+        "passioID": "LEG0015",
+        "name": "chickpeas",
+        "unitQuantity": "0.5%cup%(126.0 g) ",
+        "type": "dinner",
+        "day": 6
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG0107",
+        "name": "broccoli",
+        "unitQuantity": "1%cup chopped%(91.0 g) ",
+        "type": "dinner",
+        "day": 6
+    },
+    {
+        "servingSize": 1,
+        "passioID": "BEV0149",
+        "name": "green tea",
+        "unitQuantity": "8%fl oz%(236.8 g) ",
+        "type": "dinner",
+        "day": 6
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1628606732467",
+        "name": "sesame seeds",
+        "unitQuantity": "2%tbsp%(18.0 g) ",
+        "type": "dinner",
+        "day": 6
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211586923",
+        "name": "food club, reduced sodium soy sauce",
+        "unitQuantity": "2%tbsp%(30.0 g) ",
+        "type": "dinner",
+        "day": 6
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211581658",
+        "name": "sweet potato",
+        "unitQuantity": "0.5%cup, mashed%(125.0 g) ",
+        "type": "dinner",
+        "day": 6
+    },
+    {
+        "servingSize": 1,
+        "passioID": "DAI0021",
+        "name": "tofu",
+        "unitQuantity": "170%gram%(170.0 g) ",
+        "type": "dinner",
+        "day": 6
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211198939",
+        "name": "denny's, mozzarella cheese sticks",
+        "unitQuantity": "1%piece%(27.0 g) ",
+        "type": "snack",
+        "day": 6
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG0052",
+        "name": "orange",
+        "unitQuantity": "1%fruit (2-5/8\" dia)%(131.0 g) ",
+        "type": "snack",
+        "day": 6
+    },
+    {
+        "servingSize": 1,
+        "passioID": "MEA0008",
+        "name": "hard boiled egg",
+        "unitQuantity": "2%large%(100.0 g) ",
+        "type": "snack",
+        "day": 6
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211573964",
+        "name": "french toast, whole grain",
+        "unitQuantity": "1%slice, any size%(65.0 g) ",
+        "type": "breakfast",
+        "day": 7
+    },
+    {
+        "servingSize": 1,
+        "passioID": "DAI0015",
+        "name": "cottage cheese",
+        "unitQuantity": "1%cup, small curd (not packed)%(225.0 g) ",
+        "type": "breakfast",
+        "day": 7
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG0188",
+        "name": "sliced tomatoes",
+        "unitQuantity": "4%slice, medium (1/4\" thick)%(80.0 g) ",
+        "type": "breakfast",
+        "day": 7
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211492367",
+        "name": "goya, balsamic vinegar",
+        "unitQuantity": "2%tbsp%(30.0 g) ",
+        "type": "breakfast",
+        "day": 7
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG0023",
+        "name": "banana",
+        "unitQuantity": "1%medium (7\" to 7-7/8\" long)%(118.0 g) ",
+        "type": "breakfast",
+        "day": 7
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211585241",
+        "name": "mung beans, canned, drained",
+        "unitQuantity": "1%cup%(180.0 g) ",
+        "type": "lunch",
+        "day": 7
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG0167",
+        "name": "mixed greens",
+        "unitQuantity": "2%cup (assume loosely packed)%(70.0 g) ",
+        "type": "lunch",
+        "day": 7
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG0570",
+        "name": "olives",
+        "unitQuantity": "32%gram%(32.0 g) ",
+        "type": "lunch",
+        "day": 7
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211487570",
+        "name": "salsa, red, homemade",
+        "unitQuantity": "0.3%cup%(58.5 g) ",
+        "type": "lunch",
+        "day": 7
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG0021",
+        "name": "avocado",
+        "unitQuantity": "0.5%fruit, without skin and seed%(68.0 g) ",
+        "type": "lunch",
+        "day": 7
+    },
+    {
+        "servingSize": 1,
+        "passioID": "BEV0149",
+        "name": "green tea",
+        "unitQuantity": "8%fl oz%(236.8 g) ",
+        "type": "lunch",
+        "day": 7
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211585423",
+        "name": "cucumber, raw",
+        "unitQuantity": "0.5%cup%(59.5 g) ",
+        "type": "lunch",
+        "day": 7
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211505192",
+        "name": "organic farro",
+        "unitQuantity": "0.5%cup%(104.0 g) ",
+        "type": "dinner",
+        "day": 7
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211208697",
+        "name": "halibut, raw",
+        "unitQuantity": "5%oz, boneless, raw%(141.75 g) ",
+        "type": "dinner",
+        "day": 7
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG0109",
+        "name": "brussel sprouts",
+        "unitQuantity": "1%cup%(88.0 g) ",
+        "type": "dinner",
+        "day": 7
+    },
+    {
+        "servingSize": 1,
+        "passioID": "ING0090",
+        "name": "olive oil",
+        "unitQuantity": "1%tbsp%(15.0 g) ",
+        "type": "dinner",
+        "day": 7
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG0145",
+        "name": "green beans",
+        "unitQuantity": "1%cup, fresh%(130.0 g) ",
+        "type": "dinner",
+        "day": 7
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG7734",
+        "name": "grapes",
+        "unitQuantity": "1%cup%(151.0 g) ",
+        "type": "snack",
+        "day": 7
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211487572",
+        "name": "almonds, unroasted",
+        "unitQuantity": "0.5%cup%(70.5 g) ",
+        "type": "snack",
+        "day": 7
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG0018",
+        "name": "apples",
+        "unitQuantity": "1%medium%(172.0 g) ",
+        "type": "breakfast",
+        "day": 8
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211581561",
+        "name": "chia seeds",
+        "unitQuantity": "2%tbsp%(24.0 g) ",
+        "type": "breakfast",
+        "day": 8
+    },
+    {
+        "servingSize": 1,
+        "passioID": "DIP0018",
+        "name": "peanut butter",
+        "unitQuantity": "2%tbsp%(32.0 g) ",
+        "type": "breakfast",
+        "day": 8
+    },
+    {
+        "servingSize": 1,
+        "passioID": "ING0003",
+        "name": "stevia in the raw",
+        "unitQuantity": "1%individual packet%(1.0 g) ",
+        "type": "breakfast",
+        "day": 8
+    },
+    {
+        "servingSize": 1,
+        "passioID": "BEV0036",
+        "name": "coffee",
+        "unitQuantity": "8%fl oz%(236.8 g) ",
+        "type": "breakfast",
+        "day": 8
+    },
+    {
+        "servingSize": 1,
+        "passioID": "BEV0268",
+        "name": "almond milk",
+        "unitQuantity": "1%cup%(240.0 g) ",
+        "type": "breakfast",
+        "day": 8
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1001873",
+        "name": "turkey burger",
+        "unitQuantity": "141%gram%(141.0 g) ",
+        "type": "lunch",
+        "day": 8
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG0188",
+        "name": "sliced tomatoes",
+        "unitQuantity": "2%medium whole (2-3/5\" dia)%(246.0 g) ",
+        "type": "lunch",
+        "day": 8
+    },
+    {
+        "servingSize": 1,
+        "passioID": "PRE0274",
+        "name": "lettuce wraps",
+        "unitQuantity": "3%each%(305.4 g) ",
+        "type": "lunch",
+        "day": 8
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211505536",
+        "name": "mayo avocado oil, chosen foods",
+        "unitQuantity": "1%tbsp%(14.0 g) ",
+        "type": "lunch",
+        "day": 8
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211585166",
+        "name": "sweet potato fries, school",
+        "unitQuantity": "0.5%cup%(30.0 g) ",
+        "type": "lunch",
+        "day": 8
+    },
+    {
+        "servingSize": 1,
+        "passioID": "SAU0003",
+        "name": "yellow mustard",
+        "unitQuantity": "1%tsp%(5.0 g) ",
+        "type": "lunch",
+        "day": 8
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211573676",
+        "name": "bellino pesto sauce",
+        "unitQuantity": "2%tbsp%(30.0 g) ",
+        "type": "dinner",
+        "day": 8
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211547562",
+        "name": "simply organic, italian seasoning",
+        "unitQuantity": "1%tsp%(1.2 g) ",
+        "type": "dinner",
+        "day": 8
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG0516",
+        "name": "raw sliced red peppers",
+        "unitQuantity": "0.5%cup, sliced%(46.0 g) ",
+        "type": "dinner",
+        "day": 8
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211500634",
+        "name": "organic flax tempeh",
+        "unitQuantity": "5%oz%(140.0 g) ",
+        "type": "dinner",
+        "day": 8
+    },
+    {
+        "servingSize": 1,
+        "passioID": "openfood3068320114453",
+        "name": "badoit, mineral water",
+        "unitQuantity": "12%fl oz%(360.0 g) ",
+        "type": "dinner",
+        "day": 8
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211579682",
+        "name": "mushrooms, morel, raw",
+        "unitQuantity": "1%cup%(66.0 g) ",
+        "type": "dinner",
+        "day": 8
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211579299",
+        "name": "chickpeas and lentils organic linguine pasta chickapea",
+        "unitQuantity": "4%oz%(112.0 g) ",
+        "type": "dinner",
+        "day": 8
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG0131",
+        "name": "cooked edamame",
+        "unitQuantity": "1%cup, shelled%(155.0 g) ",
+        "type": "snack",
+        "day": 8
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211254040",
+        "name": "celery, raw",
+        "unitQuantity": "1%cup%(120.0 g) ",
+        "type": "snack",
+        "day": 8
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1002707",
+        "name": "olive oil bottle",
+        "unitQuantity": "1%tbsp%(15.0 g) ",
+        "type": "snack",
+        "day": 8
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211254256",
+        "name": "carrots, raw",
+        "unitQuantity": "1%cup%(110.0 g) ",
+        "type": "snack",
+        "day": 8
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG0393",
+        "name": "cucumbers",
+        "unitQuantity": "1%cup%(119.0 g) ",
+        "type": "snack",
+        "day": 8
+    },
+    {
+        "servingSize": 1,
+        "passioID": "NUT0014",
+        "name": "hemp seeds",
+        "unitQuantity": "1%tbsp%(10.0 g) ",
+        "type": "breakfast",
+        "day": 9
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG0294",
+        "name": "peaches",
+        "unitQuantity": "0.5%cup slices%(77.0 g) ",
+        "type": "breakfast",
+        "day": 9
+    },
+    {
+        "servingSize": 1,
+        "passioID": "ING0001",
+        "name": "wholesome stevia packet",
+        "unitQuantity": "1%packet%(1.0 g) ",
+        "type": "breakfast",
+        "day": 9
+    },
+    {
+        "servingSize": 1,
+        "passioID": "MEA4812",
+        "name": "scrambled egg whites",
+        "unitQuantity": "3%egg%(90.0 g) ",
+        "type": "breakfast",
+        "day": 9
+    },
+    {
+        "servingSize": 1,
+        "passioID": "BEV0268",
+        "name": "almond milk",
+        "unitQuantity": "28.3%gram%(28.3 g) ",
+        "type": "breakfast",
+        "day": 9
+    },
+    {
+        "servingSize": 1,
+        "passioID": "NUT0011",
+        "name": "flax seeds",
+        "unitQuantity": "1%tbsp, whole%(10.3 g) ",
+        "type": "breakfast",
+        "day": 9
+    },
+    {
+        "servingSize": 1,
+        "passioID": "BEV0036",
+        "name": "coffee",
+        "unitQuantity": "8%fl oz%(236.8 g) ",
+        "type": "breakfast",
+        "day": 9
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211199141",
+        "name": "quinoa, cooked",
+        "unitQuantity": "0.5%cup%(92.5 g) ",
+        "type": "breakfast",
+        "day": 9
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211586079",
+        "name": "kroger kidney beans",
+        "unitQuantity": "0.5%cup%(130.0 g) ",
+        "type": "lunch",
+        "day": 9
+    },
+    {
+        "servingSize": 1,
+        "passioID": "ING0236",
+        "name": "garlic powder",
+        "unitQuantity": "1%tsp%(3.1 g) ",
+        "type": "lunch",
+        "day": 9
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG8403",
+        "name": "roasted tomatoes",
+        "unitQuantity": "1%cup%(240.0 g) ",
+        "type": "lunch",
+        "day": 9
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211573986",
+        "name": "bone broth",
+        "unitQuantity": "1%cup%(237.0 g) ",
+        "type": "lunch",
+        "day": 9
+    },
+    {
+        "servingSize": 1,
+        "passioID": "MEA0205",
+        "name": "ground turkey",
+        "unitQuantity": "5%oz, cooked%(141.75 g) ",
+        "type": "lunch",
+        "day": 9
+    },
+    {
+        "servingSize": 1,
+        "passioID": "ING0223",
+        "name": "chili powder",
+        "unitQuantity": "1%tbsp%(6.77 g) ",
+        "type": "lunch",
+        "day": 9
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG0195",
+        "name": "onions",
+        "unitQuantity": "0.3%onion%(82.75 g) ",
+        "type": "lunch",
+        "day": 9
+    },
+    {
+        "servingSize": 1,
+        "passioID": "ING0090",
+        "name": "olive oil",
+        "unitQuantity": "1%tbsp%(15.0 g) ",
+        "type": "lunch",
+        "day": 9
+    },
+    {
+        "servingSize": 1,
+        "passioID": "ING0090",
+        "name": "olive oil",
+        "unitQuantity": "1%tbsp%(15.0 g) ",
+        "type": "dinner",
+        "day": 9
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211576645",
+        "name": "spices, oregano, dried",
+        "unitQuantity": "3%tsp, ground%(5.4 g) ",
+        "type": "dinner",
+        "day": 9
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG0109",
+        "name": "brussel sprouts",
+        "unitQuantity": "1%cup%(88.0 g) ",
+        "type": "dinner",
+        "day": 9
+    },
+    {
+        "servingSize": 1,
+        "passioID": "DAI0031",
+        "name": "mozzarella",
+        "unitQuantity": "3%oz%(85.05 g) ",
+        "type": "dinner",
+        "day": 9
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG2127",
+        "name": "parsley",
+        "unitQuantity": "1%tbsp%(3.8 g) ",
+        "type": "dinner",
+        "day": 9
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG0107",
+        "name": "broccoli",
+        "unitQuantity": "1%cup chopped%(91.0 g) ",
+        "type": "dinner",
+        "day": 9
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211491665",
+        "name": "fish, mahimahi, raw",
+        "unitQuantity": "5%oz%(141.65 g) ",
+        "type": "dinner",
+        "day": 9
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG0031",
+        "name": "blueberries",
+        "unitQuantity": "1%cup%(148.0 g) ",
+        "type": "snack",
+        "day": 9
+    },
+    {
+        "servingSize": 1,
+        "passioID": "BEV0264",
+        "name": "soy milk",
+        "unitQuantity": "1%cup%(240.0 g) ",
+        "type": "snack",
+        "day": 9
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1002727",
+        "name": "sparkling water",
+        "unitQuantity": "8%oz%(236.64 g) ",
+        "type": "snack",
+        "day": 9
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211581561",
+        "name": "chia seeds",
+        "unitQuantity": "2%tbsp%(24.0 g) ",
+        "type": "snack",
+        "day": 9
+    },
+    {
+        "servingSize": 1,
+        "passioID": "DAI0149",
+        "name": "mozzarella cheese cubes",
+        "unitQuantity": "2%oz%(56.7 g) ",
+        "type": "breakfast",
+        "day": 10
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1003366",
+        "name": "raw turkey slices",
+        "unitQuantity": "3%slice%(48.0 g) ",
+        "type": "breakfast",
+        "day": 10
+    },
+    {
+        "servingSize": 1,
+        "passioID": "ING0123",
+        "name": "almond oil",
+        "unitQuantity": "2%tbsp%(27.2 g) ",
+        "type": "breakfast",
+        "day": 10
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG3084",
+        "name": "pineapple",
+        "unitQuantity": "0.5%cup, chunks%(82.5 g) ",
+        "type": "breakfast",
+        "day": 10
+    },
+    {
+        "servingSize": 1,
+        "passioID": "MEA0009",
+        "name": "white eggs in shell",
+        "unitQuantity": "1%large%(50.0 g) ",
+        "type": "breakfast",
+        "day": 10
+    },
+    {
+        "servingSize": 1,
+        "passioID": "ING0003",
+        "name": "stevia in the raw",
+        "unitQuantity": "1%individual packet%(1.0 g) ",
+        "type": "breakfast",
+        "day": 10
+    },
+    {
+        "servingSize": 1,
+        "passioID": "BEV0036",
+        "name": "coffee",
+        "unitQuantity": "8%fl oz%(236.8 g) ",
+        "type": "breakfast",
+        "day": 10
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211586025",
+        "name": "dave's killer bread, 100% whole wheat organic bread",
+        "unitQuantity": "1%slice%(42.0 g) ",
+        "type": "breakfast",
+        "day": 10
+    },
+    {
+        "servingSize": 1,
+        "passioID": "ING0099",
+        "name": "avocado oil",
+        "unitQuantity": "1%tbsp%(14.0 g) ",
+        "type": "lunch",
+        "day": 10
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG0218",
+        "name": "carrots",
+        "unitQuantity": "1%cup chopped%(128.0 g) ",
+        "type": "lunch",
+        "day": 10
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1001343",
+        "name": "raw sea bass",
+        "unitQuantity": "6%oz%(169.98 g) ",
+        "type": "lunch",
+        "day": 10
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211552852",
+        "name": "cauliflower, raw",
+        "unitQuantity": "1%cup%(107.0 g) ",
+        "type": "lunch",
+        "day": 10
+    },
+    {
+        "servingSize": 1,
+        "passioID": "GRA0177",
+        "name": "dry farro",
+        "unitQuantity": "0.5%cup%(104.0 g) ",
+        "type": "lunch",
+        "day": 10
+    },
+    {
+        "servingSize": 1,
+        "passioID": "SAU0034",
+        "name": "soy sauce",
+        "unitQuantity": "1%tsp%(6.0 g) ",
+        "type": "dinner",
+        "day": 10
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1628606732467",
+        "name": "sesame seeds",
+        "unitQuantity": "2%tbsp%(18.0 g) ",
+        "type": "dinner",
+        "day": 10
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG0111",
+        "name": "cabbage",
+        "unitQuantity": "1%cup%(89.0 g) ",
+        "type": "dinner",
+        "day": 10
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211553547",
+        "name": "quinoa, uncooked",
+        "unitQuantity": "0.5%cup%(85.0 g) ",
+        "type": "dinner",
+        "day": 10
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211568653",
+        "name": "beef, flank, steak, separable lean only, trimmed to 0\" fat, all grades, raw",
+        "unitQuantity": "5%oz%(141.25 g) ",
+        "type": "dinner",
+        "day": 10
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG0523",
+        "name": "clementines",
+        "unitQuantity": "1%fruit%(74.0 g) ",
+        "type": "snack",
+        "day": 10
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211585405",
+        "name": "pistachio nuts",
+        "unitQuantity": "0.5%cup%(29.0 g) ",
+        "type": "snack",
+        "day": 10
+    },
+    {
+        "servingSize": 1,
+        "passioID": "MEA0020",
+        "name": "boiled egg whites",
+        "unitQuantity": "3%egg white%(99.0 g) ",
+        "type": "breakfast",
+        "day": 11
+    },
+    {
+        "servingSize": 1,
+        "passioID": "BEV0036",
+        "name": "coffee",
+        "unitQuantity": "8%fl oz%(236.8 g) ",
+        "type": "breakfast",
+        "day": 11
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211490622",
+        "name": "vanilla almondmilk non-dairy creamer, aldi",
+        "unitQuantity": "1%tbsp%(15.0 g) ",
+        "type": "breakfast",
+        "day": 11
+    },
+    {
+        "servingSize": 1,
+        "passioID": "DIP0017",
+        "name": "almond butter",
+        "unitQuantity": "2%tbsp%(32.0 g) ",
+        "type": "breakfast",
+        "day": 11
+    },
+    {
+        "servingSize": 1,
+        "passioID": "ING0003",
+        "name": "stevia in the raw",
+        "unitQuantity": "1%individual packet%(1.0 g) ",
+        "type": "breakfast",
+        "day": 11
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG0023",
+        "name": "banana",
+        "unitQuantity": "1%large (8\" to 8-7/8\" long)%(136.0 g) ",
+        "type": "breakfast",
+        "day": 11
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1003540",
+        "name": "cinnamon extract",
+        "unitQuantity": "2%tsp%(10.0 g) ",
+        "type": "breakfast",
+        "day": 11
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211570943",
+        "name": "oats, raw",
+        "unitQuantity": "0.5%cup%(40.5 g) ",
+        "type": "breakfast",
+        "day": 11
+    },
+    {
+        "servingSize": 1,
+        "passioID": "ING0090",
+        "name": "olive oil",
+        "unitQuantity": "0.5%tbsp%(7.5 g) ",
+        "type": "lunch",
+        "day": 11
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211585558",
+        "name": "raw berries",
+        "unitQuantity": "1%cup%(144.0 g) ",
+        "type": "lunch",
+        "day": 11
+    },
+    {
+        "servingSize": 1,
+        "passioID": "SAU0020",
+        "name": "oil and vinegar dressing",
+        "unitQuantity": "0.5%tbsp%(7.5 g) ",
+        "type": "lunch",
+        "day": 11
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1628606734678",
+        "name": "kale, raw",
+        "unitQuantity": "2%cup%(50.0 g) ",
+        "type": "lunch",
+        "day": 11
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211581669",
+        "name": "pumpkin seeds, plain",
+        "unitQuantity": "0.1%cup, in shell, yields%(6.21 g) ",
+        "type": "lunch",
+        "day": 11
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211553547",
+        "name": "quinoa, uncooked",
+        "unitQuantity": "0.5%cup%(85.0 g) ",
+        "type": "lunch",
+        "day": 11
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211571950",
+        "name": "chicken breast filet",
+        "unitQuantity": "170%gram%(170.0 g) ",
+        "type": "lunch",
+        "day": 11
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG0145",
+        "name": "green beans",
+        "unitQuantity": "1%cup, fresh%(130.0 g) ",
+        "type": "dinner",
+        "day": 11
+    },
+    {
+        "servingSize": 1,
+        "passioID": "ING0099",
+        "name": "avocado oil",
+        "unitQuantity": "2%tbsp%(28.0 g) ",
+        "type": "dinner",
+        "day": 11
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211203639",
+        "name": "tuna, fresh, raw",
+        "unitQuantity": "5%oz, boneless, raw%(141.75 g) ",
+        "type": "dinner",
+        "day": 11
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG0189",
+        "name": "okra",
+        "unitQuantity": "1%cup slices%(160.0 g) ",
+        "type": "dinner",
+        "day": 11
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG0021",
+        "name": "avocado",
+        "unitQuantity": "0.5%fruit, without skin and seed%(68.0 g) ",
+        "type": "snack",
+        "day": 11
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211567984",
+        "name": "dave's killer bread, organic whole wheat bread",
+        "unitQuantity": "1%slice%(28.0 g) ",
+        "type": "snack",
+        "day": 11
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211573986",
+        "name": "bone broth",
+        "unitQuantity": "1%cup%(237.0 g) ",
+        "type": "snack",
+        "day": 11
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG0081",
+        "name": "pears",
+        "unitQuantity": "1%medium%(202.0 g) ",
+        "type": "snack",
+        "day": 11
+    },
+    {
+        "servingSize": 1,
+        "passioID": "NUT0014",
+        "name": "hemp seeds",
+        "unitQuantity": "3%tbsp%(30.0 g) ",
+        "type": "breakfast",
+        "day": 12
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211490622",
+        "name": "vanilla almondmilk non-dairy creamer, aldi",
+        "unitQuantity": "2%tbsp%(30.0 g) ",
+        "type": "breakfast",
+        "day": 12
+    },
+    {
+        "servingSize": 1,
+        "passioID": "BEV0264",
+        "name": "soy milk",
+        "unitQuantity": "1%cup%(240.0 g) ",
+        "type": "breakfast",
+        "day": 12
+    },
+    {
+        "servingSize": 1,
+        "passioID": "ING0003",
+        "name": "stevia in the raw",
+        "unitQuantity": "1%individual packet%(1.0 g) ",
+        "type": "breakfast",
+        "day": 12
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG0453",
+        "name": "green cauliflower",
+        "unitQuantity": "1%cup%(64.0 g) ",
+        "type": "breakfast",
+        "day": 12
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG2084",
+        "name": "pineapple cubes",
+        "unitQuantity": "1%cup, chunks%(165.0 g) ",
+        "type": "breakfast",
+        "day": 12
+    },
+    {
+        "servingSize": 1,
+        "passioID": "ING0030",
+        "name": "on protein powder",
+        "unitQuantity": "1%scoop%(32.0 g) ",
+        "type": "breakfast",
+        "day": 12
+    },
+    {
+        "servingSize": 1,
+        "passioID": "BEV0036",
+        "name": "coffee",
+        "unitQuantity": "8%fl oz%(236.8 g) ",
+        "type": "breakfast",
+        "day": 12
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG1127",
+        "name": "basil leaves",
+        "unitQuantity": "1%tbsp, chopped%(2.65 g) ",
+        "type": "lunch",
+        "day": 12
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211569069",
+        "name": "turkey breast, pre-basted, meat and skin, cooked, roasted",
+        "unitQuantity": "6%oz%(169.98 g) ",
+        "type": "lunch",
+        "day": 12
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG4277",
+        "name": "roasted eggplants",
+        "unitQuantity": "1%cup%(101.0 g) ",
+        "type": "lunch",
+        "day": 12
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG0083",
+        "name": "roasted sliced green zucchini",
+        "unitQuantity": "1%cup%(180.0 g) ",
+        "type": "lunch",
+        "day": 12
+    },
+    {
+        "servingSize": 1,
+        "passioID": "ING0090",
+        "name": "olive oil",
+        "unitQuantity": "2%tbsp%(30.0 g) ",
+        "type": "lunch",
+        "day": 12
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211581658",
+        "name": "sweet potato",
+        "unitQuantity": "0.5%cup, mashed%(125.0 g) ",
+        "type": "lunch",
+        "day": 12
+    },
+    {
+        "servingSize": 1,
+        "passioID": "SEA0029",
+        "name": "raw scallops",
+        "unitQuantity": "6%oz%(169.98 g) ",
+        "type": "dinner",
+        "day": 12
+    },
+    {
+        "servingSize": 1,
+        "passioID": "SAU2019",
+        "name": "tomato sauce",
+        "unitQuantity": "1%serving 1/2 cup%(132.0 g) ",
+        "type": "dinner",
+        "day": 12
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG0537",
+        "name": "frozen spinach",
+        "unitQuantity": "2%cup%(312.0 g) ",
+        "type": "dinner",
+        "day": 12
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211579194",
+        "name": "peeled & cut spaghetti squash",
+        "unitQuantity": "1%cup%(113.33 g) ",
+        "type": "dinner",
+        "day": 12
+    },
+    {
+        "servingSize": 1,
+        "passioID": "BEV0150",
+        "name": "herbal tea",
+        "unitQuantity": "8%fl oz%(236.8 g) ",
+        "type": "dinner",
+        "day": 12
+    },
+    {
+        "servingSize": 1,
+        "passioID": "ING0090",
+        "name": "olive oil",
+        "unitQuantity": "2%tbsp%(30.0 g) ",
+        "type": "dinner",
+        "day": 12
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211492623",
+        "name": "goat cheese  fairway",
+        "unitQuantity": "2%oz%(56.0 g) ",
+        "type": "snack",
+        "day": 12
+    },
+    {
+        "servingSize": 1,
+        "passioID": "DIP0006",
+        "name": "hummus",
+        "unitQuantity": "4%tbsp%(60.0 g) ",
+        "type": "snack",
+        "day": 12
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG0393",
+        "name": "cucumbers",
+        "unitQuantity": "1%cup%(119.0 g) ",
+        "type": "snack",
+        "day": 12
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211208199",
+        "name": "crackers, wheat",
+        "unitQuantity": "0.5%cup%(25.0 g) ",
+        "type": "snack",
+        "day": 12
+    },
+    {
+        "servingSize": 1,
+        "passioID": "ING0003",
+        "name": "stevia in the raw",
+        "unitQuantity": "1%individual packet%(1.0 g) ",
+        "type": "breakfast",
+        "day": 13
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211490622",
+        "name": "vanilla almondmilk non-dairy creamer, aldi",
+        "unitQuantity": "2%tbsp%(30.0 g) ",
+        "type": "breakfast",
+        "day": 13
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1628606734678",
+        "name": "kale, raw",
+        "unitQuantity": "1%cup%(25.0 g) ",
+        "type": "breakfast",
+        "day": 13
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG0107",
+        "name": "broccoli",
+        "unitQuantity": "0.5%cup, chopped or diced%(44.0 g) ",
+        "type": "breakfast",
+        "day": 13
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211492623",
+        "name": "goat cheese  fairway",
+        "unitQuantity": "2%oz%(56.0 g) ",
+        "type": "breakfast",
+        "day": 13
+    },
+    {
+        "servingSize": 1,
+        "passioID": "BEV0036",
+        "name": "coffee",
+        "unitQuantity": "8%fl oz%(236.8 g) ",
+        "type": "breakfast",
+        "day": 13
+    },
+    {
+        "servingSize": 1,
+        "passioID": "MEA0009",
+        "name": "white eggs in shell",
+        "unitQuantity": "2%large%(100.0 g) ",
+        "type": "breakfast",
+        "day": 13
+    },
+    {
+        "servingSize": 1,
+        "passioID": "DIP0031",
+        "name": "salsa verde",
+        "unitQuantity": "0.5%cup%(123.0 g) ",
+        "type": "lunch",
+        "day": 13
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211571717",
+        "name": "lean ground beef,  ibp",
+        "unitQuantity": "5%oz%(140.0 g) ",
+        "type": "lunch",
+        "day": 13
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG0021",
+        "name": "avocado",
+        "unitQuantity": "0.5%fruit, without skin and seed%(68.0 g) ",
+        "type": "lunch",
+        "day": 13
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG2105",
+        "name": "bell peppers",
+        "unitQuantity": "0.5%cup, chopped%(74.5 g) ",
+        "type": "lunch",
+        "day": 13
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211581636",
+        "name": "spinach, frozen, chopped or leaf, unprepared",
+        "unitQuantity": "1%cup%(156.0 g) ",
+        "type": "lunch",
+        "day": 13
+    },
+    {
+        "servingSize": 1,
+        "passioID": "GRA0177",
+        "name": "dry farro",
+        "unitQuantity": "0.5%cup%(104.0 g) ",
+        "type": "lunch",
+        "day": 13
+    },
+    {
+        "servingSize": 1,
+        "passioID": "ING0099",
+        "name": "avocado oil",
+        "unitQuantity": "2%tbsp%(28.0 g) ",
+        "type": "dinner",
+        "day": 13
+    },
+    {
+        "servingSize": 1,
+        "passioID": "MEA6015",
+        "name": "pork tenderloin",
+        "unitQuantity": "6%oz%(169.98 g) ",
+        "type": "dinner",
+        "day": 13
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG9221",
+        "name": "fresh rosemary",
+        "unitQuantity": "1%tsp%(0.7 g) ",
+        "type": "dinner",
+        "day": 13
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG0109",
+        "name": "brussel sprouts",
+        "unitQuantity": "1%cup%(88.0 g) ",
+        "type": "dinner",
+        "day": 13
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211581658",
+        "name": "sweet potato",
+        "unitQuantity": "0.5%cup, mashed%(125.0 g) ",
+        "type": "dinner",
+        "day": 13
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211579653",
+        "name": "thyme, fresh",
+        "unitQuantity": "1%tsp%(0.8 g) ",
+        "type": "dinner",
+        "day": 13
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211588650",
+        "name": "trader joe's, sparkling mineral water, lemon",
+        "unitQuantity": "12%fl oz%(360.0 g) ",
+        "type": "snack",
+        "day": 13
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211567984",
+        "name": "dave's killer bread, organic whole wheat bread",
+        "unitQuantity": "1%slice%(28.0 g) ",
+        "type": "snack",
+        "day": 13
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG0393",
+        "name": "cucumbers",
+        "unitQuantity": "0.5%cup%(59.5 g) ",
+        "type": "snack",
+        "day": 13
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211492553",
+        "name": "cottage cheese  spartan",
+        "unitQuantity": "0.5%cup%(113.0 g) ",
+        "type": "snack",
+        "day": 13
+    },
+    {
+        "servingSize": 1,
+        "passioID": "SEA0010",
+        "name": "smoked salmon",
+        "unitQuantity": "4%oz, boneless%(113.4 g) ",
+        "type": "snack",
+        "day": 13
+    },
+    {
+        "servingSize": 1,
+        "passioID": "ING0003",
+        "name": "stevia in the raw",
+        "unitQuantity": "1%individual packet%(1.0 g) ",
+        "type": "breakfast",
+        "day": 14
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211570943",
+        "name": "oats, raw",
+        "unitQuantity": "0.5%cup%(40.5 g) ",
+        "type": "breakfast",
+        "day": 14
+    },
+    {
+        "servingSize": 1,
+        "passioID": "DAI0115",
+        "name": "greek yogurt",
+        "unitQuantity": "1%cup%(245.0 g) ",
+        "type": "breakfast",
+        "day": 14
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211588177",
+        "name": "walnuts, raw",
+        "unitQuantity": "0.3%cup%(30.0 g) ",
+        "type": "breakfast",
+        "day": 14
+    },
+    {
+        "servingSize": 1,
+        "passioID": "BEV0036",
+        "name": "coffee",
+        "unitQuantity": "8%fl oz%(236.8 g) ",
+        "type": "breakfast",
+        "day": 14
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211490622",
+        "name": "vanilla almondmilk non-dairy creamer, aldi",
+        "unitQuantity": "2%tbsp%(30.0 g) ",
+        "type": "breakfast",
+        "day": 14
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG0038",
+        "name": "raspberries",
+        "unitQuantity": "1%cup%(123.0 g) ",
+        "type": "breakfast",
+        "day": 14
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211580429",
+        "name": "red lentil penne, barilla",
+        "unitQuantity": "4%oz%(112.0 g) ",
+        "type": "lunch",
+        "day": 14
+    },
+    {
+        "servingSize": 1,
+        "passioID": "SEA2123",
+        "name": "shrimp",
+        "unitQuantity": "5%oz, cooked%(141.75 g) ",
+        "type": "lunch",
+        "day": 14
+    },
+    {
+        "servingSize": 1,
+        "passioID": "DAI0024",
+        "name": "feta cheese cubes",
+        "unitQuantity": "2%oz%(56.0 g) ",
+        "type": "lunch",
+        "day": 14
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211547562",
+        "name": "simply organic, italian seasoning",
+        "unitQuantity": "1%tsp%(1.2 g) ",
+        "type": "lunch",
+        "day": 14
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG0111",
+        "name": "cabbage",
+        "unitQuantity": "2%cup%(178.0 g) ",
+        "type": "lunch",
+        "day": 14
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG8333",
+        "name": "red bell peppers",
+        "unitQuantity": "0.5%cup, chopped%(74.5 g) ",
+        "type": "lunch",
+        "day": 14
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG2075",
+        "name": "watermelon",
+        "unitQuantity": "1%cup, balls%(154.0 g) ",
+        "type": "dinner",
+        "day": 14
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211553547",
+        "name": "quinoa, uncooked",
+        "unitQuantity": "0.5%cup%(85.0 g) ",
+        "type": "dinner",
+        "day": 14
+    },
+    {
+        "servingSize": 1,
+        "passioID": "BEV0150",
+        "name": "herbal tea",
+        "unitQuantity": "8%fl oz%(236.8 g) ",
+        "type": "dinner",
+        "day": 14
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG0021",
+        "name": "avocado",
+        "unitQuantity": "0.5%fruit, without skin and seed%(68.0 g) ",
+        "type": "dinner",
+        "day": 14
+    },
+    {
+        "servingSize": 1,
+        "passioID": "VEG0149",
+        "name": "arugula",
+        "unitQuantity": "2%cup%(40.0 g) ",
+        "type": "dinner",
+        "day": 14
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1001709",
+        "name": "shredded white chicken pieces",
+        "unitQuantity": "5%oz%(141.65 g) ",
+        "type": "dinner",
+        "day": 14
+    },
+    {
+        "servingSize": 1,
+        "passioID": "NUT0014",
+        "name": "hemp seeds",
+        "unitQuantity": "2%tbsp%(20.0 g) ",
+        "type": "snack",
+        "day": 14
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1002459",
+        "name": "boxed protein shakes",
+        "unitQuantity": "1%shake%(330.0 g) ",
+        "type": "snack",
+        "day": 14
+    },
+    {
+        "servingSize": 1,
+        "passioID": "1603211554335",
+        "name": "mango, raw",
+        "unitQuantity": "0.5%cup, sliced%(82.5 g) ",
+        "type": "snack",
+        "day": 14
+    }
+]
