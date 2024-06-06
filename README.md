@@ -3,7 +3,16 @@
 <img src='./media/header.png'>
 
 
-## Installation
+
+
+## Minimum Requirements
+
+|    Platform         | Minimum Requirements | 
+|-------------|---------|
+| **Android** | SDK 26+ |
+| **iOS**     | 13.0+   |
+
+# Installation
 
 
 #### Step 1: Create an .npmrc file in the root of your project with the following lines replacing GITHUB_ACCESS_TOKEN with the token you've created.
@@ -73,13 +82,16 @@ dependencies {
 ####  Android Permission
 
 ```
-<uses-permission android:name="android.permission.CAMERA" />
+  <uses-permission android:name="android.permission.INTERNET" />
+  <uses-permission android:name="android.permission.CAMERA" />
+  <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
 ```
 
 
 # Usage example
 
- ### Note: Ensure your SDK is configured correctly before launching the Nutrition AI module.
+
+### Note: Ensure your SDK is configured correctly before launching the Nutrition AI module.
 
 ## Using Internal Services
 
@@ -90,10 +102,19 @@ import {
   BrandingProvider,
   NutritionNavigator,
   ServicesProvider,
+  usePassioConfig,
 } from '@passiolife/nutrition-ai-ui-ux';
 import { NavigationContainer } from '@react-navigation/native';
 
 export default function App() {
+
+  const { isReady } = usePassioConfig({ key: "YOUR_PASSIO_KEY" });
+
+  if (!isReady) {
+    return <Loading />;
+  }
+
+
   return (
     <ServicesProvider>
       <BrandingProvider>
@@ -324,6 +345,13 @@ export default function App() {
     dataService,
     analyticsService,
   };
+
+    const { isReady } = usePassioConfig({ key: "YOUR_PASSIO_KEY" });
+
+  if (!isReady) {
+    return <Loading />;
+  }
+
 
   return (
     <ServicesProvider services={services}>
