@@ -1,5 +1,4 @@
 import React from 'react';
-import services from './services';
 import {
   BrandingProvider,
   NutritionNavigator,
@@ -19,7 +18,7 @@ export default function App() {
   }
 
   return (
-    <ServicesProvider services={services}>
+    <ServicesProvider>
       <BrandingProvider branding={branding}>
         <NavigationContainer>
           <NutritionNavigator />

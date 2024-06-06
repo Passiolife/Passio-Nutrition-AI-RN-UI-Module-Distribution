@@ -65,10 +65,10 @@ export const BackNavigation: React.FC<Props> = (props) => {
                     if (navigation.canGoBack()) {
                       navigation.goBack();
                     } else {
-                      entry.onBackToHost();
+                      entry?.onBackToHost?.();
                     }
                   } catch (e) {
-                    entry.onBackToHost();
+                    entry?.onBackToHost?.();
                   }
                 }
               }}
