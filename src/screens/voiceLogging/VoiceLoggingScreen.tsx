@@ -1,4 +1,4 @@
-import { Image, SafeAreaView, View } from 'react-native';
+import { ActivityIndicator, Image, SafeAreaView, View } from 'react-native';
 
 import type { MealLabel } from '../../models';
 import React from 'react';
@@ -39,43 +39,47 @@ export const VoiceLoggingScreen = gestureHandlerRootHOC(() => {
     <>
       <BackNavigation title={'Voice Logging'} />
       <SafeAreaView style={styles.container}>
-        <View style={styles.contentView}>
-          <View style={styles.textView}>
-            {searchQuery.length > 0 ? (
-              <View style={styles.textWrapper}>
-                <Text weight="400" size="_14px" numberOfLines={3}>
-                  {searchQuery}
-                </Text>
-              </View>
-            ) : null}
+        {searchQuery.length > 0 && (
+          <View style={styles.searchQuery}>
+            <Text weight="400" size="_14px" numberOfLines={5}>
+              {searchQuery}
+            </Text>
           </View>
-          <View>
-            {isRecording ? (
-              <>
-                <Image
-                  source={speeking_wave}
-                  resizeMode="stretch"
-                  style={styles.speekingImg}
-                />
-              </>
-            ) : isFetchingResponse ? (
-              <></>
-            ) : (
-              <>
-                <Text size="_16px" weight="400">
-                  Tap{' '}
-                  <Text size="_16px" weight="600">
-                    Start Listening,
-                  </Text>{' '}
-                  then say something like:
-                </Text>
-                <Text size="_16px" weight="400" style={styles.contentText}>
-                  “I had one blueberry muffin and a cup of green tea for my
-                  breakfast”
-                </Text>
-              </>
-            )}
+        )}
+        {isRecording && (
+          <View style={styles.imageContainer}>
+            <Image
+              source={speeking_wave}
+              resizeMode="contain"
+              style={styles.speekingImg}
+            />
           </View>
+        )}
+
+        {isFetchingResponse && (
+          <View style={styles.generatingResultLoading}>
+            <ActivityIndicator style={{ marginVertical: 8 }} />
+            <Text>Generating results...</Text>
+          </View>
+        )}
+
+        {!isRecording && searchQuery.length === 0 && (
+          <View style={styles.defaultText}>
+            <Text size="_16px" weight="400">
+              Tap{' '}
+              <Text size="_16px" weight="600">
+                Start Listening,
+              </Text>{' '}
+              then say something like:
+            </Text>
+            <Text size="_16px" weight="400" style={styles.contentText}>
+              “I had one blueberry muffin and a cup of green tea for my
+              breakfast”
+            </Text>
+          </View>
+        )}
+
+        {!isFetchingResponse && (
           <View style={styles.btnView}>
             <BasicButton
               text={!isRecording ? 'Start Listening' : 'Stop Listening'}
@@ -90,7 +94,7 @@ export const VoiceLoggingScreen = gestureHandlerRootHOC(() => {
               }
             />
           </View>
-        </View>
+        )}
       </SafeAreaView>
 
       <BottomSheet

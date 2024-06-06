@@ -49,6 +49,7 @@ export function useVoiceLogging() {
         bottomSheetModalRef.current?.expand();
         setPassioSpeechRecognitionModel(val);
       } else {
+        setSearchQuery('');
         Alert.alert("Sorry we didn't recognize your input, please try again");
       }
     } catch (error) {
