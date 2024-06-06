@@ -19,6 +19,7 @@ const branding: Branding = {
   gray300: 'rgba(209, 213, 219, 1)',
   indigo50: 'rgba(238, 242, 255, 1)',
   error: 'rgba(239, 68, 68, 1)',
+  card: 'white',
 };
 
 export default branding;

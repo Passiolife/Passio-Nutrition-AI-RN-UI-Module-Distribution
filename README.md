@@ -3,16 +3,8 @@
 <img src='./media/header.png'>
 
 
+## Installation
 
-
-## Minimum Requirements
-
-|    Platform         | Minimum Requirements | 
-|-------------|---------|
-| **Android** | SDK 26+ |
-| **iOS**     | 13.0+   |
-
-# Installation
 
 #### Step 1: Create an .npmrc file in the root of your project with the following lines replacing GITHUB_ACCESS_TOKEN with the token you've created.
 ```sh
@@ -81,15 +73,13 @@ dependencies {
 ####  Android Permission
 
 ```
-  <uses-permission android:name="android.permission.INTERNET" />
-  <uses-permission android:name="android.permission.CAMERA" />
-  <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+<uses-permission android:name="android.permission.CAMERA" />
 ```
 
 
 # Usage example
 
-
+ ### Note: Ensure your SDK is configured correctly before launching the Nutrition AI module.
 
 ## Using Internal Services
 
@@ -100,19 +90,10 @@ import {
   BrandingProvider,
   NutritionNavigator,
   ServicesProvider,
-  usePassioConfig,
 } from '@passiolife/nutrition-ai-ui-ux';
 import { NavigationContainer } from '@react-navigation/native';
 
 export default function App() {
-
-  const { isReady } = usePassioConfig({ key: "YOUR_PASSIO_KEY" });
-
-  if (!isReady) {
-    return <Loading />;
-  }
-
-
   return (
     <ServicesProvider>
       <BrandingProvider>
@@ -344,13 +325,6 @@ export default function App() {
     analyticsService,
   };
 
-    const { isReady } = usePassioConfig({ key: "YOUR_PASSIO_KEY" });
-
-  if (!isReady) {
-    return <Loading />;
-  }
-
-
   return (
     <ServicesProvider services={services}>
       <BrandingProvider branding={branding}>
@@ -441,3 +415,79 @@ If your project not runnable in IOS then follow below steps
 - restart system
 - yarn at root
 - open xcode
+
+
+### Reference Properties  
+
+```js
+export interface FoodLog extends ServingInfo {
+  name: string;
+  uuid: string;
+  passioID: PassioID;
+  refCode?: string;
+  eventTimestamp: string;
+  isOpenFood?: boolean;
+  longName?: string;
+  meal: MealLabel;
+  imageName: string;
+  entityType: PassioIDEntityType | 'user-recipe';
+  foodItems: FoodItem[];
+}
+```
+
+```js
+export interface ServingInfo {
+  selectedUnit: string;
+  selectedQuantity: number;
+  servingSizes: ServingSize[];
+  servingUnits: ServingUnit[];
+  computedWeight?: ComputedWeight;
+}
+```
+
+```js
+export interface FoodItem extends ServingInfo {
+  passioID: PassioID;
+  name: string;
+  imageName: string;
+  entityType: PassioIDEntityType;
+  computedWeight: ComputedWeight;
+  ingredientsDescription?: string;
+  barcode?: string;
+  nutrients: Nutrient[];
+}
+```
+
+```js
+export interface Nutrient {
+  id: NutrientType;
+  amount: number;
+  unit: string;
+}
+```
+
+```js
+export interface NutritionProfile {
+  caloriesTarget: number;
+  carbsPercentage: number;
+  proteinPercentage: number;
+  fatPercentage: number;
+  unitLength: UnitSystem;
+  unitsWeight: UnitSystem;
+  gender: 'male' | 'female';
+  height: number;
+  age: number;
+  weight: number;
+  activityLevel: ActivityLevelType;
+  diet?: DietType;
+  name: string;
+  caloriesDeficit?: CaloriesDeficit;
+  targetWater?: number;
+  targetWeight?: number;
+  breakFastNotification?: boolean;
+  dinnerNotification?: boolean;
+  lunchNotification?: boolean;
+  mealPlan?: string;
+}
+
+```

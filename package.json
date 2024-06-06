@@ -1,8 +1,9 @@
 {
   "name": "@passiolife/nutrition-ai-ui-ux",
-  "version": "3.0.4-alpha-1",
+  "version": "3.1.0-alpha-1",
   "description": "A white-labeled nutrition tracking module implemented in React Native",
-  "license": "UNLICENSED",
+  "license": "MIT",
+  "private": false,
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
   "types": "lib/typescript/index.d.ts",
@@ -38,7 +39,16 @@
   "keywords": [
     "react-native",
     "ios",
-    "android"
+    "android",
+    "passio",
+    "passiolife",
+    "nutrition",
+    "food",
+    "nutritionai",
+    "food scanner",
+    "nutrition information",
+    "ai advisor",
+    "health"
   ],
   "repository": "https://github.com/Passiolife/Passio-Nutrition-AI-RN-UI-Module-Distribution",
   "author": "Rami, Chirag (https://www.passiolife.com)",
@@ -49,11 +59,17 @@
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/Passiolife/Passio-Nutrition-AI-RN-UI-Module-Distribution/blob/master/LICENSE"
+    }
+  ],
   "dependencies": {
     "@babel/runtime": "^7.23.8",
     "@gorhom/bottom-sheet": "^4.6.1",
     "@notifee/react-native": "^7.8.2",
-    "@passiolife/nutritionai-react-native-sdk-v3": "3.0.4",
+    "@passiolife/nutritionai-react-native-sdk-v3": "3.1.0-1",
     "@react-native-async-storage/async-storage": "^1.21.0",
     "@react-native-community/datetimepicker": "^7.6.3",
     "@react-native-community/slider": "^4.5.0",
