@@ -3,7 +3,6 @@
   "version": "3.1.0-alpha-1",
   "description": "A white-labeled nutrition tracking module implemented in React Native",
   "license": "MIT",
-  "private": false,
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
   "types": "lib/typescript/index.d.ts",
@@ -50,14 +49,16 @@
     "ai advisor",
     "health"
   ],
-  "repository": "https://github.com/Passiolife/Passio-Nutrition-AI-RN-UI-Module-Distribution",
+  "repository": {
+    "url": "git+https://github.com/Passiolife/Passio-Nutrition-AI-RN-UI-Module-Distribution.git"
+  },
   "author": "Rami, Chirag (https://www.passiolife.com)",
   "bugs": {
     "url": "https://github.com/Passiolife/Passio-Nutrition-AI-RN-UI-Module-Distribution/issues"
   },
   "homepage": "https://github.com/Passiolife/Passio-Nutrition-AI-RN-UI-Module-Distribution#readme",
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
+    "registry": "https://npm.pkg.github.com/passiolife"
   },
   "licenses": [
     {
