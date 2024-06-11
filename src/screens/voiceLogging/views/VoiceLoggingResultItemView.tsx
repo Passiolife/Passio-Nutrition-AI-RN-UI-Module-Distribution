@@ -28,10 +28,9 @@ export const VoiceLoggingResultItemView = (props: Props) => {
       <View
         style={{
           flex: 1,
-          justifyContent: 'center',
         }}
       >
-        <Text weight="600" size="_12px" style={[styles.text]}>
+        <Text weight="700" size="_12px" style={styles.text}>
           {foodName}
         </Text>
         <Text
@@ -52,12 +51,19 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
     backgroundColor: 'rgba(238, 242, 255, 1)',
     flex: 1,
-    margin: 8,
+    marginVertical: 4,
     paddingVertical: 8,
     borderRadius: 8,
+    shadowColor: '#00000029',
+    shadowOpacity: 1,
+    shadowOffset: {
+      width: 1.0,
+      height: 1.0,
+    },
+    shadowRadius: 0.5,
+    elevation: 1,
   },
   imageContainer: {
     width: 42,
@@ -83,7 +89,7 @@ const styles = StyleSheet.create({
   text: {
     textTransform: 'capitalize',
     marginStart: 16,
-    flex: 1,
+    marginVertical: 2,
     marginRight: 10,
   },
   selectedAddIcon: {
@@ -91,7 +97,5 @@ const styles = StyleSheet.create({
     borderColor: '#4F46E5',
     backgroundColor: '#4F46E5',
   },
-  secondaryText: {
-    marginTop: -4,
-  },
+  secondaryText: {},
 });

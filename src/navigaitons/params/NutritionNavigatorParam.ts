@@ -20,6 +20,7 @@ export type Module =
   | 'Search'
   | 'Other'
   | 'Favorites'
+  | 'VoiceLogging'
   | 'Ingredient';
 
 export interface HomeBottom {

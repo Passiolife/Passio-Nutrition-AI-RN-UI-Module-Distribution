@@ -17,7 +17,8 @@ export const voiceLoggingScreenStyle = ({ backgroundColor }: Branding) =>
       },
       shadowRadius: 10,
       shadowOpacity: 1.0,
-      elevation: 1,
+      elevation: 10,
+      flex: 1,
     },
     contentView: {
       flex: 1,
@@ -60,8 +61,13 @@ export const voiceLoggingScreenStyle = ({ backgroundColor }: Branding) =>
       borderRadius: 8,
     },
     speekingImg: {
-      height: height / 2,
+      height: height / 3,
       width: width,
+      transform: [
+        {
+          scale: 2,
+        },
+      ],
     },
     micIcon: {
       height: 20,
@@ -80,7 +86,7 @@ export const voiceLoggingScreenStyle = ({ backgroundColor }: Branding) =>
     },
     imageContainer: {
       position: 'absolute',
-      top: 120,
+      top: 200,
       bottom: 0,
       left: 0,
       right: 0,

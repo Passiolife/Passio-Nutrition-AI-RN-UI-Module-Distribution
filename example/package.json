@@ -10,6 +10,7 @@
     "bundle-ios": "react-native bundle --dev false --entry-file index.js --bundle-output ios/main.jsbundle --platform ios",
     "start": "react-native start",
     "test": "jest",
+    "reverse": "adb reverse tcp:8081 tcp:8081",
     "bundle-android": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/",
     "release-apk": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/build/intermediates/res/merged/release/ && rm -rf android/app/src/main/res/drawable-* && rm -rf android/app/src/main/res/raw/*",
     "reinstall": "cd ..; yarn prepare && cd example; rm -rf node_modules/ && rm -rf yarn.lock && yarn && cd ios; pod install; cd .."
