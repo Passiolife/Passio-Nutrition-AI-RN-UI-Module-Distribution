@@ -34,8 +34,7 @@
     "bootstrap": "yarn example && yarn && yarn pods",
     "android": "cd example && yarn android",
     "ios": "cd example && yarn ios",
-    "reverse": "adb reverse tcp:8081 tcp:8081",
-    "postinstall": "patch-package && husky"
+    "reverse": "adb reverse tcp:8081 tcp:8081"
   },
   "keywords": [
     "react-native",

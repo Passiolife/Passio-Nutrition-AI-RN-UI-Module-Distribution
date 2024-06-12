@@ -20,8 +20,6 @@ import { useServices } from '../../contexts';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import type BottomSheet from '@gorhom/bottom-sheet';
 
-import { Alert } from 'react-native';
-
 export type VoiceLoggingScreenNavigationProps = StackNavigationProp<
   ParamList,
   'VoiceLoggingScreen'
