@@ -96,11 +96,9 @@ export function useFoodSearch() {
           screen: 'MealLogScreen',
         });
       }
-
       route.params.onSaveData?.(item);
     } else {
       route.params.onSaveData?.(item);
-      navigation.replace;
     }
   };
 

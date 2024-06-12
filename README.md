@@ -3,16 +3,7 @@
 <img src='./media/header.png'>
 
 
-
-
-## Minimum Requirements
-
-|    Platform         | Minimum Requirements | 
-|-------------|---------|
-| **Android** | SDK 26+ |
-| **iOS**     | 13.0+   |
-
-# Installation
+## Installation
 
 
 #### Step 1: Create an .npmrc file in the root of your project with the following lines replacing GITHUB_ACCESS_TOKEN with the token you've created.
@@ -82,16 +73,34 @@ dependencies {
 ####  Android Permission
 
 ```
-  <uses-permission android:name="android.permission.INTERNET" />
-  <uses-permission android:name="android.permission.CAMERA" />
-  <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+<uses-permission android:name="android.permission.CAMERA" />
+
 ```
+### Required Dependencies
+
+| Dependency                   | Required Version |
+|------------------------------|------------------|
+| react-native-reanimated      | >=^3.6.1         |
+| react-native-gesture-handler | >=2.16.0         |
+| react-native-safe-area-context | >=4.8.2       |
+
+⚠️ Issue
+
+If you find a duplicate entry for '@react-navigation', ensure that the your project navigation dependencies are match our navigation dependencies require versions. 
+
+### Additional Navigation Dependencies
+
+| Dependency                          | Required Version |
+|-------------------------------------|------------------|
+| @react-navigation/native            | >=^6.1.17        |
+| @react-navigation/native-stack      | >=6.1.17         |
+| @react-navigation/stack             | >=6.3.29         |
+| @react-navigation/bottom-tabs      | >=6.5.20         |
 
 
 # Usage example
 
-
-### Note: Ensure your SDK is configured correctly before launching the Nutrition AI module.
+ ### Note: Ensure your SDK is configured correctly before launching the Nutrition AI module.
 
 ## Using Internal Services
 
@@ -102,30 +111,26 @@ import {
   BrandingProvider,
   NutritionNavigator,
   ServicesProvider,
-  usePassioConfig,
+  usePassioConfig
 } from '@passiolife/nutrition-ai-ui-ux';
 import { NavigationContainer } from '@react-navigation/native';
 
 export default function App() {
 
-  const { isReady } = usePassioConfig({ key: "YOUR_PASSIO_KEY" });
+ const { isReady } = usePassioConfig({ key: "YOUR_PASSIO_KEY" });
 
   if (!isReady) {
     return <Loading />;
   }
 
-
   return (
     <ServicesProvider>
       <BrandingProvider>
-        <NavigationContainer>
           <NutritionNavigator />
-        </NavigationContainer>
       </BrandingProvider>
     </ServicesProvider>
   );
 }
-
 
 
 ```
@@ -336,6 +341,7 @@ import {
   BrandingProvider,
   NutritionNavigator,
   ServicesProvider,
+  usePassioConfig
 } from '@passiolife/nutrition-ai-ui-ux';
 import { NavigationContainer } from '@react-navigation/native';
 
@@ -346,12 +352,12 @@ export default function App() {
     analyticsService,
   };
 
-    const { isReady } = usePassioConfig({ key: "YOUR_PASSIO_KEY" });
+
+const { isReady } = usePassioConfig({ key: "YOUR_PASSIO_KEY" });
 
   if (!isReady) {
     return <Loading />;
   }
-
 
   return (
     <ServicesProvider services={services}>
@@ -443,6 +449,37 @@ If your project not runnable in IOS then follow below steps
 - restart system
 - yarn at root
 - open xcode
+
+If you find a duplicate entry for '@react-navigation', ensure that the navigation dependencies are listed above the other '@react-navigation' dependencies
+
+To resolve the issue, you can use the following resolutions in your package.json:
+
+```
+"resolutions": {
+    "@types/react": "18.0.12",
+    "react-native": "0.68.1",
+    "react-native-reanimated": "3.6.1",
+    "@react-native-community/slider": "4.5.0",
+    "react-native-safe-area-context": "4.8.2",
+    ...others
+  }
+  ```
+
+
+### ⚠️ Issue Voice logging
+
+#### Notes on Android
+
+Even after all the permissions are correct in Android, there is one last thing to make sure this libray is working fine on Android. Please make sure the device has Google Speech Recognizing Engine such as com.google.android.googlequicksearchbox by calling Voice.getSpeechRecognitionServices(). Since Android phones can be configured with so many options, even if a device has googlequicksearchbox engine, it could be configured to use other services. You can check which serivce is used for Voice Assistive App in following steps for most Android phones:
+
+Settings > App Management > Default App > Assistive App and Voice Input > Assistive App
+
+Above flow can vary depending on the Android models and manufactures. For Huawei phones, there might be a chance that the device cannot install Google Services.
+
+How can I get com.google.android.googlequicksearchbox in the device?
+
+Please ask users to install Google Search App.
+
 
 
 ### Reference Properties  

@@ -1,9 +1,14 @@
+import Voice, {
+  SpeechEndEvent,
+  SpeechResultsEvent,
+  SpeechStartEvent,
+} from '@react-native-voice/voice';
 import {
   PassioSDK,
   PassioSpeechRecognitionModel,
 } from '@passiolife/nutritionai-react-native-sdk-v3';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { getLogToDate, mealLabelByDate } from '../../utils';
+import { ShowToast, getLogToDate, mealLabelByDate } from '../../utils';
 import {
   useNavigation,
   useRoute,
@@ -14,12 +19,6 @@ import { convertPassioFoodItemToFoodLog } from '../../utils/V3Utils';
 import { useServices } from '../../contexts';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import type BottomSheet from '@gorhom/bottom-sheet';
-import Voice, {
-  SpeechEndEvent,
-  SpeechResultsEvent,
-  SpeechStartEvent,
-} from '@react-native-voice/voice';
-import { Alert } from 'react-native';
 
 export type VoiceLoggingScreenNavigationProps = StackNavigationProp<
   ParamList,
@@ -36,6 +35,7 @@ export function useVoiceLogging() {
   const [isRecording, setIsRecord] = useState(false);
   const [isFetchingResponse, setFetchResponse] = useState(false);
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const searchQueryRef = useRef<string>('');
 
   const [PassioSpeechRecognitionResult, setPassioSpeechRecognitionModel] =
     useState<PassioSpeechRecognitionModel[] | null>(null);
@@ -50,13 +50,37 @@ export function useVoiceLogging() {
         setPassioSpeechRecognitionModel(val);
       } else {
         setSearchQuery('');
-        Alert.alert("Sorry we didn't recognize your input, please try again");
+        ShowToast("Sorry we didn't recognize your input, please try again");
       }
     } catch (error) {
     } finally {
       setFetchResponse(false);
     }
   }, []);
+
+  const speechStartHandler = (_e: SpeechStartEvent) => {
+    setSearchQuery('');
+    setIsRecord(true);
+  };
+  const speechEndHandler = (_e: SpeechEndEvent) => {
+    setIsRecord(false);
+    setFetchResponse(true);
+    setTimeout(() => {
+      if (searchQueryRef.current.length > 0) {
+        recognizeSpeechRemote(searchQueryRef.current);
+      } else {
+        setFetchResponse(false);
+      }
+    }, 500);
+  };
+
+  const speechResultsHandler = (e: SpeechResultsEvent) => {
+    if (e && e.value && e.value.length > 0) {
+      const text = e.value[0];
+      searchQueryRef.current = text;
+      setSearchQuery(text);
+    }
+  };
 
   const onClearPress = () => {
     setPassioSpeechRecognitionModel(null);
@@ -103,50 +127,29 @@ export function useVoiceLogging() {
   };
 
   const onSearchManuallyPress = () => {
-    navigation.navigate('FoodSearchScreen', {
-      logToDate: route.params.logToDate,
-      logToMeal: route.params.logToMeal,
-      from: 'MealLog',
+    navigation.replace('FoodSearchScreen', {
+      from: 'Search',
     });
   };
 
-  const speechStartHandler = (_e: SpeechStartEvent) => {
-    setIsRecord(true);
-  };
-  const speechEndHandler = (_e: SpeechEndEvent) => {
-    setIsRecord(false);
-  };
-
-  const speechResultsHandler = (e: SpeechResultsEvent) => {
-    if (e && e.value && e.value.length > 0) {
-      const text = e.value[0];
-      setSearchQuery(text);
-    }
-  };
-
-  const onRecordingPress = () => {
+  const onRecordingPress = async () => {
     if (isRecording) {
       stopRecording();
-      setIsRecord(false);
     } else {
-      setSearchQuery('');
       startRecording();
-      setIsRecord(true);
     }
   };
   const startRecording = async () => {
-    setIsRecord(true);
     try {
       await Voice.start('en-Us');
-    } catch (error) {}
+    } catch (error) {
+      ShowToast('Something went wrong while starting recording');
+    }
   };
   const stopRecording = async () => {
     try {
-      await Voice.stop();
       setIsRecord(false);
-      if (searchQuery.length > 0) {
-        recognizeSpeechRemote(searchQuery);
-      }
+      await Voice.stop();
     } catch (error) {}
   };
 
@@ -154,9 +157,11 @@ export function useVoiceLogging() {
     Voice.onSpeechStart = speechStartHandler;
     Voice.onSpeechEnd = speechEndHandler;
     Voice.onSpeechResults = speechResultsHandler;
+    Voice.onSpeechPartialResults = speechResultsHandler;
     return () => {
       Voice.destroy().then(Voice.removeAllListeners);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return {

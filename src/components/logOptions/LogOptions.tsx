@@ -34,10 +34,10 @@ export const LogOptions = ({
 
   return (
     <View style={styles.main}>
-      {renderItem(ICONS.Mic, 'Voice Logging', onVoiceLogging)}
-      {renderItem(ICONS.logOptionFoodScanner, 'Food Scanner', onFoodScanner)}
-      {renderItem(ICONS.logOptionSearch, 'Text Search', onTextSearch)}
       {renderItem(ICONS.logOptionFavorite, 'Favorites', onFavorite)}
+      {renderItem(ICONS.Mic, 'Voice Logging', onVoiceLogging)}
+      {renderItem(ICONS.logOptionSearch, 'Text Search', onTextSearch)}
+      {renderItem(ICONS.logOptionFoodScanner, 'Food Scanner', onFoodScanner)}
     </View>
   );
 };

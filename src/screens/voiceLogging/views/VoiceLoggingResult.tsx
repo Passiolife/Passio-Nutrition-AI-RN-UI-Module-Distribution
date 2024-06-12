@@ -4,7 +4,6 @@ import {
   StyleSheet,
   View,
   type ViewStyle,
-  FlatList,
   TouchableOpacity,
   Image,
 } from 'react-native';
@@ -14,6 +13,7 @@ import type { PassioSpeechRecognitionModel } from '@passiolife/nutritionai-react
 import { VoiceLoggingResultItemView } from './VoiceLoggingResultItemView';
 import { BasicButton } from '../../../components';
 import { ICONS } from '../../../assets';
+import { FlatList } from 'react-native-gesture-handler';
 
 interface Props {
   style?: StyleProp<ViewStyle>;
@@ -35,10 +35,6 @@ export const VoiceLoggingResult = React.forwardRef(
     }: Props,
     _ref: React.Ref<VoiceLoggingResultRef>
   ) => {
-    const renderFooter = () => {
-      return <View style={styles.footer} />;
-    };
-
     const [selected, setSelected] = useState<PassioSpeechRecognitionModel[]>(
       []
     );
@@ -76,17 +72,17 @@ export const VoiceLoggingResult = React.forwardRef(
           </TouchableOpacity>
         </View>
         <Text
-          weight="600"
-          size="_18px"
+          weight="700"
+          size="_20px"
           color="text"
           style={styles.quickSuggestionTextStyle}
         >
           Results
         </Text>
         <Text
-          weight="500"
+          weight="400"
           size="_14px"
-          color="secondaryText"
+          color="text"
           style={styles.noQuickSuggestionTitle}
         >
           Select the foods you would like to log
@@ -94,11 +90,9 @@ export const VoiceLoggingResult = React.forwardRef(
         <FlatList
           style={styles.list}
           data={passioSpeechRecognitionResults}
-          ListFooterComponent={renderFooter}
           showsVerticalScrollIndicator={false}
           renderItem={({ item }: { item: PassioSpeechRecognitionModel }) => {
             const foodDataInfo = item.advisorInfo?.foodDataInfo;
-
             const isSelected =
               selected?.find(
                 (it) =>
@@ -106,11 +100,20 @@ export const VoiceLoggingResult = React.forwardRef(
                   item.advisorInfo?.recognisedName
               ) !== undefined;
 
+            const npCalories =
+              item.advisorInfo?.foodDataInfo?.nutritionPreview?.calories ?? 0;
+            const npWeightQuantity =
+              item.advisorInfo?.foodDataInfo?.nutritionPreview
+                ?.weightQuantity ?? 0;
+            const ratio = npCalories / npWeightQuantity;
+            const advisorInfoWeightGram = item.advisorInfo?.weightGrams ?? 0;
+            const calories = ratio * advisorInfoWeightGram;
+
             return (
               <VoiceLoggingResultItemView
                 foodName={item.advisorInfo?.recognisedName}
                 imageName={foodDataInfo?.iconID}
-                bottom={`${item.advisorInfo?.portionSize} | ${item.advisorInfo?.foodDataInfo?.nutritionPreview?.calories} cal`}
+                bottom={`${item.advisorInfo?.portionSize} | ${Math.round(calories)} cal`}
                 onFoodLogSelect={() => {
                   onFoodSelect(item);
                 }}
@@ -166,17 +169,14 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     flex: 1,
   },
-  footer: {
-    height: 120,
-  },
+  footer: {},
   list: {
     marginHorizontal: 16,
-    marginVertical: 16,
+    marginTop: 16,
     flex: 1,
   },
   quickSuggestionTextStyle: {
     alignSelf: 'center',
-    marginTop: 4,
     paddingHorizontal: 16,
   },
   noQuickSuggestionTitle: {
