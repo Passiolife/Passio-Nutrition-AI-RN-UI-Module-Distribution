@@ -6,10 +6,22 @@
 ## Installation
 
 
-#### Step 1: Create an .npmrc file in the root of your project with the following lines replacing GITHUB_ACCESS_TOKEN with the token you've created.
+#### Step 1: Create an .npmrc or yarnrc.yml file in the root of your project with the following lines replacing GITHUB_ACCESS_TOKEN with the token you've created.
+
+`.npmrc`
 ```sh
 //npm.pkg.github.com/:_authToken=GITHUB_ACCESS_TOKEN
 @passiolife:registry=https://npm.pkg.github.com
+```
+
+or
+
+`yarnrc.yml`
+```sh
+npmScopes:
+  passiolife:
+    npmRegistryServer: 'https://npm.pkg.github.com'
+    npmAuthToken: 'GITHUB_ACCESS_TOKEN'
 ```
 
 #### Step 2: Open terminal
@@ -40,18 +52,8 @@ module.exports = {
 };
 ```
 
-#### Step 4: require  @react-native-async-storage/async-storage
-```sh
-yarn add  @react-native-async-storage/async-storage
-```
 
-
-#### Step 5: require  add react-native-screens
-```sh
-yarn add react-native-screens
-```
-
-#### Step 6: For Android, add this implementation line to the dependencies section on app/build.gradle file.
+#### Step 4: For Android, add this implementation line to the dependencies section on app/build.gradle file.
 ```sh
 dependencies {
     // Add this line below for Passio SDK library
@@ -83,6 +85,22 @@ dependencies {
 | react-native-reanimated      | >=^3.6.1         |
 | react-native-gesture-handler | >=2.16.0         |
 | react-native-safe-area-context | >=4.8.2       |
+| react-native-screens           | >=3.30.1       |
+
+### Add Reanimated's babel plugin
+Add react-native-reanimated/plugin plugin to your babel.config.js.
+```js
+module.exports = {
+    presets: [
+      ... // don't add it here :)
+    ],
+    plugins: [
+      ...
+      'react-native-reanimated/plugin',
+    ],
+  };
+```
+
 
 ⚠️ Issue
 
@@ -406,6 +424,8 @@ export const AppNavigator = () => {
 
 ```
 
+
+
 #### NutritionDataService callback functions: 
 
 | Callback     |  Argument     | Return       | Description    |                                                                                                                           
@@ -466,6 +486,7 @@ To resolve the issue, you can use the following resolutions in your package.json
   ```
 
 
+
 ### ⚠️ Issue Voice logging
 
 #### Notes on Android
@@ -481,6 +502,11 @@ How can I get com.google.android.googlequicksearchbox in the device?
 Please ask users to install Google Search App.
 
 
+### ⚠️ Issue @react-native-async-storage/async-storage
+If you pod or build not sync please add `@react-native-async-storage/async-storage`
+```sh
+yarn add  @react-native-async-storage/async-storage
+```
 
 ### Reference Properties  
 
