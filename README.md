@@ -15,7 +15,6 @@
 ```
 
 or
-
 `yarnrc.yml`
 ```sh
 npmScopes:
@@ -52,7 +51,6 @@ module.exports = {
 };
 ```
 
-
 #### Step 4: For Android, add this implementation line to the dependencies section on app/build.gradle file.
 ```sh
 dependencies {
@@ -60,6 +58,23 @@ dependencies {
     implementation files("$rootDir/../node_modules/@passiolife/nutritionai-react-native-sdk-v3/android/libs/passiolib-release.aar")
     ...
 }
+
+
+```
+
+
+### Add Reanimated's babel plugin
+Add react-native-reanimated/plugin plugin to your babel.config.js.
+```js
+module.exports = {
+    presets: [
+      ... // don't add it here :)
+    ],
+    plugins: [
+      ...
+      'react-native-reanimated/plugin',
+    ],
+  };
 ```
 
 ## Permission
@@ -85,21 +100,6 @@ dependencies {
 | react-native-reanimated      | >=^3.6.1         |
 | react-native-gesture-handler | >=2.16.0         |
 | react-native-safe-area-context | >=4.8.2       |
-| react-native-screens           | >=3.30.1       |
-
-### Add Reanimated's babel plugin
-Add react-native-reanimated/plugin plugin to your babel.config.js.
-```js
-module.exports = {
-    presets: [
-      ... // don't add it here :)
-    ],
-    plugins: [
-      ...
-      'react-native-reanimated/plugin',
-    ],
-  };
-```
 
 
 ⚠️ Issue
@@ -114,6 +114,9 @@ If you find a duplicate entry for '@react-navigation', ensure that the your proj
 | @react-navigation/native-stack      | >=6.1.17         |
 | @react-navigation/stack             | >=6.3.29         |
 | @react-navigation/bottom-tabs      | >=6.5.20         |
+| react-native-screens           | >=3.30.1       |
+
+
 
 
 # Usage example
