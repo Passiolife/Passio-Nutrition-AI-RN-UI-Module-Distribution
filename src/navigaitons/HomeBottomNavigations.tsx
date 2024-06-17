@@ -123,6 +123,12 @@ export const HomeBottomNavigation = React.memo(() => {
               logToMeal: undefined,
             });
           }}
+          onTakePicture={() => {
+            navigation.navigate('TakePictureScreen', {
+              logToDate: mealLogDateRef.current,
+              logToMeal: undefined,
+            });
+          }}
           {...props}
           items={menu}
         />

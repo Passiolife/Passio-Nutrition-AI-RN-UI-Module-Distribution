@@ -10,6 +10,7 @@ interface Props {
   onTextSearch: () => void;
   onFavorite: () => void;
   onVoiceLogging: () => void;
+  onTakePicture: () => void;
 }
 
 export const LogOptions = ({
@@ -17,6 +18,7 @@ export const LogOptions = ({
   onFoodScanner,
   onTextSearch,
   onVoiceLogging,
+  onTakePicture,
 }: Props) => {
   const branding = useBranding();
   const styles = logOptionsStyle(branding);
@@ -38,6 +40,7 @@ export const LogOptions = ({
       {renderItem(ICONS.Mic, 'Voice Logging', onVoiceLogging)}
       {renderItem(ICONS.logOptionSearch, 'Text Search', onTextSearch)}
       {renderItem(ICONS.logOptionFoodScanner, 'Food Scanner', onFoodScanner)}
+      {renderItem(ICONS.logOptionFoodScanner, 'Take Picture', onTakePicture)}
     </View>
   );
 };

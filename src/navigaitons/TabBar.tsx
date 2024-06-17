@@ -63,6 +63,10 @@ export const TabBar = React.memo((props: TabBarProps) => {
                     floatingRef.current?.onClose();
                     props.onVoiceLogging();
                   }}
+                  onTakePicture={() => {
+                    floatingRef.current?.onClose();
+                    props.onTakePicture();
+                  }}
                 />
               }
             />
