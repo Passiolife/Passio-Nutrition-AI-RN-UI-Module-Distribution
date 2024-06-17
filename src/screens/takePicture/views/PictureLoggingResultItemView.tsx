@@ -54,6 +54,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(238, 242, 255, 1)',
     flex: 1,
     marginVertical: 4,
+    marginHorizontal: 2,
     paddingVertical: 8,
     borderRadius: 8,
     shadowColor: '#00000029',

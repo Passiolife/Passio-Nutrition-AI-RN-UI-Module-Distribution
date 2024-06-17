@@ -1,40 +1,29 @@
-import {
-  useNavigation,
-  useRoute,
-  type RouteProp,
-} from '@react-navigation/native';
 import type { ParamList } from '../../navigaitons';
-import { useServices } from '../../contexts';
-import type { StackNavigationProp } from '@react-navigationstack';
-import {
-  useCameraPermission,
-  Camera,
-  CameraCaptureError,
-} from 'react-native-vision-camera';
+import type { StackNavigationProp } from '@react-navigation/stack';
 import { useCallback, useMemo, useRef, useState } from 'react';
-import {
-  PassioAdvisorFoodInfo,
-  PassioSDK,
-} from '@passiolife/nutritionai-react-native-sdk-v3';
 import type BottomSheet from '@gorhom/bottom-sheet';
-import { Platform } from 'react-native';
-import { ShowToast } from '../../utils';
-import { useSharedValue } from 'react-native-reanimated';
+import { ShowToast, createFoodLogUsingFoodDataInfo } from '../../utils';
+import {
+  PassioSDK,
+  type PassioAdvisorFoodInfo,
+} from '@passiolife/nutritionai-react-native-sdk-v3';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
+import { useServices } from '../../contexts';
+import { launchImageLibrary } from 'react-native-image-picker';
 
 export type TakePictureScreenProps = StackNavigationProp<
   ParamList,
   'TakePictureScreen'
 >;
 
+export const PHOTO_LIMIT = 7;
+
 export function useTakePicture() {
-  const { hasPermission, requestPermission } = useCameraPermission();
-  const animatedMarginBottom = useSharedValue<number>(46);
-  const camera = useRef<Camera>(null);
-  const [images, setImages] = useState<
-    {
-      path: string;
-    }[]
-  >([]);
+  const navigation = useNavigation<TakePictureScreenProps>();
+  const services = useServices();
+
+  const route = useRoute<RouteProp<ParamList, 'TakePictureScreen'>>();
+
   const bottomSheetModalRef = useRef<BottomSheet>(null);
   const snapPoints = useMemo(() => ['30%', '60%'], []);
   const [isFetchingResponse, setFetchResponse] = useState(false);
@@ -42,62 +31,82 @@ export function useTakePicture() {
     PassioAdvisorFoodInfo[] | null
   >(null);
 
-  const captureImage = useCallback(async () => {
-    camera.current
-      ?.takePhoto({ enableShutterSound: true })
-      .then((value) => {
-        let path =
-          Platform.OS === 'android' ? `file://${value.path}` : value.path;
-        setImages([...images, { path: path }]);
-      })
-      .catch((val: CameraCaptureError) => {
-        console.log('error::::', val.message);
-      });
-  }, [images]);
+  const recognizePictureRemote = useCallback(
+    async (imgs: string[]) => {
+      setFetchResponse(true);
+      try {
+        setPassioAdvisorFoodInfo(null);
 
-  // const services = useServices();
-  // const navigation = useNavigation<TakePictureScreenProps>();
-  // const route = useRoute<RouteProp<ParamList, 'VoiceLoggingScreen'>>();
+        let foodInfoArray: Array<PassioAdvisorFoodInfo[] | null> = [];
 
-  const recognizePictureRemote = useCallback(async () => {
-    setFetchResponse(true);
-    try {
-      setPassioAdvisorFoodInfo(null);
+        const data = imgs.map(async (item) => {
+          const val = await PassioSDK.recognizeImageRemote(
+            item.replace('file://', '') ?? ''
+          );
+          foodInfoArray?.push(val);
+        });
 
-      let foodInfoArray: Array<PassioAdvisorFoodInfo[] | null> = [];
+        await Promise.all(data);
+        let foodInfoArrayFlat = foodInfoArray.flat();
+        if (foodInfoArrayFlat && foodInfoArrayFlat?.length > 0) {
+          setFetchResponse(false);
+          bottomSheetModalRef.current?.expand();
+          setPassioAdvisorFoodInfo(
+            foodInfoArrayFlat as PassioAdvisorFoodInfo[]
+          );
+        } else {
+          ShowToast('No Result found', 'error');
 
-      const data = images.map(async (item) => {
-        const val = await PassioSDK.recognizeImageRemote(
-          item.path.replace('file://', '') ?? ''
-        );
-        foodInfoArray?.push(val);
-      });
-
-      await Promise.all(data);
-      let foodInfoArrayFlat = foodInfoArray.flat();
-      if (foodInfoArrayFlat && foodInfoArrayFlat?.length > 0) {
+          if (route.params.type === 'picture') {
+            navigation.goBack();
+          }
+        }
+      } catch (error) {
+      } finally {
         setFetchResponse(false);
-        bottomSheetModalRef.current?.expand();
-        setPassioAdvisorFoodInfo(foodInfoArrayFlat as PassioAdvisorFoodInfo[]);
-      } else {
-        ShowToast('No Result found', 'error');
       }
-    } catch (error) {
-      console.log('error', error);
-    } finally {
-      setFetchResponse(false);
-    }
-  }, [images]);
+    },
+    [navigation, route.params.type]
+  );
 
-  const onLogSelectPress = useCallback(() => {}, []);
-  const onRetakePress = useCallback(() => {}, []);
+  const onLogSelectPress = useCallback(
+    async (selected: PassioAdvisorFoodInfo[]) => {
+      const foodLogs = await createFoodLogUsingFoodDataInfo(
+        selected,
+        route.params.logToDate,
+        route.params.logToMeal
+      );
+
+      for (const item of foodLogs) {
+        await services.dataService.saveFoodLog({
+          ...item,
+        });
+      }
+      navigation.pop(1);
+      navigation.navigate('BottomNavigation', {
+        screen: 'MealLogScreen',
+      });
+    },
+
+    [
+      navigation,
+      route.params.logToDate,
+      route.params.logToMeal,
+      services.dataService,
+    ]
+  );
+
+  const onRetakePress = useCallback(() => {
+    if (route.params.type === 'camera') {
+      bottomSheetModalRef.current?.close();
+      setPassioAdvisorFoodInfo([]);
+    } else {
+      setPassioAdvisorFoodInfo([]);
+      navigation.goBack();
+    }
+  }, [navigation, route.params.type]);
 
   return {
-    hasPermission,
-    requestPermission,
-    camera,
-    captureImage,
-    images,
     recognizePictureRemote,
     snapPoints,
     bottomSheetModalRef,
@@ -105,6 +114,21 @@ export function useTakePicture() {
     passioAdvisorFoodInfo,
     onRetakePress,
     isFetchingResponse,
-    animatedMarginBottom,
+    type: route.params.type ?? 'camera',
   };
 }
+
+export const onTakeImages = async () => {
+  try {
+    const { assets, didCancel } = await launchImageLibrary({
+      selectionLimit: PHOTO_LIMIT,
+      mediaType: 'photo',
+    });
+    const galleryImages = assets?.map(
+      (i) => i.uri?.replace('file://', '') ?? ''
+    );
+    return galleryImages;
+  } catch (e) {
+    return [];
+  }
+};

@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import type { Branding } from '../../contexts';
 
-export const takePictureStyle = ({ backgroundColor }: Branding) =>
+export const takePictureStyle = ({  }: Branding) =>
   StyleSheet.create({
     bottomSheetChildrenContainer: {
       shadowColor: '#00000029',

@@ -894,6 +894,10 @@ PODS:
     - React-debug
   - react-native-blob-util (0.19.6):
     - React-Core
+  - react-native-image-picker (7.1.2):
+    - glog
+    - RCT-Folly (= 2022.05.16.00)
+    - React-Core
   - react-native-nutrition-ux (3.1.0-alpha-1):
     - React-Core
   - react-native-pdf (6.7.4):
@@ -1147,6 +1151,7 @@ DEPENDENCIES:
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - React-Mapbuffer (from `../node_modules/react-native/ReactCommon`)
   - react-native-blob-util (from `../node_modules/react-native-blob-util`)
+  - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - react-native-nutrition-ux (from `../..`)
   - react-native-pdf (from `../node_modules/react-native-pdf`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
@@ -1255,6 +1260,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   react-native-blob-util:
     :path: "../node_modules/react-native-blob-util"
+  react-native-image-picker:
+    :path: "../node_modules/react-native-image-picker"
   react-native-nutrition-ux:
     :path: "../.."
   react-native-pdf:
@@ -1364,6 +1371,7 @@ SPEC CHECKSUMS:
   React-logger: 66b168e2b2bee57bd8ce9e69f739d805732a5570
   React-Mapbuffer: 9ee041e1d7be96da6d76a251f92e72b711c651d6
   react-native-blob-util: d8fa1a7f726867907a8e43163fdd8b441d4489ea
+  react-native-image-picker: 994a97b28e7f2c2197e21801569bb19f6e494e38
   react-native-nutrition-ux: ee2cfaa810f02017b6df580b19f586aabc5e9bc6
   react-native-pdf: 79aa75e39a80c1d45ffe58aa500f3cf08f267a2e
   react-native-safe-area-context: 0ee144a6170530ccc37a0fd9388e28d06f516a89

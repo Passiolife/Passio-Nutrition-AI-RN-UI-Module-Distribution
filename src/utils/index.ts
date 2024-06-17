@@ -18,6 +18,7 @@ export * from './PassioUtils';
 export * from './QuickResultUtils';
 export * from './ScaningUtils';
 export * from './quickSuggestionUtils';
+export * from './passioFoodDataInfoUtils';
 export {
   isToday,
   currentTimeStamp,

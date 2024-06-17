@@ -17,12 +17,14 @@ interface Props {
   style?: StyleProp<ViewStyle>;
   passioAdvisorFoodInfoResult: Array<PassioAdvisorFoodInfo>;
   onRetake: () => void;
+  type: 'camera' | 'picture';
   onLogSelect: (selected: PassioAdvisorFoodInfo[]) => void;
 }
 
 export const PictureLoggingResult = ({
   style,
   passioAdvisorFoodInfoResult,
+  type,
   onRetake,
   onLogSelect,
 }: Props) => {
@@ -108,7 +110,7 @@ export const PictureLoggingResult = ({
           secondary
           onPress={onRetake}
           style={styles.buttonTryAgain}
-          text="Retake"
+          text={type === 'camera' ? 'Retake' : 'Cancel'}
         />
         <BasicButton
           onPress={() => {

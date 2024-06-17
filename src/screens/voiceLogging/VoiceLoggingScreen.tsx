@@ -21,6 +21,8 @@ export interface VoiceLoggingScreenProps {
 export interface TakePictureScreenProps {
   logToDate?: Date | undefined;
   logToMeal?: MealLabel | undefined;
+  type: 'picture' | 'camera';
+  images?: string[];
 }
 
 export const VoiceLoggingScreen = gestureHandlerRootHOC(() => {
