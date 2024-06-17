@@ -9,7 +9,7 @@ import {
 } from '@passiolife/nutritionai-react-native-sdk-v3';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { useServices } from '../../contexts';
-import { launchImageLibrary } from 'react-native-image-picker';
+import type { TakePictureRef } from './TakePicture';
 
 export type TakePictureScreenProps = StackNavigationProp<
   ParamList,
@@ -21,6 +21,7 @@ export const PHOTO_LIMIT = 7;
 export function useTakePicture() {
   const navigation = useNavigation<TakePictureScreenProps>();
   const services = useServices();
+  const takePictureRef = useRef<TakePictureRef>(null);
 
   const route = useRoute<RouteProp<ParamList, 'TakePictureScreen'>>();
 
@@ -100,6 +101,7 @@ export function useTakePicture() {
     if (route.params.type === 'camera') {
       bottomSheetModalRef.current?.close();
       setPassioAdvisorFoodInfo([]);
+      takePictureRef.current?.onRetake();
     } else {
       setPassioAdvisorFoodInfo([]);
       navigation.goBack();
@@ -115,20 +117,6 @@ export function useTakePicture() {
     onRetakePress,
     isFetchingResponse,
     type: route.params.type ?? 'camera',
+    takePictureRef,
   };
 }
-
-export const onTakeImages = async () => {
-  try {
-    const { assets, didCancel } = await launchImageLibrary({
-      selectionLimit: PHOTO_LIMIT,
-      mediaType: 'photo',
-    });
-    const galleryImages = assets?.map(
-      (i) => i.uri?.replace('file://', '') ?? ''
-    );
-    return galleryImages;
-  } catch (e) {
-    return [];
-  }
-};

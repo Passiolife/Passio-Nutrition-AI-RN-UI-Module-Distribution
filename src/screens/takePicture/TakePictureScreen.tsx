@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { takePictureStyle } from './takePicture.styles';
 import { useTakePicture } from './useTakePicture';
 import { useBranding } from '../../contexts';
@@ -20,7 +20,9 @@ export const TakePictureScreen = gestureHandlerRootHOC(() => {
     passioAdvisorFoodInfo,
     onRetakePress,
     isFetchingResponse,
+    takePictureRef,
   } = useTakePicture();
+
   const animatedIndex = useSharedValue<number>(0);
   const branding = useBranding();
   const styles = takePictureStyle(branding);
@@ -44,6 +46,7 @@ export const TakePictureScreen = gestureHandlerRootHOC(() => {
         <TakePicture
           recognizePictureRemote={recognizePictureRemote}
           animatedIndex={animatedIndex}
+          ref={takePictureRef}
         />
       ) : (
         <SelectPhotos recognizePictureRemote={recognizePictureRemote} />
