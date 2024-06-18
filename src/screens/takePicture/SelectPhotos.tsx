@@ -1,4 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from 'react';
 import { PHOTO_LIMIT, TakePictureScreenProps } from './useTakePicture';
 import { Dimensions, FlatList, Image, Platform, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -11,79 +17,99 @@ interface Props {
   recognizePictureRemote: (images: string[]) => void;
 }
 
-export const SelectPhotos = ({ recognizePictureRemote }: Props) => {
-  const [images, setImages] = useState<string[]>([]);
-  const navigation = useNavigation<TakePictureScreenProps>();
-  const isFirstTime = useRef(true);
+export interface SelectPhotosRef {
+  onRetake: () => void;
+}
 
-  const onTakeImages = async () => {
-    try {
-      const { assets } = await launchImageLibrary({
-        selectionLimit: PHOTO_LIMIT,
-        mediaType: 'photo',
-      });
-      const galleryImages = assets?.map(
-        (i) => i.uri?.replace('file://', '') ?? ''
-      );
-      return galleryImages;
-    } catch (e) {
-      return [];
-    }
-  };
+export const SelectPhotos = React.forwardRef<SelectPhotosRef, Props>(
+  ({ recognizePictureRemote }: Props, ref: React.Ref<SelectPhotosRef>) => {
+    const [images, setImages] = useState<string[]>([]);
+    const navigation = useNavigation<TakePictureScreenProps>();
+    const isFirstTime = useRef(true);
 
-  useEffect(() => {
-    async function init() {
-      setTimeout(async () => {
-        try {
-          const takenImages = await onTakeImages();
-          if (takenImages && takenImages.length > 0) {
-            setImages(takenImages);
-            recognizePictureRemote(takenImages);
-          } else {
-            navigation.goBack();
-          }
-        } catch {
+    useImperativeHandle(
+      ref,
+      () => ({
+        onRetake: () => {
+          setImages([]);
+          onTakeImages();
+        },
+      }),
+      [onTakeImages]
+    );
+
+    const onTakeImages = useCallback(async () => {
+      try {
+        const { assets } = await launchImageLibrary({
+          selectionLimit: PHOTO_LIMIT,
+          mediaType: 'photo',
+        });
+        const galleryImages = assets?.map(
+          (i) => i.uri?.replace('file://', '') ?? ''
+        );
+
+        if (galleryImages && galleryImages.length > 0) {
+          setImages(galleryImages);
+          recognizePictureRemote(galleryImages);
+        } else {
           navigation.goBack();
         }
-      }, 300);
-    }
+        return galleryImages;
+      } catch (e) {
+        return [];
+      }
+    }, [navigation, recognizePictureRemote]);
 
-    if (isFirstTime.current) {
-      init();
-      isFirstTime.current = false;
-    }
-  }, [navigation, recognizePictureRemote]);
+    useEffect(() => {
+      async function init() {
+        setTimeout(async () => {
+          try {
+            await onTakeImages();
+          } catch {
+            navigation.goBack();
+          }
+        }, 300);
+      }
 
-  return (
-    <SafeAreaView style={{ backgroundColor: 'white', flex: 1 }}>
-      <View>
-        <FlatList
-          data={images}
-          style={{
-            margin: 16,
-          }}
-          renderItem={({ item }) => {
-            return (
-              <Image
-                source={{
-                  uri: Image.resolveAssetSource({
-                    uri:
-                      Platform.OS === 'android' ? `${'file://' + item}` : item,
-                  }).uri,
-                }}
-                resizeMode="cover"
-                resizeMethod="resize"
-                style={{
-                  height: width / 3.5,
-                  margin: 3,
-                  width: width / 3.5,
-                }}
-              />
-            );
-          }}
-          numColumns={3}
-        />
-      </View>
-    </SafeAreaView>
-  );
-};
+      if (isFirstTime.current) {
+        init();
+        isFirstTime.current = false;
+      }
+    }, [navigation, onTakeImages, recognizePictureRemote]);
+
+    return (
+      <SafeAreaView style={{ backgroundColor: 'white', flex: 1 }}>
+        <View>
+          <FlatList
+            data={images}
+            style={{
+              margin: 16,
+            }}
+            renderItem={({ item }) => {
+              return (
+                <Image
+                  source={{
+                    uri: Image.resolveAssetSource({
+                      uri:
+                        Platform.OS === 'android'
+                          ? `${'file://' + item}`
+                          : item,
+                    }).uri,
+                  }}
+                  resizeMode="cover"
+                  resizeMethod="resize"
+                  style={{
+                    height: width / 3.5,
+                    margin: 3,
+                    width: width / 3.5,
+                  }}
+                />
+              );
+            }}
+            numColumns={3}
+          />
+        </View>
+      </SafeAreaView>
+    );
+  }
+);

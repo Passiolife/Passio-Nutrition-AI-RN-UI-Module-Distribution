@@ -2,7 +2,7 @@ import type { ParamList } from '../../navigaitons';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import { useCallback, useMemo, useRef, useState } from 'react';
 import type BottomSheet from '@gorhom/bottom-sheet';
-import { ShowToast, createFoodLogUsingFoodDataInfo } from '../../utils';
+import { createFoodLogUsingFoodDataInfo } from '../../utils';
 import {
   PassioSDK,
   type PassioAdvisorFoodInfo,
@@ -10,6 +10,7 @@ import {
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { useServices } from '../../contexts';
 import type { TakePictureRef } from './TakePicture';
+import type { SelectPhotosRef } from './SelectPhotos';
 
 export type TakePictureScreenProps = StackNavigationProp<
   ParamList,
@@ -22,6 +23,7 @@ export function useTakePicture() {
   const navigation = useNavigation<TakePictureScreenProps>();
   const services = useServices();
   const takePictureRef = useRef<TakePictureRef>(null);
+  const selectPhotoRef = useRef<SelectPhotosRef>(null);
 
   const route = useRoute<RouteProp<ParamList, 'TakePictureScreen'>>();
 
@@ -32,43 +34,34 @@ export function useTakePicture() {
     PassioAdvisorFoodInfo[] | null
   >(null);
 
-  const recognizePictureRemote = useCallback(
-    async (imgs: string[]) => {
-      setFetchResponse(true);
-      try {
-        setPassioAdvisorFoodInfo(null);
+  const recognizePictureRemote = useCallback(async (imgs: string[]) => {
+    setFetchResponse(true);
+    try {
+      setPassioAdvisorFoodInfo(null);
 
-        let foodInfoArray: Array<PassioAdvisorFoodInfo[] | null> = [];
+      let foodInfoArray: Array<PassioAdvisorFoodInfo[] | null> = [];
 
-        const data = imgs.map(async (item) => {
-          const val = await PassioSDK.recognizeImageRemote(
-            item.replace('file://', '') ?? ''
-          );
-          foodInfoArray?.push(val);
-        });
+      const data = imgs.map(async (item) => {
+        const val = await PassioSDK.recognizeImageRemote(
+          item.replace('file://', '') ?? ''
+        );
+        foodInfoArray?.push(val);
+      });
 
-        await Promise.all(data);
-        let foodInfoArrayFlat = foodInfoArray.flat();
-        if (foodInfoArrayFlat && foodInfoArrayFlat?.length > 0) {
-          setFetchResponse(false);
-          bottomSheetModalRef.current?.expand();
-          setPassioAdvisorFoodInfo(
-            foodInfoArrayFlat as PassioAdvisorFoodInfo[]
-          );
-        } else {
-          ShowToast('No Result found', 'error');
-
-          if (route.params.type === 'picture') {
-            navigation.goBack();
-          }
-        }
-      } catch (error) {
-      } finally {
+      await Promise.all(data);
+      let foodInfoArrayFlat = foodInfoArray.flat();
+      if (foodInfoArrayFlat && foodInfoArrayFlat?.length > 0) {
         setFetchResponse(false);
+        bottomSheetModalRef.current?.expand();
+        setPassioAdvisorFoodInfo(foodInfoArrayFlat as PassioAdvisorFoodInfo[]);
+      } else {
+        bottomSheetModalRef.current?.expand();
       }
-    },
-    [navigation, route.params.type]
-  );
+    } catch (error) {
+    } finally {
+      setFetchResponse(false);
+    }
+  }, []);
 
   const onLogSelectPress = useCallback(
     async (selected: PassioAdvisorFoodInfo[]) => {
@@ -103,18 +96,25 @@ export function useTakePicture() {
       setPassioAdvisorFoodInfo([]);
       takePictureRef.current?.onRetake();
     } else {
+      bottomSheetModalRef.current?.close();
       setPassioAdvisorFoodInfo([]);
-      navigation.goBack();
+      selectPhotoRef.current?.onRetake();
     }
-  }, [navigation, route.params.type]);
+  }, [route.params.type]);
+
+  const onCancelPress = useCallback(() => {
+    navigation.goBack();
+  }, [navigation]);
 
   return {
     recognizePictureRemote,
     snapPoints,
     bottomSheetModalRef,
+    selectPhotoRef,
     onLogSelectPress,
     passioAdvisorFoodInfo,
     onRetakePress,
+    onCancelPress,
     isFetchingResponse,
     type: route.params.type ?? 'camera',
     takePictureRef,

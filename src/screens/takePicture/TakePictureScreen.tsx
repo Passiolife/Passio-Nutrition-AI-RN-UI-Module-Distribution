@@ -16,11 +16,13 @@ export const TakePictureScreen = gestureHandlerRootHOC(() => {
     recognizePictureRemote,
     snapPoints,
     bottomSheetModalRef,
+    selectPhotoRef,
     onLogSelectPress,
     passioAdvisorFoodInfo,
     onRetakePress,
     isFetchingResponse,
     takePictureRef,
+    onCancelPress,
   } = useTakePicture();
 
   const animatedIndex = useSharedValue<number>(0);
@@ -49,12 +51,15 @@ export const TakePictureScreen = gestureHandlerRootHOC(() => {
           ref={takePictureRef}
         />
       ) : (
-        <SelectPhotos recognizePictureRemote={recognizePictureRemote} />
+        <SelectPhotos
+          recognizePictureRemote={recognizePictureRemote}
+          ref={selectPhotoRef}
+        />
       )}
       <BottomSheet
         ref={bottomSheetModalRef}
         index={-1}
-        animatedIndex={animatedIndex}
+        //animatedIndex={animatedIndex}
         snapPoints={snapPoints}
         backgroundStyle={styles.bottomSheetChildrenContainer}
         handleIndicatorStyle={{ display: 'none' }}
@@ -62,6 +67,7 @@ export const TakePictureScreen = gestureHandlerRootHOC(() => {
         <PictureLoggingResult
           onLogSelect={onLogSelectPress}
           onRetake={onRetakePress}
+          onCancel={onCancelPress}
           type={type}
           passioAdvisorFoodInfoResult={passioAdvisorFoodInfo ?? []}
         />

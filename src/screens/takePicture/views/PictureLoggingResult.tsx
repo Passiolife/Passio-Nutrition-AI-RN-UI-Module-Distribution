@@ -5,6 +5,7 @@ import {
   View,
   type ViewStyle,
   TouchableOpacity,
+  Image,
 } from 'react-native';
 import { COLORS } from '../../../constants';
 import { Text } from '../../../components/texts/Text';
@@ -12,6 +13,7 @@ import type { PassioAdvisorFoodInfo } from '@passiolife/nutritionai-react-native
 import { PictureLoggingResultItemView } from './PictureLoggingResultItemView';
 import { BasicButton } from '../../../components';
 import { FlatList } from 'react-native-gesture-handler';
+import { ICONS } from '../../../assets';
 
 interface Props {
   style?: StyleProp<ViewStyle>;
@@ -19,6 +21,7 @@ interface Props {
   onRetake: () => void;
   type: 'camera' | 'picture';
   onLogSelect: (selected: PassioAdvisorFoodInfo[]) => void;
+  onCancel: () => void;
 }
 
 export const PictureLoggingResult = ({
@@ -27,6 +30,7 @@ export const PictureLoggingResult = ({
   type,
   onRetake,
   onLogSelect,
+  onCancel,
 }: Props) => {
   const [selected, setSelected] = useState<PassioAdvisorFoodInfo[]>([]);
 
@@ -47,6 +51,15 @@ export const PictureLoggingResult = ({
     setSelected([]);
   };
 
+  const renderNoDataFound = () => {
+    return (
+      <View style={styles.noDataFound}>
+        <Image source={ICONS.bottomMealPlan} />
+        <Text>{'No Result Found'}</Text>
+      </View>
+    );
+  };
+
   return (
     <View style={[styles.itemsContainer, style]}>
       <View style={styles.clearBtnView}>
@@ -56,26 +69,34 @@ export const PictureLoggingResult = ({
           </Text>
         </TouchableOpacity>
       </View>
-      <Text
-        weight="700"
-        size="_20px"
-        color="text"
-        style={styles.quickSuggestionTextStyle}
-      >
-        Your Results
-      </Text>
-      <Text
-        weight="400"
-        size="_14px"
-        color="text"
-        style={styles.noQuickSuggestionTitle}
-      >
-        Select the foods you would like to log
-      </Text>
+      {passioAdvisorFoodInfoResult.length > 0 && (
+        <Text
+          weight="700"
+          size="_20px"
+          color="text"
+          style={styles.quickSuggestionTextStyle}
+        >
+          {passioAdvisorFoodInfoResult.length === 0
+            ? 'No Result found'
+            : 'Your Results'}
+        </Text>
+      )}
+
+      {passioAdvisorFoodInfoResult.length > 0 && (
+        <Text
+          weight="400"
+          size="_14px"
+          color="text"
+          style={styles.noQuickSuggestionTitle}
+        >
+          Select the foods you would like to log
+        </Text>
+      )}
       <FlatList
         style={styles.list}
         data={passioAdvisorFoodInfoResult}
         showsVerticalScrollIndicator={false}
+        ListEmptyComponent={renderNoDataFound}
         renderItem={({ item }) => {
           const foodDataInfo = item.foodDataInfo;
           const isSelected =
@@ -104,23 +125,44 @@ export const PictureLoggingResult = ({
           );
         }}
       />
-
-      <View style={styles.buttonContainer}>
-        <BasicButton
-          secondary
-          onPress={onRetake}
-          style={styles.buttonTryAgain}
-          text={type === 'camera' ? 'Retake' : 'Cancel'}
-        />
-        <BasicButton
-          onPress={() => {
-            onLogSelect(selected ?? []);
-          }}
-          style={styles.buttonLogSelected}
-          enable={selected && selected.length > 0}
-          text="Log Selected"
-        />
-      </View>
+      {passioAdvisorFoodInfoResult.length > 0 ? (
+        <View style={styles.buttonContainer}>
+          <BasicButton
+            secondary
+            onPress={() => {
+              if (type === 'camera') {
+                onRetake();
+              } else {
+                onCancel();
+              }
+            }}
+            style={styles.buttonTryAgain}
+            text={type === 'camera' ? 'Retake' : 'Cancel'}
+          />
+          <BasicButton
+            onPress={() => {
+              onLogSelect(selected ?? []);
+            }}
+            style={styles.buttonLogSelected}
+            enable={selected && selected.length > 0}
+            text="Log Selected"
+          />
+        </View>
+      ) : (
+        <View style={styles.buttonContainer}>
+          <BasicButton
+            secondary
+            onPress={onCancel}
+            style={styles.buttonTryAgain}
+            text={'Cancel'}
+          />
+          <BasicButton
+            onPress={onRetake}
+            style={styles.buttonLogSelected}
+            text={type === 'camera' ? 'Retake' : 'Select Image'}
+          />
+        </View>
+      )}
     </View>
   );
 };
@@ -131,6 +173,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   footer: {},
+  noDataFound: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 80,
+    alignContent: 'center',
+  },
   list: {
     marginHorizontal: 16,
     marginBottom: 20,
