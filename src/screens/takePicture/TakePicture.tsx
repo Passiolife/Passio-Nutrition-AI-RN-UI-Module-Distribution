@@ -218,8 +218,8 @@ export const TakePicture = React.forwardRef<TakePictureRef, Props>(
                 return (
                   <RenderItem
                     item={item}
-                    onDelete={(item) => {
-                      setImages((i) => i.filter((o) => o !== item));
+                    onDelete={(path) => {
+                      setImages((i) => i.filter((o) => o !== path));
                     }}
                   />
                 );
