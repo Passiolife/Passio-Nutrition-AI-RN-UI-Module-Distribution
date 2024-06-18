@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { PHOTO_LIMIT, TakePictureScreenProps } from './useTakePicture';
-import { Dimensions, FlatList, Image, View } from 'react-native';
+import { Dimensions, FlatList, Image, Platform, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import { launchImageLibrary } from 'react-native-image-picker';
@@ -67,7 +67,8 @@ export const SelectPhotos = ({ recognizePictureRemote }: Props) => {
               <Image
                 source={{
                   uri: Image.resolveAssetSource({
-                    uri: item,
+                    uri:
+                      Platform.OS === 'android' ? `${'file://' + item}` : item,
                   }).uri,
                 }}
                 resizeMode="cover"

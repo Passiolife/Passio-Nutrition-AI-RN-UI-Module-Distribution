@@ -4,6 +4,7 @@ export const ic_left_white = require('./chev_left_white.png');
 export const ic_right_white = require('./chev_right_white.png');
 export const chev_down = require('./chev_down.png');
 export const ICONS = {
+  close: require('./icons/close.png'),
   back: require('./icons/back.png'),
   menu: require('./icons/menu.png'),
   bottomDiary: require('./icons/bottom_diary.png'),

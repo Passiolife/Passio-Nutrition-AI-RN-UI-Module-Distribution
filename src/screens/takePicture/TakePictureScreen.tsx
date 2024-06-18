@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { takePictureStyle } from './takePicture.styles';
 import { useTakePicture } from './useTakePicture';
 import { useBranding } from '../../contexts';

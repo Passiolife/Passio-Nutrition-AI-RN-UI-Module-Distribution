@@ -14,15 +14,17 @@ import {
   useCameraPermission,
 } from 'react-native-vision-camera';
 import {
+  Dimensions,
   FlatList,
   Image,
+  LayoutAnimation,
   Platform,
   TouchableOpacity,
   View,
 } from 'react-native';
 import { BasicButton } from '../../components';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { scaleHeight, screenWidth } from '../../utils';
+import { scaleHeight } from '../../utils';
 import { ICONS } from '../../assets';
 import Animated, {
   SharedValue,
@@ -30,7 +32,6 @@ import Animated, {
   useAnimatedStyle,
 } from 'react-native-reanimated';
 import { useNavigation } from '@react-navigation/native';
-import Carousel from 'react-native-reanimated-carousel';
 
 interface Props {
   recognizePictureRemote: (images: string[]) => void;
@@ -41,6 +42,71 @@ export interface TakePictureRef {
   onRetake: () => void;
 }
 
+const RenderItem = ({
+  item,
+  onDelete,
+}: {
+  item: string;
+  onDelete: (item: string) => void;
+}) => {
+  const [isSelect, setSelect] = useState(false);
+
+  return (
+    <TouchableOpacity
+      onPress={() => {
+        setSelect(!isSelect);
+      }}
+    >
+      <Image
+        source={{
+          uri: Image.resolveAssetSource({
+            uri: item,
+          }).uri,
+        }}
+        style={{
+          height: 75,
+          width: 75,
+          borderRadius: 8,
+          marginHorizontal: 4,
+          marginTop: 10,
+          alignContent: 'center',
+          alignItems: 'center',
+          alignSelf: 'center',
+          justifyContent: 'center',
+          shadowColor: '#000',
+          shadowOffset: { width: 0, height: 2 },
+          shadowOpacity: 0.8,
+          shadowRadius: 2,
+        }}
+      />
+
+      {isSelect && (
+        <TouchableOpacity
+          onPress={() => {
+            onDelete(item);
+          }}
+          style={{
+            position: 'absolute',
+            right: 0,
+            height: 18,
+            width: 18,
+            overflow: 'hidden',
+          }}
+        >
+          <Image
+            source={ICONS.close}
+            style={{
+              height: 18,
+              overflow: 'hidden',
+              width: 18,
+            }}
+          />
+        </TouchableOpacity>
+      )}
+    </TouchableOpacity>
+  );
+};
+
 export const TakePicture = React.forwardRef<TakePictureRef, Props>(
   (
     { recognizePictureRemote, animatedIndex }: Props,
@@ -49,6 +115,7 @@ export const TakePicture = React.forwardRef<TakePictureRef, Props>(
     const [images, setImages] = useState<string[]>([]);
     const camera = useRef<Camera>(null);
     const navigation = useNavigation<TakePictureScreenProps>();
+    const flatListRef = useRef<FlatList>(null);
 
     useImperativeHandle(
       ref,
@@ -71,6 +138,8 @@ export const TakePicture = React.forwardRef<TakePictureRef, Props>(
           let path =
             Platform.OS === 'android' ? `file://${value.path}` : value.path;
           setImages([...images, path]);
+
+          LayoutAnimation.configureNext(LayoutAnimation.Presets.linear);
         })
         .catch((_val: CameraCaptureError) => {});
     }, [images]);
@@ -104,33 +173,8 @@ export const TakePicture = React.forwardRef<TakePictureRef, Props>(
       return <></>;
     }
 
-    const renderItem = ({ item }: { item: string }) => {
-      return (
-        <Image
-          source={{
-            uri: Image.resolveAssetSource({
-              uri: item,
-            }).uri,
-          }}
-          style={{
-            height: 75,
-            width: 75,
-            backgroundColor: 'red',
-            borderRadius: 8,
-            marginHorizontal: 2,
-            alignContent: 'center',
-            alignItems: 'center',
-            alignSelf: 'center',
-            justifyContent: 'center',
-          }}
-        />
-      );
-    };
-
     return (
-      <SafeAreaView
-        style={{ flex: 1, justifyContent: 'flex-end', paddingHorizontal: 16 }}
-      >
+      <SafeAreaView style={{ flex: 1, justifyContent: 'flex-end' }}>
         <Camera
           style={{
             position: 'absolute',
@@ -152,38 +196,34 @@ export const TakePicture = React.forwardRef<TakePictureRef, Props>(
             animatedStyle,
           ]}
         >
-          <View>
-            {/* <Carousel
-              width={screenWidth - 50}
-              modeConfig={{
-                parallaxScrollingOffset: 240,
-                parallaxScrollingScale: 1.2,
-                parallaxAdjacentItemScale: 1,
-              }}
-              height={130}
-              data={images}
-              style={{
-                bottom: 100,
-              }}
-              mode="parallax"
-              renderItem={renderItem}
-            /> */}
+          <View style={{}}>
             <FlatList
-              data={images}
+              data={images.reverse()}
+              ref={flatListRef}
               horizontal
               showsHorizontalScrollIndicator={false}
               alwaysBounceHorizontal={false}
               contentContainerStyle={{
                 alignItems: 'center',
-                justifyContent: 'center',
                 alignSelf: 'center',
                 alignContent: 'center',
-                flex: images.length < 4 ? 1 : undefined,
+                paddingHorizontal: Dimensions.get('window').width / 2 - 75 / 2, // Center the items
+                flexGrow: 1,
+                justifyContent: images.length < 4 ? 'center' : 'flex-start',
               }}
               style={{
                 marginBottom: 18,
               }}
-              renderItem={renderItem}
+              renderItem={({ item }) => {
+                return (
+                  <RenderItem
+                    item={item}
+                    onDelete={(item) => {
+                      setImages((i) => i.filter((o) => o !== item));
+                    }}
+                  />
+                );
+              }}
             />
           </View>
         </Animated.View>
@@ -203,6 +243,7 @@ export const TakePicture = React.forwardRef<TakePictureRef, Props>(
             style={{
               backgroundColor: 'white',
               maxHeight: 50,
+              marginStart: 16,
               flex: 1,
               marginEnd: 16,
             }}
@@ -227,6 +268,7 @@ export const TakePicture = React.forwardRef<TakePictureRef, Props>(
             style={{
               maxHeight: 50,
               flex: 1,
+              marginEnd: 16,
               marginStart: 16,
               opacity: images.length > 0 ? 1 : 0.5,
             }}

@@ -31,7 +31,6 @@ import type { ParamList } from './params';
 import HomeScreen, {
   type HomeScreenScreenProps,
 } from '../screens/home/HomeScreen';
-import { launchImageLibrary } from 'react-native-image-picker';
 export type HomeBottomStackParams = {
   [HomeScreenRoute]: HomeScreenScreenProps;
   [MealLogScreenRoute]: MealLogScreenProps;
