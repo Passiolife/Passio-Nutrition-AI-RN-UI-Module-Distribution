@@ -27,17 +27,6 @@ export const SelectPhotos = React.forwardRef<SelectPhotosRef, Props>(
     const navigation = useNavigation<TakePictureScreenProps>();
     const isFirstTime = useRef(true);
 
-    useImperativeHandle(
-      ref,
-      () => ({
-        onRetake: () => {
-          setImages([]);
-          onTakeImages();
-        },
-      }),
-      [onTakeImages]
-    );
-
     const onTakeImages = useCallback(async () => {
       try {
         const { assets } = await launchImageLibrary({
@@ -59,6 +48,17 @@ export const SelectPhotos = React.forwardRef<SelectPhotosRef, Props>(
         return [];
       }
     }, [navigation, recognizePictureRemote]);
+
+    useImperativeHandle(
+      ref,
+      () => ({
+        onRetake: () => {
+          setImages([]);
+          onTakeImages();
+        },
+      }),
+      [onTakeImages]
+    );
 
     useEffect(() => {
       async function init() {
