@@ -94,6 +94,14 @@ export const HomeBottomNavigation = React.memo(() => {
 
   const mealLogDateRef = useRef(new Date());
 
+  const onTakePicture = () => {
+    navigation.navigate('TakePictureScreen', {
+      logToDate: mealLogDateRef.current,
+      logToMeal: undefined,
+      type: 'picture',
+    });
+  };
+
   const renderTabs = (props: BottomTabBarProps) => {
     return (
       <SafeAreaView edges={['bottom']} style={styles.safeAreaStyle}>
@@ -123,6 +131,14 @@ export const HomeBottomNavigation = React.memo(() => {
               logToMeal: undefined,
             });
           }}
+          onTakeCamera={() => {
+            navigation.navigate('TakePictureScreen', {
+              logToDate: mealLogDateRef.current,
+              logToMeal: undefined,
+              type: 'camera',
+            });
+          }}
+          onTakePicture={onTakePicture}
           {...props}
           items={menu}
         />

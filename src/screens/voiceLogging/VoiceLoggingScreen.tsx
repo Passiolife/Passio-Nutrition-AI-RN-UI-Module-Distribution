@@ -18,6 +18,12 @@ export interface VoiceLoggingScreenProps {
   logToMeal?: MealLabel | undefined;
   onSaveData?: (item: PassioFoodItem) => void;
 }
+export interface TakePictureScreenProps {
+  logToDate?: Date | undefined;
+  logToMeal?: MealLabel | undefined;
+  type: 'picture' | 'camera';
+  images?: string[];
+}
 
 export const VoiceLoggingScreen = gestureHandlerRootHOC(() => {
   const {

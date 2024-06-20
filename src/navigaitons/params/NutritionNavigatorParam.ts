@@ -12,7 +12,10 @@ import type {
 import type { IngredientQuickScanScreenProps } from '../../screens/recipeEditor/RecipesScan/IngredientQuickScanScreen/IngredientQuickScanScreen';
 import type { Nutrient, Water, Weight } from '../../models';
 import type { FavoritesScreenProps } from '../../screens/myFavoritess';
-import type { VoiceLoggingScreenProps } from '../../screens/voiceLogging';
+import type {
+  TakePictureScreenProps,
+  VoiceLoggingScreenProps,
+} from '../../screens/voiceLogging';
 
 export type Module =
   | 'QuickScan'
@@ -73,4 +76,5 @@ export type ParamList = {
   SettingScreen: SettingScreenProps;
   NutritionInformationScreen: NutritionScreenProps;
   VoiceLoggingScreen: VoiceLoggingScreenProps;
+  TakePictureScreen: TakePictureScreenProps;
 };

@@ -8,14 +8,18 @@ import {
   PassioSpeechRecognitionModel,
 } from '@passiolife/nutritionai-react-native-sdk-v3';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { ShowToast, getLogToDate, mealLabelByDate } from '../../utils';
+import {
+  ShowToast,
+  createFoodLogUsingPortionSize,
+  getLogToDate,
+  mealLabelByDate,
+} from '../../utils';
 import {
   useNavigation,
   useRoute,
   type RouteProp,
 } from '@react-navigation/native';
 import type { ParamList } from '../../navigaitons';
-import { convertPassioFoodItemToFoodLog } from '../../utils/V3Utils';
 import { useServices } from '../../contexts';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import type BottomSheet from '@gorhom/bottom-sheet';
@@ -102,10 +106,12 @@ export function useVoiceLogging() {
           item.advisorInfo.foodDataInfo
         );
         if (foodItem) {
-          const foodLog = convertPassioFoodItemToFoodLog(
+          let foodLog = createFoodLogUsingPortionSize(
             foodItem,
             logToDate,
-            meal
+            meal,
+            item.advisorInfo.weightGrams,
+            item.advisorInfo.portionSize
           );
           await services.dataService.saveFoodLog({
             ...foodLog,

@@ -165,8 +165,25 @@ export const round2Digit = (value: number) => {
   return value.toFixed(2);
 };
 
+export const updateServing = (
+  foodLog: FoodLog,
+  { mass, unit }: ServingUnit
+) => {
+  const { computedWeight, foodItems } = foodLog;
+  const servingWeight =
+    computedWeight?.value ?? foodItems[0]?.computedWeight.value;
+  const defaultWeight = servingWeight ?? 0;
+  const newQuantity = Number(defaultWeight / mass);
+  foodLog.selectedQuantity = Number(
+    newQuantity < 10 ? newQuantity.toFixed(2) : Math.round(newQuantity)
+  );
+  foodLog.selectedUnit = unit;
+  return foodLog;
+};
+
 export const updateQuantityOfFoodLog = (foodLog: FoodLog, qty: number) => {
   const copyOfFoodLog = { ...foodLog };
+
   if (qty > 0) {
     const oldQuantity = copyOfFoodLog.selectedQuantity;
     const oldWeight =

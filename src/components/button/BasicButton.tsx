@@ -24,6 +24,7 @@ interface Props {
   boarderColor?: string;
   testId?: string;
   rightIcon?: JSX.Element;
+  disabled?: boolean;
 }
 
 export const BasicButton: React.FC<Props> = (props) => {
@@ -39,6 +40,7 @@ export const BasicButton: React.FC<Props> = (props) => {
     boarderColor = brandingContext.primaryColor,
     testId,
     rightIcon,
+    disabled = false,
   } = props;
   const styles = basicButtonStyle(brandingContext);
 
@@ -86,6 +88,7 @@ export const BasicButton: React.FC<Props> = (props) => {
 
   return (
     <TouchableHighlight
+      disabled={disabled}
       testID={testId}
       style={[
         styles.container,
