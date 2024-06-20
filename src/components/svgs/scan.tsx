@@ -2,10 +2,10 @@ import React from 'react';
 import { Dimensions } from 'react-native';
 import { Path, Svg } from 'react-native-svg';
 
-const ScanSVG = () => {
+const ScanSVG = ({ margin = 20 }: { margin?: number }) => {
   return (
     <Svg
-      width={Dimensions.get('window').width - 20}
+      width={Dimensions.get('window').width - margin}
       height="384"
       fill="none"
       viewBox="0 0 384 384"

@@ -16,5 +16,7 @@ module.exports = {
     '@notifee/react-native': {},
     '@react-native-async-storage/async-storage': {},
     'react-native-screens': {},
+    'react-native-vision-camera': {},
+    'react-native-image-picker': {},
   },
 };
