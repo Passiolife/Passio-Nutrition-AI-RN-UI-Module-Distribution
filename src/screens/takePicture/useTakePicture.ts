@@ -9,8 +9,8 @@ import {
 } from '@passiolife/nutritionai-react-native-sdk-v3';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { useServices } from '../../contexts';
-import type { TakePictureRef } from './TakePicture';
-import type { SelectPhotosRef } from './SelectPhotos';
+import type { TakePictureRef } from './views/TakePicture';
+import type { SelectPhotosRef } from './views/SelectPhotos';
 
 export type TakePictureScreenProps = StackNavigationProp<
   ParamList,
@@ -28,8 +28,9 @@ export function useTakePicture() {
   const route = useRoute<RouteProp<ParamList, 'TakePictureScreen'>>();
 
   const bottomSheetModalRef = useRef<BottomSheet>(null);
-  const snapPoints = useMemo(() => ['30%', '60%'], []);
+  const snapPoints = useMemo(() => ['30%', '70%'], []);
   const [isFetchingResponse, setFetchResponse] = useState(false);
+  const [isPreparingLog, setPreparingLog] = useState(false);
   const [passioAdvisorFoodInfo, setPassioAdvisorFoodInfo] = useState<
     PassioAdvisorFoodInfo[] | null
   >(null);
@@ -65,6 +66,7 @@ export function useTakePicture() {
 
   const onLogSelectPress = useCallback(
     async (selected: PassioAdvisorFoodInfo[]) => {
+      setPreparingLog(true);
       const foodLogs = await createFoodLogUsingFoodDataInfo(
         selected,
         route.params.logToDate,
@@ -76,6 +78,7 @@ export function useTakePicture() {
           ...item,
         });
       }
+      setPreparingLog(false);
       navigation.pop(1);
       navigation.navigate('BottomNavigation', {
         screen: 'MealLogScreen',
@@ -115,6 +118,7 @@ export function useTakePicture() {
     passioAdvisorFoodInfo,
     onRetakePress,
     onCancelPress,
+    isPreparingLog,
     isFetchingResponse,
     type: route.params.type ?? 'camera',
     takePictureRef,

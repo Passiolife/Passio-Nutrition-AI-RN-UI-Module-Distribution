@@ -5,11 +5,11 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { PHOTO_LIMIT, TakePictureScreenProps } from './useTakePicture';
 import { Dimensions, FlatList, Image, Platform, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import { launchImageLibrary } from 'react-native-image-picker';
+import { PHOTO_LIMIT, type TakePictureScreenProps } from '../useTakePicture';
 
 const width = Dimensions.get('screen').width;
 

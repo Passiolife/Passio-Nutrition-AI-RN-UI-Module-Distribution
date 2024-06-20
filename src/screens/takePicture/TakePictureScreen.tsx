@@ -4,11 +4,11 @@ import { useTakePicture } from './useTakePicture';
 import { useBranding } from '../../contexts';
 import { ActivityIndicator, Text, View } from 'react-native';
 import BottomSheet from '@gorhom/bottom-sheet';
-import { PictureLoggingResult } from './views/PictureLoggingResult';
+import { PictureLoggingResult } from './result/PictureLoggingResult';
 import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
 import { useSharedValue } from 'react-native-reanimated';
-import { TakePicture } from './TakePicture';
-import { SelectPhotos } from './SelectPhotos';
+import { TakePicture } from './views/TakePicture';
+import { SelectPhotos } from './views/SelectPhotos';
 
 export const TakePictureScreen = gestureHandlerRootHOC(() => {
   const {
@@ -23,6 +23,7 @@ export const TakePictureScreen = gestureHandlerRootHOC(() => {
     isFetchingResponse,
     takePictureRef,
     onCancelPress,
+    isPreparingLog,
   } = useTakePicture();
 
   const animatedIndex = useSharedValue<number>(0);
@@ -59,7 +60,6 @@ export const TakePictureScreen = gestureHandlerRootHOC(() => {
       <BottomSheet
         ref={bottomSheetModalRef}
         index={-1}
-        //animatedIndex={animatedIndex}
         snapPoints={snapPoints}
         backgroundStyle={styles.bottomSheetChildrenContainer}
         handleIndicatorStyle={{ display: 'none' }}
@@ -69,6 +69,7 @@ export const TakePictureScreen = gestureHandlerRootHOC(() => {
           onRetake={onRetakePress}
           onCancel={onCancelPress}
           type={type}
+          isPreparingLog={isPreparingLog}
           passioAdvisorFoodInfoResult={passioAdvisorFoodInfo ?? []}
         />
       </BottomSheet>

@@ -22,26 +22,28 @@ interface Props {
   type: 'camera' | 'picture';
   onLogSelect: (selected: PassioAdvisorFoodInfo[]) => void;
   onCancel: () => void;
+  isPreparingLog: boolean;
+}
+
+interface Selection extends PassioAdvisorFoodInfo {
+  index: number;
 }
 
 export const PictureLoggingResult = ({
   style,
   passioAdvisorFoodInfoResult,
   type,
+  isPreparingLog,
   onRetake,
   onLogSelect,
   onCancel,
 }: Props) => {
-  const [selected, setSelected] = useState<PassioAdvisorFoodInfo[]>([]);
+  const [selected, setSelected] = useState<Selection[]>([]);
 
-  const onFoodSelect = (result: PassioAdvisorFoodInfo) => {
-    const find = selected?.find(
-      (item) => item.recognisedName === result?.recognisedName
-    );
+  const onFoodSelect = (result: Selection) => {
+    const find = selected?.find((item) => item.index === result?.index);
     if (find) {
-      setSelected((item) =>
-        item?.filter((i) => i.recognisedName !== result?.recognisedName)
-      );
+      setSelected((item) => item?.filter((i) => i.index !== result?.index));
     } else {
       setSelected((item) => [...(item ?? []), result]);
     }
@@ -97,12 +99,10 @@ export const PictureLoggingResult = ({
         data={passioAdvisorFoodInfoResult}
         showsVerticalScrollIndicator={false}
         ListEmptyComponent={renderNoDataFound}
-        renderItem={({ item }) => {
+        renderItem={({ item, index }) => {
           const foodDataInfo = item.foodDataInfo;
           const isSelected =
-            selected?.find(
-              (it) => it?.recognisedName === item?.recognisedName
-            ) !== undefined;
+            selected?.find((it) => it?.index === index) !== undefined;
 
           const npCalories =
             item?.foodDataInfo?.nutritionPreview?.calories ?? 0;
@@ -118,7 +118,7 @@ export const PictureLoggingResult = ({
               imageName={foodDataInfo?.iconID}
               bottom={`${item?.portionSize} | ${Math.round(calories)} cal`}
               onFoodLogSelect={() => {
-                onFoodSelect(item);
+                onFoodSelect({ ...item, index: index });
               }}
               isSelected={isSelected}
             />
@@ -144,6 +144,7 @@ export const PictureLoggingResult = ({
               onLogSelect(selected ?? []);
             }}
             style={styles.buttonLogSelected}
+            isLoading={isPreparingLog}
             enable={selected && selected.length > 0}
             text="Log Selected"
           />

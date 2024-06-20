@@ -5,8 +5,8 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import type { TakePictureScreenProps } from './useTakePicture';
-import { useBranding } from '../../contexts';
+import type { TakePictureScreenProps } from '../useTakePicture';
+import { useBranding } from '../../../contexts';
 import {
   Camera,
   CameraCaptureError,
@@ -17,21 +17,21 @@ import {
   Dimensions,
   FlatList,
   Image,
-  LayoutAnimation,
   Platform,
   TouchableOpacity,
   View,
 } from 'react-native';
-import { BasicButton } from '../../components';
+import { BasicButton } from '../../../components';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { scaleHeight } from '../../utils';
-import { ICONS } from '../../assets';
+import { scaleHeight } from '../../../utils';
+import { ICONS } from '../../../assets';
 import Animated, {
   SharedValue,
   interpolate,
   useAnimatedStyle,
 } from 'react-native-reanimated';
 import { useNavigation } from '@react-navigation/native';
+import ScanSVG from '../../../components/svgs/scan';
 
 interface Props {
   recognizePictureRemote: (images: string[]) => void;
@@ -138,8 +138,6 @@ export const TakePicture = React.forwardRef<TakePictureRef, Props>(
           let path =
             Platform.OS === 'android' ? `file://${value.path}` : value.path;
           setImages([...images, path]);
-
-          LayoutAnimation.configureNext(LayoutAnimation.Presets.linear);
         })
         .catch((_val: CameraCaptureError) => {});
     }, [images]);
@@ -188,10 +186,25 @@ export const TakePicture = React.forwardRef<TakePictureRef, Props>(
           ref={camera}
           photo={true}
         />
+        <View
+          style={{
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            left: 0,
+            bottom: 80,
+            justifyContent: 'center',
+            alignContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <ScanSVG margin={40} />
+        </View>
+
         <Animated.View
           style={[
             {
-              marginBottom: 46,
+              marginBottom: 0,
             },
             animatedStyle,
           ]}
@@ -232,7 +245,7 @@ export const TakePicture = React.forwardRef<TakePictureRef, Props>(
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
-            marginBottom: scaleHeight(75),
+            marginBottom: scaleHeight(26),
           }}
         >
           <BasicButton
