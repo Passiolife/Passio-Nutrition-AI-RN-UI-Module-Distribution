@@ -35,37 +35,48 @@ export function useTakePicture() {
     PassioAdvisorFoodInfo[] | null
   >(null);
 
-  const recognizePictureRemote = useCallback(async (imgs: string[]) => {
-    setFetchResponse(true);
-    try {
-      setPassioAdvisorFoodInfo(null);
-
-      let foodInfoArray: Array<PassioAdvisorFoodInfo[] | null> = [];
-
-      const data = imgs.map(async (item) => {
-        const val = await PassioSDK.recognizeImageRemote(
-          item.replace('file://', '') ?? ''
-        );
-        foodInfoArray?.push(val);
-      });
-
-      await Promise.all(data);
-      let foodInfoArrayFlat = foodInfoArray.flat();
-      if (foodInfoArrayFlat && foodInfoArrayFlat?.length > 0) {
-        setFetchResponse(false);
-        bottomSheetModalRef.current?.expand();
-        setPassioAdvisorFoodInfo(foodInfoArrayFlat as PassioAdvisorFoodInfo[]);
-      } else {
-        bottomSheetModalRef.current?.expand();
+  const recognizePictureRemote = useCallback(
+    async (imgs: string[]) => {
+      if (isFetchingResponse) {
+        return;
       }
-    } catch (error) {
-    } finally {
-      setFetchResponse(false);
-    }
-  }, []);
+      setFetchResponse(true);
+      try {
+        setPassioAdvisorFoodInfo(null);
+
+        let foodInfoArray: Array<PassioAdvisorFoodInfo[] | null> = [];
+
+        const data = imgs.map(async (item) => {
+          const val = await PassioSDK.recognizeImageRemote(
+            item.replace('file://', '') ?? ''
+          );
+          foodInfoArray?.push(val);
+        });
+
+        await Promise.all(data);
+        let foodInfoArrayFlat = foodInfoArray.flat();
+        if (foodInfoArrayFlat && foodInfoArrayFlat?.length > 0) {
+          setFetchResponse(false);
+          bottomSheetModalRef.current?.expand();
+          setPassioAdvisorFoodInfo(
+            foodInfoArrayFlat as PassioAdvisorFoodInfo[]
+          );
+        } else {
+          bottomSheetModalRef.current?.expand();
+        }
+      } catch (error) {
+      } finally {
+        setFetchResponse(false);
+      }
+    },
+    [isFetchingResponse]
+  );
 
   const onLogSelectPress = useCallback(
     async (selected: PassioAdvisorFoodInfo[]) => {
+      if (isPreparingLog) {
+        return;
+      }
       setPreparingLog(true);
       const foodLogs = await createFoodLogUsingFoodDataInfo(
         selected,
@@ -86,6 +97,7 @@ export function useTakePicture() {
     },
 
     [
+      isPreparingLog,
       navigation,
       route.params.logToDate,
       route.params.logToMeal,
