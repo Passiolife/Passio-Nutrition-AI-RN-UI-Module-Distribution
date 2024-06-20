@@ -2,13 +2,12 @@
 
 <img src='./media/header.png'>
 
-
 ## Installation
 
-
-#### Step 1: Create an .npmrc or yarnrc.yml file in the root of your project with the following lines replacing GITHUB_ACCESS_TOKEN with the token you've created.
+#### Step 1: Create an .npmrc or yarnrc.yml file in the root of your project with the following lines replacing GITHUB_ACCESS_TOKEN with the token you've created
 
 `.npmrc`
+
 ```sh
 //npm.pkg.github.com/:_authToken=GITHUB_ACCESS_TOKEN
 @passiolife:registry=https://npm.pkg.github.com
@@ -16,6 +15,7 @@
 
 or
 `yarnrc.yml`
+
 ```sh
 npmScopes:
   passiolife:
@@ -24,11 +24,13 @@ npmScopes:
 ```
 
 #### Step 2: Open terminal
+
 ```sh
 yarn add @passiolife/nutrition-ai-ui-ux
 ```
 
 #### Step 3: add react-native.config.js at root
+
 ```sh
 module.exports = {
   dependencies: {
@@ -47,11 +49,14 @@ module.exports = {
     '@react-native-voice/voice': {},
     '@notifee/react-native': {},
     '@react-native-async-storage/async-storage': {},
+    'react-native-vision-camera': {},
+    'react-native-image-picker': {},
   },
 };
 ```
 
-#### Step 4: For Android, add this implementation line to the dependencies section on app/build.gradle file.
+#### Step 4: For Android, add this implementation line to the dependencies section on app/build.gradle file
+
 ```sh
 dependencies {
     // Add this line below for Passio SDK library
@@ -62,9 +67,10 @@ dependencies {
 
 ```
 
-
 ### Add Reanimated's babel plugin
+
 Add react-native-reanimated/plugin plugin to your babel.config.js.
+
 ```js
 module.exports = {
     presets: [
@@ -79,20 +85,22 @@ module.exports = {
 
 ## Permission
 
-#### IOS Permission 
+#### IOS Permission
 
 ```
  Privacy - NSCameraUsageDescription
  Privacy - NSSpeechRecognitionUsageDescription
  Privacy - NSMicrophoneUsageDescription
+ Privacy - Photo Library Usage Description
 ```
 
-####  Android Permission
+#### Android Permission
 
 ```
 <uses-permission android:name="android.permission.CAMERA" />
 
 ```
+
 ### Required Dependencies
 
 | Dependency                   | Required Version |
@@ -101,10 +109,9 @@ module.exports = {
 | react-native-gesture-handler | >=2.16.0         |
 | react-native-safe-area-context | >=4.8.2       |
 
-
 ⚠️ Issue
 
-If you find a duplicate entry for '@react-navigation', ensure that the your project navigation dependencies are match our navigation dependencies require versions. 
+If you find a duplicate entry for '@react-navigation', ensure that the your project navigation dependencies are match our navigation dependencies require versions.
 
 ### Additional Navigation Dependencies
 
@@ -116,15 +123,11 @@ If you find a duplicate entry for '@react-navigation', ensure that the your proj
 | @react-navigation/bottom-tabs      | >=6.5.20         |
 | react-native-screens           | >=3.30.1       |
 
-
-
-
 # Usage example
 
- ### Note: Ensure your SDK is configured correctly before launching the Nutrition AI module.
+### Note: Ensure your SDK is configured correctly before launching the Nutrition AI module
 
 ## Using Internal Services
-
 
 ``` JS
 import React from 'react';
@@ -159,7 +162,6 @@ export default function App() {
 ## Using External Services
 
 #### Step 1: If you'd like to include your data service, follow the steps below. Otherwise, skip to the next step
-
 
 `NutritionDataService` used for Return a function to store or retrieve data through a REST API, local database, or Firebase, etc
 
@@ -317,7 +319,7 @@ export const dataService: NutritionDataService = {
 };
  ```
 
- #### Step: 2 If you're want to apply your theme, you can use the following, although it's in experimental mode. otherwise you can skip to next step
+#### Step: 2 If you're want to apply your theme, you can use the following, although it's in experimental mode. otherwise you can skip to next step
 
 Nutrition-UX SDK also provide  Branding into BrandingProvider.
 
@@ -345,7 +347,7 @@ Nutrition-UX SDK also provide  Branding into BrandingProvider.
   };
 ```
 
-#### Step:3 : If you're want to check some log event then provide analytic service, although it's in experimental mode. 
+#### Step:3 : If you're want to check some log event then provide analytic service, although it's in experimental mode
 
 ```js
   export  const analyticsService: AnalyticsService = {
@@ -354,7 +356,6 @@ Nutrition-UX SDK also provide  Branding into BrandingProvider.
     },
   };
 ```
-
 
 ``` JS
 import React from 'react';
@@ -393,7 +394,6 @@ const { isReady } = usePassioConfig({ key: "YOUR_PASSIO_KEY" });
 
 ```
 
-
 # Use `PassioScreens` as `Stack` without navigation container
 
 ```js
@@ -427,11 +427,9 @@ export const AppNavigator = () => {
 
 ```
 
+#### NutritionDataService callback functions
 
-
-#### NutritionDataService callback functions: 
-
-| Callback     |  Argument     | Return       | Description    |                                                                                                                           
+| Callback     |  Argument     | Return       | Description    |
 | ------------------------ | ---------- | ------------------------------------------------------------------| -----------------------------------------------|
 | saveNutritionProfile   | NutritionProfile | void |  This function provides you `NutritionProfile` object for save nutrition profile|
 | saveFoodLog            | FoodLog | void |  This function provide you  `FoodLog` for save food log|
@@ -446,8 +444,6 @@ export const AppNavigator = () => {
 | getPatientProfile      | void | PatientProfile | You have to provide `PatientProfile` to this funciton|
 | getRecipes             | void | Recipe[] | You have to provide `Recipe[]` to this funciton|
 
-
-
 ## Contributing
 
 To begin development, clone the project and check out the develop branch.
@@ -458,7 +454,6 @@ As you develop your feature, run the example app to test and debug your code.
 
 Once your work is complete, verify that you have met all acceptance criteria on the ticket and have sufficient tests to cover the behavior. Then you may create a pull request back to the develop branch which will be reviewed and subsequently approved and merged.
 
-
 ### ⚠️ Issue
 
 If your project not runnable in IOS then follow below steps
@@ -466,9 +461,9 @@ If your project not runnable in IOS then follow below steps
 - removed podfile.lock
 - remove pods
 - remove node_modules in example
-- remove node_modules in root 
+- remove node_modules in root
 - remove derived data
-- remove library cache 
+- remove library cache
 - restart system
 - yarn at root
 - open xcode
@@ -488,8 +483,6 @@ To resolve the issue, you can use the following resolutions in your package.json
   }
   ```
 
-
-
 ### ⚠️ Issue Voice logging
 
 #### Notes on Android
@@ -504,9 +497,10 @@ How can I get com.google.android.googlequicksearchbox in the device?
 
 Please ask users to install Google Search App.
 
-
 ### ⚠️ Issue @react-native-async-storage/async-storage
+
 If you pod or build not sync please add `@react-native-async-storage/async-storage`
+
 ```sh
 yarn add  @react-native-async-storage/async-storage
 ```

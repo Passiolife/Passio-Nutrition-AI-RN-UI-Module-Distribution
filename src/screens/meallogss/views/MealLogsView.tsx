@@ -46,6 +46,9 @@ const RenderItem = ({
     <Card style={styles.cardContainer}>
       <Pressable
         onPress={() => {
+          if (item.data.length === 0) {
+            return;
+          }
           setExpandable(!expandable);
         }}
         style={styles.heder}
@@ -54,8 +57,13 @@ const RenderItem = ({
           {item.title}
         </Text>
         <Image
-          source={expandable ? ICONS.down : ICONS.up}
-          style={styles.upDown}
+          source={expandable && item.data.length > 0 ? ICONS.down : ICONS.up}
+          style={[
+            styles.upDown,
+            {
+              opacity: item.data.length === 0 ? 0.2 : 1,
+            },
+          ]}
         />
       </Pressable>
       {expandable && item.data.length > 0 && (
@@ -66,16 +74,6 @@ const RenderItem = ({
             renderItem={renderFoodItem}
             keyExtractor={(__: FoodLog) => __.uuid.toString()}
           />
-        </>
-      )}
-      {expandable && item.data.length === 0 && (
-        <>
-          <Text
-            color="secondaryText"
-            style={{ padding: 16, textAlign: 'center' }}
-          >
-            No Data
-          </Text>
         </>
       )}
     </Card>
