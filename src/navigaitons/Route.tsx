@@ -25,6 +25,7 @@ export const WeightEntryRoute = 'WeightEntry';
 export const SettingScreenRoute = 'SettingScreen';
 export const NutritionInformationScreenRoute = 'NutritionInformationScreen';
 export const TakePictureScreenRoute = 'TakePictureScreen';
+export const AdvisorScreenRoute = 'AdvisorScreen';
 
 export const ROUTES = {
   NutritionProfileScreen: 'NutritionProfileScreen',
@@ -41,4 +42,5 @@ export const ROUTES = {
   ProgressScreenRoute: 'ProgressScreen',
   VoiceLoggingScreen: 'VoiceLoggingScreen',
   TakePictureScreen: 'TakePictureScreen',
+  AdvisorScreen: 'AdvisorScreen',
 };

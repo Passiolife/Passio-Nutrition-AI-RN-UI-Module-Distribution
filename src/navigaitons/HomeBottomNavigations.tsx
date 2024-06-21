@@ -138,6 +138,12 @@ export const HomeBottomNavigation = React.memo(() => {
               type: 'camera',
             });
           }}
+          onAiAdvisor={() => {
+            navigation.navigate('AdvisorScreen', {
+              logToDate: mealLogDateRef.current,
+              logToMeal: undefined,
+            });
+          }}
           onTakePicture={onTakePicture}
           {...props}
           items={menu}

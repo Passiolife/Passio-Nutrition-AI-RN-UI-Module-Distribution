@@ -17,6 +17,7 @@ import {
   IngredientQuickScanScreen,
   VoiceLoggingScreen,
   TakePictureScreen,
+  AdvisorScreen,
 } from '../screens';
 import {
   DashboardScreenRoute,
@@ -40,6 +41,7 @@ import {
   SettingScreenRoute,
   NutritionInformationScreenRoute,
   TakePictureScreenRoute,
+  AdvisorScreenRoute,
 } from './Route';
 import MyPlanScreen from '../screens/myPlans/MyPlanScreen';
 import { HomeBottomNavigation } from './HomeBottomNavigations';
@@ -186,6 +188,11 @@ export const NutritionNavigator = () => {
             options={{ headerShown: false }}
             name={TakePictureScreenRoute}
             component={TakePictureScreen}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name={AdvisorScreenRoute}
+            component={AdvisorScreen}
           />
         </Stack.Navigator>
       </NavigationContainer>

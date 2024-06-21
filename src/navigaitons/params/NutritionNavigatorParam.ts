@@ -10,7 +10,7 @@ import type {
   HomeScreenScreenProps,
 } from '../../screens';
 import type { IngredientQuickScanScreenProps } from '../../screens/recipeEditor/RecipesScan/IngredientQuickScanScreen/IngredientQuickScanScreen';
-import type { Nutrient, Water, Weight } from '../../models';
+import type { MealLabel, Nutrient, Water, Weight } from '../../models';
 import type { FavoritesScreenProps } from '../../screens/myFavoritess';
 import type {
   TakePictureScreenProps,
@@ -51,6 +51,11 @@ interface NutritionScreenProps {
   nutrient: Nutrient[];
 }
 
+export interface AdvisorScreenProps {
+  logToDate?: Date | undefined;
+  logToMeal?: MealLabel | undefined;
+}
+
 export type ParamList = {
   MealLogScreen: MealLogScreenProps;
   ScanningScreen: ScanningScreenProps;
@@ -77,4 +82,5 @@ export type ParamList = {
   NutritionInformationScreen: NutritionScreenProps;
   VoiceLoggingScreen: VoiceLoggingScreenProps;
   TakePictureScreen: TakePictureScreenProps;
+  AdvisorScreen: AdvisorScreenProps;
 };

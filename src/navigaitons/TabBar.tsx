@@ -71,6 +71,10 @@ export const TabBar = React.memo((props: TabBarProps) => {
                     floatingRef.current?.onClose();
                     props.onTakeCamera();
                   }}
+                  onAiAdvisor={() => {
+                    floatingRef.current?.onClose();
+                    props.onAiAdvisor();
+                  }}
                 />
               }
             />
