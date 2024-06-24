@@ -18,6 +18,7 @@ import { TypingView } from './view/message/TypingView';
 import IngredientsView from './view/IngredientsView';
 import { BackNavigation } from '../../components';
 import { useBranding, type Branding } from '../../contexts';
+import { MessageRecords } from './view/message/records/MessageRecords';
 
 export const AdvisorScreen = () => {
   const {
@@ -57,6 +58,8 @@ export const AdvisorScreen = () => {
         );
       case 'image':
         return <MessageSendImageView imgUrl={item.uri} />;
+      case 'records':
+        return <MessageRecords response={item} />;
       case 'typing':
         return <TypingView />;
       default:

@@ -2,6 +2,11 @@ import { useCallback, useState } from 'react';
 import { launchImageLibrary } from 'react-native-image-picker';
 import { Keyboard } from 'react-native';
 import { useNutritionAdvisor } from '../../hooks';
+import { useNavigation } from '@react-navigation/native';
+import type { StackNavigationProp } from '@react-navigation/stack';
+import type { ParamList } from '../../navigaitons';
+
+type ScreenNavigationProps = StackNavigationProp<ParamList, 'AdvisorScreen'>;
 
 export const useAdvisorScreen = () => {
   const {
@@ -12,12 +17,13 @@ export const useAdvisorScreen = () => {
     fetchIngredients,
     sendMessage,
     setIngredientAdvisorResponse,
-    sendImage,
+    sendImages,
   } = useNutritionAdvisor({
     key: '',
   });
   const [inputMessage, setInputMessage] = useState('');
   const [loading, setLoading] = useState(false);
+  const navigation = useNavigation<ScreenNavigationProps>();
 
   const onChangeTextInput = useCallback((val: string) => {
     setInputMessage(val);
@@ -31,14 +37,19 @@ export const useAdvisorScreen = () => {
 
   const onPressPlusIcon = useCallback(async () => {
     try {
-      const { assets } = await launchImageLibrary({ mediaType: 'photo' });
-      if (assets) {
-        sendImage(assets?.[0].uri?.replace('file://', '') ?? '');
-      }
+      navigation.navigate('ImagePickerScreen', {
+        onImages: async (images) => {
+          navigation.goBack();
+          await sendImages(
+            images.map((assets) => assets.replace('file://', '') ?? '')
+          );
+        },
+        type: 'gallery',
+      });
     } catch (err) {
       setLoading(false);
     }
-  }, [sendImage]);
+  }, [navigation, sendImages]);
 
   const onCloseIngredientView = useCallback(async () => {
     setIngredientAdvisorResponse(null);

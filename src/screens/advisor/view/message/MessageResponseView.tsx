@@ -1,13 +1,13 @@
-import type { PassioAdvisorResponse } from '@passiolife/nutritionai-react-native-sdk-v3'
-import React from 'react'
-import { Dimensions, StyleSheet, Text, TouchableOpacity } from 'react-native'
+import type { PassioAdvisorResponse } from '@passiolife/nutritionai-react-native-sdk-v3';
+import React from 'react';
+import { Dimensions, StyleSheet, Text, TouchableOpacity } from 'react-native';
 
-const { width: ScreenWidth } = Dimensions.get('window')
+const { width: ScreenWidth } = Dimensions.get('window');
 
 interface MessageResponseViewProps {
-  response: PassioAdvisorResponse | null | undefined
-  error?: string
-  onResponse: (response: PassioAdvisorResponse) => void
+  response: PassioAdvisorResponse | null | undefined;
+  error?: string;
+  onResponse: (response: PassioAdvisorResponse) => void;
 }
 
 export const MessageResponseView = ({
@@ -15,31 +15,31 @@ export const MessageResponseView = ({
   onResponse,
   error,
 }: MessageResponseViewProps) => {
-  const styles = ResponseViewStyle()
+  const styles = ResponseViewStyle();
 
   const onPress = async () => {
     if (response) {
-      onResponse(response)
+      onResponse(response);
     }
-  }
+  };
 
-  const content = response?.markupContent ?? ''
-  const ingredients = response?.extractedIngredients
+  const content = response?.markupContent ?? '';
+  const ingredients = response?.extractedIngredients;
 
   const renderText = () => {
-    let output = ''
+    let output = '';
 
     if (ingredients && ingredients.length > 0) {
-      output = ingredients.map((i) => '\n' + i.recognisedName + '\n').join('')
+      output = ingredients.map((i) => '\n' + i.recognisedName + '\n').join('');
     } else if (content) {
-      output = content
+      output = content;
     } else if (error) {
-      output = error
+      output = error;
     } else {
-      output = 'Something went wrong, please try again'
+      output = 'Something went wrong, please try again';
     }
-    return output
-  }
+    return output;
+  };
 
   return (
     <TouchableOpacity
@@ -48,8 +48,8 @@ export const MessageResponseView = ({
     >
       <Text style={[styles.msgText, styles.receivedMsg]}>{renderText()}</Text>
     </TouchableOpacity>
-  )
-}
+  );
+};
 
 // Styles for the component
 const ResponseViewStyle = () =>
@@ -77,4 +77,4 @@ const ResponseViewStyle = () =>
     receivedMsg: {
       color: '#FFFFFF',
     },
-  })
+  });

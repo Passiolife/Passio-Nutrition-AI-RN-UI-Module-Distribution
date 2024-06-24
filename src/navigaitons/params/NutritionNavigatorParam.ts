@@ -51,6 +51,10 @@ interface NutritionScreenProps {
   nutrient: Nutrient[];
 }
 
+interface ImagePickerProps {
+  onImages: (images: string[]) => void;
+  type: 'camera' | 'gallery';
+}
 export interface AdvisorScreenProps {
   logToDate?: Date | undefined;
   logToMeal?: MealLabel | undefined;
@@ -83,4 +87,5 @@ export type ParamList = {
   VoiceLoggingScreen: VoiceLoggingScreenProps;
   TakePictureScreen: TakePictureScreenProps;
   AdvisorScreen: AdvisorScreenProps;
+  ImagePickerScreen: ImagePickerProps;
 };

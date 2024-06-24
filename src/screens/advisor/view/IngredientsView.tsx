@@ -1,20 +1,20 @@
-import React from 'react'
+import React from 'react';
 import {
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
   FlatList,
-} from 'react-native'
+} from 'react-native';
 import {
   IconSize,
   PassioIconView,
   type PassioAdvisorResponse,
-} from '@passiolife/nutritionai-react-native-sdk-v3'
+} from '@passiolife/nutritionai-react-native-sdk-v3';
 
 interface Props {
-  response: PassioAdvisorResponse
-  onClose?: () => void
+  response: PassioAdvisorResponse;
+  onClose?: () => void;
 }
 
 const IngredientsView = ({ response, onClose }: Props) => {
@@ -39,8 +39,8 @@ const IngredientsView = ({ response, onClose }: Props) => {
         )}
       />
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -80,6 +80,6 @@ const styles = StyleSheet.create({
   text: {
     textTransform: 'capitalize',
   },
-})
+});
 
-export default IngredientsView
+export default IngredientsView;

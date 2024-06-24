@@ -20,3 +20,4 @@ export * from './nutritionInformation';
 export * from './voiceLogging';
 export * from './takePicture';
 export * from './advisor';
+export * from './imagePicker';

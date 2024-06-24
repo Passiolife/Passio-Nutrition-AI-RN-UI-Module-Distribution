@@ -1,18 +1,18 @@
-import React from 'react'
-import { Dimensions, StyleSheet, Text, TouchableOpacity } from 'react-native'
+import React from 'react';
+import { Dimensions, StyleSheet, Text, TouchableOpacity } from 'react-native';
 
-const { width: ScreenWidth } = Dimensions.get('window')
+const { width: ScreenWidth } = Dimensions.get('window');
 
 export const TypingView = () => {
-  const styles = ResponseViewStyle()
-  const content = 'typing...'
+  const styles = ResponseViewStyle();
+  const content = 'typing...';
 
   return (
     <TouchableOpacity style={[styles.msgView, styles.receivedMsgView]}>
       <Text style={[styles.msgText, styles.receivedMsg]}>{content}</Text>
     </TouchableOpacity>
-  )
-}
+  );
+};
 
 // Styles for the component
 const ResponseViewStyle = () =>
@@ -40,4 +40,4 @@ const ResponseViewStyle = () =>
     receivedMsg: {
       color: '#FFFFFF',
     },
-  })
+  });

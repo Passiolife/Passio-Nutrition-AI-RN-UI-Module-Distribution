@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 import {
   NutritionAdvisor,
+  PassioAdvisorFoodInfo,
   PassioAdvisorMessageResultStatus,
   PassioAdvisorResponse,
 } from '@passiolife/nutritionai-react-native-sdk-v3';
@@ -60,6 +61,20 @@ export const useNutritionAdvisor = ({ key }: { key: string }) => {
     });
   };
 
+  const handleImageResponse = async (
+    records: PassioAdvisorFoodInfo[],
+    uris: string[]
+  ) => {
+    setMessage((item) => {
+      const chatResponse: AdvisorResponse = {
+        type: 'records',
+        records: records,
+        uri: uris,
+      };
+      return [...item.filter((it) => it.type !== 'typing'), chatResponse];
+    });
+  };
+
   const sendMessage = async (message: string) => {
     setMessage((item) => {
       return [
@@ -79,13 +94,13 @@ export const useNutritionAdvisor = ({ key }: { key: string }) => {
     handleAdvisorResponse(response, message);
   };
 
-  const sendImage = async (imgUrl: string) => {
+  const sendImages = async (images: string[]) => {
     setMessage((item) => {
       return [
         ...item,
         {
           type: 'image',
-          uri: imgUrl,
+          uri: images,
         },
         {
           type: 'typing',
@@ -94,8 +109,21 @@ export const useNutritionAdvisor = ({ key }: { key: string }) => {
     });
     setSending(true);
     try {
-      const response = await NutritionAdvisor.sendImage(imgUrl);
-      handleAdvisorResponse(response, imgUrl);
+      let foodRecords: PassioAdvisorFoodInfo[] = [];
+      for (const item of images) {
+        const response = await NutritionAdvisor.sendImage(item);
+        if (
+          response?.status === 'Success' &&
+          response.response?.extractedIngredients
+        ) {
+          foodRecords = [
+            ...foodRecords,
+            ...response.response?.extractedIngredients,
+          ];
+        }
+      }
+
+      handleImageResponse(foodRecords, images);
     } catch (err) {
     } finally {
       setSending(false);
@@ -119,7 +147,7 @@ export const useNutritionAdvisor = ({ key }: { key: string }) => {
     ingredientAdvisorResponse,
     sending,
     sendMessage,
-    sendImage,
+    sendImages,
     fetchIngredients,
     setIngredientAdvisorResponse,
   };

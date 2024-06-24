@@ -1,20 +1,20 @@
-import { StyleSheet, Text, View, Dimensions } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, View, Dimensions } from 'react-native';
+import React from 'react';
 
 interface MessageSendTextViewProps {
-  msg: string
+  msg: string;
 }
 
-const { width: ScreenWidth } = Dimensions.get('window')
+const { width: ScreenWidth } = Dimensions.get('window');
 
 export const MessageSendTextView = ({ msg }: MessageSendTextViewProps) => {
-  const styles = messageSendTextView()
+  const styles = messageSendTextView();
   return (
     <View style={[styles.msgView, styles.sentMsgView]}>
       <Text style={[styles.msgText, styles.sentMsg]}>{msg}</Text>
     </View>
-  )
-}
+  );
+};
 
 const messageSendTextView = () =>
   StyleSheet.create({
@@ -40,4 +40,4 @@ const messageSendTextView = () =>
     sentMsg: {
       color: '#111827',
     },
-  })
+  });

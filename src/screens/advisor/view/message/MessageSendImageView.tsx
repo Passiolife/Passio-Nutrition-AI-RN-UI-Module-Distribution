@@ -1,25 +1,25 @@
-import React from 'react'
-import { Dimensions, Image, StyleSheet, View } from 'react-native'
+import React from 'react';
+import { Dimensions, Image, StyleSheet, View } from 'react-native';
 
-const { width: ScreenWidth } = Dimensions.get('window')
+const { width: ScreenWidth } = Dimensions.get('window');
 
 interface MessageSendImageViewProps {
-  imgUrl: string | undefined
+  imgUrl: string[] | undefined;
 }
 
 export const MessageSendImageView = ({ imgUrl }: MessageSendImageViewProps) => {
-  const styles = ImageMessageViewStyle()
+  const styles = ImageMessageViewStyle();
 
   return (
     <View style={[styles.msgView, styles.sentMsgView]}>
       <Image
-        source={{ uri: `file://${imgUrl}` }}
-        resizeMode="contain"
+        source={{ uri: `file://${imgUrl?.at(0)}` }}
+        resizeMode="cover"
         style={styles.img}
       />
     </View>
-  )
-}
+  );
+};
 
 const ImageMessageViewStyle = () =>
   StyleSheet.create({
@@ -28,17 +28,15 @@ const ImageMessageViewStyle = () =>
       borderTopEndRadius: 8,
       borderTopStartRadius: 8,
       marginVertical: 16,
-      padding: 6,
+      padding: 1,
     },
 
     sentMsgView: {
       backgroundColor: '#E0E7FF',
       alignSelf: 'flex-end',
-      borderBottomRightRadius: 0,
-      borderBottomLeftRadius: 8,
     },
     img: {
-      width: 150,
-      height: 150,
+      width: 220,
+      height: 220,
     },
-  })
+  });
