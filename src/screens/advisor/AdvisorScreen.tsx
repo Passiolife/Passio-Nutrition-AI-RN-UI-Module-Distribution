@@ -27,11 +27,13 @@ export const AdvisorScreen = () => {
     ingredientAdvisorResponse,
     sending,
     configureStatus,
+    isOptionShow,
     onChangeTextInput,
     onPressSendBtn,
     onPressPlusIcon,
     onCloseIngredientView,
     fetchIngredients,
+    onPickerImageOrGallery,
   } = useAdvisorScreen();
   const branding = useBranding();
   const styles = chatStyle(branding);
@@ -94,7 +96,10 @@ export const AdvisorScreen = () => {
                   textInputChnageHandler={onChangeTextInput}
                   sendBtnHandler={onPressSendBtn}
                   plusIconHandler={onPressPlusIcon}
+                  onGalleryPicker={() => onPickerImageOrGallery('gallery')}
+                  onImagePicker={() => onPickerImageOrGallery('camera')}
                   sending={sending}
+                  isOptionShow={isOptionShow}
                 />
               ) : (
                 <ActivityIndicator />

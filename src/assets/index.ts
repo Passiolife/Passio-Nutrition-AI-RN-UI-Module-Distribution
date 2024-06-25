@@ -7,6 +7,8 @@ export const ICONS = {
   close: require('./icons/close.png'),
   back: require('./icons/back.png'),
   menu: require('./icons/menu.png'),
+  camera: require('./icons/camera.png'),
+  gallery: require('./icons/gallery.png'),
   bottomDiary: require('./icons/bottom_diary.png'),
   bottomHome: require('./icons/bottom_home.png'),
   bottomProgress: require('./icons/bottm_progress.png'),

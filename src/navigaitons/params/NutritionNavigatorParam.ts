@@ -51,9 +51,10 @@ interface NutritionScreenProps {
   nutrient: Nutrient[];
 }
 
+export type ImagePickerType = 'camera' | 'gallery';
 interface ImagePickerProps {
   onImages: (images: string[]) => void;
-  type: 'camera' | 'gallery';
+  type: ImagePickerType;
 }
 export interface AdvisorScreenProps {
   logToDate?: Date | undefined;

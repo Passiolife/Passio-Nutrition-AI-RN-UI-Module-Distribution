@@ -9,9 +9,10 @@ import {
 } from 'react-native';
 import { BasicButton, Text } from '../../../../../components';
 import type { PassioAdvisorFoodInfo } from '@passiolife/nutritionai-react-native-sdk-v3';
-import { PictureLoggingResultItemView } from './PictureLoggingResultItemView';
 import type { AdvisorResponse } from '../../../model/advisorResponse';
 import { ICONS } from '../../../../../assets';
+import { MessageRecordItem } from './MessageRecordItem';
+import { useBranding } from '../../../../../contexts';
 
 interface Props {
   style?: StyleProp<ViewStyle>;
@@ -29,6 +30,7 @@ export const MessageRecords = ({
   onLogSelect,
 }: Props) => {
   const [selected, setSelected] = useState<Selection[]>([]);
+  const branding = useBranding();
 
   const onFoodSelect = (result: Selection) => {
     const find = selected?.find((item) => item.index === result?.index);
@@ -79,7 +81,7 @@ export const MessageRecords = ({
           const calories = ratio * advisorInfoWeightGram;
 
           return (
-            <PictureLoggingResultItemView
+            <MessageRecordItem
               foodName={item?.recognisedName}
               imageName={foodDataInfo?.iconID}
               bottom={`${item?.portionSize} | ${Math.round(calories)} cal`}
@@ -97,6 +99,9 @@ export const MessageRecords = ({
             onPress={() => {
               onLogSelect?.(selected ?? []);
             }}
+            backgroundColor={branding.backgroundColor}
+            boarderColor={branding.backgroundColor}
+            textColor={branding.primaryColor}
             style={styles.buttonLogSelected}
             enable={selected && selected.length > 0}
             text="Log Selected"

@@ -13,7 +13,7 @@ interface Props {
   isSelected: boolean;
 }
 
-export const PictureLoggingResultItemView = (props: Props) => {
+export const MessageRecordItem = (props: Props) => {
   const { foodName, imageName, onFoodLogSelect, isSelected, bottom } = props;
   return (
     <TouchableOpacity onPress={onFoodLogSelect} style={styles.container}>
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
   },
   text: {
     textTransform: 'capitalize',
-    marginStart: 16,
+    marginStart: 4,
     marginVertical: 2,
     marginRight: 10,
   },

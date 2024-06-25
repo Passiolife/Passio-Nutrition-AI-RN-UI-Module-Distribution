@@ -15,28 +15,65 @@ interface BottomBarProps {
   textInputChnageHandler: (val: string) => void;
   sendBtnHandler: () => void;
   plusIconHandler?: () => void;
+  onImagePicker?: () => void;
+  onGalleryPicker?: () => void;
   sending: boolean;
+  isOptionShow?: boolean;
 }
 
 export const BottomBar = ({
+  isOptionShow,
   inputValue,
   sendBtnHandler,
   textInputChnageHandler,
   plusIconHandler,
+  onImagePicker,
+  onGalleryPicker,
   sending,
 }: BottomBarProps) => {
   const styles = BottomBarStyle();
   return (
     <View style={styles.row}>
       <View style={[styles.inputContainer]}>
-        <TouchableOpacity onPress={plusIconHandler} style={styles.plusIconView}>
-          <Image
-            source={ICONS.newAddPlus}
-            tintColor={'white'}
-            resizeMode="contain"
-            style={styles.plusIcon}
-          />
-        </TouchableOpacity>
+        {isOptionShow ? (
+          <View style={{ flexDirection: 'row' }}>
+            <TouchableOpacity
+              onPress={onImagePicker}
+              style={[styles.button, styles.camera]}
+            >
+              <Image
+                source={ICONS.camera}
+                tintColor={'white'}
+                resizeMode="contain"
+                style={styles.plusIcon}
+              />
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={onGalleryPicker}
+              style={[styles.button, styles.gallery]}
+            >
+              <Image
+                source={ICONS.gallery}
+                tintColor={'white'}
+                resizeMode="contain"
+                style={styles.plusIcon}
+              />
+            </TouchableOpacity>
+          </View>
+        ) : (
+          <TouchableOpacity
+            onPress={plusIconHandler}
+            style={[styles.button, styles.plusIconView]}
+          >
+            <Image
+              source={ICONS.newAddPlus}
+              tintColor={'white'}
+              resizeMode="contain"
+              style={styles.plusIcon}
+            />
+          </TouchableOpacity>
+        )}
         <TextInput
           placeholder="Type your message here..."
           style={styles.input}
@@ -75,10 +112,11 @@ const BottomBarStyle = () =>
       height: '100%',
     },
     plusIcon: {
-      width: 16,
-      height: 16,
+      width: 14,
+      height: 14,
     },
-    plusIconView: {
+    plusIconView: {},
+    button: {
       paddingHorizontal: 14,
       backgroundColor: '#4F46E5',
       borderRadius: 4,
@@ -86,6 +124,10 @@ const BottomBarStyle = () =>
       justifyContent: 'center',
       alignItems: 'center',
     },
+    gallery: {
+      marginStart: 4,
+    },
+    camera: {},
     input: {
       flex: 1,
       fontSize: 14,

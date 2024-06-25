@@ -1,10 +1,9 @@
 import { useCallback, useState } from 'react';
-import { launchImageLibrary } from 'react-native-image-picker';
 import { Keyboard } from 'react-native';
 import { useNutritionAdvisor } from '../../hooks';
 import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
-import type { ParamList } from '../../navigaitons';
+import type { ImagePickerType, ParamList } from '../../navigaitons';
 
 type ScreenNavigationProps = StackNavigationProp<ParamList, 'AdvisorScreen'>;
 
@@ -23,9 +22,11 @@ export const useAdvisorScreen = () => {
   });
   const [inputMessage, setInputMessage] = useState('');
   const [loading, setLoading] = useState(false);
+  const [isOptionShow, setOptionShow] = useState(false);
   const navigation = useNavigation<ScreenNavigationProps>();
 
   const onChangeTextInput = useCallback((val: string) => {
+    setOptionShow(false);
     setInputMessage(val);
   }, []);
 
@@ -36,20 +37,27 @@ export const useAdvisorScreen = () => {
   }, [inputMessage, sendMessage]);
 
   const onPressPlusIcon = useCallback(async () => {
-    try {
-      navigation.navigate('ImagePickerScreen', {
-        onImages: async (images) => {
-          navigation.goBack();
-          await sendImages(
-            images.map((assets) => assets.replace('file://', '') ?? '')
-          );
-        },
-        type: 'gallery',
-      });
-    } catch (err) {
-      setLoading(false);
-    }
-  }, [navigation, sendImages]);
+    setOptionShow(true);
+  }, []);
+
+  const onPickerImageOrGallery = useCallback(
+    async (type: ImagePickerType) => {
+      try {
+        navigation.navigate('ImagePickerScreen', {
+          onImages: async (images) => {
+            navigation.goBack();
+            await sendImages(
+              images.map((assets) => assets.replace('file://', '') ?? '')
+            );
+          },
+          type: type,
+        });
+      } catch (err) {
+        setLoading(false);
+      }
+    },
+    [navigation, sendImages]
+  );
 
   const onCloseIngredientView = useCallback(async () => {
     setIngredientAdvisorResponse(null);
@@ -62,10 +70,12 @@ export const useAdvisorScreen = () => {
     messages,
     loading,
     sending,
+    isOptionShow,
     onChangeTextInput,
     onPressSendBtn,
     onPressPlusIcon,
     fetchIngredients,
     onCloseIngredientView,
+    onPickerImageOrGallery,
   };
 };
