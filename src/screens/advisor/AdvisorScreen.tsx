@@ -34,7 +34,6 @@ export const AdvisorScreen = () => {
     onPressSendBtn,
     onPressPlusIcon,
     onCloseIngredientView,
-    fetchIngredients,
     onPickerImageOrGallery,
   } = useAdvisorScreen();
   const branding = useBranding();
@@ -55,9 +54,15 @@ export const AdvisorScreen = () => {
       case 'response':
         return (
           <MessageResponseView
-            response={item.response}
+            response={item.response?.markupContent}
             error={item.error}
-            onResponse={fetchIngredients}
+          />
+        );
+      case 'defaultResponse':
+        return (
+          <MessageResponseView
+            response={item.defaultResponse}
+            error={item.error}
           />
         );
       case 'image':

@@ -32,6 +32,7 @@ export const SelectPhotos = React.forwardRef<SelectPhotosRef, Props>(
         const { assets } = await launchImageLibrary({
           selectionLimit: PHOTO_LIMIT,
           mediaType: 'photo',
+          quality: 0.4,
         });
         const galleryImages = assets?.map(
           (i) => i.uri?.replace('file://', '') ?? ''

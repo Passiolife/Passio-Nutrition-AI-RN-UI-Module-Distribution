@@ -7,9 +7,23 @@ import {
   PassioAdvisorResponse,
 } from '@passiolife/nutritionai-react-native-sdk-v3';
 import type { AdvisorResponse } from '../screens/advisor/model/advisorResponse';
-import type { FlatList } from 'react-native';
+import { LayoutAnimation, type FlatList } from 'react-native';
 
 export type SDKStatus = 'Success' | 'Error' | 'Init';
+
+const defaultResponse: AdvisorResponse = {
+  type: 'defaultResponse',
+  defaultResponse: `
+  **Welcome! I am your AI Nutrition Advisor**
+ 
+  **You can ask me things like:**  
+  • How many calories are in a yogurt?  
+  • Create me a recipe for dinner?  
+  • How can I adjust my diet for heart health?
+
+  Let's chat!
+  `,
+};
 
 export const useNutritionAdvisor = ({ key }: { key: string }) => {
   const [configureStatus, setConfigureStatus] = useState<SDKStatus>('Init');
@@ -18,6 +32,17 @@ export const useNutritionAdvisor = ({ key }: { key: string }) => {
   const [ingredientAdvisorResponse, setIngredientAdvisorResponse] =
     useState<PassioAdvisorResponse | null>(null);
   const listRef = useRef<FlatList>(null);
+  const firstRender = useRef(true);
+
+  useEffect(() => {
+    if (firstRender.current) {
+      setTimeout(() => {
+        LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+        setMessage([defaultResponse]);
+        firstRender.current = false;
+      }, 1000);
+    }
+  }, []);
 
   useEffect(() => {
     const initializeNutritionAdvisor = async () => {
@@ -66,9 +91,8 @@ export const useNutritionAdvisor = ({ key }: { key: string }) => {
 
   const jumpToLast = () => {
     setTimeout(() => {
-      listRef?.current?.scrollToIndex({
+      listRef?.current?.scrollToEnd({
         animated: true,
-        index: messages.length + 1,
       });
     }, 300);
   };
@@ -77,17 +101,30 @@ export const useNutritionAdvisor = ({ key }: { key: string }) => {
     records: PassioAdvisorFoodInfo[],
     uris: string[]
   ) => {
-    setMessage((item) => {
-      const chatResponse: AdvisorResponse = {
-        type: 'records',
-        records: records,
-        uri: uris,
-      };
-      return [
-        ...item.filter((it) => it.type !== 'imageScanning'),
-        chatResponse,
-      ];
-    });
+    if (records.length === 0) {
+      setMessage((item) => {
+        const chatResponse: AdvisorResponse = {
+          type: 'response',
+          error: "I'm unable to provide a response.",
+        };
+        return [
+          ...item.filter((it) => it.type !== 'imageScanning'),
+          chatResponse,
+        ];
+      });
+    } else {
+      setMessage((item) => {
+        const chatResponse: AdvisorResponse = {
+          type: 'records',
+          records: records,
+          uri: uris,
+        };
+        return [
+          ...item.filter((it) => it.type !== 'imageScanning'),
+          chatResponse,
+        ];
+      });
+    }
     jumpToLast();
   };
 
@@ -127,28 +164,29 @@ export const useNutritionAdvisor = ({ key }: { key: string }) => {
         },
       ];
     });
-    listRef?.current?.scrollToIndex({
-      animated: true,
-      index: messages.length,
-    });
     setSending(true);
+    jumpToLast();
     try {
       let foodRecords: PassioAdvisorFoodInfo[] = [];
+      setSending(true);
       for (const item of images) {
-        const response = await NutritionAdvisor.sendImage(item);
-        if (
-          response?.status === 'Success' &&
-          response.response?.extractedIngredients
-        ) {
-          foodRecords = [
-            ...foodRecords,
-            ...response.response?.extractedIngredients,
-          ];
-        }
+        try {
+          const response = await NutritionAdvisor.sendImage(item);
+          if (
+            response?.status === 'Success' &&
+            response.response?.extractedIngredients
+          ) {
+            foodRecords = [
+              ...foodRecords,
+              ...(response.response?.extractedIngredients ?? []),
+            ];
+          }
+        } catch (err) {}
       }
 
       handleImageResponse(foodRecords, images);
     } catch (err) {
+      handleImageResponse([], images);
     } finally {
       setSending(false);
     }

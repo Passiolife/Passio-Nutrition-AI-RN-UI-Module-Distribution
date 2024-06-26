@@ -3,6 +3,7 @@ import { useNutritionAdvisor } from '../../hooks';
 import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import type { ImagePickerType, ParamList } from '../../navigaitons';
+import { Keyboard } from 'react-native';
 
 type ScreenNavigationProps = StackNavigationProp<ParamList, 'AdvisorScreen'>;
 
@@ -41,7 +42,11 @@ export const useAdvisorScreen = () => {
 
   const onPickerImageOrGallery = useCallback(
     async (type: ImagePickerType) => {
+      if (sending) {
+        return;
+      }
       try {
+        Keyboard.dismiss();
         navigation.navigate('ImagePickerScreen', {
           onImages: async (images) => {
             navigation.goBack();
@@ -55,7 +60,7 @@ export const useAdvisorScreen = () => {
         setLoading(false);
       }
     },
-    [navigation, sendImages]
+    [navigation, sendImages, sending]
   );
 
   const onCloseIngredientView = useCallback(async () => {

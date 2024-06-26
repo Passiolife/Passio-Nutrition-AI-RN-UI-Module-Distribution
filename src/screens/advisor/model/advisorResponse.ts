@@ -9,7 +9,8 @@ export type messageType =
   | 'response'
   | 'records'
   | 'typing'
-  | 'imageScanning';
+  | 'imageScanning'
+  | 'defaultResponse';
 export interface AdvisorResponse {
   type: messageType;
   message?: string;
@@ -17,4 +18,5 @@ export interface AdvisorResponse {
   uri?: string[];
   response?: PassioAdvisorResponse | null;
   records?: PassioAdvisorFoodInfo[];
+  defaultResponse?: string;
 }

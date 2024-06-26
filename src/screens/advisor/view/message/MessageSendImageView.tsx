@@ -17,7 +17,7 @@ export const MessageSendImageView = ({ imgUrl }: MessageSendImageViewProps) => {
         imgUrl && (
           <View style={[styles.img]}>
             <Carousel
-              loop
+              loop={false}
               width={220}
               height={300}
               mode="parallax"

@@ -20,10 +20,10 @@ const messageSendTextView = () =>
   StyleSheet.create({
     msgView: {
       maxWidth: ScreenWidth * 0.75,
-      borderTopEndRadius: 8,
-      borderTopStartRadius: 8,
+      borderTopEndRadius: 12,
+      borderTopStartRadius: 12,
       marginVertical: 16,
-      paddingVertical: 8,
+      paddingVertical: 12,
       paddingHorizontal: 10,
     },
 

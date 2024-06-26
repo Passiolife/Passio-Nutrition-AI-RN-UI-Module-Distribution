@@ -85,7 +85,14 @@ export const BottomBar = ({
         {sending ? (
           <ActivityIndicator style={styles.sendBtn} />
         ) : (
-          <TouchableOpacity onPress={sendBtnHandler} style={styles.sendBtn}>
+          <TouchableOpacity
+            onPress={sendBtnHandler}
+            disabled={inputValue.length === 0}
+            style={[
+              styles.sendBtn,
+              inputValue.length === 0 && styles.disableSend,
+            ]}
+          >
             <Text style={styles.sendBtnText}>Send</Text>
           </TouchableOpacity>
         )}
@@ -99,8 +106,11 @@ const BottomBarStyle = () =>
   StyleSheet.create({
     row: {
       flexDirection: 'row',
+      height: 50,
       alignItems: 'center',
-      height: 48,
+    },
+    disableSend: {
+      backgroundColor: 'gray',
     },
     inputContainer: {
       flex: 1,
