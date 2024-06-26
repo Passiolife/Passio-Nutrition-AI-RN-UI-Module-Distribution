@@ -27,6 +27,8 @@ const defaultResponse: AdvisorResponse = {
 
 export const useNutritionAdvisor = ({ key }: { key: string }) => {
   const [configureStatus, setConfigureStatus] = useState<SDKStatus>('Init');
+  const [sdkError, setSDKError] = useState<string | undefined>(undefined);
+
   const [messages, setMessage] = useState<AdvisorResponse[]>([]);
   const [sending, setSending] = useState(false);
   const [ingredientAdvisorResponse, setIngredientAdvisorResponse] =
@@ -56,9 +58,11 @@ export const useNutritionAdvisor = ({ key }: { key: string }) => {
           );
         } else {
           setConfigureStatus('Error');
+          setSDKError(status?.message);
         }
       } catch (err) {
         setConfigureStatus('Error');
+        setSDKError('Error');
       }
     };
 
@@ -209,6 +213,7 @@ export const useNutritionAdvisor = ({ key }: { key: string }) => {
     ingredientAdvisorResponse,
     sending,
     listRef,
+    sdkError,
     sendMessage,
     sendImages,
     fetchIngredients,

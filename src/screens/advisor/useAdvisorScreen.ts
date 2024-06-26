@@ -10,6 +10,7 @@ type ScreenNavigationProps = StackNavigationProp<ParamList, 'AdvisorScreen'>;
 export const useAdvisorScreen = () => {
   const {
     messages,
+    sdkError,
     configureStatus,
     sending,
     ingredientAdvisorResponse,
@@ -76,6 +77,7 @@ export const useAdvisorScreen = () => {
     sending,
     isOptionShow,
     listRef,
+    sdkError,
     onChangeTextInput,
     onPressSendBtn,
     onPressPlusIcon,

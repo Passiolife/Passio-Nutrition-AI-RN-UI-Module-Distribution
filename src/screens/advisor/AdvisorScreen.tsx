@@ -16,7 +16,7 @@ import { MessageResponseView } from './view/message/MessageResponseView';
 import { MessageSendImageView } from './view/message/MessageSendImageView';
 import { TypingView } from './view/message/TypingView';
 import IngredientsView from './view/IngredientsView';
-import { BackNavigation } from '../../components';
+import { BackNavigation, Text } from '../../components';
 import { useBranding, type Branding } from '../../contexts';
 import { MessageRecords } from './view/message/records/MessageRecords';
 import { ImageScanning } from './view/message/ImageScanning';
@@ -28,6 +28,7 @@ export const AdvisorScreen = () => {
     ingredientAdvisorResponse,
     sending,
     configureStatus,
+    sdkError,
     isOptionShow,
     listRef,
     onChangeTextInput,
@@ -82,28 +83,28 @@ export const AdvisorScreen = () => {
     <>
       <BackNavigation title="AI Advisor" />
 
-      <KeyboardAvoidingView
-        style={styles.body}
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-      >
-        <SafeAreaView style={styles.body}>
-          <View style={[styles.body, styles.container]}>
-            <View style={styles.chatBody}>
-              <View style={styles.chatBodyContainer}>
-                <FlatList
-                  data={messages}
-                  ref={listRef}
-                  keyExtractor={(_item, index) => index.toString()}
-                  renderItem={renderItem}
-                  showsVerticalScrollIndicator={false}
-                  style={styles.flatListStyle}
-                  // onContentSizeChange={() => listRef.current?.scrollToEnd()}
-                  // onLayout={() => listRef.current?.scrollToEnd()}
-                />
+      {configureStatus === 'Success' ? (
+        <KeyboardAvoidingView
+          style={styles.body}
+          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        >
+          <SafeAreaView style={styles.body}>
+            <View style={[styles.body, styles.container]}>
+              <View style={styles.chatBody}>
+                <View style={styles.chatBodyContainer}>
+                  <FlatList
+                    data={messages}
+                    ref={listRef}
+                    keyExtractor={(_item, index) => index.toString()}
+                    renderItem={renderItem}
+                    showsVerticalScrollIndicator={false}
+                    style={styles.flatListStyle}
+                    // onContentSizeChange={() => listRef.current?.scrollToEnd()}
+                    // onLayout={() => listRef.current?.scrollToEnd()}
+                  />
+                </View>
               </View>
-            </View>
-            <View style={styles.bottomView}>
-              {configureStatus === 'Success' ? (
+              <View style={styles.bottomView}>
                 <BottomBar
                   inputValue={inputMessage}
                   textInputChnageHandler={onChangeTextInput}
@@ -114,13 +115,18 @@ export const AdvisorScreen = () => {
                   sending={sending}
                   isOptionShow={isOptionShow}
                 />
-              ) : (
-                <ActivityIndicator />
-              )}
+              </View>
             </View>
-          </View>
-        </SafeAreaView>
-      </KeyboardAvoidingView>
+          </SafeAreaView>
+        </KeyboardAvoidingView>
+      ) : configureStatus === 'Error' ? (
+        <Text style={styles.error}>{sdkError}</Text>
+      ) : (
+        <View style={{ flex: 1, justifyContent: 'center' }}>
+          <ActivityIndicator />
+        </View>
+      )}
+
       {ingredientAdvisorResponse && (
         <IngredientsView
           response={ingredientAdvisorResponse}
@@ -137,6 +143,15 @@ const chatStyle = ({ backgroundColor }: Branding) =>
     body: {
       flex: 1,
       backgroundColor: backgroundColor,
+    },
+    error: {
+      flex: 1,
+      justifyContent: 'center',
+      alignSelf: 'center',
+      alignContent: 'center',
+      textAlign: 'center',
+      marginTop: 120,
+      alignItems: 'center',
     },
     chatBody: {
       flex: 1,
