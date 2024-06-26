@@ -70,3 +70,19 @@ export const createFoodLogUsingPortionSize = (
     return foodLog;
   }
 };
+
+export const getUpdatedCaloriesOfPassioAdvisorFoodInfo = (
+  passio: PassioAdvisorFoodInfo
+) => {
+  const npCalories = passio?.foodDataInfo?.nutritionPreview?.calories ?? 0;
+  const npWeightQuantity =
+    passio?.foodDataInfo?.nutritionPreview?.weightQuantity ?? 0;
+  const ratio = npCalories / npWeightQuantity;
+  const advisorInfoWeightGram = passio?.weightGrams ?? 0;
+  const calories = ratio * advisorInfoWeightGram;
+
+  return {
+    calories: calories,
+    advisorInfoWeightGram: advisorInfoWeightGram,
+  };
+};

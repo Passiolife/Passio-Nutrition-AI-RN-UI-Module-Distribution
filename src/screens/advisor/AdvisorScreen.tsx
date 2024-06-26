@@ -31,6 +31,7 @@ export const AdvisorScreen = () => {
     sdkError,
     isOptionShow,
     listRef,
+    onLogSelect,
     onChangeTextInput,
     onPressSendBtn,
     onPressPlusIcon,
@@ -69,7 +70,7 @@ export const AdvisorScreen = () => {
       case 'image':
         return <MessageSendImageView imgUrl={item.uri} />;
       case 'records':
-        return <MessageRecords response={item} />;
+        return <MessageRecords response={item} onLogSelect={onLogSelect} />;
       case 'typing':
         return <TypingView />;
       case 'imageScanning':

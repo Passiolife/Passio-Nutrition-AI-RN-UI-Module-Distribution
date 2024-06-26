@@ -13,6 +13,7 @@ import type { AdvisorResponse } from '../../../model/advisorResponse';
 import { ICONS } from '../../../../../assets';
 import { MessageRecordItem } from './MessageRecordItem';
 import { useBranding } from '../../../../../contexts';
+import { getUpdatedCaloriesOfPassioAdvisorFoodInfo } from '../../../../../utils';
 
 interface Props {
   style?: StyleProp<ViewStyle>;
@@ -71,15 +72,7 @@ export const MessageRecords = ({
           const foodDataInfo = item.foodDataInfo;
           const isSelected =
             selected?.find((it) => it?.index === index) !== undefined;
-
-          const npCalories =
-            item?.foodDataInfo?.nutritionPreview?.calories ?? 0;
-          const npWeightQuantity =
-            item?.foodDataInfo?.nutritionPreview?.weightQuantity ?? 0;
-          const ratio = npCalories / npWeightQuantity;
-          const advisorInfoWeightGram = item?.weightGrams ?? 0;
-          const calories = ratio * advisorInfoWeightGram;
-
+          const { calories } = getUpdatedCaloriesOfPassioAdvisorFoodInfo(item);
           return (
             <MessageRecordItem
               foodName={item?.recognisedName}
