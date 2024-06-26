@@ -1,5 +1,4 @@
 import { useCallback, useState } from 'react';
-import { Keyboard } from 'react-native';
 import { useNutritionAdvisor } from '../../hooks';
 import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dimensions, Image, StyleSheet, Text, View } from 'react-native';
+import { Dimensions, Image, StyleSheet, View } from 'react-native';
 import Carousel from 'react-native-reanimated-carousel';
 
 const { width: ScreenWidth } = Dimensions.get('window');
