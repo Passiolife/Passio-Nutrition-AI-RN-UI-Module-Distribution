@@ -1919,10 +1919,10 @@
   dependencies:
     "@octokit/openapi-types" "^20.0.0"
 
-"@passiolife/nutritionai-react-native-sdk-v3@3.1.0-1":
-  version "3.1.0-1"
-  resolved "https://npm.pkg.github.com/download/@passiolife/nutritionai-react-native-sdk-v3/3.1.0-1/d293fff9601557f03a1b2a25c6c53a4965988c01#d293fff9601557f03a1b2a25c6c53a4965988c01"
-  integrity sha512-Dt6HITgdLQ6m3nyNANotYA6jQkhCREkvu2nuyL9vBaEb0G9vMsAi6KqW+MFmQ6fbFguMRVLwL1e+W3+vSjwJ6g==
+"@passiolife/nutritionai-react-native-sdk-v3@3.1.1-1":
+  version "3.1.1-1"
+  resolved "https://npm.pkg.github.com/download/@passiolife/nutritionai-react-native-sdk-v3/3.1.1-1/01624e49dc2d59258fe53b1ea75f608697b691a5#01624e49dc2d59258fe53b1ea75f608697b691a5"
+  integrity sha512-R0vdn7Q/9mrSFT0pFwLW+pWzmirvkFB5iYB+MmBJsY+c6XrC/CMHFHDoqOkTw2gJhm2/YL4uMJAcDATGPzcHGQ==
 
 "@pkgjs/parseargs@^0.11.0":
   version "0.11.0"
@@ -8437,6 +8437,11 @@ react-native-pdf@^6.7.4:
   dependencies:
     crypto-js "4.2.0"
     deprecated-react-native-prop-types "^2.3.0"
+
+react-native-reanimated-carousel@^3.5.1:
+  version "3.5.1"
+  resolved "https://registry.yarnpkg.com/react-native-reanimated-carousel/-/react-native-reanimated-carousel-3.5.1.tgz#3605b9959ffc0aa1c6b8b8736d98f91f46e36b17"
+  integrity sha512-9BBQV6JAYSQm2lV7MFtT4mzapXmW4IZO6s38gfiJL84Jg23ivGB1UykcNQauKgtHyhtW2NuZJzItb1s42lM+hA==
 
 react-native-reanimated@^3.6.1:
   version "3.8.1"

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import {
   NutritionAdvisor,
@@ -7,6 +7,7 @@ import {
   PassioAdvisorResponse,
 } from '@passiolife/nutritionai-react-native-sdk-v3';
 import type { AdvisorResponse } from '../screens/advisor/model/advisorResponse';
+import type { FlatList } from 'react-native';
 
 export type SDKStatus = 'Success' | 'Error' | 'Init';
 
@@ -16,6 +17,7 @@ export const useNutritionAdvisor = ({ key }: { key: string }) => {
   const [sending, setSending] = useState(false);
   const [ingredientAdvisorResponse, setIngredientAdvisorResponse] =
     useState<PassioAdvisorResponse | null>(null);
+  const listRef = useRef<FlatList>(null);
 
   useEffect(() => {
     const initializeNutritionAdvisor = async () => {
@@ -59,6 +61,16 @@ export const useNutritionAdvisor = ({ key }: { key: string }) => {
         return [...item.filter((it) => it.type !== 'typing'), chatResponse];
       }
     });
+    jumpToLast();
+  };
+
+  const jumpToLast = () => {
+    setTimeout(() => {
+      listRef?.current?.scrollToIndex({
+        animated: true,
+        index: messages.length + 1,
+      });
+    }, 300);
   };
 
   const handleImageResponse = async (
@@ -71,11 +83,18 @@ export const useNutritionAdvisor = ({ key }: { key: string }) => {
         records: records,
         uri: uris,
       };
-      return [...item.filter((it) => it.type !== 'typing'), chatResponse];
+      return [
+        ...item.filter((it) => it.type !== 'imageScanning'),
+        chatResponse,
+      ];
     });
+    jumpToLast();
   };
 
   const sendMessage = async (message: string) => {
+    if (message.trim().length === 0) {
+      return;
+    }
     setMessage((item) => {
       return [
         ...item,
@@ -89,6 +108,7 @@ export const useNutritionAdvisor = ({ key }: { key: string }) => {
       ];
     });
     setSending(true);
+    jumpToLast();
     const response = await NutritionAdvisor.sendMessage(message);
     setSending(false);
     handleAdvisorResponse(response, message);
@@ -103,9 +123,13 @@ export const useNutritionAdvisor = ({ key }: { key: string }) => {
           uri: images,
         },
         {
-          type: 'typing',
+          type: 'imageScanning',
         },
       ];
+    });
+    listRef?.current?.scrollToIndex({
+      animated: true,
+      index: messages.length,
     });
     setSending(true);
     try {
@@ -146,9 +170,11 @@ export const useNutritionAdvisor = ({ key }: { key: string }) => {
     messages,
     ingredientAdvisorResponse,
     sending,
+    listRef,
     sendMessage,
     sendImages,
     fetchIngredients,
     setIngredientAdvisorResponse,
+    jumpToLast,
   };
 };

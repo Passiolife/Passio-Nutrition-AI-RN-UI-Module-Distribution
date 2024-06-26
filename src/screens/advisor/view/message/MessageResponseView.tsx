@@ -1,6 +1,7 @@
 import type { PassioAdvisorResponse } from '@passiolife/nutritionai-react-native-sdk-v3';
 import React from 'react';
-import { Dimensions, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { Dimensions, StyleSheet, TouchableOpacity } from 'react-native';
+import Markdown from 'react-native-markdown-display';
 
 const { width: ScreenWidth } = Dimensions.get('window');
 
@@ -46,9 +47,32 @@ export const MessageResponseView = ({
       onPress={onPress}
       style={[styles.msgView, styles.receivedMsgView]}
     >
-      <Text style={[styles.msgText, styles.receivedMsg]}>{renderText()}</Text>
+      <Markdown style={markdownStyles}>{renderText()}</Markdown>
     </TouchableOpacity>
   );
+};
+
+const markdownStyles = {
+  body: {
+    color: '#FFFFFF', // White color for the text
+    fontSize: 13,
+  },
+  heading1: {
+    color: '#FFFFFF', // White color for headings
+    fontSize: 14,
+  },
+  strong: {
+    color: '#FFFFFF', // White color for bold text
+    fontSize: 14,
+  },
+  em: {
+    color: '#FFFFFF', // White color for italic text
+    fontSize: 14,
+  },
+  link: {
+    color: '#FFFFFF', // White color for links
+    fontSize: 14,
+  },
 };
 
 // Styles for the component

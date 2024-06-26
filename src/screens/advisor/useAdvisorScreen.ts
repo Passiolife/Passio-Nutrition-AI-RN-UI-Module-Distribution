@@ -13,6 +13,7 @@ export const useAdvisorScreen = () => {
     configureStatus,
     sending,
     ingredientAdvisorResponse,
+    listRef,
     fetchIngredients,
     sendMessage,
     setIngredientAdvisorResponse,
@@ -33,7 +34,6 @@ export const useAdvisorScreen = () => {
   const onPressSendBtn = useCallback(() => {
     sendMessage(inputMessage);
     setInputMessage('');
-    Keyboard.dismiss();
   }, [inputMessage, sendMessage]);
 
   const onPressPlusIcon = useCallback(async () => {
@@ -71,6 +71,7 @@ export const useAdvisorScreen = () => {
     loading,
     sending,
     isOptionShow,
+    listRef,
     onChangeTextInput,
     onPressSendBtn,
     onPressPlusIcon,

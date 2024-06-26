@@ -1,3 +1,4 @@
+import React, { useRef, useEffect } from 'react';
 import {
   KeyboardAvoidingView,
   SafeAreaView,
@@ -7,7 +8,6 @@ import {
   FlatList,
   ActivityIndicator,
 } from 'react-native';
-import React from 'react';
 import { BottomBar } from './view';
 import { useAdvisorScreen } from './useAdvisorScreen';
 import type { AdvisorResponse } from './model/advisorResponse';
@@ -19,6 +19,7 @@ import IngredientsView from './view/IngredientsView';
 import { BackNavigation } from '../../components';
 import { useBranding, type Branding } from '../../contexts';
 import { MessageRecords } from './view/message/records/MessageRecords';
+import { ImageScanning } from './view/message/ImageScanning';
 
 export const AdvisorScreen = () => {
   const {
@@ -28,6 +29,7 @@ export const AdvisorScreen = () => {
     sending,
     configureStatus,
     isOptionShow,
+    listRef,
     onChangeTextInput,
     onPressSendBtn,
     onPressPlusIcon,
@@ -64,6 +66,8 @@ export const AdvisorScreen = () => {
         return <MessageRecords response={item} />;
       case 'typing':
         return <TypingView />;
+      case 'imageScanning':
+        return <ImageScanning />;
       default:
         return <></>;
     }
@@ -72,20 +76,24 @@ export const AdvisorScreen = () => {
   return (
     <>
       <BackNavigation title="AI Advisor" />
-      <SafeAreaView style={styles.body}>
-        <KeyboardAvoidingView
-          style={styles.body}
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        >
+
+      <KeyboardAvoidingView
+        style={styles.body}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      >
+        <SafeAreaView style={styles.body}>
           <View style={[styles.body, styles.container]}>
             <View style={styles.chatBody}>
               <View style={styles.chatBodyContainer}>
                 <FlatList
                   data={messages}
+                  ref={listRef}
                   keyExtractor={(_item, index) => index.toString()}
                   renderItem={renderItem}
                   showsVerticalScrollIndicator={false}
                   style={styles.flatListStyle}
+                  // onContentSizeChange={() => listRef.current?.scrollToEnd()}
+                  // onLayout={() => listRef.current?.scrollToEnd()}
                 />
               </View>
             </View>
@@ -106,14 +114,14 @@ export const AdvisorScreen = () => {
               )}
             </View>
           </View>
-        </KeyboardAvoidingView>
-        {ingredientAdvisorResponse && (
-          <IngredientsView
-            response={ingredientAdvisorResponse}
-            onClose={onCloseIngredientView}
-          />
-        )}
-      </SafeAreaView>
+        </SafeAreaView>
+      </KeyboardAvoidingView>
+      {ingredientAdvisorResponse && (
+        <IngredientsView
+          response={ingredientAdvisorResponse}
+          onClose={onCloseIngredientView}
+        />
+      )}
     </>
   );
 };
@@ -129,7 +137,7 @@ const chatStyle = ({ backgroundColor }: Branding) =>
       flex: 1,
     },
     bottomView: {
-      marginBottom: 40,
+      marginBottom: 10,
     },
     container: {
       paddingHorizontal: 16,
@@ -147,3 +155,5 @@ const chatStyle = ({ backgroundColor }: Branding) =>
       marginBottom: 10,
     },
   });
+
+export default AdvisorScreen;

@@ -1,5 +1,6 @@
 import React from 'react';
-import { Dimensions, Image, StyleSheet, View } from 'react-native';
+import { Dimensions, Image, StyleSheet, Text, View } from 'react-native';
+import Carousel from 'react-native-reanimated-carousel';
 
 const { width: ScreenWidth } = Dimensions.get('window');
 
@@ -12,11 +13,38 @@ export const MessageSendImageView = ({ imgUrl }: MessageSendImageViewProps) => {
 
   return (
     <View style={[styles.msgView, styles.sentMsgView]}>
-      <Image
-        source={{ uri: `file://${imgUrl?.at(0)}` }}
-        resizeMode="cover"
-        style={styles.img}
-      />
+      {
+        imgUrl && (
+          <View style={[styles.img]}>
+            <Carousel
+              loop
+              width={220}
+              height={300}
+              mode="parallax"
+              style={styles.imgCarousel}
+              modeConfig={{
+                parallaxAdjacentItemScale: 0.5,
+              }}
+              data={imgUrl}
+              renderItem={({ index, item }) => (
+                <Image
+                  key={index.toString()}
+                  source={{ uri: `file://${item}` }}
+                  resizeMode="cover"
+                  style={[styles.img, {}]}
+                />
+              )}
+            />
+          </View>
+        )
+        // : (
+        //   <Image
+        //     source={{ uri: `file://${imgUrl?.at(0)}` }}
+        //     resizeMode="cover"
+        //     style={styles.img}
+        //   />
+        // )
+      }
     </View>
   );
 };
@@ -32,11 +60,15 @@ const ImageMessageViewStyle = () =>
     },
 
     sentMsgView: {
-      backgroundColor: '#E0E7FF',
       alignSelf: 'flex-end',
     },
     img: {
       width: 220,
       height: 220,
+    },
+    imgCarousel: {
+      borderTopEndRadius: 8,
+      borderTopStartRadius: 8,
+      overflow: 'hidden',
     },
   });
