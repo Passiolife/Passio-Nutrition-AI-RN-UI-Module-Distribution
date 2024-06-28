@@ -37,6 +37,8 @@ export const AdvisorScreen = () => {
     onPressPlusIcon,
     onCloseIngredientView,
     onPickerImageOrGallery,
+    findFoodPress,
+    onViewDiary,
   } = useAdvisorScreen();
   const branding = useBranding();
   const styles = chatStyle(branding);
@@ -57,7 +59,10 @@ export const AdvisorScreen = () => {
         return (
           <MessageResponseView
             response={item.response?.markupContent}
+            tools={item.response?.tools}
             error={item.error}
+            isLoading={item.isLoading}
+            onFindFoodPress={() => findFoodPress(item)}
           />
         );
       case 'defaultResponse':
@@ -70,7 +75,13 @@ export const AdvisorScreen = () => {
       case 'image':
         return <MessageSendImageView imgUrl={item.uri} />;
       case 'records':
-        return <MessageRecords response={item} onLogSelect={onLogSelect} />;
+        return (
+          <MessageRecords
+            onLogSelect={onLogSelect}
+            response={item}
+            onViewDiary={onViewDiary}
+          />
+        );
       case 'typing':
         return <TypingView />;
       case 'imageScanning':

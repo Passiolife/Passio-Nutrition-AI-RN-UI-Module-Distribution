@@ -11,12 +11,23 @@ export type messageType =
   | 'typing'
   | 'imageScanning'
   | 'defaultResponse';
+
+export type RecordType = 'image' | 'searchTool';
 export interface AdvisorResponse {
   type: messageType;
   message?: string;
   error?: string;
   uri?: string[];
   response?: PassioAdvisorResponse | null;
-  records?: PassioAdvisorFoodInfo[];
+  records?: Selection[];
+  recordType?: RecordType;
   defaultResponse?: string;
+  isLogged?: boolean;
+  isLoading?: boolean;
+  uuID: string;
+}
+
+export interface Selection extends PassioAdvisorFoodInfo {
+  index: number;
+  isLogged?: boolean;
 }

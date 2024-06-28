@@ -6,8 +6,12 @@ import {
   PassioAdvisorMessageResultStatus,
   PassioAdvisorResponse,
 } from '@passiolife/nutritionai-react-native-sdk-v3';
-import type { AdvisorResponse } from '../screens/advisor/model/advisorResponse';
+import type {
+  AdvisorResponse,
+  RecordType,
+} from '../screens/advisor/model/advisorResponse';
 import { LayoutAnimation, type FlatList } from 'react-native';
+import uuid4 from 'react-native-uuid';
 
 export type SDKStatus = 'Success' | 'Error' | 'Init';
 
@@ -23,6 +27,7 @@ const defaultResponse: AdvisorResponse = {
 
   Let's chat!
   `,
+  uuID: uuid4.v4() as string,
 };
 
 export const useNutritionAdvisor = ({ key }: { key: string }) => {
@@ -78,6 +83,7 @@ export const useNutritionAdvisor = ({ key }: { key: string }) => {
         const chatResponse: AdvisorResponse = {
           type: 'response',
           response: response.response,
+          uuID: uuid4.v4() as string,
         };
         return [...item.filter((it) => it.type !== 'typing'), chatResponse];
       } else {
@@ -86,6 +92,7 @@ export const useNutritionAdvisor = ({ key }: { key: string }) => {
           response: null,
           message: message,
           error: response?.message,
+          uuID: uuid4.v4() as string,
         };
         return [...item.filter((it) => it.type !== 'typing'), chatResponse];
       }
@@ -103,13 +110,14 @@ export const useNutritionAdvisor = ({ key }: { key: string }) => {
 
   const handleImageResponse = async (
     records: PassioAdvisorFoodInfo[],
-    uris: string[]
+    recordType: RecordType
   ) => {
     if (records.length === 0) {
       setMessage((item) => {
         const chatResponse: AdvisorResponse = {
           type: 'response',
           error: "I'm unable to provide a response.",
+          uuID: uuid4.v4() as string,
         };
         return [
           ...item.filter((it) => it.type !== 'imageScanning'),
@@ -120,8 +128,14 @@ export const useNutritionAdvisor = ({ key }: { key: string }) => {
       setMessage((item) => {
         const chatResponse: AdvisorResponse = {
           type: 'records',
-          records: records,
-          uri: uris,
+          recordType: recordType,
+          uuID: uuid4.v4() as string,
+          records: records.map((record, index) => {
+            return {
+              ...record,
+              index: index,
+            };
+          }),
         };
         return [
           ...item.filter((it) => it.type !== 'imageScanning'),
@@ -142,9 +156,11 @@ export const useNutritionAdvisor = ({ key }: { key: string }) => {
         {
           type: 'text',
           message: message,
+          uuID: uuid4.v4() as string,
         },
         {
           type: 'typing',
+          uuID: uuid4.v4() as string,
         },
       ];
     });
@@ -162,9 +178,11 @@ export const useNutritionAdvisor = ({ key }: { key: string }) => {
         {
           type: 'image',
           uri: images,
+          uuID: uuid4.v4() as string,
         },
         {
           type: 'imageScanning',
+          uuID: uuid4.v4() as string,
         },
       ];
     });
@@ -188,23 +206,46 @@ export const useNutritionAdvisor = ({ key }: { key: string }) => {
         } catch (err) {}
       }
 
-      handleImageResponse(foodRecords, images);
+      handleImageResponse(foodRecords, 'image');
     } catch (err) {
-      handleImageResponse([], images);
+      handleImageResponse([], 'image');
     } finally {
       setSending(false);
     }
   };
 
-  const fetchIngredients = async (response: PassioAdvisorResponse) => {
-    setSending(true);
-    const responseOfIngredients =
-      await NutritionAdvisor.fetchIngredients(response);
-    if (responseOfIngredients?.status === 'Success') {
-      setIngredientAdvisorResponse(responseOfIngredients.response);
-    } else {
+  const fetchIngredients = async (response: AdvisorResponse) => {
+    if (response.response) {
+      setSending(true);
+      makeResponseLoadingState(response.uuID, true);
+      const responseOfIngredients = await NutritionAdvisor.fetchIngredients(
+        response.response
+      );
+      if (responseOfIngredients?.status === 'Success') {
+        handleImageResponse(
+          responseOfIngredients?.response?.extractedIngredients ?? [],
+          'searchTool'
+        );
+      } else {
+      }
+      makeResponseLoadingState(response.uuID, false);
+      setSending(false);
     }
-    setSending(false);
+  };
+
+  const makeResponseLoadingState = (uuid: string, isLoading?: boolean) => {
+    setMessage((item) => {
+      return item.map((r) => {
+        if (r.uuID === uuid) {
+          return {
+            ...r,
+            isLoading: isLoading,
+          };
+        } else {
+          return r;
+        }
+      });
+    });
   };
 
   return {
@@ -215,6 +256,8 @@ export const useNutritionAdvisor = ({ key }: { key: string }) => {
     listRef,
     sdkError,
     sendMessage,
+    setMessage,
+    makeResponseLoadingState,
     sendImages,
     fetchIngredients,
     setIngredientAdvisorResponse,

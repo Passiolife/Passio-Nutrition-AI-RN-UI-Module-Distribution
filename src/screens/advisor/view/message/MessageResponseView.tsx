@@ -1,17 +1,25 @@
 import React from 'react';
-import { Dimensions, StyleSheet, TouchableOpacity } from 'react-native';
+import { Dimensions, StyleSheet, TouchableOpacity, View } from 'react-native';
 import Markdown from 'react-native-markdown-display';
+import { useBranding } from '../../../../contexts';
+import { BasicButton } from '../../../../components';
 
 const { width: ScreenWidth } = Dimensions.get('window');
 
 interface MessageResponseViewProps {
   response?: string;
+  tools?: string[];
   error?: string;
+  isLoading?: boolean;
+  onFindFoodPress?: () => void;
 }
 
 export const MessageResponseView = ({
   response,
   error,
+  isLoading,
+  tools,
+  onFindFoodPress,
 }: MessageResponseViewProps) => {
   const styles = ResponseViewStyle();
 
@@ -30,9 +38,26 @@ export const MessageResponseView = ({
     return output;
   };
 
+  const branding = useBranding();
+
   return (
     <TouchableOpacity style={[styles.msgView, styles.receivedMsgView]}>
       <Markdown style={markdownStyles}>{renderText()}</Markdown>
+      {tools && tools?.length > 0 && (
+        <View style={styles.buttonContainer}>
+          <BasicButton
+            onPress={() => {
+              onFindFoodPress?.();
+            }}
+            backgroundColor={branding.backgroundColor}
+            boarderColor={branding.backgroundColor}
+            textColor={branding.primaryColor}
+            style={styles.buttonLogSelected}
+            isLoading={isLoading}
+            text={'Find Foods'}
+          />
+        </View>
+      )}
     </TouchableOpacity>
   );
 };
@@ -85,5 +110,15 @@ const ResponseViewStyle = () =>
 
     receivedMsg: {
       color: '#FFFFFF',
+    },
+    buttonContainer: {
+      flexDirection: 'row',
+      marginVertical: 16,
+      justifyContent: 'center',
+    },
+    buttonLogSelected: {
+      marginEnd: 16,
+      alignSelf: 'center',
+      marginStart: 8,
     },
   });

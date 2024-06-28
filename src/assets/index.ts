@@ -78,6 +78,8 @@ export const ICONS = {
   RecordingStop: require('./icons/stop_white.png'),
   Mic: require('./icons/mic_blue.png'),
   AIAdvisor: require('./icons/ai_advisor.png'),
+  Tick: require('./icons/tick.png'),
+  CloseRed: require('./icons/close_red.png'),
   CaptureIcon: require('./icons/capture.png'),
 };
 export const onBoardingAssets = {

@@ -1,8 +1,9 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { PassioIDEntityType } from '@passiolife/nutritionai-react-native-sdk-v3';
 import { PassioFoodIcon } from '../../../../../components/passio/PassioFoodIcon';
 import { Text } from '../../../../../components';
+import { ICONS } from '../../../../../assets';
 
 interface Props {
   imageName?: string;
@@ -11,10 +12,22 @@ interface Props {
   onFoodLogEditor?: () => void;
   onFoodLogSelect: () => void;
   isSelected: boolean;
+  // That means indvidual item response logged
+  isLogged?: boolean;
+  // That means whole response logged
+  isResponseLogged?: boolean;
 }
 
 export const MessageRecordItem = (props: Props) => {
-  const { foodName, imageName, onFoodLogSelect, isSelected, bottom } = props;
+  const {
+    foodName,
+    imageName,
+    onFoodLogSelect,
+    isSelected,
+    bottom,
+    isLogged,
+    isResponseLogged,
+  } = props;
   return (
     <TouchableOpacity onPress={onFoodLogSelect} style={styles.container}>
       <View style={styles.imageContainer}>
@@ -41,9 +54,26 @@ export const MessageRecordItem = (props: Props) => {
           {bottom}
         </Text>
       </View>
-      <TouchableOpacity onPress={onFoodLogSelect}>
-        <View style={[styles.addIcon, isSelected && styles.selectedAddIcon]} />
-      </TouchableOpacity>
+      {isResponseLogged ? (
+        <Image
+          source={isLogged ? ICONS.Tick : ICONS.CloseRed}
+          height={24}
+          width={24}
+          style={{
+            height: 24,
+            width: 24,
+            marginEnd: 16,
+          }}
+          resizeMode="contain"
+          resizeMethod="resize"
+        />
+      ) : (
+        <TouchableOpacity onPress={onFoodLogSelect}>
+          <View
+            style={[styles.addIcon, isSelected && styles.selectedAddIcon]}
+          />
+        </TouchableOpacity>
+      )}
     </TouchableOpacity>
   );
 };

@@ -4,10 +4,7 @@ import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import type { ImagePickerType, ParamList } from '../../navigaitons';
 import { Keyboard } from 'react-native';
-import {
-  PassioSDK,
-  type PassioAdvisorFoodInfo,
-} from '@passiolife/nutritionai-react-native-sdk-v3';
+import { PassioSDK } from '@passiolife/nutritionai-react-native-sdk-v3';
 import {
   ShowToast,
   createFoodLogUsingPortionSize,
@@ -15,6 +12,7 @@ import {
   mealLabelByDate,
 } from '../../utils';
 import { useServices } from '../../contexts';
+import type { AdvisorResponse, Selection } from './model/advisorResponse';
 
 type ScreenNavigationProps = StackNavigationProp<ParamList, 'AdvisorScreen'>;
 
@@ -28,8 +26,10 @@ export const useAdvisorScreen = () => {
     listRef,
     fetchIngredients,
     sendMessage,
+    setMessage,
     setIngredientAdvisorResponse,
     sendImages,
+    makeResponseLoadingState,
   } = useNutritionAdvisor({
     key: '',
   });
@@ -81,7 +81,20 @@ export const useAdvisorScreen = () => {
     setIngredientAdvisorResponse(null);
   }, [setIngredientAdvisorResponse]);
 
-  const onLogSelect = async (info: PassioAdvisorFoodInfo[]) => {
+  const findFoodPress = useCallback(
+    async (response: AdvisorResponse) => {
+      if (response.response) {
+        fetchIngredients(response);
+      }
+    },
+    [fetchIngredients]
+  );
+
+  const onLogSelect = async (
+    response: AdvisorResponse,
+    selected: Selection[]
+  ) => {
+    makeResponseLoadingState(response.uuID, true);
     const logToDate = getLogToDate(
       route.params.logToDate,
       route.params.logToMeal
@@ -91,7 +104,7 @@ export const useAdvisorScreen = () => {
         ? mealLabelByDate(logToDate)
         : route.params.logToMeal;
 
-    for (const item of info) {
+    for (const item of selected) {
       if (item.foodDataInfo) {
         const foodItem = await PassioSDK.fetchFoodItemForDataInfo(
           item.foodDataInfo
@@ -109,7 +122,38 @@ export const useAdvisorScreen = () => {
       }
     }
 
+    // Response
+    setMessage((item) => {
+      return item.map((r) => {
+        if (r.uuID === response.uuID) {
+          return {
+            ...r,
+            isLogged: true,
+            isLoading: false,
+            records: r.records?.map((map) => {
+              return {
+                ...map,
+                isLogged:
+                  selected.find(
+                    (selectedItem) => selectedItem.index === map.index
+                  ) !== undefined,
+              };
+            }),
+          };
+        } else {
+          return r;
+        }
+      });
+    });
+
     ShowToast('Logged food');
+  };
+
+  const onViewDiary = () => {
+    navigation.pop(1);
+    navigation.navigate('BottomNavigation', {
+      screen: 'MealLogScreen',
+    });
   };
 
   return {
@@ -123,11 +167,13 @@ export const useAdvisorScreen = () => {
     listRef,
     sdkError,
     onLogSelect,
+    onViewDiary,
     onChangeTextInput,
     onPressSendBtn,
     onPressPlusIcon,
     fetchIngredients,
     onCloseIngredientView,
     onPickerImageOrGallery,
+    findFoodPress,
   };
 };

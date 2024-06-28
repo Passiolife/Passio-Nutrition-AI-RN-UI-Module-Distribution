@@ -8,8 +8,10 @@ import {
   StyleSheet,
 } from 'react-native';
 import { BasicButton, Text } from '../../../../../components';
-import type { PassioAdvisorFoodInfo } from '@passiolife/nutritionai-react-native-sdk-v3';
-import type { AdvisorResponse } from '../../../model/advisorResponse';
+import type {
+  AdvisorResponse,
+  Selection,
+} from '../../../model/advisorResponse';
 import { ICONS } from '../../../../../assets';
 import { MessageRecordItem } from './MessageRecordItem';
 import { useBranding } from '../../../../../contexts';
@@ -18,20 +20,22 @@ import { getUpdatedCaloriesOfPassioAdvisorFoodInfo } from '../../../../../utils'
 interface Props {
   style?: StyleProp<ViewStyle>;
   response: AdvisorResponse;
-  onLogSelect?: (select: PassioAdvisorFoodInfo[]) => void;
-}
-
-interface Selection extends PassioAdvisorFoodInfo {
-  index: number;
+  onLogSelect?: (
+    response: AdvisorResponse,
+    select: Selection[]
+  ) => Promise<void>;
+  onViewDiary: () => void;
 }
 
 export const MessageRecords = ({
   style,
-  response: { records = [] },
   onLogSelect,
+  onViewDiary,
+  response,
 }: Props) => {
   const [selected, setSelected] = useState<Selection[]>([]);
   const branding = useBranding();
+  const { records = [] } = response;
 
   const onFoodSelect = (result: Selection) => {
     const find = selected?.find((item) => item.index === result?.index);
@@ -79,25 +83,36 @@ export const MessageRecords = ({
               imageName={foodDataInfo?.iconID}
               bottom={`${item?.portionSize} | ${Math.round(calories)} cal`}
               onFoodLogSelect={() => {
+                if (response.isLogged) {
+                  return;
+                }
                 onFoodSelect({ ...item, index: index });
               }}
+              isLogged={item.isLogged}
+              isResponseLogged={response.isLogged}
               isSelected={isSelected}
             />
           );
         }}
       />
+
       {records.length > 0 && (
         <View style={styles.buttonContainer}>
           <BasicButton
             onPress={() => {
-              onLogSelect?.(selected ?? []);
+              if (response.isLogged) {
+                onViewDiary?.();
+              } else {
+                onLogSelect?.(response, selected ?? []);
+              }
             }}
             backgroundColor={branding.backgroundColor}
             boarderColor={branding.backgroundColor}
             textColor={branding.primaryColor}
             style={styles.buttonLogSelected}
             enable={selected && selected.length > 0}
-            text="Log Selected"
+            isLoading={response.isLoading}
+            text={response?.isLogged ? 'View Diary' : 'Log Selected'}
           />
         </View>
       )}
@@ -109,7 +124,8 @@ const styles = StyleSheet.create({
   itemsContainer: {
     backgroundColor: '#6366F1',
     flex: 1,
-    marginEnd: 60,
+    marginEnd: 40,
+    marginVertical: 16,
     borderEndEndRadius: 12,
     borderStartEndRadius: 12,
     borderTopStartRadius: 12,
@@ -122,8 +138,7 @@ const styles = StyleSheet.create({
   },
   list: {
     marginHorizontal: 16,
-    marginBottom: 20,
-    marginTop: 16,
+    marginVertical: 20,
     flex: 1,
   },
   quickSuggestionTextStyle: {
