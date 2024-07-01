@@ -29,7 +29,11 @@ export const MessageRecordItem = (props: Props) => {
     isResponseLogged,
   } = props;
   return (
-    <TouchableOpacity onPress={onFoodLogSelect} style={styles.container}>
+    <TouchableOpacity
+      disabled={isResponseLogged}
+      onPress={onFoodLogSelect}
+      style={styles.container}
+    >
       <View style={styles.imageContainer}>
         <PassioFoodIcon
           imageName={imageName}

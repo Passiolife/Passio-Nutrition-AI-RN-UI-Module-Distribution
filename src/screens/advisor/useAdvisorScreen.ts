@@ -31,7 +31,7 @@ export const useAdvisorScreen = () => {
     sendImages,
     makeResponseLoadingState,
   } = useNutritionAdvisor({
-    key: '',
+    key: '1xe6qOCRboApvzzbNMEO3UnUgqKK28goXF9QuI1dgcrP',
   });
   const [inputMessage, setInputMessage] = useState('');
   const [loading, setLoading] = useState(false);

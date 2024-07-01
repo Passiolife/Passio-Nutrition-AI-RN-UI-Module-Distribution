@@ -144,7 +144,7 @@ const basicButtonStyle = ({ primaryColor }: Branding) =>
       flexDirection: 'row',
     },
     text: {
-      paddingVertical: scaleHeight(12),
+      paddingVertical: scaleHeight(8),
     },
     // primary button styles
     primaryContainer: {
@@ -155,7 +155,7 @@ const basicButtonStyle = ({ primaryColor }: Branding) =>
       borderRadius: 4,
     },
     normalText: {
-      paddingVertical: scaleHeight(12),
+      paddingVertical: scaleHeight(8),
       fontSize: 15,
     },
 

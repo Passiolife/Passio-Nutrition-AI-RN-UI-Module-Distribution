@@ -120,5 +120,6 @@ const ResponseViewStyle = () =>
       marginEnd: 16,
       alignSelf: 'center',
       marginStart: 8,
+      borderWidth: 0,
     },
   });

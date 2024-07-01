@@ -109,8 +109,14 @@ export const MessageRecords = ({
             backgroundColor={branding.backgroundColor}
             boarderColor={branding.backgroundColor}
             textColor={branding.primaryColor}
-            style={styles.buttonLogSelected}
+            style={[
+              styles.buttonLogSelected,
+              {
+                opacity: selected.length === 0 ? 0.5 : 1,
+              },
+            ]}
             enable={selected && selected.length > 0}
+            disabled={selected.length === 0}
             isLoading={response.isLoading}
             text={response?.isLogged ? 'View Diary' : 'Log Selected'}
           />
@@ -153,5 +159,6 @@ const styles = StyleSheet.create({
     flex: 1,
     marginEnd: 16,
     marginStart: 8,
+    borderWidth: 0,
   },
 });
