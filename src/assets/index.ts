@@ -7,6 +7,8 @@ export const ICONS = {
   close: require('./icons/close.png'),
   back: require('./icons/back.png'),
   menu: require('./icons/menu.png'),
+  camera: require('./icons/camera.png'),
+  gallery: require('./icons/gallery.png'),
   bottomDiary: require('./icons/bottom_diary.png'),
   bottomHome: require('./icons/bottom_home.png'),
   bottomProgress: require('./icons/bottm_progress.png'),
@@ -75,6 +77,9 @@ export const ICONS = {
   editGreyIc: require('./icons/edit_grey_ic.png'),
   RecordingStop: require('./icons/stop_white.png'),
   Mic: require('./icons/mic_blue.png'),
+  AIAdvisor: require('./icons/ai_advisor.png'),
+  Tick: require('./icons/tick.png'),
+  CloseRed: require('./icons/close_red.png'),
   CaptureIcon: require('./icons/capture.png'),
 };
 export const onBoardingAssets = {

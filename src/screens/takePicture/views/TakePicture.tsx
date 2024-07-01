@@ -181,6 +181,7 @@ export const TakePicture = React.forwardRef<TakePictureRef, Props>(
             right: 0,
             left: 0,
           }}
+          photoQualityBalance="balanced"
           device={device}
           isActive={true}
           ref={camera}
