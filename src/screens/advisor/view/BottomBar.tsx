@@ -110,7 +110,7 @@ const BottomBarStyle = () =>
       alignItems: 'center',
     },
     disableSend: {
-      backgroundColor: 'gray',
+      opacity: 0.7,
     },
     inputContainer: {
       flex: 1,
