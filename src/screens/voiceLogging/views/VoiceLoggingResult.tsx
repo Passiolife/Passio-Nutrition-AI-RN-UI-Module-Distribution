@@ -14,6 +14,7 @@ import { VoiceLoggingResultItemView } from './VoiceLoggingResultItemView';
 import { BasicButton } from '../../../components';
 import { ICONS } from '../../../assets';
 import { FlatList } from 'react-native-gesture-handler';
+import { getUpdatedCaloriesOfPassioAdvisorFoodInfo } from '../../../utils';
 
 interface Props {
   style?: StyleProp<ViewStyle>;
@@ -100,14 +101,9 @@ export const VoiceLoggingResult = React.forwardRef(
                   item.advisorInfo?.recognisedName
               ) !== undefined;
 
-            const npCalories =
-              item.advisorInfo?.foodDataInfo?.nutritionPreview?.calories ?? 0;
-            const npWeightQuantity =
-              item.advisorInfo?.foodDataInfo?.nutritionPreview
-                ?.weightQuantity ?? 0;
-            const ratio = npCalories / npWeightQuantity;
-            const advisorInfoWeightGram = item.advisorInfo?.weightGrams ?? 0;
-            const calories = ratio * advisorInfoWeightGram;
+            const { calories } = getUpdatedCaloriesOfPassioAdvisorFoodInfo(
+              item.advisorInfo
+            );
 
             return (
               <VoiceLoggingResultItemView

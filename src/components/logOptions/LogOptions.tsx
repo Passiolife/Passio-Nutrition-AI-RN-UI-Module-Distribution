@@ -12,6 +12,7 @@ interface Props {
   onVoiceLogging: () => void;
   onTakePicture: () => void;
   onTakeCamera: () => void;
+  onAiAdvisor: () => void;
 }
 
 type Type = 'All' | 'UseImage';
@@ -23,6 +24,7 @@ export const LogOptions = ({
   onVoiceLogging,
   onTakePicture,
   onTakeCamera,
+  onAiAdvisor,
 }: Props) => {
   const branding = useBranding();
   const styles = logOptionsStyle(branding);
@@ -45,6 +47,7 @@ export const LogOptions = ({
         <>
           {renderItem(ICONS.logOptionFavorite, 'Favorites', onFavorite)}
           {renderItem(ICONS.Mic, 'Voice Logging', onVoiceLogging)}
+          {renderItem(ICONS.AIAdvisor, 'AI Advisor', onAiAdvisor)}
           {renderItem(ICONS.logOptionSearch, 'Text Search', onTextSearch)}
           {renderItem(
             ICONS.logOptionFoodScanner,
