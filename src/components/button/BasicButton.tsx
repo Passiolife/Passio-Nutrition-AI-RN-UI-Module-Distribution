@@ -22,8 +22,11 @@ interface Props {
   isLoading?: boolean;
   enable?: boolean;
   boarderColor?: string;
+  textColor?: string;
+  backgroundColor?: string;
   testId?: string;
   rightIcon?: JSX.Element;
+  disabled?: boolean;
 }
 
 export const BasicButton: React.FC<Props> = (props) => {
@@ -39,6 +42,9 @@ export const BasicButton: React.FC<Props> = (props) => {
     boarderColor = brandingContext.primaryColor,
     testId,
     rightIcon,
+    backgroundColor,
+    textColor,
+    disabled = false,
   } = props;
   const styles = basicButtonStyle(brandingContext);
 
@@ -71,7 +77,7 @@ export const BasicButton: React.FC<Props> = (props) => {
     } else if (secondary) {
       colorOfBorder = COLORS.transparent;
     } else {
-      colorOfBorder = brandingContext.primaryColor;
+      colorOfBorder = backgroundColor ?? brandingContext.primaryColor;
     }
     return colorOfBorder;
   };
@@ -86,6 +92,7 @@ export const BasicButton: React.FC<Props> = (props) => {
 
   return (
     <TouchableHighlight
+      disabled={disabled}
       testID={testId}
       style={[
         styles.container,
@@ -115,7 +122,7 @@ export const BasicButton: React.FC<Props> = (props) => {
               styles.text,
               small ? styles.smallText : styles.normalText,
               {
-                color: secondary ? boarderColor : COLORS.white,
+                color: textColor ?? (secondary ? boarderColor : COLORS.white),
               },
             ]}
           >
@@ -137,7 +144,7 @@ const basicButtonStyle = ({ primaryColor }: Branding) =>
       flexDirection: 'row',
     },
     text: {
-      paddingVertical: scaleHeight(12),
+      paddingVertical: scaleHeight(8),
     },
     // primary button styles
     primaryContainer: {
@@ -148,7 +155,7 @@ const basicButtonStyle = ({ primaryColor }: Branding) =>
       borderRadius: 4,
     },
     normalText: {
-      paddingVertical: scaleHeight(12),
+      paddingVertical: scaleHeight(8),
       fontSize: 15,
     },
 

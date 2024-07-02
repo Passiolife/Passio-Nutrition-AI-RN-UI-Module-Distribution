@@ -10,9 +10,12 @@ import type {
   HomeScreenScreenProps,
 } from '../../screens';
 import type { IngredientQuickScanScreenProps } from '../../screens/recipeEditor/RecipesScan/IngredientQuickScanScreen/IngredientQuickScanScreen';
-import type { Nutrient, Water, Weight } from '../../models';
+import type { MealLabel, Nutrient, Water, Weight } from '../../models';
 import type { FavoritesScreenProps } from '../../screens/myFavoritess';
-import type { VoiceLoggingScreenProps } from '../../screens/voiceLogging';
+import type {
+  TakePictureScreenProps,
+  VoiceLoggingScreenProps,
+} from '../../screens/voiceLogging';
 
 export type Module =
   | 'QuickScan'
@@ -20,6 +23,7 @@ export type Module =
   | 'Search'
   | 'Other'
   | 'Favorites'
+  | 'VoiceLogging'
   | 'Ingredient';
 
 export interface HomeBottom {
@@ -47,6 +51,16 @@ interface NutritionScreenProps {
   nutrient: Nutrient[];
 }
 
+export type ImagePickerType = 'camera' | 'gallery';
+interface ImagePickerProps {
+  onImages: (images: string[]) => void;
+  type: ImagePickerType;
+}
+export interface AdvisorScreenProps {
+  logToDate?: Date | undefined;
+  logToMeal?: MealLabel | undefined;
+}
+
 export type ParamList = {
   MealLogScreen: MealLogScreenProps;
   ScanningScreen: ScanningScreenProps;
@@ -72,4 +86,7 @@ export type ParamList = {
   SettingScreen: SettingScreenProps;
   NutritionInformationScreen: NutritionScreenProps;
   VoiceLoggingScreen: VoiceLoggingScreenProps;
+  TakePictureScreen: TakePictureScreenProps;
+  AdvisorScreen: AdvisorScreenProps;
+  ImagePickerScreen: ImagePickerProps;
 };

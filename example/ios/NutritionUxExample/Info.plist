@@ -39,6 +39,8 @@
 	<string></string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Description of why you require the use of the microphone</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>The photo library is used for food detection on a photo</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
 	<string>Description of why you require the use of the speech recognition</string>
 	<key>UILaunchStoryboardName</key>

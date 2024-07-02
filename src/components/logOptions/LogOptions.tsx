@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Image, Pressable, View } from 'react-native';
 import { useBranding } from '../../contexts';
 import logOptionsStyle from './LogOptions.styles';
@@ -10,16 +10,25 @@ interface Props {
   onTextSearch: () => void;
   onFavorite: () => void;
   onVoiceLogging: () => void;
+  onTakePicture: () => void;
+  onTakeCamera: () => void;
+  onAiAdvisor: () => void;
 }
+
+type Type = 'All' | 'UseImage';
 
 export const LogOptions = ({
   onFavorite,
   onFoodScanner,
   onTextSearch,
   onVoiceLogging,
+  onTakePicture,
+  onTakeCamera,
+  onAiAdvisor,
 }: Props) => {
   const branding = useBranding();
   const styles = logOptionsStyle(branding);
+  const [type, setType] = useState<Type>('All');
 
   const renderItem = (icon: number, title: string, onPress: () => void) => {
     return (
@@ -34,10 +43,33 @@ export const LogOptions = ({
 
   return (
     <View style={styles.main}>
-      {renderItem(ICONS.Mic, 'Voice Logging', onVoiceLogging)}
-      {renderItem(ICONS.logOptionFoodScanner, 'Food Scanner', onFoodScanner)}
-      {renderItem(ICONS.logOptionSearch, 'Text Search', onTextSearch)}
-      {renderItem(ICONS.logOptionFavorite, 'Favorites', onFavorite)}
+      {type === 'All' ? (
+        <>
+          {renderItem(ICONS.logOptionFavorite, 'Favorites', onFavorite)}
+          {renderItem(ICONS.Mic, 'Voice Logging', onVoiceLogging)}
+          {renderItem(ICONS.AIAdvisor, 'AI Advisor', onAiAdvisor)}
+          {renderItem(ICONS.logOptionSearch, 'Text Search', onTextSearch)}
+          {renderItem(
+            ICONS.logOptionFoodScanner,
+            'Food Scanner',
+            onFoodScanner
+          )}
+          {renderItem(ICONS.logOptionFoodScanner, 'Use Image', () => {
+            setType('UseImage');
+          })}
+        </>
+      ) : (
+        <>
+          <>
+            {renderItem(ICONS.logOptionSearch, 'Take Photos', onTakeCamera)}
+            {renderItem(
+              ICONS.logOptionFoodScanner,
+              'Select Photos',
+              onTakePicture
+            )}
+          </>
+        </>
+      )}
     </View>
   );
 };

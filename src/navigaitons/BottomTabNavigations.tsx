@@ -20,6 +20,9 @@ export interface TabBarProps extends BottomTabBarProps {
   onTextSearch: () => void;
   onFavorite: () => void;
   onVoiceLogging: () => void;
+  onTakePicture: () => void;
+  onTakeCamera: () => void;
+  onAiAdvisor: () => void;
 }
 
 export const renderTabBarIcons = (

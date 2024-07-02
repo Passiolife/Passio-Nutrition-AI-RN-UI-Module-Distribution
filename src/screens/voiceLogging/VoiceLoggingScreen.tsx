@@ -10,12 +10,19 @@ import { BackNavigation, Text, BasicButton } from '../../components';
 import BottomSheet from '@gorhom/bottom-sheet';
 import { VoiceLoggingResult } from './views/VoiceLoggingResult';
 import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
-import { ICONS, speeking_wave } from '../../assets';
+import { ICONS, LottieAsset } from '../../assets';
+import LottieView from 'lottie-react-native';
 
 export interface VoiceLoggingScreenProps {
   logToDate?: Date | undefined;
   logToMeal?: MealLabel | undefined;
   onSaveData?: (item: PassioFoodItem) => void;
+}
+export interface TakePictureScreenProps {
+  logToDate?: Date | undefined;
+  logToMeal?: MealLabel | undefined;
+  type: 'picture' | 'camera';
+  images?: string[];
 }
 
 export const VoiceLoggingScreen = gestureHandlerRootHOC(() => {
@@ -46,12 +53,14 @@ export const VoiceLoggingScreen = gestureHandlerRootHOC(() => {
             </Text>
           </View>
         )}
-        {isRecording && (
+        {!isFetchingResponse && isRecording && (
           <View style={styles.imageContainer}>
-            <Image
-              source={speeking_wave}
+            <LottieView
+              source={LottieAsset.VOICE_LOGGING_WAVES}
+              loop
               resizeMode="contain"
-              style={styles.speekingImg}
+              style={[styles.speekingImg]}
+              autoPlay={true}
             />
           </View>
         )}
