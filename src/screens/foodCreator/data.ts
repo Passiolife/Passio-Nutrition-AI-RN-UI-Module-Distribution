@@ -1,3 +1,5 @@
+import type { NutrientType } from '../../models';
+
 export const Units = [
   'Servings',
   'Piece',
@@ -14,5 +16,19 @@ export const Units = [
   'bottle',
   'bar',
   'packet',
+];
+
+export const OtherNutrients: NutrientType[] = [
+  'satFat',
+  'transFat',
+  'cholesterol',
+  'sodium',
+  'fiber',
+  'sugars',
+  'sugarAdded',
+  'vitaminD',
+  'calcium',
+  'iron',
+  'potassium',
 ];
 export const Weights = ['grams', 'ml'];

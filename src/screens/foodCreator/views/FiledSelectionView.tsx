@@ -12,6 +12,8 @@ interface Props {
   lists?: string[];
   labelList?: string[];
   onChange?: (value: string) => void;
+  isColum?: boolean;
+  isCenter?: boolean;
 }
 interface FiledSelectionViewRef {
   value?: () => string | undefined;
@@ -30,6 +32,8 @@ export const FiledSelectionView = React.forwardRef<
       error,
       onChange,
       value: defaultValue,
+      isColum = false,
+      isCenter = false,
     }: Props,
     ref: React.Ref<FiledSelectionViewRef>
   ) => {
@@ -50,7 +54,7 @@ export const FiledSelectionView = React.forwardRef<
 
     const renderFiled = () => {
       return (
-        <View style={styles.formRow}>
+        <View style={[styles.formRow, isColum && styles.formColum]}>
           <Text
             weight="400"
             size="_12px"
@@ -62,6 +66,7 @@ export const FiledSelectionView = React.forwardRef<
           <ListPicker
             value={value ?? ''}
             title={name}
+            isCenter={isCenter}
             onChange={(item) => {
               onChange?.(item);
               setValue(item);
@@ -84,6 +89,11 @@ const requireNutritionFactStyle = ({}: Branding) =>
   StyleSheet.create({
     formRow: {
       flexDirection: 'row',
+      justifyContent: 'space-between',
+      marginBottom: 10,
+    },
+    formColum: {
+      flexDirection: 'column',
       justifyContent: 'space-between',
       marginBottom: 10,
     },

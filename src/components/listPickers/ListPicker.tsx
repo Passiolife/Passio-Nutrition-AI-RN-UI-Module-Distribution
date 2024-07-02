@@ -23,6 +23,7 @@ interface Props<T> {
   label?: string;
   extraWidth?: number;
   onChange: (size: T) => void;
+  isCenter?: boolean;
 }
 
 export const ListPicker: React.FC<Props<any>> = ({
@@ -32,6 +33,7 @@ export const ListPicker: React.FC<Props<any>> = ({
   extraWidth,
   value,
   onChange,
+  isCenter,
 }) => {
   const branding = useBranding();
   const styles = menuStyle(branding);
@@ -70,6 +72,7 @@ export const ListPicker: React.FC<Props<any>> = ({
     return (
       <Picker
         ref={pickerRef}
+        isCenter={isCenter}
         extraWidth={extraWidth ?? 0}
         options={
           <FlatList
