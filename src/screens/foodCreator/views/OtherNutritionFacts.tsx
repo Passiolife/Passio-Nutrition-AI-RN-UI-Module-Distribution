@@ -1,16 +1,22 @@
-import React, { useState } from 'react';
+import React, { useImperativeHandle, useRef, useState } from 'react';
 import { Card, Text } from '../../../components';
 import { StyleSheet, View } from 'react-native';
 import { Branding, useBranding } from '../../../contexts';
-import { FiledView } from './FiledView';
+import { FiledView, FiledViewRef } from './FiledView';
 import { FiledSelectionView } from './FiledSelectionView';
 import { OtherNutrients } from '../data';
 import { FlatList } from 'react-native';
 import { nutrientName, type NutrientType } from '../../../models';
 
 interface Props {}
+export interface OtherNutritionFactsRef {
+  getValue: () => void;
+}
 
-export const OtherNutritionFacts = ({}: Props) => {
+export const OtherNutritionFacts = React.forwardRef<
+  OtherNutritionFactsRef,
+  Props
+>(({}: Props, ref: React.Ref<OtherNutritionFactsRef>) => {
   const branding = useBranding();
 
   const styles = requireNutritionFactStyle(branding);
@@ -21,6 +27,34 @@ export const OtherNutritionFacts = ({}: Props) => {
     return nutrientName[i].toString() ?? '';
   });
 
+  const refs = useRef<Record<string, React.RefObject<FiledViewRef>>>({});
+
+  useImperativeHandle(
+    ref,
+    () => ({
+      getValue: () => {
+        list.forEach((item) => {
+          const sleetedRef = refs.current[item];
+          if (sleetedRef && sleetedRef.current) {
+            // Assuming FiledViewRef has a method or property called `getValue`
+            // eslint-disable-next-line no-console
+            console.log(`Value for ${item}: `, sleetedRef.current.value());
+          }
+        });
+
+        return;
+      },
+    }),
+    [list]
+  );
+
+  // Initialize refs for each item in the list
+  list.forEach((item) => {
+    if (!refs.current[item]) {
+      refs.current[item] = React.createRef();
+    }
+  });
+
   return (
     <Card style={styles.card}>
       {
@@ -29,27 +63,38 @@ export const OtherNutritionFacts = ({}: Props) => {
           <FlatList
             data={list}
             renderItem={({ item }) => {
-              return <FiledView label={item} name={item} />;
+              return (
+                <FiledView
+                  ref={refs.current[item]}
+                  label={nutrientName[item as NutrientType].toString()}
+                  name={nutrientName[item as NutrientType].toString()}
+                  onDelete={() => {
+                    setList((i) => [...i.filter((o) => item !== o)]);
+                    setDefaultList((i) => [...i, item as NutrientType]);
+                  }}
+                />
+              );
             }}
           />
-          <View style={styles.right}>
+          {defaultList.length > 0 && (
             <FiledSelectionView
               isColum
               lists={defaultList}
               labelList={labelList}
               name=""
+              label="Select Nutrients"
               isCenter
               onChange={(item) => {
                 setList((i) => [...i, item]);
                 setDefaultList((i) => [...i.filter((o) => item !== o)]);
               }}
             />
-          </View>
+          )}
         </View>
       }
     </Card>
   );
-};
+});
 
 const requireNutritionFactStyle = ({}: Branding) =>
   StyleSheet.create({
@@ -65,26 +110,5 @@ const requireNutritionFactStyle = ({}: Branding) =>
       flexDirection: 'row',
       alignContent: 'space-around',
       justifyContent: 'space-between',
-    },
-    left: {
-      flex: 1,
-      alignContent: 'center',
-      alignItems: 'center',
-      alignSelf: 'center',
-    },
-    right: {
-      flex: 1.5,
-    },
-    editImage: {
-      marginVertical: 4,
-      fontSize: 10,
-    },
-    icon: {
-      height: 80,
-      width: 80,
-      alignItems: 'center',
-      alignSelf: 'center',
-      justifyContent: 'center',
-      alignContent: 'center',
     },
   });

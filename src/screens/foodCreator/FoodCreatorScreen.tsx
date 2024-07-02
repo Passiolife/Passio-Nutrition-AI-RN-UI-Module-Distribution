@@ -9,7 +9,7 @@ import { RequireNutritionFacts } from './views/RequireNutritionFacts';
 import { OtherNutritionFacts } from './views/OtherNutritionFacts';
 
 export const FoodCreatorScreen = () => {
-  const { branding } = useFoodCreator();
+  const { branding, otherNutritionFactsRef, onSavePress } = useFoodCreator();
 
   const styles = foodCreatorStyle(branding);
 
@@ -20,7 +20,7 @@ export const FoodCreatorScreen = () => {
         <View>
           <FoodCreatorFoodDetail />
           <RequireNutritionFacts />
-          <OtherNutritionFacts />
+          <OtherNutritionFacts ref={otherNutritionFactsRef} />
           <View style={{ height: 100 }} />
         </View>
       </ScrollView>
@@ -43,6 +43,7 @@ export const FoodCreatorScreen = () => {
         />
         <BasicButton
           text={'Save'}
+          onPress={onSavePress}
           style={{
             flexDirection: 'row',
             flex: 1,

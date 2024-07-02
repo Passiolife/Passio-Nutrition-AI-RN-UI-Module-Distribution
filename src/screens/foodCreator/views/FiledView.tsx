@@ -1,8 +1,15 @@
 import React, { useImperativeHandle, useState } from 'react';
 import { Text, TextInput } from '../../../components';
-import { KeyboardTypeOptions, StyleSheet, View } from 'react-native';
+import {
+  Image,
+  KeyboardTypeOptions,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { Branding, useBranding } from '../../../contexts';
 import { scaleHeight } from '../../../utils';
+import { ICONS } from '../../../assets';
 
 interface Props {
   name: string;
@@ -10,10 +17,11 @@ interface Props {
   label?: string;
   keyboardType?: KeyboardTypeOptions;
   isColum?: boolean;
+  onDelete?: () => void;
 }
 
-interface FiledViewRef {
-  value?: () => string | undefined;
+export interface FiledViewRef {
+  value: () => string | undefined;
 }
 
 export const FiledView = React.forwardRef<FiledViewRef, Props>(
@@ -24,6 +32,7 @@ export const FiledView = React.forwardRef<FiledViewRef, Props>(
       keyboardType = 'numeric',
       label = 'value',
       isColum = false,
+      onDelete,
     }: Props,
     ref: React.Ref<FiledViewRef>
   ) => {
@@ -44,7 +53,7 @@ export const FiledView = React.forwardRef<FiledViewRef, Props>(
 
     const renderFiled = () => {
       return (
-        <View style={[styles.formRow, isColum && styles.formColum]}>
+        <View style={[!isColum && styles.formRow, isColum && styles.formColum]}>
           <Text
             weight="400"
             size="_12px"
@@ -61,6 +70,11 @@ export const FiledView = React.forwardRef<FiledViewRef, Props>(
             placeholder={label}
             keyboardType={keyboardType}
           />
+          {onDelete && (
+            <TouchableOpacity onPress={onDelete}>
+              <Image source={ICONS.delete} style={styles.delete} />
+            </TouchableOpacity>
+          )}
         </View>
       );
     };
@@ -73,6 +87,7 @@ const requireNutritionFactStyle = ({ white, border }: Branding) =>
   StyleSheet.create({
     formRow: {
       flexDirection: 'row',
+      alignItems: 'center',
       justifyContent: 'space-between',
       marginBottom: 10,
     },
@@ -86,6 +101,11 @@ const requireNutritionFactStyle = ({ white, border }: Branding) =>
     },
     labelMargin: {
       marginTop: 10,
+    },
+    delete: {
+      height: 24,
+      width: 24,
+      marginHorizontal: 6,
     },
     textInput: {
       textAlign: 'left',
