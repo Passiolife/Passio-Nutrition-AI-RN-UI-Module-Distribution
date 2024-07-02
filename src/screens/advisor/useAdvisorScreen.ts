@@ -61,6 +61,7 @@ export const useAdvisorScreen = () => {
       }
       try {
         Keyboard.dismiss();
+        setOptionShow(false);
         navigation.navigate('ImagePickerScreen', {
           onImages: async (images) => {
             navigation.goBack();
