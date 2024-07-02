@@ -1,6 +1,6 @@
 import React from 'react';
-import { Dimensions, StyleSheet, TouchableOpacity, View } from 'react-native';
-import Markdown from 'react-native-markdown-display';
+import { Dimensions, StyleSheet, View } from 'react-native';
+import Markdown, { MarkdownIt } from 'react-native-markdown-display';
 import { useBranding } from '../../../../contexts';
 import { BasicButton } from '../../../../components';
 
@@ -41,8 +41,15 @@ export const MessageResponseView = ({
   const branding = useBranding();
 
   return (
-    <TouchableOpacity style={[styles.msgView, styles.receivedMsgView]}>
-      <Markdown style={markdownStyles}>{renderText()}</Markdown>
+    <View style={[styles.msgView, styles.receivedMsgView]}>
+      <Markdown
+        markdownit={MarkdownIt({
+          break: true,
+        })}
+        style={markdownStyles}
+      >
+        {renderText()}
+      </Markdown>
       {tools && tools?.length > 0 && (
         <View style={styles.buttonContainer}>
           <BasicButton
@@ -58,7 +65,7 @@ export const MessageResponseView = ({
           />
         </View>
       )}
-    </TouchableOpacity>
+    </View>
   );
 };
 
@@ -98,7 +105,6 @@ const ResponseViewStyle = () =>
     },
     receivedMsgView: {
       backgroundColor: '#6366F1',
-      alignSelf: 'flex-start',
       borderBottomRightRadius: 8,
       borderBottomLeftRadius: 0,
     },
