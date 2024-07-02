@@ -49,6 +49,8 @@ export const ListPicker: React.FC<Props<any>> = ({
         }}
       >
         <Text
+          weight="400"
+          size="_12px"
           style={[
             styles.optionTitle,
             {
@@ -80,7 +82,9 @@ export const ListPicker: React.FC<Props<any>> = ({
         }
       >
         <View style={styles.main}>
-          <Text style={styles.mainTitle}>{label ?? value}</Text>
+          <Text weight="400" size="_12px" style={styles.mainTitle}>
+            {label ?? value}
+          </Text>
           <Image source={ICONS.down} style={styles.icon} />
         </View>
       </Picker>
