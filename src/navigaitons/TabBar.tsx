@@ -75,6 +75,10 @@ export const TabBar = React.memo((props: TabBarProps) => {
                     floatingRef.current?.onClose();
                     props.onAiAdvisor();
                   }}
+                  onMyFoods={() => {
+                    floatingRef.current?.onClose();
+                    props.onMyFoods();
+                  }}
                 />
               }
             />
