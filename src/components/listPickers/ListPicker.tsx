@@ -18,11 +18,12 @@ interface Props<T> {
   labelList?: string[];
   value: string;
   title: string;
-  error: string;
+  error?: string;
   style: StyleProp<ViewStyle>;
   label?: string;
   extraWidth?: number;
   onChange: (size: T) => void;
+  isCenter?: boolean;
 }
 
 export const ListPicker: React.FC<Props<any>> = ({
@@ -32,6 +33,8 @@ export const ListPicker: React.FC<Props<any>> = ({
   extraWidth,
   value,
   onChange,
+  isCenter,
+  error,
 }) => {
   const branding = useBranding();
   const styles = menuStyle(branding);
@@ -49,6 +52,8 @@ export const ListPicker: React.FC<Props<any>> = ({
         }}
       >
         <Text
+          weight="400"
+          size="_12px"
           style={[
             styles.optionTitle,
             {
@@ -68,6 +73,7 @@ export const ListPicker: React.FC<Props<any>> = ({
     return (
       <Picker
         ref={pickerRef}
+        isCenter={isCenter}
         extraWidth={extraWidth ?? 0}
         options={
           <FlatList
@@ -80,9 +86,16 @@ export const ListPicker: React.FC<Props<any>> = ({
         }
       >
         <View style={styles.main}>
-          <Text style={styles.mainTitle}>{label ?? value}</Text>
+          <Text weight="400" size="_12px" style={styles.mainTitle}>
+            {label ?? value}
+          </Text>
           <Image source={ICONS.down} style={styles.icon} />
         </View>
+        {error && (
+          <Text weight="400" size="_12px" style={[styles.error]}>
+            {error}
+          </Text>
+        )}
       </Picker>
     );
   };

@@ -60,6 +60,14 @@ export interface AdvisorScreenProps {
   logToDate?: Date | undefined;
   logToMeal?: MealLabel | undefined;
 }
+export interface FoodCreatorNavProps {
+  logToDate?: Date | undefined;
+  logToMeal?: MealLabel | undefined;
+}
+export interface MyFoodsScreenNavProps {
+  logToDate?: Date | undefined;
+  logToMeal?: MealLabel | undefined;
+}
 
 export type ParamList = {
   MealLogScreen: MealLogScreenProps;
@@ -89,4 +97,6 @@ export type ParamList = {
   TakePictureScreen: TakePictureScreenProps;
   AdvisorScreen: AdvisorScreenProps;
   ImagePickerScreen: ImagePickerProps;
+  FoodCreatorScreen: FoodCreatorNavProps;
+  MyFoodsScreen: MyFoodsScreenNavProps;
 };

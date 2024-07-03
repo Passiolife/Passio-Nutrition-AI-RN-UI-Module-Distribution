@@ -110,6 +110,7 @@ export const AdvisorScreen = () => {
                     keyExtractor={(_item, index) => index.toString()}
                     renderItem={renderItem}
                     showsVerticalScrollIndicator={false}
+                    contentContainerStyle={{ flexGrow: 1 }}
                     style={styles.flatListStyle}
                     // onContentSizeChange={() => listRef.current?.scrollToEnd()}
                     // onLayout={() => listRef.current?.scrollToEnd()}
