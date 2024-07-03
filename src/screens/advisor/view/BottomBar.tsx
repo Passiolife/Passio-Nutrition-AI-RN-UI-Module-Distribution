@@ -66,7 +66,14 @@ export const BottomBar = ({
             ) : (
               <TouchableOpacity
                 onPress={plusIconHandler}
-                style={[styles.button, styles.plusIconView]}
+                disabled={sending}
+                style={[
+                  styles.button,
+                  styles.plusIconView,
+                  {
+                    opacity: sending ? 0.5 : 1,
+                  },
+                ]}
               >
                 <Image
                   source={ICONS.newAddPlus}
