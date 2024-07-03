@@ -3,13 +3,14 @@ import { View, Modal, Pressable, Platform } from 'react-native';
 import { useBranding } from '../../contexts';
 import tutorialStyle from './picker.styles';
 import { Card } from '../cards';
-import { scaleWidth } from '../../utils';
+import { scaleWidth, screenHeight } from '../../utils';
 
 interface PickerProps extends React.PropsWithChildren {
   top?: boolean;
   bottom?: boolean;
   options: React.JSX.Element;
   extraWidth?: number;
+  isCenter?: boolean;
 }
 export interface PickerRef {
   onClose: () => void;
@@ -46,7 +47,7 @@ export const Picker = React.forwardRef(
         (fx: number, fy: number, width: number, height: number) => {
           const newMeasure: Matrix = {
             x: fx,
-            y: fy,
+            y: props.isCenter ? screenHeight / 2 : fy,
             width: width,
             height: height,
           };

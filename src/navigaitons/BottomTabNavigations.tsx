@@ -23,6 +23,7 @@ export interface TabBarProps extends BottomTabBarProps {
   onTakePicture: () => void;
   onTakeCamera: () => void;
   onAiAdvisor: () => void;
+  onMyFoods: () => void;
 }
 
 export const renderTabBarIcons = (

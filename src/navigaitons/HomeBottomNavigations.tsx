@@ -144,6 +144,12 @@ export const HomeBottomNavigation = React.memo(() => {
               logToMeal: undefined,
             });
           }}
+          onMyFoods={() => {
+            navigation.navigate('MyFoodsScreen', {
+              logToDate: mealLogDateRef.current,
+              logToMeal: undefined,
+            });
+          }}
           onTakePicture={onTakePicture}
           {...props}
           items={menu}
