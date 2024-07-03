@@ -9,7 +9,13 @@ import { RequireNutritionFacts } from './views/RequireNutritionFacts';
 import { OtherNutritionFacts } from './views/OtherNutritionFacts';
 
 export const FoodCreatorScreen = () => {
-  const { branding, otherNutritionFactsRef, onSavePress } = useFoodCreator();
+  const {
+    branding,
+    otherNutritionFactsRef,
+    requireNutritionFactsRef,
+    foodCreatorFoodDetailRef,
+    onSavePress,
+  } = useFoodCreator();
 
   const styles = foodCreatorStyle(branding);
 
@@ -18,8 +24,8 @@ export const FoodCreatorScreen = () => {
       <BackNavigation title="Food Creator" />
       <ScrollView style={{ flex: 1 }}>
         <View>
-          <FoodCreatorFoodDetail />
-          <RequireNutritionFacts />
+          <FoodCreatorFoodDetail ref={foodCreatorFoodDetailRef} />
+          <RequireNutritionFacts ref={requireNutritionFactsRef} />
           <OtherNutritionFacts ref={otherNutritionFactsRef} />
           <View style={{ height: 100 }} />
         </View>

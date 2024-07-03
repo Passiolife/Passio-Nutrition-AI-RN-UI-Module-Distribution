@@ -2,15 +2,20 @@ import React, { useImperativeHandle, useRef, useState } from 'react';
 import { Card, Text } from '../../../components';
 import { StyleSheet, View } from 'react-native';
 import { Branding, useBranding } from '../../../contexts';
-import { FiledView, FiledViewRef } from './FiledView';
-import { FiledSelectionView } from './FiledSelectionView';
+import { FiledView, FiledViewRef } from '../../../components/filed/FiledView';
+import { FiledSelectionView } from '../../../components/filed/FiledSelectionView';
 import { OtherNutrients } from '../data';
 import { FlatList } from 'react-native';
 import { nutrientName, type NutrientType } from '../../../models';
 
 interface Props {}
+
+interface Value {
+  records: Record<NutrientType, string>;
+  isNotValid?: boolean;
+}
 export interface OtherNutritionFactsRef {
-  getValue: () => void;
+  getValue: () => Value;
 }
 
 export const OtherNutritionFacts = React.forwardRef<
@@ -33,16 +38,25 @@ export const OtherNutritionFacts = React.forwardRef<
     ref,
     () => ({
       getValue: () => {
+        let record: Record<NutrientType, string> = {} as Record<
+          NutrientType,
+          string
+        >;
+        let isNotValid = false;
         list.forEach((item) => {
           const sleetedRef = refs.current[item];
           if (sleetedRef && sleetedRef.current) {
-            // Assuming FiledViewRef has a method or property called `getValue`
-            // eslint-disable-next-line no-console
-            console.log(`Value for ${item}: `, sleetedRef.current.value());
+            if (sleetedRef.current.errorCheck()) {
+              isNotValid = true;
+            }
+            record[item as NutrientType] = sleetedRef.current.value() ?? '';
           }
         });
 
-        return;
+        return {
+          records: record,
+          isNotValid: isNotValid,
+        };
       },
     }),
     [list]
@@ -62,6 +76,8 @@ export const OtherNutritionFacts = React.forwardRef<
           <Text style={styles.title}>{'Other Nutrition Facts'}</Text>
           <FlatList
             data={list}
+            extraData={list}
+            keyExtractor={(item) => item}
             renderItem={({ item }) => {
               return (
                 <FiledView

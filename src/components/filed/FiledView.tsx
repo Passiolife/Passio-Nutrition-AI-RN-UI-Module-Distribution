@@ -1,5 +1,5 @@
 import React, { useImperativeHandle, useState } from 'react';
-import { Text, TextInput } from '../../../components';
+import { Text, TextInput } from '..';
 import {
   Image,
   KeyboardTypeOptions,
@@ -7,9 +7,9 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { Branding, useBranding } from '../../../contexts';
-import { scaleHeight } from '../../../utils';
-import { ICONS } from '../../../assets';
+import { Branding, useBranding } from '../../contexts';
+import { scaleHeight } from '../../utils';
+import { ICONS } from '../../assets';
 
 interface Props {
   name: string;
@@ -22,6 +22,7 @@ interface Props {
 
 export interface FiledViewRef {
   value: () => string | undefined;
+  errorCheck: () => boolean | undefined;
 }
 
 export const FiledView = React.forwardRef<FiledViewRef, Props>(
@@ -29,7 +30,7 @@ export const FiledView = React.forwardRef<FiledViewRef, Props>(
     {
       name,
       value: defaultValue,
-      keyboardType = 'numeric',
+      keyboardType = 'decimal-pad',
       label = 'value',
       isColum = false,
       onDelete,
@@ -38,6 +39,7 @@ export const FiledView = React.forwardRef<FiledViewRef, Props>(
   ) => {
     const branding = useBranding();
     const [value, setValue] = useState<string | undefined>(defaultValue);
+    const [error, setError] = useState<string>();
 
     const styles = requireNutritionFactStyle(branding);
 
@@ -46,6 +48,14 @@ export const FiledView = React.forwardRef<FiledViewRef, Props>(
       () => ({
         value: () => {
           return value;
+        },
+        errorCheck: () => {
+          if (value === undefined || value?.length === 0) {
+            setError('please enter value');
+          } else {
+            setError(undefined);
+          }
+          return value?.length === 0;
         },
       }),
       [value]
@@ -64,10 +74,15 @@ export const FiledView = React.forwardRef<FiledViewRef, Props>(
           </Text>
           <TextInput
             style={styles.textInput}
-            onChangeText={setValue}
+            onChangeText={(text) => {
+              setValue(text);
+              setError(undefined);
+            }}
             value={defaultValue}
             containerStyle={styles.containerTextInput}
             placeholder={label}
+            error={error}
+            enterKeyHint="next"
             keyboardType={keyboardType}
           />
           {onDelete && (
@@ -83,7 +98,7 @@ export const FiledView = React.forwardRef<FiledViewRef, Props>(
   }
 );
 
-const requireNutritionFactStyle = ({ white, border }: Branding) =>
+const requireNutritionFactStyle = ({ white, gray300 }: Branding) =>
   StyleSheet.create({
     formRow: {
       flexDirection: 'row',
@@ -113,7 +128,7 @@ const requireNutritionFactStyle = ({ white, border }: Branding) =>
       fontWeight: '400',
       fontSize: 14,
       backgroundColor: white,
-      borderColor: border,
+      borderColor: gray300,
       paddingVertical: scaleHeight(8),
       borderRadius: scaleHeight(4),
     },

@@ -1,18 +1,77 @@
-import React from 'react';
+import React, { useImperativeHandle, useMemo, useRef } from 'react';
 import { Card, Text } from '../../../components';
 import { Image, StyleSheet, View } from 'react-native';
 import { Branding, useBranding } from '../../../contexts';
-import { FiledView } from './FiledView';
-import { FiledSelectionView } from './FiledSelectionView';
+import { FiledView, FiledViewRef } from '../../../components/filed/FiledView';
+import {
+  FiledSelectionView,
+  FiledSelectionViewRef,
+} from '../../../components/filed/FiledSelectionView';
 import { Units } from '../data';
 import { ICONS } from '../../../assets';
 
 interface Props {}
 
-export const FoodCreatorFoodDetail = ({}: Props) => {
+export type FoodCreatorFoodDetailType = 'name' | 'brand' | 'barcode';
+
+interface Value {
+  records: Record<FoodCreatorFoodDetailType, string>;
+  isNotValid?: boolean;
+}
+
+export interface FoodCreatorFoodDetailRef {
+  getValue: () => Value;
+}
+
+export const FoodCreatorFoodDetail = React.forwardRef<
+  FoodCreatorFoodDetailRef,
+  Props
+>(({}: Props, ref: React.Ref<FoodCreatorFoodDetailRef>) => {
   const branding = useBranding();
 
   const styles = requireNutritionFactStyle(branding);
+
+  const nameRef = useRef<FiledViewRef>(null);
+  const brandNameRef = useRef<FiledViewRef>(null);
+  const barcodeRef = useRef<FiledSelectionViewRef>(null);
+
+  const refs = useMemo(
+    () => ({
+      name: nameRef,
+      brand: brandNameRef,
+      barcode: barcodeRef,
+    }),
+    []
+  );
+
+  useImperativeHandle(
+    ref,
+    () => ({
+      getValue: () => {
+        let record: Record<FoodCreatorFoodDetailType, string> = {} as Record<
+          FoodCreatorFoodDetailType,
+          string
+        >;
+        let isNotValid = false;
+
+        (Object.keys(refs) as FoodCreatorFoodDetailType[]).forEach((key) => {
+          const currentRef = refs[key].current;
+          const value = currentRef?.value();
+          currentRef?.errorCheck();
+          if (value === undefined || value.length === 0) {
+            isNotValid = true;
+          }
+          record[key] = value ?? '';
+        });
+
+        return {
+          records: record,
+          isNotValid,
+        };
+      },
+    }),
+    [refs]
+  );
 
   return (
     <Card style={styles.card}>
@@ -32,16 +91,26 @@ export const FoodCreatorFoodDetail = ({}: Props) => {
               </Text>
             </View>
             <View style={styles.right}>
-              <FiledView label="enter name" isColum name="Name" />
-              <FiledView label="enter brand" isColum name="Brand" />
-              <FiledSelectionView isColum lists={Units} name="Barcode" />
+              <FiledView ref={nameRef} label="enter name" isColum name="Name" />
+              <FiledView
+                ref={brandNameRef}
+                label="enter brand"
+                isColum
+                name="Brand"
+              />
+              <FiledSelectionView
+                ref={barcodeRef}
+                isColum
+                lists={Units}
+                name="Barcode"
+              />
             </View>
           </View>
         </View>
       }
     </Card>
   );
-};
+});
 
 const requireNutritionFactStyle = ({}: Branding) =>
   StyleSheet.create({

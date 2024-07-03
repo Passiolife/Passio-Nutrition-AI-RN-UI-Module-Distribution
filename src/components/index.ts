@@ -41,6 +41,8 @@ export * from './weeklyAddhernce';
 export * from './progressBard';
 export * from './timeStamp';
 export * from './mealPlan';
+export * from './tab';
+export * from './filed';
 
 import ActionSheet from './actionSheets/ActionSheet';
 export { ActionSheet };

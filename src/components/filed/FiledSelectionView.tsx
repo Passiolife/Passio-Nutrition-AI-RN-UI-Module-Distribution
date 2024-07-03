@@ -1,8 +1,8 @@
 import React, { useImperativeHandle, useState } from 'react';
-import { Text } from '../../../components';
+import { Text } from '..';
 import { StyleSheet, View } from 'react-native';
-import { Branding, useBranding } from '../../../contexts';
-import { ListPicker } from '../../../components/listPickers';
+import { Branding, useBranding } from '../../contexts';
+import { ListPicker } from '../listPickers';
 
 interface Props {
   name: string;
@@ -15,8 +15,9 @@ interface Props {
   isColum?: boolean;
   isCenter?: boolean;
 }
-interface FiledSelectionViewRef {
-  value?: () => string | undefined;
+export interface FiledSelectionViewRef {
+  value: () => string | undefined;
+  errorCheck: () => boolean | undefined;
 }
 
 export const FiledSelectionView = React.forwardRef<
@@ -29,7 +30,6 @@ export const FiledSelectionView = React.forwardRef<
       lists,
       labelList,
       label,
-      error,
       onChange,
       value: defaultValue,
       isColum = false,
@@ -41,12 +41,21 @@ export const FiledSelectionView = React.forwardRef<
 
     const styles = requireNutritionFactStyle(branding);
     const [value, setValue] = useState<string | undefined>(defaultValue);
+    const [error, setError] = useState<string>();
 
     useImperativeHandle(
       ref,
       () => ({
         value: () => {
           return value;
+        },
+        errorCheck: () => {
+          if (value === undefined || value?.length === 0) {
+            setError('please enter value');
+          } else {
+            setError(undefined);
+          }
+          return value?.length === 0;
         },
       }),
       [value]
@@ -69,6 +78,7 @@ export const FiledSelectionView = React.forwardRef<
             isCenter={isCenter}
             onChange={(item) => {
               onChange?.(item);
+              setError(undefined);
               setValue(item);
             }}
             lists={lists ?? []}

@@ -18,7 +18,7 @@ interface Props<T> {
   labelList?: string[];
   value: string;
   title: string;
-  error: string;
+  error?: string;
   style: StyleProp<ViewStyle>;
   label?: string;
   extraWidth?: number;
@@ -34,6 +34,7 @@ export const ListPicker: React.FC<Props<any>> = ({
   value,
   onChange,
   isCenter,
+  error,
 }) => {
   const branding = useBranding();
   const styles = menuStyle(branding);
@@ -90,6 +91,11 @@ export const ListPicker: React.FC<Props<any>> = ({
           </Text>
           <Image source={ICONS.down} style={styles.icon} />
         </View>
+        {error && (
+          <Text weight="400" size="_12px" style={[styles.error]}>
+            {error}
+          </Text>
+        )}
       </Picker>
     );
   };

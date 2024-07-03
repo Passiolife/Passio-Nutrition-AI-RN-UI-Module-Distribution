@@ -12,4 +12,11 @@ export const myFoodScreenStyle = ({ searchBody }: Branding) =>
       backgroundColor: searchBody,
       flex: 1,
     },
+    container: {
+      flex: 1,
+    },
+    button: {
+      marginVertical: 24,
+      marginHorizontal: 16,
+    },
   });
