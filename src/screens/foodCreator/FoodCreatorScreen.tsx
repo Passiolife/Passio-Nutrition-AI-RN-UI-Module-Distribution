@@ -14,6 +14,7 @@ export const FoodCreatorScreen = () => {
     otherNutritionFactsRef,
     requireNutritionFactsRef,
     foodCreatorFoodDetailRef,
+    foodLog,
     onSavePress,
   } = useFoodCreator();
 
@@ -24,9 +25,16 @@ export const FoodCreatorScreen = () => {
       <BackNavigation title="Food Creator" />
       <ScrollView style={{ flex: 1 }}>
         <View>
-          <FoodCreatorFoodDetail ref={foodCreatorFoodDetailRef} />
-          <RequireNutritionFacts ref={requireNutritionFactsRef} />
-          <OtherNutritionFacts ref={otherNutritionFactsRef} />
+          <FoodCreatorFoodDetail
+            foodLog={foodLog}
+            ref={foodCreatorFoodDetailRef}
+          />
+          <RequireNutritionFacts
+            foodLog={foodLog}
+            ref={requireNutritionFactsRef}
+          />
+
+          <OtherNutritionFacts foodLog={foodLog} ref={otherNutritionFactsRef} />
           <View style={{ height: 100 }} />
         </View>
       </ScrollView>

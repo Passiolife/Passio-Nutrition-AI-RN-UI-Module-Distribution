@@ -3,14 +3,14 @@ import { Card, Text } from '../../../components';
 import { Image, StyleSheet, View } from 'react-native';
 import { Branding, useBranding } from '../../../contexts';
 import { FiledView, FiledViewRef } from '../../../components/filed/FiledView';
-import {
-  FiledSelectionView,
-  FiledSelectionViewRef,
-} from '../../../components/filed/FiledSelectionView';
-import { Units } from '../data';
+import type { FiledSelectionViewRef } from '../../../components/filed/FiledSelectionView';
 import { ICONS } from '../../../assets';
+import { FiledViewClick } from '../../../components/filed/FiledViewClick';
+import type { FoodLog } from '../../../models';
 
-interface Props {}
+interface Props {
+  foodLog?: FoodLog;
+}
 
 export type FoodCreatorFoodDetailType = 'name' | 'brand' | 'barcode';
 
@@ -26,7 +26,7 @@ export interface FoodCreatorFoodDetailRef {
 export const FoodCreatorFoodDetail = React.forwardRef<
   FoodCreatorFoodDetailRef,
   Props
->(({}: Props, ref: React.Ref<FoodCreatorFoodDetailRef>) => {
+>(({ foodLog }: Props, ref: React.Ref<FoodCreatorFoodDetailRef>) => {
   const branding = useBranding();
 
   const styles = requireNutritionFactStyle(branding);
@@ -58,9 +58,13 @@ export const FoodCreatorFoodDetail = React.forwardRef<
           const currentRef = refs[key].current;
           const value = currentRef?.value();
           currentRef?.errorCheck();
-          if (value === undefined || value.length === 0) {
-            isNotValid = true;
+
+          if (key !== 'barcode' && key !== 'brand') {
+            if (value === undefined || value.length === 0) {
+              isNotValid = true;
+            }
           }
+
           record[key] = value ?? '';
         });
 
@@ -91,17 +95,23 @@ export const FoodCreatorFoodDetail = React.forwardRef<
               </Text>
             </View>
             <View style={styles.right}>
-              <FiledView ref={nameRef} label="enter name" isColum name="Name" />
+              <FiledView
+                value={foodLog?.name}
+                ref={nameRef}
+                label="enter name"
+                isColum
+                name="Name"
+              />
               <FiledView
                 ref={brandNameRef}
                 label="enter brand"
                 isColum
                 name="Brand"
               />
-              <FiledSelectionView
+              <FiledViewClick
+                value=""
                 ref={barcodeRef}
                 isColum
-                lists={Units}
                 name="Barcode"
               />
             </View>

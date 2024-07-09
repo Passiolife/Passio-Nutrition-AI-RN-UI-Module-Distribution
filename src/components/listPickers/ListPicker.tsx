@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import {
   FlatList,
   Image,
+  TextInput,
   TouchableOpacity,
   View,
   type StyleProp,
@@ -17,13 +18,17 @@ interface Props<T> {
   lists: string[];
   labelList?: string[];
   value: string;
+  defaultInput?: string;
   title: string;
   error?: string;
   style: StyleProp<ViewStyle>;
   label?: string;
   extraWidth?: number;
   onChange: (size: T) => void;
+  onChangeText?: (value: string) => void;
   isCenter?: boolean;
+  isTextInput?: boolean;
+  input?: string;
 }
 
 export const ListPicker: React.FC<Props<any>> = ({
@@ -34,6 +39,9 @@ export const ListPicker: React.FC<Props<any>> = ({
   value,
   onChange,
   isCenter,
+  defaultInput,
+  onChangeText,
+  isTextInput = false,
   error,
 }) => {
   const branding = useBranding();
@@ -86,7 +94,23 @@ export const ListPicker: React.FC<Props<any>> = ({
         }
       >
         <View style={styles.main}>
-          <Text weight="400" size="_12px" style={styles.mainTitle}>
+          {isTextInput && (
+            <TextInput
+              value={defaultInput}
+              onChangeText={onChangeText}
+              style={{ flex: 1, marginStart: 8 }}
+            />
+          )}
+          <Text
+            weight="400"
+            size="_12px"
+            style={[
+              styles.mainTitle,
+              isTextInput && {
+                flex: undefined,
+              },
+            ]}
+          >
             {label ?? value}
           </Text>
           <Image source={ICONS.down} style={styles.icon} />

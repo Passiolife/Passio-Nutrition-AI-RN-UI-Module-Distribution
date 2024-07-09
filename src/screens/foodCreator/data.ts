@@ -31,4 +31,4 @@ export const OtherNutrients: NutrientType[] = [
   'iron',
   'potassium',
 ];
-export const Weights = ['grams', 'ml'];
+export const Weights = ['g', 'ml'];

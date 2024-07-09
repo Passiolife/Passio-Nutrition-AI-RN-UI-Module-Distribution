@@ -1,19 +1,19 @@
 import {
   IconSize,
   type PassioID,
-  PassioIDEntityType,
   PassioIconView,
 } from '@passiolife/nutritionai-react-native-sdk-v3/src/sdk/v2';
 import type { ImageStyle, StyleProp } from 'react-native';
 
 import React from 'react';
+import type { PassioIconType } from '../../models';
 
 interface Props {
   style?: StyleProp<ImageStyle>;
   passioID?: PassioID;
   imageName?: string;
   size?: IconSize;
-  entityType: PassioIDEntityType | 'user-recipe';
+  entityType: PassioIconType;
 }
 
 /*

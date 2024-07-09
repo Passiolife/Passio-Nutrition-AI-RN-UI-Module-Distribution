@@ -8,8 +8,12 @@ import {
   FiledSelectionViewRef,
 } from '../../../components/filed/FiledSelectionView';
 import { Units, Weights } from '../data';
+import { WEIGHT_UNIT_SPLIT_IDENTIFIER } from '../FoodCreator.utils';
+import type { FoodLog } from '../../../models';
 
-interface Props {}
+interface Props {
+  foodLog?: FoodLog;
+}
 
 export type RequireNutritionFactsType =
   | 'calories'
@@ -32,7 +36,7 @@ export interface RequireNutritionFactsRef {
 export const RequireNutritionFacts = React.forwardRef<
   RequireNutritionFactsRef,
   Props
->(({}: Props, ref: React.Ref<RequireNutritionFactsRef>) => {
+>(({ foodLog }: Props, ref: React.Ref<RequireNutritionFactsRef>) => {
   const branding = useBranding();
   const styles = requireNutritionFactStyle(branding);
 
@@ -72,11 +76,21 @@ export const RequireNutritionFacts = React.forwardRef<
         (Object.keys(refs) as RequireNutritionFactsType[]).forEach((key) => {
           const currentRef = refs[key].current;
           const value = currentRef?.value();
+          const input = currentRef?.input?.();
           currentRef?.errorCheck();
           if (value === undefined || value.length === 0) {
             isNotValid = true;
           }
-          record[key] = value ?? '';
+
+          if (key === 'Weight') {
+            if (input === undefined || input.length === 0) {
+              isNotValid = true;
+            }
+
+            record[key] = input + WEIGHT_UNIT_SPLIT_IDENTIFIER + value ?? '';
+          } else {
+            record[key] = value ?? '';
+          }
         });
 
         return {
@@ -88,24 +102,53 @@ export const RequireNutritionFacts = React.forwardRef<
     [refs]
   );
 
+  let calories;
+  let fat;
+  let carbs;
+  let proteins;
+
+  foodLog?.foodItems?.[0].nutrients.forEach((i) => {
+    if (i.amount) {
+      const amount = i.amount.toFixed(2).toString();
+      if (i.id === 'calories') calories = amount;
+      if (i.id === 'carbs') carbs = amount;
+      if (i.id === 'protein') proteins = amount;
+      if (i.id === 'fat') fat = amount;
+    }
+  });
+
   return (
     <Card style={styles.card}>
       <View>
         <Text style={styles.title}>{'Required Nutrition Facts'}</Text>
-        <FiledView ref={servingSizeRef} name="Serving Size" />
+        <FiledView
+          ref={servingSizeRef}
+          name="Serving Size"
+          value={
+            foodLog?.selectedQuantity ? foodLog.selectedQuantity.toString() : ''
+          }
+        />
         <FiledSelectionView
           lists={Units}
           name="Units"
+          value={foodLog?.selectedUnit}
           ref={unitRef}
           onChange={(value) => setUnits(value)}
         />
         {units === 'g' || units === 'ml' ? null : (
-          <FiledSelectionView ref={weightRef} lists={Weights} name="Weight" />
+          <FiledSelectionView
+            isTextInput
+            ref={weightRef}
+            value={foodLog?.computedWeight?.unit}
+            input={(foodLog?.computedWeight?.value ?? '').toString()}
+            lists={Weights}
+            name="Weight"
+          />
         )}
-        <FiledView ref={caloriesRef} name="Calories" />
-        <FiledView ref={fatRef} name="Fat" />
-        <FiledView ref={carbsRef} name="Carbs" />
-        <FiledView ref={proteinRef} name="Protein" />
+        <FiledView ref={caloriesRef} name="Calories" value={calories} />
+        <FiledView ref={fatRef} value={fat} name="Fat" />
+        <FiledView ref={carbsRef} value={carbs} name="Carbs" />
+        <FiledView ref={proteinRef} value={proteins} name="Protein" />
       </View>
     </Card>
   );

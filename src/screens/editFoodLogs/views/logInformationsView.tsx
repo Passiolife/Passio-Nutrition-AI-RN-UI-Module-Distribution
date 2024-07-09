@@ -2,12 +2,9 @@ import React from 'react';
 import { Card, LinkText, Text } from '../../../components';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
-import type { FoodItem } from '../../../models';
+import type { FoodItem, PassioIconType } from '../../../models';
 import { PassioFoodIcon } from '../../../components/passio/PassioFoodIcon';
-import type {
-  PassioID,
-  PassioIDEntityType,
-} from '@passiolife/nutritionai-react-native-sdk-v3/src/sdk/v2';
+import type { PassioID } from '@passiolife/nutritionai-react-native-sdk-v3/src/sdk/v2';
 import { content } from '../../../constants/Content';
 import { totalAmountOfNutrient } from '../utils';
 import { scaleHeight, scaleWidth } from '../../../utils';
@@ -18,7 +15,7 @@ interface Props {
   foodItems: FoodItem[];
   passioID: PassioID;
   isOpenFood?: boolean;
-  entityType: PassioIDEntityType | 'user-recipe';
+  entityType: PassioIconType;
   name: string;
   imageName: string;
   qty: number;

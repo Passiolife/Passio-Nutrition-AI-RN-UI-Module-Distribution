@@ -1,5 +1,5 @@
-import React, { useImperativeHandle, useRef, useState } from 'react';
-import { Text, TextInput } from '..';
+import React, { useImperativeHandle, useState } from 'react';
+import { Text } from '..';
 import {
   Image,
   KeyboardTypeOptions,
@@ -17,30 +17,22 @@ interface Props {
   label?: string;
   keyboardType?: KeyboardTypeOptions;
   isColum?: boolean;
-  onDelete?: () => void;
+  onValuePress?: () => void;
 }
 
-export interface FiledViewRef {
+export interface FiledViewClickRef {
   value: () => string | undefined;
-  input: () => string | undefined;
   errorCheck: () => boolean | undefined;
 }
 
-export const FiledView = React.forwardRef<FiledViewRef, Props>(
+export const FiledViewClick = React.forwardRef<FiledViewClickRef, Props>(
   (
-    {
-      name,
-      value: defaultValue,
-      keyboardType = 'decimal-pad',
-      label = 'value',
-      isColum = false,
-      onDelete,
-    }: Props,
-    ref: React.Ref<FiledViewRef>
+    { name, value: defaultValue, isColum = false, onValuePress }: Props,
+    ref: React.Ref<FiledViewClickRef>
   ) => {
     const branding = useBranding();
-    const value = useRef<string | undefined>(defaultValue);
-    const [error, setError] = useState<string>();
+    const [value] = useState<string | undefined>(defaultValue);
+    const [_error, setError] = useState<string>();
 
     const styles = requireNutritionFactStyle(branding);
 
@@ -48,18 +40,15 @@ export const FiledView = React.forwardRef<FiledViewRef, Props>(
       ref,
       () => ({
         value: () => {
-          return value.current;
-        },
-        input: () => {
-          return value.current;
+          return value;
         },
         errorCheck: () => {
-          if (value === undefined || value.current?.length === 0) {
+          if (value === undefined || value?.length === 0) {
             setError('please enter value');
           } else {
             setError(undefined);
           }
-          return value.current?.length === 0;
+          return value?.length === 0;
         },
       }),
       [value]
@@ -76,24 +65,20 @@ export const FiledView = React.forwardRef<FiledViewRef, Props>(
           >
             {name}
           </Text>
-          <TextInput
-            style={styles.textInput}
-            onChangeText={(text) => {
-              value.current = text;
-              setError(undefined);
+          <TouchableOpacity
+            style={[styles.textInput, styles.containerTextInput]}
+            onPress={() => {
+              onValuePress?.();
             }}
-            defaultValue={defaultValue}
-            containerStyle={styles.containerTextInput}
-            placeholder={label}
-            error={error}
-            enterKeyHint="next"
-            keyboardType={keyboardType}
-          />
-          {onDelete && (
-            <TouchableOpacity onPress={onDelete}>
-              <Image source={ICONS.delete} style={styles.delete} />
-            </TouchableOpacity>
-          )}
+          >
+            <Text
+              color={value ? 'text' : 'secondaryText'}
+              style={styles.textInput}
+            >
+              {value}
+            </Text>
+            <Image source={ICONS.down} style={styles.delete} />
+          </TouchableOpacity>
         </View>
       );
     };
@@ -127,16 +112,18 @@ const requireNutritionFactStyle = ({ white, gray300 }: Branding) =>
       marginHorizontal: 6,
     },
     textInput: {
-      textAlign: 'left',
-      flex: 1,
-      fontWeight: '400',
       fontSize: 14,
-      backgroundColor: white,
-      borderColor: gray300,
-      paddingVertical: scaleHeight(8),
-      borderRadius: scaleHeight(4),
+      fontWeight: '400',
+      flex: 1,
     },
     containerTextInput: {
       flex: 1,
+      flexDirection: 'row',
+      textAlign: 'left',
+      backgroundColor: white,
+      borderColor: gray300,
+      borderWidth: 1,
+      paddingVertical: scaleHeight(8),
+      borderRadius: scaleHeight(4),
     },
   });
