@@ -10,7 +10,13 @@ import type {
   HomeScreenScreenProps,
 } from '../../screens';
 import type { IngredientQuickScanScreenProps } from '../../screens/recipeEditor/RecipesScan/IngredientQuickScanScreen/IngredientQuickScanScreen';
-import type { FoodLog, MealLabel, Nutrient, Water, Weight } from '../../models';
+import type {
+  CustomFood,
+  MealLabel,
+  Nutrient,
+  Water,
+  Weight,
+} from '../../models';
 import type { FavoritesScreenProps } from '../../screens/myFavoritess';
 import type {
   TakePictureScreenProps,
@@ -63,7 +69,7 @@ export interface AdvisorScreenProps {
 export interface FoodCreatorNavProps {
   logToDate?: Date | undefined;
   logToMeal?: MealLabel | undefined;
-  foodLog?: FoodLog;
+  foodLog?: CustomFood;
 }
 export interface MyFoodsScreenNavProps {
   logToDate?: Date | undefined;

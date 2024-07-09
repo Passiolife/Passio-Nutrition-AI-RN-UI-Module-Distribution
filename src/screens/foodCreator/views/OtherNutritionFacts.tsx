@@ -6,10 +6,10 @@ import { FiledView, FiledViewRef } from '../../../components/filed/FiledView';
 import { FiledSelectionView } from '../../../components/filed/FiledSelectionView';
 import { OtherNutrients } from '../data';
 import { FlatList } from 'react-native';
-import { FoodLog, nutrientName, type NutrientType } from '../../../models';
+import { CustomFood, nutrientName, type NutrientType } from '../../../models';
 
 interface Props {
-  foodLog?: FoodLog;
+  foodLog?: CustomFood;
 }
 
 interface Value {

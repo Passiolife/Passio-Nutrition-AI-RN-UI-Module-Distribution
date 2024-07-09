@@ -6,10 +6,10 @@ import { FiledView, FiledViewRef } from '../../../components/filed/FiledView';
 import type { FiledSelectionViewRef } from '../../../components/filed/FiledSelectionView';
 import { ICONS } from '../../../assets';
 import { FiledViewClick } from '../../../components/filed/FiledViewClick';
-import type { FoodLog } from '../../../models';
+import type { CustomFood } from '../../../models';
 
 interface Props {
-  foodLog?: FoodLog;
+  foodLog?: CustomFood;
 }
 
 export type FoodCreatorFoodDetailType = 'name' | 'brand' | 'barcode';

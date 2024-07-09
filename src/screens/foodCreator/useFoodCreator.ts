@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { useBranding } from '../../contexts';
+import { useBranding, useServices } from '../../contexts';
 import type { OtherNutritionFactsRef } from './views/OtherNutritionFacts';
 import type { RequireNutritionFactsRef } from './views/RequireNutritionFacts';
 import type { FoodCreatorFoodDetailRef } from './views/FoodCreatorFoodDetail';
@@ -7,7 +7,7 @@ import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import type { ParamList } from '../../navigaitons';
 import { createFoodLogUsingFoodCreator } from './FoodCreator.utils';
-import type { FoodLog } from '../../models';
+import type { CustomFood } from '../../models';
 
 export type ScanningScreenNavigationProps = StackNavigationProp<
   ParamList,
@@ -16,15 +16,18 @@ export type ScanningScreenNavigationProps = StackNavigationProp<
 
 export const useFoodCreator = () => {
   const branding = useBranding();
+  const services = useServices();
   const navigation = useNavigation<ScanningScreenNavigationProps>();
   const { params } = useRoute<RouteProp<ParamList, 'FoodCreatorScreen'>>();
-  const [foodLog, _setFoodLog] = useState<FoodLog | undefined>(params.foodLog);
+  const [foodLog, _setFoodLog] = useState<CustomFood | undefined>(
+    params.foodLog
+  );
 
   const otherNutritionFactsRef = useRef<OtherNutritionFactsRef>(null);
   const requireNutritionFactsRef = useRef<RequireNutritionFactsRef>(null);
   const foodCreatorFoodDetailRef = useRef<FoodCreatorFoodDetailRef>(null);
 
-  const onSavePress = () => {
+  const onSavePress = async () => {
     const info = foodCreatorFoodDetailRef.current?.getValue();
     const requireNutritionFact = requireNutritionFactsRef.current?.getValue();
     const otherNutritionFact = otherNutritionFactsRef.current?.getValue();
@@ -50,10 +53,10 @@ export const useFoodCreator = () => {
         otherNutritionFact: otherNutritionFact?.records,
       });
 
-      navigation.navigate('EditFoodLogScreen', {
-        foodLog: modifiedFoodLog,
-        prevRouteName: 'Other',
-      });
+      try {
+        await services.dataService.saveCustomFood(modifiedFoodLog);
+        navigation.goBack();
+      } catch {}
     }
   };
 

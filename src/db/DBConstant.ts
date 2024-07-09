@@ -1,6 +1,7 @@
 // nutrition tables
 
 export const TABLE_FOOD_LOGS = 'food_logs';
+export const TABLE_CUSTOM_FOOD_LOGS = 'custom_food_logs';
 export const TABLE_WATER = 'water';
 export const TABLE_WEIGHT = 'weight';
 export const TABLE_FAVOURITE_FOOD_LOGS = 'favourite_food_table';

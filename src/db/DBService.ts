@@ -23,6 +23,7 @@ import {
   ROW_TOTAL_SERVINGS,
   ROW_UUID,
   ROW_WEIGHT,
+  TABLE_CUSTOM_FOOD_LOGS,
   TABLE_FAVOURITE_FOOD_LOGS,
   TABLE_FOOD_LOGS,
   TABLE_RECIPE,
@@ -31,6 +32,7 @@ import {
 } from './DBConstant';
 
 const table_food_log = TABLE_FOOD_LOGS;
+const table_custom_food_log = TABLE_CUSTOM_FOOD_LOGS;
 const table_favourite_food_log = TABLE_FAVOURITE_FOOD_LOGS;
 const table_recipe = TABLE_RECIPE;
 
@@ -42,6 +44,11 @@ export const createTable = async (db: SQLiteDatabase): Promise<void> => {
       function (txn) {
         txn.executeSql(
           `CREATE TABLE IF NOT EXISTS ${table_food_log} (${ROW_UUID} TEXT PRIMARY KEY, ${ROW_NAME} TEXT, ${ROW_MEAL} TEXT, ${ROW_FOOD_ITEMS} TEXT, ${ROW_SERVING_SIZES} TEXT, ${ROW_SERVING_UNITS} TEXT, ${ROW_ENTITY_TYPE} TEXT, ${ROW_IMAGE_NAME} TEXT, ${ROW_PASSIOID} TEXT, ${ROW_SELECTED_UNIT} TEXT, ${ROW_SELECTED_QUANTITY} TEXT, ${ROW_EVENT_TIME_STAMP} TEXT
+      )`,
+          []
+        );
+        txn.executeSql(
+          `CREATE TABLE IF NOT EXISTS ${table_custom_food_log} (${ROW_UUID} TEXT PRIMARY KEY, ${ROW_NAME} TEXT, ${ROW_MEAL} TEXT, ${ROW_FOOD_ITEMS} TEXT, ${ROW_SERVING_SIZES} TEXT, ${ROW_SERVING_UNITS} TEXT, ${ROW_ENTITY_TYPE} TEXT, ${ROW_IMAGE_NAME} TEXT, ${ROW_PASSIOID} TEXT, ${ROW_SELECTED_UNIT} TEXT, ${ROW_SELECTED_QUANTITY} TEXT, ${ROW_EVENT_TIME_STAMP} TEXT
       )`,
           []
         );

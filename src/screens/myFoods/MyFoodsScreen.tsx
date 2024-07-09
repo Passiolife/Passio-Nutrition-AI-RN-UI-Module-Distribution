@@ -4,18 +4,19 @@ import React from 'react';
 import { myFoodScreenStyle } from './MyFoodsScreen.styles';
 import { useMyFoodScreen } from './useMyFoodScreen';
 import { BackNavigation, BasicButton, TabBar } from '../../components';
-import { useNavigation } from '@react-navigation/native';
-import type { StackNavigationProp } from '@react-navigation/stack';
-import type { ParamList } from '../../navigaitons';
 import { useSharedValue } from 'react-native-reanimated';
-
-type ScreenNavigationProps = StackNavigationProp<ParamList, 'MyFoodsScreen'>;
+import CustomFoods from './views/customFoods/CustomFoods';
 
 const TabList = ['Custom Foods', 'Recipe'];
 
 export const MyFoodsScreen = () => {
-  const { branding } = useMyFoodScreen();
-  const navigation = useNavigation<ScreenNavigationProps>();
+  const {
+    branding,
+    customFoods,
+    onCreateFoodPress,
+    onPressEditor,
+    onPressLog,
+  } = useMyFoodScreen();
   const tab = useSharedValue(TabList[0]);
 
   const styles = myFoodScreenStyle(branding);
@@ -34,13 +35,17 @@ export const MyFoodsScreen = () => {
   return (
     <View style={styles.body}>
       <BackNavigation title="My Foods" bottomView={renderTab()} />
-      <View style={styles.container} />
+      <View style={styles.container}>
+        <CustomFoods
+          customFoods={customFoods ?? []}
+          onPressEditor={onPressEditor}
+          onPressLog={onPressLog}
+        />
+      </View>
       <BasicButton
         text="Create New Food"
         style={styles.button}
-        onPress={() => {
-          navigation.navigate('FoodCreatorScreen', {});
-        }}
+        onPress={onCreateFoodPress}
       />
     </View>
   );

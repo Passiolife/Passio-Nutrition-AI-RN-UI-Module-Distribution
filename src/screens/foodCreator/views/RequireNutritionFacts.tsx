@@ -9,10 +9,10 @@ import {
 } from '../../../components/filed/FiledSelectionView';
 import { Units, Weights } from '../data';
 import { WEIGHT_UNIT_SPLIT_IDENTIFIER } from '../FoodCreator.utils';
-import type { FoodLog } from '../../../models';
+import type { CustomFood } from '../../../models';
 
 interface Props {
-  foodLog?: FoodLog;
+  foodLog?: CustomFood;
 }
 
 export type RequireNutritionFactsType =

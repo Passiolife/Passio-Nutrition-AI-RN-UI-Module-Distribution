@@ -1,4 +1,10 @@
-import type { FavoriteFoodItem, FoodLog, Recipe, Water } from './../models';
+import type {
+  CustomFood,
+  FavoriteFoodItem,
+  FoodLog,
+  Recipe,
+  Water,
+} from './../models';
 import {
   ROW_CONSUMED,
   ROW_DAY,
@@ -18,6 +24,7 @@ import {
   ROW_TOTAL_SERVINGS,
   ROW_UUID,
   ROW_WEIGHT,
+  TABLE_CUSTOM_FOOD_LOGS,
   TABLE_FAVOURITE_FOOD_LOGS,
   TABLE_FOOD_LOGS,
   TABLE_RECIPE,
@@ -67,6 +74,38 @@ export const saveFoodLog = async (
   });
 };
 
+export const saveCustomFood = async (
+  db: SQLiteDatabase,
+  foodLog: CustomFood
+): Promise<void> => {
+  return new Promise((resolve, reject) => {
+    const insertQuery = `INSERT or REPLACE INTO  ${TABLE_CUSTOM_FOOD_LOGS} (${ROW_UUID}, ${ROW_NAME}, ${ROW_IMAGE_NAME}, ${ROW_ENTITY_TYPE}, ${ROW_FOOD_ITEMS},${ROW_SERVING_SIZES},${ROW_SERVING_UNITS},${ROW_SELECTED_UNIT},${ROW_SELECTED_QUANTITY}) VALUES (?,?,?,?,?,?,?,?,?)`;
+    db.transaction((tx) => {
+      tx.executeSql(
+        insertQuery,
+        [
+          foodLog.uuid,
+          foodLog.name,
+          foodLog.imageName,
+          foodLog.entityType,
+          JSON.stringify(foodLog.foodItems),
+          JSON.stringify(foodLog.servingSizes),
+          JSON.stringify(foodLog.servingUnits),
+          foodLog.selectedUnit,
+          foodLog.selectedQuantity,
+        ],
+        () => {
+          resolve();
+        },
+        (_, error) => {
+          console.error(`Failed to save food logs ${error}`);
+          reject(error);
+        }
+      );
+    });
+  });
+};
+
 // Delete Food logs into local storage
 export const deleteFoodLog = async (
   db: SQLiteDatabase,
@@ -74,6 +113,28 @@ export const deleteFoodLog = async (
 ): Promise<void> => {
   return new Promise((resolve, reject) => {
     const deleteQuery = `DELETE from ${TABLE_FOOD_LOGS} where ${ROW_UUID} = "${uuId}"`;
+    db.transaction((tx) => {
+      tx.executeSql(
+        deleteQuery,
+        [],
+        () => {
+          resolve();
+        },
+        (_, error) => {
+          reject(error);
+        }
+      );
+    });
+  });
+};
+
+// Delete Food logs into local storage
+export const deleteCustomFood = async (
+  db: SQLiteDatabase,
+  uuId: string
+): Promise<void> => {
+  return new Promise((resolve, reject) => {
+    const deleteQuery = `DELETE from ${TABLE_CUSTOM_FOOD_LOGS} where ${ROW_UUID} = "${uuId}"`;
     db.transaction((tx) => {
       tx.executeSql(
         deleteQuery,
@@ -151,6 +212,20 @@ export const getFoodLogs = async (): Promise<FoodLog[]> => {
   try {
     const db = await DBHandler.getInstance();
     const results = await db.executeSql(`SELECT * FROM ${TABLE_FOOD_LOGS}`);
+    return convertResultToFoodLog(results);
+  } catch (error) {
+    console.error(`Failed to get food logs ${error}`);
+    throw error;
+  }
+};
+
+// Get Food Logs List from local storage
+export const getCustomFoods = async (): Promise<CustomFood[]> => {
+  try {
+    const db = await DBHandler.getInstance();
+    const results = await db.executeSql(
+      `SELECT * FROM ${TABLE_CUSTOM_FOOD_LOGS}`
+    );
     return convertResultToFoodLog(results);
   } catch (error) {
     console.error(`Failed to get food logs ${error}`);

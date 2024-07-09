@@ -1,13 +1,11 @@
 import {
+  CustomFood,
   FoodItem,
-  FoodLog,
   Nutrient,
   NutrientType,
   nutrientUnits,
 } from '../../models';
 import uuid4 from 'react-native-uuid';
-import { getMealLog } from '../../utils';
-import { convertDateToDBFormat } from '../../utils/DateFormatter';
 import type { FoodCreatorFoodDetailType } from './views/FoodCreatorFoodDetail';
 import type { RequireNutritionFactsType } from './views/RequireNutritionFacts';
 
@@ -15,6 +13,7 @@ export interface createFoodLogUsingFoodCreator {
   info: Record<FoodCreatorFoodDetailType, string>;
   requireNutritionFact: Record<RequireNutritionFactsType, string>;
   otherNutritionFact: Record<NutrientType, string>;
+  oldRecord?: CustomFood;
 }
 
 export const WEIGHT_UNIT_SPLIT_IDENTIFIER = '-';
@@ -23,10 +22,9 @@ export const createFoodLogUsingFoodCreator = ({
   info,
   requireNutritionFact,
   otherNutritionFact,
+  oldRecord,
 }: createFoodLogUsingFoodCreator) => {
-  const uuid: string = uuid4.v4() as string;
-  const date = new Date();
-  const meal = getMealLog(date, undefined);
+  const uuid: string = oldRecord?.uuid ?? (uuid4.v4() as string);
 
   const [weight, unit] = (requireNutritionFact?.Weight as string).split(
     WEIGHT_UNIT_SPLIT_IDENTIFIER
@@ -101,10 +99,9 @@ export const createFoodLogUsingFoodCreator = ({
     ],
   };
 
-  const foodLog: FoodLog = {
+  const foodLog: CustomFood = {
+    ...oldRecord,
     uuid: uuid,
-    eventTimestamp: convertDateToDBFormat(date),
-    meal: meal,
     foodItems: [foodItem],
     ...foodItem,
   };

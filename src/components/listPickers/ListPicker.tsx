@@ -96,7 +96,7 @@ export const ListPicker: React.FC<Props<any>> = ({
         <View style={styles.main}>
           {isTextInput && (
             <TextInput
-              value={defaultInput}
+              defaultValue={defaultInput}
               onChangeText={onChangeText}
               style={{ flex: 1, marginStart: 8 }}
             />
