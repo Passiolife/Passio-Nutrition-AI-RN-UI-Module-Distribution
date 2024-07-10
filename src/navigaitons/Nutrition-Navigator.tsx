@@ -21,6 +21,7 @@ import {
   ImagePickerScreen,
   MyFoodsScreen,
   FoodCreatorScreen,
+  BarcodeScanScreen,
 } from '../screens';
 import {
   DashboardScreenRoute,
@@ -46,6 +47,7 @@ import {
   TakePictureScreenRoute,
   AdvisorScreenRoute,
   ImagePickerScreenRoute,
+  BarcodeScanScreenRoute,
   MyFoodsScreenRoute,
   FoodCreatorScreenRoute,
 } from './Route';
@@ -214,6 +216,11 @@ export const NutritionNavigator = () => {
             options={{ headerShown: false }}
             name={MyFoodsScreenRoute}
             component={MyFoodsScreen}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name={BarcodeScanScreenRoute}
+            component={BarcodeScanScreen}
           />
         </Stack.Navigator>
       </NavigationContainer>

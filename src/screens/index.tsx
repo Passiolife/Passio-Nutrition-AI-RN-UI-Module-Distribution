@@ -23,3 +23,4 @@ export * from './advisor';
 export * from './imagePicker';
 export * from './foodCreator';
 export * from './myFoods';
+export * from './barcode';

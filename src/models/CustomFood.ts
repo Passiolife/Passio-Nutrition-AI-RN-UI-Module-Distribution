@@ -9,4 +9,7 @@ export interface CustomFood
     | 'isOpenFood'
     | 'longName'
     | 'passioID'
-  > {}
+  > {
+  barcode?: string;
+  brandName?: string;
+}

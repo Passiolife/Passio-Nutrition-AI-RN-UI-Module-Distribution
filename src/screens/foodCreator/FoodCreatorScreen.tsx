@@ -16,6 +16,7 @@ export const FoodCreatorScreen = () => {
     foodCreatorFoodDetailRef,
     foodLog,
     onSavePress,
+    onBarcodePress,
   } = useFoodCreator();
 
   const styles = foodCreatorStyle(branding);
@@ -28,6 +29,7 @@ export const FoodCreatorScreen = () => {
           <FoodCreatorFoodDetail
             foodLog={foodLog}
             ref={foodCreatorFoodDetailRef}
+            onBarcodePress={onBarcodePress}
           />
           <RequireNutritionFacts
             foodLog={foodLog}

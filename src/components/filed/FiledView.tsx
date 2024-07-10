@@ -1,4 +1,4 @@
-import React, { useImperativeHandle, useRef, useState } from 'react';
+import React, { useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { Text, TextInput } from '..';
 import {
   Image,
@@ -44,6 +44,10 @@ export const FiledView = React.forwardRef<FiledViewRef, Props>(
 
     const styles = requireNutritionFactStyle(branding);
 
+    useEffect(() => {
+      value.current = defaultValue;
+    }, [defaultValue]);
+
     useImperativeHandle(
       ref,
       () => ({
@@ -86,7 +90,6 @@ export const FiledView = React.forwardRef<FiledViewRef, Props>(
             containerStyle={styles.containerTextInput}
             placeholder={label}
             error={error}
-            enterKeyHint="next"
             keyboardType={keyboardType}
           />
           {onDelete && (

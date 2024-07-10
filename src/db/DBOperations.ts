@@ -6,6 +6,9 @@ import type {
   Water,
 } from './../models';
 import {
+  ROW_BARCODE,
+  ROW_BRAND_NAME,
+  ROW_COMPUTED_WEIGHT,
   ROW_CONSUMED,
   ROW_DAY,
   ROW_ENTITY_TYPE,
@@ -79,7 +82,7 @@ export const saveCustomFood = async (
   foodLog: CustomFood
 ): Promise<void> => {
   return new Promise((resolve, reject) => {
-    const insertQuery = `INSERT or REPLACE INTO  ${TABLE_CUSTOM_FOOD_LOGS} (${ROW_UUID}, ${ROW_NAME}, ${ROW_IMAGE_NAME}, ${ROW_ENTITY_TYPE}, ${ROW_FOOD_ITEMS},${ROW_SERVING_SIZES},${ROW_SERVING_UNITS},${ROW_SELECTED_UNIT},${ROW_SELECTED_QUANTITY}) VALUES (?,?,?,?,?,?,?,?,?)`;
+    const insertQuery = `INSERT or REPLACE INTO  ${TABLE_CUSTOM_FOOD_LOGS} (${ROW_UUID}, ${ROW_NAME}, ${ROW_IMAGE_NAME}, ${ROW_ENTITY_TYPE}, ${ROW_BARCODE}, ${ROW_BRAND_NAME}, ${ROW_COMPUTED_WEIGHT}, ${ROW_FOOD_ITEMS},${ROW_SERVING_SIZES},${ROW_SERVING_UNITS},${ROW_SELECTED_UNIT},${ROW_SELECTED_QUANTITY}) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)`;
     db.transaction((tx) => {
       tx.executeSql(
         insertQuery,
@@ -88,6 +91,9 @@ export const saveCustomFood = async (
           foodLog.name,
           foodLog.imageName,
           foodLog.entityType,
+          foodLog.barcode,
+          foodLog.brandName,
+          JSON.stringify(foodLog.computedWeight),
           JSON.stringify(foodLog.foodItems),
           JSON.stringify(foodLog.servingSizes),
           JSON.stringify(foodLog.servingUnits),
@@ -372,6 +378,7 @@ export function convertResultToFoodLog(results: [ResultSet]): FoodLog[] {
     value.foodItems = JSON.parse(value.foodItems.toString());
     value.servingUnits = JSON.parse(value.servingUnits.toString());
     value.servingSizes = JSON.parse(value.servingSizes.toString());
+    value.computedWeight = JSON.parse((value.computedWeight ?? '').toString());
   });
   return items;
 }

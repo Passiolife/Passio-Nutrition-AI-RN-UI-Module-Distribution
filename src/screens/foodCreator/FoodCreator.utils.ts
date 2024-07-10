@@ -8,6 +8,8 @@ import {
 import uuid4 from 'react-native-uuid';
 import type { FoodCreatorFoodDetailType } from './views/FoodCreatorFoodDetail';
 import type { RequireNutritionFactsType } from './views/RequireNutritionFacts';
+import type { PassioFoodItem } from '@passiolife/nutritionai-react-native-sdk-v3';
+import { convertPassioFoodItemToFoodLog } from '../../utils/V3Utils';
 
 export interface createFoodLogUsingFoodCreator {
   info: Record<FoodCreatorFoodDetailType, string>;
@@ -72,6 +74,7 @@ export const createFoodLogUsingFoodCreator = ({
     },
     passioID: '',
     name: info?.name!,
+    barcode: info?.barcode,
     imageName: '',
     entityType: 'user-food',
     nutrients: nutrients,
@@ -103,8 +106,27 @@ export const createFoodLogUsingFoodCreator = ({
     ...oldRecord,
     uuid: uuid,
     foodItems: [foodItem],
+    brandName: info.brand,
+    barcode: info.barcode,
     ...foodItem,
   };
 
   return foodLog;
+};
+
+export const convertPassioFoodItemToCustomFood = (
+  foodItem: PassioFoodItem,
+  barcode?: string
+) => {
+  const foodLog = convertPassioFoodItemToFoodLog(
+    foodItem,
+    undefined,
+    undefined
+  );
+  const customFood: CustomFood = {
+    ...foodLog,
+    barcode: barcode,
+    brandName: foodItem.details,
+  };
+  return customFood;
 };

@@ -9,9 +9,15 @@ interface Props {
   customFoods: CustomFood[];
   onPressLog?: (food: CustomFood) => void;
   onPressEditor?: (food: CustomFood) => void;
+  onPressDelete?: (food: CustomFood) => void;
 }
 
-const CustomFoods = ({ customFoods, onPressEditor, onPressLog }: Props) => {
+const CustomFoods = ({
+  customFoods,
+  onPressEditor,
+  onPressLog,
+  onPressDelete,
+}: Props) => {
   const renderCustomFood = ({ item }: { item: CustomFood }) => {
     return (
       <CustomFoodsItem
@@ -21,6 +27,7 @@ const CustomFoods = ({ customFoods, onPressEditor, onPressLog }: Props) => {
         brandName={''}
         onPressLog={() => onPressLog?.(item)}
         onPressEditor={() => onPressEditor?.(item)}
+        onPressDelete={() => onPressDelete?.(item)}
         entityType={PassioIDEntityType.barcode}
       />
     );

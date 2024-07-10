@@ -11,6 +11,7 @@ import type {
 } from '../../screens';
 import type { IngredientQuickScanScreenProps } from '../../screens/recipeEditor/RecipesScan/IngredientQuickScanScreen/IngredientQuickScanScreen';
 import type {
+  BarcodeCustomResult,
   CustomFood,
   MealLabel,
   Nutrient,
@@ -75,6 +76,10 @@ export interface MyFoodsScreenNavProps {
   logToDate?: Date | undefined;
   logToMeal?: MealLabel | undefined;
 }
+export interface BarcodeScanScreenNavProps {
+  onCreateFoodAnyWay?: (result?: BarcodeCustomResult) => void;
+  onViewExistingItem?: (result?: BarcodeCustomResult) => void;
+}
 
 export type ParamList = {
   MealLogScreen: MealLogScreenProps;
@@ -106,4 +111,5 @@ export type ParamList = {
   ImagePickerScreen: ImagePickerProps;
   FoodCreatorScreen: FoodCreatorNavProps;
   MyFoodsScreen: MyFoodsScreenNavProps;
+  BarcodeScanScreen: BarcodeScanScreenNavProps;
 };

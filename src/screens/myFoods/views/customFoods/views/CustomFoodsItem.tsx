@@ -6,7 +6,7 @@ import React from 'react';
 import { ICONS } from '../../../../../assets';
 import { PassioFoodIcon } from '../../../../../components/passio/PassioFoodIcon';
 import { Text } from '../../../../../components/texts/Text';
-import { Card } from '../../../../../components';
+import { Card, SwipeToDelete } from '../../../../../components';
 import { COLORS } from '../../../../../constants';
 import { scaled } from '../../../../../utils';
 
@@ -16,6 +16,7 @@ interface Props {
   name: string;
   brandName?: string;
   onPressEditor: () => void;
+  onPressDelete: () => void;
   onPressLog: () => void;
   entityType: PassioIDEntityType;
 }
@@ -25,48 +26,54 @@ const CustomFoodsItem = ({
   name,
   onPressEditor,
   onPressLog,
+  onPressDelete,
   entityType,
   brandName,
   imageName,
 }: Props) => {
   return (
     <Card style={styles.shadowContainer}>
-      <TouchableOpacity style={styles.mealContainer} onPress={onPressEditor}>
-        <View style={styles.mealImgLayout}>
-          <PassioFoodIcon
-            passioID={passioID}
-            imageName={imageName}
-            style={styles.mealImg}
-            entityType={entityType}
-          />
-        </View>
-        <View style={styles.mealDetail}>
-          <Text weight="600" size="_14px" color="text" style={styles.mealName}>
-            {name}
-          </Text>
-          {brandName && (
+      <SwipeToDelete onPressDelete={onPressDelete} marginVertical={0}>
+        <TouchableOpacity style={styles.mealContainer} onPress={onPressEditor}>
+          <View style={styles.mealImgLayout}>
+            <PassioFoodIcon
+              passioID={passioID}
+              imageName={imageName}
+              style={styles.mealImg}
+              entityType={entityType}
+            />
+          </View>
+          <View style={styles.mealDetail}>
             <Text
-              weight="400"
+              weight="600"
               size="_14px"
-              color="secondaryText"
-              style={styles.brand}
+              color="text"
+              style={styles.mealName}
             >
-              {brandName}
+              {name}
             </Text>
-          )}
-        </View>
-        <TouchableOpacity onPress={onPressLog} style={styles.addFoodIconView}>
-          <Image source={ICONS.newAddPlus} style={styles.addFoodIcon} />
+            {brandName && (
+              <Text
+                weight="400"
+                size="_14px"
+                color="secondaryText"
+                style={styles.brand}
+              >
+                {brandName}
+              </Text>
+            )}
+          </View>
+          <TouchableOpacity onPress={onPressLog} style={styles.addFoodIconView}>
+            <Image source={ICONS.newAddPlus} style={styles.addFoodIcon} />
+          </TouchableOpacity>
         </TouchableOpacity>
-      </TouchableOpacity>
+      </SwipeToDelete>
     </Card>
   );
 };
 const styles = StyleSheet.create({
   shadowContainer: {
     borderRadius: 8,
-    paddingHorizontal: 8,
-    paddingVertical: 4,
     marginHorizontal: 16,
     marginTop: 10,
     backgroundColor: COLORS.white,

@@ -2,31 +2,29 @@ import { View } from 'react-native';
 
 import React from 'react';
 import { myFoodScreenStyle } from './MyFoodsScreen.styles';
-import { useMyFoodScreen } from './useMyFoodScreen';
+import { MY_FOOD_SCREENS, useMyFoodScreen } from './useMyFoodScreen';
 import { BackNavigation, BasicButton, TabBar } from '../../components';
-import { useSharedValue } from 'react-native-reanimated';
 import CustomFoods from './views/customFoods/CustomFoods';
-
-const TabList = ['Custom Foods', 'Recipe'];
 
 export const MyFoodsScreen = () => {
   const {
     branding,
+    tabs,
     customFoods,
     onCreateFoodPress,
-    onPressEditor,
-    onPressLog,
+    onEditorPress,
+    onDeletePress,
+    onLogPress,
   } = useMyFoodScreen();
-  const tab = useSharedValue(TabList[0]);
 
   const styles = myFoodScreenStyle(branding);
 
   const renderTab = () => {
     return (
       <TabBar
-        list={TabList}
+        list={MY_FOOD_SCREENS}
         onTabSelect={(value) => {
-          tab.value = value;
+          tabs.value = value;
         }}
       />
     );
@@ -38,8 +36,9 @@ export const MyFoodsScreen = () => {
       <View style={styles.container}>
         <CustomFoods
           customFoods={customFoods ?? []}
-          onPressEditor={onPressEditor}
-          onPressLog={onPressLog}
+          onPressEditor={onEditorPress}
+          onPressLog={onLogPress}
+          onPressDelete={onDeletePress}
         />
       </View>
       <BasicButton

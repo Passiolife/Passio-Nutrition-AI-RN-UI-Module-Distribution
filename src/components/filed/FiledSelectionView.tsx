@@ -1,4 +1,4 @@
-import React, { useImperativeHandle, useRef, useState } from 'react';
+import React, { useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { Text } from '..';
 import { StyleSheet, View } from 'react-native';
 import { Branding, useBranding } from '../../contexts';
@@ -47,7 +47,15 @@ export const FiledSelectionView = React.forwardRef<
 
     const styles = requireNutritionFactStyle(branding);
     const [value, setValue] = useState<string | undefined>(defaultValue);
+
+    useEffect(() => {
+      setValue(defaultValue);
+    }, [defaultValue]);
     const [error, setError] = useState<string>();
+
+    useEffect(() => {
+      inputRef.current = input ?? '';
+    }, [input]);
 
     useImperativeHandle(
       ref,

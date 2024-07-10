@@ -16,7 +16,8 @@ const menuStyle = ({ white, gray300, border, error }: Branding) =>
     },
     mainTitle: {
       flex: 1,
-      marginStart: 12,
+      marginStart: 8,
+      textTransform: 'capitalize',
     },
     icon: {
       marginEnd: 12,

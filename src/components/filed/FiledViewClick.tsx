@@ -10,6 +10,7 @@ import {
 import { Branding, useBranding } from '../../contexts';
 import { scaleHeight } from '../../utils';
 import { ICONS } from '../../assets';
+import { COLORS } from '../../constants';
 
 interface Props {
   name: string;
@@ -72,12 +73,12 @@ export const FiledViewClick = React.forwardRef<FiledViewClickRef, Props>(
             }}
           >
             <Text
-              color={value ? 'text' : 'secondaryText'}
+              color={value || defaultValue ? 'text' : 'secondaryText'}
               style={styles.textInput}
             >
-              {value}
+              {defaultValue}
             </Text>
-            <Image source={ICONS.down} style={styles.delete} />
+            <Image source={ICONS.camera} style={styles.delete} />
           </TouchableOpacity>
         </View>
       );
@@ -110,10 +111,13 @@ const requireNutritionFactStyle = ({ white, gray300 }: Branding) =>
       height: 24,
       width: 24,
       marginHorizontal: 6,
+      tintColor: COLORS.grey9,
     },
     textInput: {
       fontSize: 14,
       fontWeight: '400',
+      alignItems: 'center',
+      paddingStart: 4,
       flex: 1,
     },
     containerTextInput: {

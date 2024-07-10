@@ -6,8 +6,12 @@ import type { FoodCreatorFoodDetailRef } from './views/FoodCreatorFoodDetail';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import type { ParamList } from '../../navigaitons';
-import { createFoodLogUsingFoodCreator } from './FoodCreator.utils';
+import {
+  convertPassioFoodItemToCustomFood,
+  createFoodLogUsingFoodCreator,
+} from './FoodCreator.utils';
 import type { CustomFood } from '../../models';
+import { convertPassioFoodItemToFoodLog } from '../../utils/V3Utils';
 
 export type ScanningScreenNavigationProps = StackNavigationProp<
   ParamList,
@@ -19,7 +23,7 @@ export const useFoodCreator = () => {
   const services = useServices();
   const navigation = useNavigation<ScanningScreenNavigationProps>();
   const { params } = useRoute<RouteProp<ParamList, 'FoodCreatorScreen'>>();
-  const [foodLog, _setFoodLog] = useState<CustomFood | undefined>(
+  const [foodLog, setCustomFood] = useState<CustomFood | undefined>(
     params.foodLog
   );
 
@@ -27,6 +31,60 @@ export const useFoodCreator = () => {
   const requireNutritionFactsRef = useRef<RequireNutritionFactsRef>(null);
   const foodCreatorFoodDetailRef = useRef<FoodCreatorFoodDetailRef>(null);
 
+  const onBarcodePress = async () => {
+    navigation.navigate('BarcodeScanScreen', {
+      onViewExistingItem: (item) => {
+        if (item?.customFood) {
+          // If they click on "Create Custom Food Anyway", the barcode value is imported into the Food Creator screen.
+          navigation.goBack();
+          if (item?.passioIDAttributes) {
+            const customFood = convertPassioFoodItemToCustomFood(
+              item.passioIDAttributes,
+              item?.barcode
+            );
+            setCustomFood(customFood);
+          }
+        } else {
+          // custom food doesn't exist
+          // If the user clicks on the "View Food Item", they're navigated to the food details screen of that food item
+          if (item?.passioIDAttributes) {
+            const barcodeFoodLog = convertPassioFoodItemToFoodLog(
+              item.passioIDAttributes,
+              undefined,
+              undefined
+            );
+            navigation.navigate('EditFoodLogScreen', {
+              foodLog: barcodeFoodLog,
+              prevRouteName: 'Other',
+            });
+          }
+        }
+      },
+      onCreateFoodAnyWay: (item) => {
+        if (item?.customFood) {
+          // If they click on "Create Custom Food Without Barcode", the barcode value is left as empty in the Food Creator screen
+          navigation.goBack();
+          if (item?.passioIDAttributes) {
+            const customFood = convertPassioFoodItemToCustomFood(
+              item.passioIDAttributes
+            );
+            setCustomFood(customFood);
+          }
+        } else {
+          // custom food doesn't exist
+          // if they click on "Create Custom Food Anyway", the barcode value is imported into the Food Creator screen.
+          navigation.goBack();
+          if (item?.passioIDAttributes) {
+            const customFood = convertPassioFoodItemToCustomFood(
+              item.passioIDAttributes,
+              item?.barcode
+            );
+            setCustomFood(customFood);
+          }
+        }
+      },
+    });
+  };
   const onSavePress = async () => {
     const info = foodCreatorFoodDetailRef.current?.getValue();
     const requireNutritionFact = requireNutritionFactsRef.current?.getValue();
@@ -35,6 +93,7 @@ export const useFoodCreator = () => {
     if (info?.isNotValid) {
       return;
     }
+
     if (requireNutritionFact?.isNotValid) {
       return;
     }
@@ -54,9 +113,14 @@ export const useFoodCreator = () => {
       });
 
       try {
-        await services.dataService.saveCustomFood(modifiedFoodLog);
+        const updateCustomFood: CustomFood = {
+          ...foodLog,
+          ...modifiedFoodLog,
+          uuid: foodLog?.uuid ?? modifiedFoodLog.uuid,
+        };
+        await services.dataService.saveCustomFood(updateCustomFood);
         navigation.goBack();
-      } catch {}
+      } catch (error) {}
     }
   };
 
@@ -67,5 +131,6 @@ export const useFoodCreator = () => {
     requireNutritionFactsRef,
     foodCreatorFoodDetailRef,
     onSavePress,
+    onBarcodePress,
   };
 };

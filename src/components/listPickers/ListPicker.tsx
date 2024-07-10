@@ -103,7 +103,7 @@ export const ListPicker: React.FC<Props<any>> = ({
           )}
           <Text
             weight="400"
-            size="_12px"
+            size="_14px"
             style={[
               styles.mainTitle,
               isTextInput && {

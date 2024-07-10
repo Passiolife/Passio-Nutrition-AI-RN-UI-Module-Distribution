@@ -18,6 +18,7 @@ import { scaleHeight } from '../../utils';
 interface Props extends React.PropsWithChildren {
   onPressDelete: () => void;
   swipeableContainer?: ViewStyle;
+  marginVertical?: number;
 }
 
 export const SwipeToDelete: React.FC<Props> = (props) => {
@@ -60,7 +61,9 @@ export const SwipeToDelete: React.FC<Props> = (props) => {
     },
   ];
   return (
-    <GestureHandlerRootView style={{ marginVertical: scaleHeight(8) }}>
+    <GestureHandlerRootView
+      style={{ marginVertical: scaleHeight(props.marginVertical ?? 8) }}
+    >
       <Swipeable
         ref={swipeableRef}
         containerStyle={swipeableContainer}

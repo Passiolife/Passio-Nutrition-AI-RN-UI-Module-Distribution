@@ -1,4 +1,10 @@
-import React, { useImperativeHandle, useMemo, useRef } from 'react';
+import React, {
+  useEffect,
+  useImperativeHandle,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { Card, Text } from '../../../components';
 import { Image, StyleSheet, View } from 'react-native';
 import { Branding, useBranding } from '../../../contexts';
@@ -10,6 +16,7 @@ import type { CustomFood } from '../../../models';
 
 interface Props {
   foodLog?: CustomFood;
+  onBarcodePress?: () => void;
 }
 
 export type FoodCreatorFoodDetailType = 'name' | 'brand' | 'barcode';
@@ -26,101 +33,115 @@ export interface FoodCreatorFoodDetailRef {
 export const FoodCreatorFoodDetail = React.forwardRef<
   FoodCreatorFoodDetailRef,
   Props
->(({ foodLog }: Props, ref: React.Ref<FoodCreatorFoodDetailRef>) => {
-  const branding = useBranding();
+>(
+  (
+    { foodLog: defaultFoodLog, onBarcodePress }: Props,
+    ref: React.Ref<FoodCreatorFoodDetailRef>
+  ) => {
+    const branding = useBranding();
 
-  const styles = requireNutritionFactStyle(branding);
+    const styles = requireNutritionFactStyle(branding);
 
-  const nameRef = useRef<FiledViewRef>(null);
-  const brandNameRef = useRef<FiledViewRef>(null);
-  const barcodeRef = useRef<FiledSelectionViewRef>(null);
+    const [foodLog, setFoodLog] = useState(defaultFoodLog);
 
-  const refs = useMemo(
-    () => ({
-      name: nameRef,
-      brand: brandNameRef,
-      barcode: barcodeRef,
-    }),
-    []
-  );
+    useEffect(() => {
+      setFoodLog(defaultFoodLog);
+    }, [defaultFoodLog]);
 
-  useImperativeHandle(
-    ref,
-    () => ({
-      getValue: () => {
-        let record: Record<FoodCreatorFoodDetailType, string> = {} as Record<
-          FoodCreatorFoodDetailType,
-          string
-        >;
-        let isNotValid = false;
+    const nameRef = useRef<FiledViewRef>(null);
+    const brandNameRef = useRef<FiledViewRef>(null);
+    const barcodeRef = useRef<FiledSelectionViewRef>(null);
 
-        (Object.keys(refs) as FoodCreatorFoodDetailType[]).forEach((key) => {
-          const currentRef = refs[key].current;
-          const value = currentRef?.value();
-          currentRef?.errorCheck();
+    const refs = useMemo(
+      () => ({
+        name: nameRef,
+        brand: brandNameRef,
+        barcode: barcodeRef,
+      }),
+      []
+    );
 
-          if (key !== 'barcode' && key !== 'brand') {
-            if (value === undefined || value.length === 0) {
-              isNotValid = true;
+    useImperativeHandle(
+      ref,
+      () => ({
+        getValue: () => {
+          let record: Record<FoodCreatorFoodDetailType, string> = {} as Record<
+            FoodCreatorFoodDetailType,
+            string
+          >;
+          let isNotValid = false;
+
+          (Object.keys(refs) as FoodCreatorFoodDetailType[]).forEach((key) => {
+            const currentRef = refs[key].current;
+            const value = currentRef?.value();
+            currentRef?.errorCheck();
+
+            if (key !== 'barcode' && key !== 'brand') {
+              if (value === undefined || value.length === 0) {
+                isNotValid = true;
+              }
             }
-          }
 
-          record[key] = value ?? '';
-        });
+            record[key] = value ?? '';
+          });
 
-        return {
-          records: record,
-          isNotValid,
-        };
-      },
-    }),
-    [refs]
-  );
+          return {
+            records: record,
+            isNotValid,
+          };
+        },
+      }),
+      [refs]
+    );
 
-  return (
-    <Card style={styles.card}>
-      {
-        <View>
-          <Text style={styles.title}>{'Scan Description'}</Text>
-          <View style={styles.container}>
-            <View style={styles.left}>
-              <Image source={ICONS.FoodEditImage} style={styles.icon} />
-              <Text
-                size="_12px"
-                color="primaryColor"
-                isLink
-                style={styles.editImage}
-              >
-                {'Edit Image'}
-              </Text>
-            </View>
-            <View style={styles.right}>
-              <FiledView
-                value={foodLog?.name}
-                ref={nameRef}
-                label="enter name"
-                isColum
-                name="Name"
-              />
-              <FiledView
-                ref={brandNameRef}
-                label="enter brand"
-                isColum
-                name="Brand"
-              />
-              <FiledViewClick
-                value=""
-                ref={barcodeRef}
-                isColum
-                name="Barcode"
-              />
+    return (
+      <Card style={styles.card}>
+        {
+          <View>
+            <Text style={styles.title}>{'Scan Description'}</Text>
+            <View style={styles.container}>
+              <View style={styles.left}>
+                <Image source={ICONS.FoodEditImage} style={styles.icon} />
+                <Text
+                  size="_12px"
+                  color="primaryColor"
+                  isLink
+                  style={styles.editImage}
+                >
+                  {'Edit Image'}
+                </Text>
+              </View>
+              <View style={styles.right}>
+                <FiledView
+                  value={foodLog?.name}
+                  ref={nameRef}
+                  label="enter name"
+                  isColum
+                  keyboardType="name-phone-pad"
+                  name="Name"
+                />
+                <FiledView
+                  ref={brandNameRef}
+                  label="enter brand"
+                  isColum
+                  keyboardType="name-phone-pad"
+                  name="Brand"
+                />
+                <FiledViewClick
+                  value={foodLog?.barcode}
+                  ref={barcodeRef}
+                  isColum
+                  name="Barcode"
+                  onValuePress={onBarcodePress}
+                />
+              </View>
             </View>
           </View>
-        </View>
-      }
-    </Card>
-  );
-});
+        }
+      </Card>
+    );
+  }
+);
 
 const requireNutritionFactStyle = ({}: Branding) =>
   StyleSheet.create({
