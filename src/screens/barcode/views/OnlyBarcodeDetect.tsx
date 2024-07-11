@@ -20,7 +20,7 @@ export const OnlyBarcodeDetect = ({
     <View style={styles.container}>
       <Card style={styles.card}>
         <View style={styles.contentContainer}>
-          <Image source={ICONS.defaultBarcode} style={styles.icon} />
+          <Image source={ICONS.barcode} style={styles.icon} />
           <Text weight="700" size="_20px" style={styles.title}>
             {barcode}
           </Text>

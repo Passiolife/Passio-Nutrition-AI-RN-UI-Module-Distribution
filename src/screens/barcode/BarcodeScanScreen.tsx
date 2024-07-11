@@ -22,7 +22,7 @@ export const BarcodeScanScreen = () => {
 
   return (
     <View style={styles.container}>
-      <BackNavigation />
+      <BackNavigation title="Food Creator" />
       <DetectionCameraView style={styles.camera} />
       {quickResult &&
         quickResult.customFood &&

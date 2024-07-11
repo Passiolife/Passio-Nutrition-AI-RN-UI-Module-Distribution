@@ -3,6 +3,7 @@ import { Text } from '..';
 import { StyleSheet, View } from 'react-native';
 import { Branding, useBranding } from '../../contexts';
 import { ListPicker } from '../listPickers';
+import { isValidDecimalNumber } from '../../screens/foodCreator/FoodCreator.utils';
 
 interface Props {
   name: string;
@@ -68,18 +69,18 @@ export const FiledSelectionView = React.forwardRef<
         },
         errorCheck: () => {
           if (value === undefined || value?.length === 0) {
-            setError('please enter value');
+            setError('Please enter value');
           } else {
             setError(undefined);
           }
 
-          if (
-            isTextInput &&
-            (inputRef.current === undefined || inputRef.current.length === 0)
-          ) {
-            setError('please enter value');
+          if (isTextInput && !isValidDecimalNumber(value)) {
+            setError('Please enter valid input');
           }
-          return value?.length === 0;
+
+          return isTextInput
+            ? !isValidDecimalNumber(value)
+            : value?.length === 0;
         },
       }),
       [isTextInput, value]

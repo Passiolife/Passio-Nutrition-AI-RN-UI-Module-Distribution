@@ -14,7 +14,10 @@ import {
   FiledSelectionViewRef,
 } from '../../../components/filed/FiledSelectionView';
 import { Units, Weights } from '../data';
-import { WEIGHT_UNIT_SPLIT_IDENTIFIER } from '../FoodCreator.utils';
+import {
+  isValidDecimalNumber,
+  WEIGHT_UNIT_SPLIT_IDENTIFIER,
+} from '../FoodCreator.utils';
 import type { CustomFood } from '../../../models';
 
 interface Props {
@@ -99,8 +102,16 @@ export const RequireNutritionFacts = React.forwardRef<
             }
 
             if (key === 'Weight') {
-              if (input === undefined || input.length === 0) {
-                isNotValid = true;
+              const unit = record.Units;
+
+              if (unit.toLowerCase() === 'ml' || unit.toLowerCase() === 'g') {
+              } else {
+                if (!isValidDecimalNumber(input)) {
+                  isNotValid = true;
+                }
+                if (value === undefined || value.length === 0) {
+                  isNotValid = true;
+                }
               }
 
               record[key] = input + WEIGHT_UNIT_SPLIT_IDENTIFIER + value ?? '';

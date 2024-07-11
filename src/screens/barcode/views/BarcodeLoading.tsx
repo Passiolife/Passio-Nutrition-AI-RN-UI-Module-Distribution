@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import { Card, Text } from '../../../components';
 import { screenHeight, screenWidth } from '../../../utils';
@@ -7,31 +7,25 @@ interface Props {}
 
 export const BarcodeLoading = ({}: Props) => {
   return (
-    <Modal visible={true} transparent>
-      <View style={styles.container}>
-        <Card style={styles.card}>
-          <View style={styles.contentContainer}>
-            <Text weight="500" size="_14px" color="white" style={styles.title}>
-              Scanning...
-            </Text>
-            <Text color="white" weight="400" style={styles.description}>
-              Place your barcode within the frame
-            </Text>
-          </View>
-        </Card>
-      </View>
-    </Modal>
+    <View style={styles.container}>
+      <Card style={styles.card}>
+        <View style={styles.contentContainer}>
+          <Text weight="500" size="_14px" color="white" style={styles.title}>
+            Scanning...
+          </Text>
+          <Text color="white" weight="400" style={styles.description}>
+            Place your barcode within the frame
+          </Text>
+        </View>
+      </Card>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    alignContent: 'center',
-    alignSelf: 'center',
-    top: screenHeight / 3,
-    flex: 1,
+    position: 'absolute',
+    top: screenHeight - 250,
   },
   card: {
     justifyContent: 'center',

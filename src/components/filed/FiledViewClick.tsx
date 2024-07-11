@@ -1,4 +1,4 @@
-import React, { useImperativeHandle, useState } from 'react';
+import React, { useEffect, useImperativeHandle, useState } from 'react';
 import { Text } from '..';
 import {
   Image,
@@ -32,10 +32,14 @@ export const FiledViewClick = React.forwardRef<FiledViewClickRef, Props>(
     ref: React.Ref<FiledViewClickRef>
   ) => {
     const branding = useBranding();
-    const [value] = useState<string | undefined>(defaultValue);
+    const [value, setValue] = useState<string | undefined>(defaultValue);
     const [_error, setError] = useState<string>();
 
     const styles = requireNutritionFactStyle(branding);
+
+    useEffect(() => {
+      setValue(defaultValue);
+    }, [defaultValue]);
 
     useImperativeHandle(
       ref,

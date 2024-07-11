@@ -3,6 +3,8 @@ import { Image, StyleSheet, View } from 'react-native';
 
 import { BasicButton, Card, Text } from '../../../components';
 import { ICONS } from '../../../assets';
+import { screenHeight } from '../../../utils';
+
 interface Props {
   onCreateCustomWithoutBarcodePress?: () => void;
   onCancelPress?: () => void;
@@ -18,7 +20,7 @@ export const CustomFoodBarcodeDetect = ({
     <View style={styles.container}>
       <Card style={styles.card}>
         <View style={styles.contentContainer}>
-          <Image source={ICONS.defaultBarcode} style={styles.icon} />
+          <Image source={ICONS.barcode} style={styles.icon} />
           <Text weight="700" size="_20px" style={styles.title}>
             Custom Food Already Exists
           </Text>
@@ -58,11 +60,9 @@ export const CustomFoodBarcodeDetect = ({
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
-    top: 0,
-    bottom: 0,
-    flex: 1,
     left: 0,
     right: 0,
+    top: screenHeight / 3,
     alignItems: 'center',
     alignContent: 'center',
     alignSelf: 'center',

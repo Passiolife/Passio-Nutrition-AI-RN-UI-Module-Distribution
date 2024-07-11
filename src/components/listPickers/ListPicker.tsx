@@ -60,8 +60,8 @@ export const ListPicker: React.FC<Props<any>> = ({
         }}
       >
         <Text
-          weight="400"
-          size="_12px"
+          weight="500"
+          size="_14px"
           style={[
             styles.optionTitle,
             {
@@ -98,6 +98,9 @@ export const ListPicker: React.FC<Props<any>> = ({
             <TextInput
               defaultValue={defaultInput}
               onChangeText={onChangeText}
+              keyboardType="decimal-pad"
+              returnKeyLabel="Okay"
+              returnKeyType="done"
               style={{ flex: 1, marginStart: 8 }}
             />
           )}

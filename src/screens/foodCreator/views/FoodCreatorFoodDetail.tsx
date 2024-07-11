@@ -117,7 +117,8 @@ export const FoodCreatorFoodDetail = React.forwardRef<
                   ref={nameRef}
                   label="enter name"
                   isColum
-                  keyboardType="name-phone-pad"
+                  isCharacter
+                  keyboardType="default"
                   name="Name"
                 />
                 <FiledView
@@ -125,7 +126,8 @@ export const FoodCreatorFoodDetail = React.forwardRef<
                   label="enter brand"
                   value={foodLog?.brandName}
                   isColum
-                  keyboardType="name-phone-pad"
+                  isCharacter
+                  keyboardType="default"
                   name="Brand"
                 />
                 <FiledViewClick

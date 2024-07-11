@@ -24,7 +24,7 @@ const CustomFoods = ({
         passioID={''}
         imageName={''}
         name={item.name}
-        brandName={''}
+        brandName={item.brandName}
         onPressLog={() => onPressLog?.(item)}
         onPressEditor={() => onPressEditor?.(item)}
         onPressDelete={() => onPressDelete?.(item)}

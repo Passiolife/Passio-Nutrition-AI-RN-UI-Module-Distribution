@@ -67,10 +67,17 @@ export const createFoodLogUsingFoodCreator = ({
     },
   ];
 
+  const factUnits = requireNutritionFact?.Units!;
+  const isUnitGramOrML =
+    factUnits.toLowerCase() === 'g' || factUnits.toLowerCase() === 'ml';
+  const factWeight = Number(
+    isUnitGramOrML ? Number(requireNutritionFact?.ServingSize!) : weight
+  );
+
   const foodItem: FoodItem = {
     computedWeight: {
       unit: unit,
-      value: Number(weight),
+      value: factWeight,
     },
     passioID: '',
     name: info?.name!,
@@ -78,25 +85,25 @@ export const createFoodLogUsingFoodCreator = ({
     imageName: '',
     entityType: 'user-food',
     nutrients: nutrients,
-    selectedUnit: requireNutritionFact?.Units!,
+    selectedUnit: factUnits!,
     selectedQuantity: Number(requireNutritionFact?.ServingSize!),
     servingSizes: [
       {
-        quantity: Number(weight),
-        unit: requireNutritionFact?.Units!,
+        quantity: Number(requireNutritionFact?.ServingSize!),
+        unit: factUnits,
       },
       {
-        quantity: 100,
+        quantity: 1,
         unit: 'gram',
       },
     ],
     servingUnits: [
       {
-        mass: Number(weight),
-        unit: requireNutritionFact?.Units!,
+        mass: factWeight / Number(requireNutritionFact?.ServingSize!),
+        unit: factUnits,
       },
       {
-        mass: Number(weight),
+        mass: 1,
         unit: 'gram',
       },
     ],
@@ -104,11 +111,11 @@ export const createFoodLogUsingFoodCreator = ({
 
   const foodLog: CustomFood = {
     ...oldRecord,
-    uuid: uuid,
     foodItems: [foodItem],
-    brandName: info.brand,
-    barcode: info.barcode,
     ...foodItem,
+    barcode: info.barcode,
+    brandName: info.brand,
+    uuid: uuid,
   };
 
   return foodLog;
@@ -129,4 +136,22 @@ export const convertPassioFoodItemToCustomFood = (
     brandName: foodItem.details,
   };
   return customFood;
+};
+
+export const cleanedDecimalNumber = (text: string) => {
+  return text;
+};
+
+export const isValidDecimalNumber = (text?: string, isCharacter?: boolean) => {
+  if (text) {
+    if (text.length === 0) {
+      return false;
+    } else if (isCharacter) {
+      return text.length > 0;
+    } else {
+      return /^\d+(\.\d+)?$/.test(text);
+    }
+  } else {
+    return false;
+  }
 };
