@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Modal, StyleSheet, View } from 'react-native';
+import { Image, StyleSheet, View } from 'react-native';
 
 import { BasicButton, Card, Text } from '../../../components';
 import { ICONS } from '../../../assets';
@@ -15,56 +15,59 @@ export const BarcodeDetect = ({
   onViewExistingPress,
 }: Props) => {
   return (
-    <Modal visible={true} transparent>
-      <View style={styles.container}>
-        <Card style={styles.card}>
-          <View style={styles.contentContainer}>
-            <Image source={ICONS.defaultBarcode} style={styles.icon} />
-            <Text weight="700" size="_20px" style={styles.title}>
-              Barcode In System
-            </Text>
-            <Text color="gray500" weight="400" style={styles.description}>
-              This barcode matches an existing item in our database. You can use
-              the data from the database, or continue with creating a custom
-              food..
-            </Text>
-          </View>
-          <View style={styles.buttonContainers}>
-            <BasicButton
-              onPress={onCancelPress}
-              style={styles.button}
-              small
-              text={'Cancel'}
-              secondary
-            />
-            <BasicButton
-              onPress={onViewExistingPress}
-              style={styles.button}
-              small
-              text={'View Existing Item'}
-            />
-          </View>
-          <View style={styles.buttonContainer}>
-            <BasicButton
-              onPress={onCreateCustomWithoutBarcodePress}
-              style={styles.button}
-              small
-              text={'Create Custom Food Anyway'}
-            />
-          </View>
-        </Card>
-      </View>
-    </Modal>
+    <View style={styles.container}>
+      <Card style={styles.card}>
+        <View style={styles.contentContainer}>
+          <Image source={ICONS.defaultBarcode} style={styles.icon} />
+          <Text weight="700" size="_20px" style={styles.title}>
+            Barcode In System
+          </Text>
+          <Text color="gray500" weight="400" style={styles.description}>
+            This barcode matches an existing item in our database. You can use
+            the data from the database, or continue with creating a custom
+            food..
+          </Text>
+        </View>
+        <View style={styles.buttonContainers}>
+          <BasicButton
+            onPress={onCancelPress}
+            style={styles.button}
+            small
+            text={'Cancel'}
+            secondary
+          />
+          <BasicButton
+            onPress={onViewExistingPress}
+            style={styles.button}
+            small
+            text={'View Existing Item'}
+          />
+        </View>
+        <View style={styles.buttonContainer}>
+          <BasicButton
+            onPress={onCreateCustomWithoutBarcodePress}
+            style={styles.button}
+            small
+            text={'Create Custom Food Anyway'}
+          />
+        </View>
+      </Card>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'center',
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    flex: 1,
+    left: 0,
+    right: 0,
     alignItems: 'center',
     alignContent: 'center',
     alignSelf: 'center',
-    flex: 1,
+    justifyContent: 'center',
   },
   card: {
     justifyContent: 'center',

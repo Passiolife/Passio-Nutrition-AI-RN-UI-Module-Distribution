@@ -36,7 +36,7 @@ export const OtherNutritionFacts = React.forwardRef<
 
   // Generate default nutrients where come from `foodLog
   const defaultKey: DefaultNutrients[] | undefined =
-    foodLog?.foodItems[0]?.nutrients
+    foodLog?.foodItems?.[0]?.nutrients
       .filter((i) => i.amount > 0 && OtherNutrients.includes(i.id))
       .map((i) => {
         const data: DefaultNutrients = {

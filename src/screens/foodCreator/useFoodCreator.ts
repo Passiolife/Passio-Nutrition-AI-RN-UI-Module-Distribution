@@ -34,19 +34,14 @@ export const useFoodCreator = () => {
   const onBarcodePress = async () => {
     navigation.navigate('BarcodeScanScreen', {
       onViewExistingItem: (item) => {
+        navigation.goBack();
         if (item?.customFood) {
-          // If they click on "Create Custom Food Anyway", the barcode value is imported into the Food Creator screen.
-          navigation.goBack();
-          if (item?.passioIDAttributes) {
-            const customFood = convertPassioFoodItemToCustomFood(
-              item.passioIDAttributes,
-              item?.barcode
-            );
-            setCustomFood(customFood);
-          }
+          // If the user clicks on the "View Food Item", they're navigated to the food details screen of that custom food.
+          // Might be in this case they navigate to the new create food detail screen.
+          setCustomFood(item?.customFood);
         } else {
           // custom food doesn't exist
-          // If the user clicks on the "View Food Item", they're navigated to the food details screen of that food item
+          // . If the user clicks on the "View Food Item", they're navigated to the food details screen of that food item
           if (item?.passioIDAttributes) {
             const barcodeFoodLog = convertPassioFoodItemToFoodLog(
               item.passioIDAttributes,
@@ -60,10 +55,20 @@ export const useFoodCreator = () => {
           }
         }
       },
-      onCreateFoodAnyWay: (item) => {
+      onBarcodePress: (item) => {
+        navigation.goBack();
         if (item?.customFood) {
-          // If they click on "Create Custom Food Without Barcode", the barcode value is left as empty in the Food Creator screen
-          navigation.goBack();
+          setCustomFood(item?.customFood);
+        } else {
+          setCustomFood({
+            barcode: item?.barcode ?? '',
+          } as CustomFood);
+        }
+      },
+      onCreateFoodAnyWay: (item) => {
+        navigation.goBack();
+        if (item?.customFood) {
+          //If they click on "Create Custom Food Without Barcode", the barcode value is left as empty in the Food Creator screen.
           if (item?.passioIDAttributes) {
             const customFood = convertPassioFoodItemToCustomFood(
               item.passioIDAttributes
@@ -72,8 +77,7 @@ export const useFoodCreator = () => {
           }
         } else {
           // custom food doesn't exist
-          // if they click on "Create Custom Food Anyway", the barcode value is imported into the Food Creator screen.
-          navigation.goBack();
+          // If they click on "Create Custom Food Anyway", the barcode value is imported into the Food Creator screen.
           if (item?.passioIDAttributes) {
             const customFood = convertPassioFoodItemToCustomFood(
               item.passioIDAttributes,

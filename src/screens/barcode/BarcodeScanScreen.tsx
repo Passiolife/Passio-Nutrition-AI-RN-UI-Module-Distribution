@@ -8,6 +8,7 @@ import BarcodeDetect from './views/BarcodeDetect';
 import CustomFoodBarcodeDetect from './views/CustomFoodBarcodeDetect';
 import BarcodeLoading from './views/BarcodeLoading';
 import { BackNavigation } from '../../components';
+import OnlyBarcodeDetect from './views/OnlyBarcodeDetect';
 
 export const BarcodeScanScreen = () => {
   const {
@@ -15,6 +16,7 @@ export const BarcodeScanScreen = () => {
     quickResult,
     resetScanning,
     onCreateCustomWithoutBarcodePress,
+    onBarcodePress,
     onViewExistingPress,
   } = useBarcodeScan();
 
@@ -22,20 +24,39 @@ export const BarcodeScanScreen = () => {
     <View style={styles.container}>
       <BackNavigation />
       <DetectionCameraView style={styles.camera} />
-      {quickResult && quickResult.customFood && (
-        <CustomFoodBarcodeDetect
-          onCancelPress={resetScanning}
-          onCreateCustomWithoutBarcodePress={onCreateCustomWithoutBarcodePress}
-          onViewExistingPress={onViewExistingPress}
-        />
-      )}
-      {quickResult && quickResult.customFood == null && (
-        <BarcodeDetect
-          onCancelPress={resetScanning}
-          onCreateCustomWithoutBarcodePress={onCreateCustomWithoutBarcodePress}
-          onViewExistingPress={onViewExistingPress}
-        />
-      )}
+      {quickResult &&
+        quickResult.customFood &&
+        quickResult.passioIDAttributes && (
+          <CustomFoodBarcodeDetect
+            onCancelPress={resetScanning}
+            onCreateCustomWithoutBarcodePress={
+              onCreateCustomWithoutBarcodePress
+            }
+            onViewExistingPress={onViewExistingPress}
+          />
+        )}
+      {quickResult &&
+        quickResult.customFood == null &&
+        quickResult.passioIDAttributes && (
+          <BarcodeDetect
+            onCancelPress={resetScanning}
+            onCreateCustomWithoutBarcodePress={
+              onCreateCustomWithoutBarcodePress
+            }
+            onViewExistingPress={onViewExistingPress}
+          />
+        )}
+
+      {quickResult &&
+        quickResult.barcode &&
+        quickResult.passioIDAttributes === null && (
+          <OnlyBarcodeDetect
+            barcode={quickResult.barcode}
+            quickResult={quickResult}
+            onCancelPress={resetScanning}
+            onBarcodePress={onBarcodePress}
+          />
+        )}
       {isLoading && <BarcodeLoading />}
     </View>
   );

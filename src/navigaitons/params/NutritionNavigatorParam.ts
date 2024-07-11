@@ -79,6 +79,7 @@ export interface MyFoodsScreenNavProps {
 export interface BarcodeScanScreenNavProps {
   onCreateFoodAnyWay?: (result?: BarcodeCustomResult) => void;
   onViewExistingItem?: (result?: BarcodeCustomResult) => void;
+  onBarcodePress?: (result?: BarcodeCustomResult) => void;
 }
 
 export type ParamList = {

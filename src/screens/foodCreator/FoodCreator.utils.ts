@@ -96,7 +96,7 @@ export const createFoodLogUsingFoodCreator = ({
         unit: requireNutritionFact?.Units!,
       },
       {
-        mass: 100,
+        mass: Number(weight),
         unit: 'gram',
       },
     ],

@@ -123,6 +123,7 @@ export const FoodCreatorFoodDetail = React.forwardRef<
                 <FiledView
                   ref={brandNameRef}
                   label="enter brand"
+                  value={foodLog?.brandName}
                   isColum
                   keyboardType="name-phone-pad"
                   name="Brand"

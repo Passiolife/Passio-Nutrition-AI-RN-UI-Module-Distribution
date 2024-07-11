@@ -66,16 +66,20 @@ export const useBarcodeScan = () => {
             (i) => i.barcode === barcodeCandidate.barcode
           );
 
-          if (attribute == null) {
+          if (attribute === null) {
             setPassioQuickResults({
               name: barcodeCandidate.barcode,
               type: 'Barcode',
               customFood: existingCustomFood,
+              barcode: barcodeCandidate.barcode,
+              passioIDAttributes: null,
             });
           } else {
             setPassioQuickResults({
               ...attribute,
               customFood: existingCustomFood,
+              barcode: barcodeCandidate.barcode,
+              type: 'Barcode',
             });
           }
           setLoading(false);
@@ -143,11 +147,18 @@ export const useBarcodeScan = () => {
     }
   };
 
+  const onBarcodePress = () => {
+    if (quickResult) {
+      params?.onBarcodePress?.(quickResult);
+    }
+  };
+
   return {
     quickResult,
     isLoading,
     resetScanning,
     onCreateCustomWithoutBarcodePress,
     onViewExistingPress,
+    onBarcodePress,
   };
 };

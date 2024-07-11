@@ -50,7 +50,7 @@ export const RequireNutritionFacts = React.forwardRef<
     const branding = useBranding();
     const styles = requireNutritionFactStyle(branding);
 
-    const [units, setUnits] = useState<string>('');
+    const [_units, setUnits] = useState<string>('');
 
     const servingSizeRef = useRef<FiledViewRef>(null);
     const caloriesRef = useRef<FiledViewRef>(null);
@@ -153,7 +153,7 @@ export const RequireNutritionFacts = React.forwardRef<
             ref={unitRef}
             onChange={(value) => setUnits(value)}
           />
-          {units === 'g' || units === 'ml' ? null : (
+          {/* {units === 'g' || units === 'ml' ? null : (
             <FiledSelectionView
               isTextInput
               ref={weightRef}
@@ -162,7 +162,15 @@ export const RequireNutritionFacts = React.forwardRef<
               lists={Weights}
               name="Weight"
             />
-          )}
+          )} */}
+          <FiledSelectionView
+            isTextInput
+            ref={weightRef}
+            value={foodLog?.computedWeight?.unit}
+            input={(foodLog?.computedWeight?.value ?? '').toString()}
+            lists={Weights}
+            name="Weight"
+          />
           <FiledView
             ref={caloriesRef}
             name="Calories"

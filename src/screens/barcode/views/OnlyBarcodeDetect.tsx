@@ -1,51 +1,65 @@
 import React from 'react';
-import { Image, Modal, StyleSheet, View } from 'react-native';
+import { Image, StyleSheet, View } from 'react-native';
 
 import { BasicButton, Card, Text } from '../../../components';
 import { ICONS } from '../../../assets';
+import type { QuickResult } from '../../../models';
 interface Props {
-  onCreateCustomWithoutBarcodePress?: () => void;
   onCancelPress?: () => void;
-  onViewExistingPress?: () => void;
+  onBarcodePress?: () => void;
+  barcode?: string;
+  quickResult: QuickResult;
 }
 
 export const OnlyBarcodeDetect = ({
-  onCreateCustomWithoutBarcodePress,
+  onCancelPress,
+  onBarcodePress,
+  barcode,
 }: Props) => {
   return (
-    <Modal visible={true} transparent>
-      <View style={styles.container}>
-        <Card style={styles.card}>
-          <View style={styles.contentContainer}>
-            <Image source={ICONS.defaultBarcode} style={styles.icon} />
-            <Text weight="700" size="_20px" style={styles.title}>
-              Barcode In System
-            </Text>
-            <Text color="gray500" weight="400" style={styles.description}>
-              This barcode doesn't matches an existing item
-            </Text>
-          </View>
-          <View style={styles.buttonContainer}>
-            <BasicButton
-              onPress={onCreateCustomWithoutBarcodePress}
-              style={styles.button}
-              small
-              text={'Create Custom Food Without Barcode'}
-            />
-          </View>
-        </Card>
-      </View>
-    </Modal>
+    <View style={styles.container}>
+      <Card style={styles.card}>
+        <View style={styles.contentContainer}>
+          <Image source={ICONS.defaultBarcode} style={styles.icon} />
+          <Text weight="700" size="_20px" style={styles.title}>
+            {barcode}
+          </Text>
+          <Text color="gray500" weight="400" style={styles.description}>
+            This barcode doesn't matches an in existing database
+          </Text>
+        </View>
+        <View style={styles.buttonContainers}>
+          <BasicButton
+            onPress={onCancelPress}
+            style={styles.button}
+            small
+            text={'Cancel'}
+            secondary
+          />
+          <BasicButton
+            onPress={onBarcodePress}
+            style={styles.button}
+            small
+            text={'Continue with Barcode'}
+          />
+        </View>
+      </Card>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'center',
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    flex: 1,
+    left: 0,
+    right: 0,
     alignItems: 'center',
     alignContent: 'center',
     alignSelf: 'center',
-    flex: 1,
+    justifyContent: 'center',
   },
   card: {
     justifyContent: 'center',
