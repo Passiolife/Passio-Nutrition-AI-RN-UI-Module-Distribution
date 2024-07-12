@@ -5,7 +5,7 @@ import type { RequireNutritionFactsRef } from './views/RequireNutritionFacts';
 import type { FoodCreatorFoodDetailRef } from './views/FoodCreatorFoodDetail';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
-import type { ParamList } from '../../navigaitons';
+import type { ImagePickerType, ParamList } from '../../navigaitons';
 import {
   convertPassioFoodItemToCustomFood,
   createFoodLogUsingFoodCreator,
@@ -32,10 +32,19 @@ export const useFoodCreator = () => {
   const [image, setImage] = useState<string | undefined>(
     foodLog?.userFoodImage
   );
+  const [isImagePickerVisible, setImagePickerModalVisible] = useState(false);
 
   const otherNutritionFactsRef = useRef<OtherNutritionFactsRef>(null);
   const requireNutritionFactsRef = useRef<RequireNutritionFactsRef>(null);
   const foodCreatorFoodDetailRef = useRef<FoodCreatorFoodDetailRef>(null);
+
+  const openImagePickerModal = () => {
+    setImagePickerModalVisible(true);
+  };
+
+  const closeImagePickerModal = () => {
+    setImagePickerModalVisible(false);
+  };
 
   const onBarcodePress = async () => {
     navigation.navigate('BarcodeScanScreen', {
@@ -136,8 +145,12 @@ export const useFoodCreator = () => {
   };
 
   const onEditImagePress = () => {
+    openImagePickerModal();
+  };
+  const onSelectImagePress = (type: ImagePickerType) => {
+    closeImagePickerModal();
     navigation.push('ImagePickerScreen', {
-      type: 'camera',
+      type: type,
       isMultiple: false,
       onImages: async (uris) => {
         if (uris) {
@@ -157,6 +170,10 @@ export const useFoodCreator = () => {
     otherNutritionFactsRef,
     requireNutritionFactsRef,
     foodCreatorFoodDetailRef,
+    isImagePickerVisible,
+    onSelectImagePress,
+    openImagePickerModal,
+    closeImagePickerModal,
     onSavePress,
     onBarcodePress,
     onEditImagePress,

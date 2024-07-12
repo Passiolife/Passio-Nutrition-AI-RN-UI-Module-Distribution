@@ -16,6 +16,9 @@ export const ImagePickerScreen = () => {
       animatedIndex={animatedIndex}
     />
   ) : (
-    <SelectPhotos recognizePictureRemote={params.onImages} />
+    <SelectPhotos
+      recognizePictureRemote={params.onImages}
+      isMultiple={params.isMultiple ?? true}
+    />
   );
 };

@@ -43,6 +43,7 @@ export * from './timeStamp';
 export * from './mealPlan';
 export * from './tab';
 export * from './filed';
+export * from './imagePickerOptions';
 
 import ActionSheet from './actionSheets/ActionSheet';
 export { ActionSheet };

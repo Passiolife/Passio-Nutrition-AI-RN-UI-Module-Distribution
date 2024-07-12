@@ -7,6 +7,7 @@ import { BackNavigation, BasicButton } from '../../components';
 import { FoodCreatorFoodDetail } from './views/FoodCreatorFoodDetail';
 import { RequireNutritionFacts } from './views/RequireNutritionFacts';
 import { OtherNutritionFacts } from './views/OtherNutritionFacts';
+import ImagePickerOptions from '../../components/imagePickerOptions/ImagePickerOptions';
 
 export const FoodCreatorScreen = () => {
   const {
@@ -16,9 +17,12 @@ export const FoodCreatorScreen = () => {
     foodCreatorFoodDetailRef,
     foodLog,
     image,
+    isImagePickerVisible,
     onSavePress,
     onBarcodePress,
     onEditImagePress,
+    onSelectImagePress,
+    closeImagePickerModal,
   } = useFoodCreator();
 
   const styles = foodCreatorStyle(branding);
@@ -72,6 +76,13 @@ export const FoodCreatorScreen = () => {
           }}
         />
       </View>
+      {isImagePickerVisible && (
+        <ImagePickerOptions
+          onCloseModel={closeImagePickerModal}
+          onSelectGallery={async () => onSelectImagePress('gallery')}
+          onSelectCamera={async () => onSelectImagePress('camera')}
+        />
+      )}
     </View>
   );
 };
