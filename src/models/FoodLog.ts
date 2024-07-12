@@ -17,7 +17,8 @@ export interface FoodLog extends ServingInfo {
   longName?: string;
   meal: MealLabel;
   imageName: string;
-  userImage?: string;
+  iconID?: string;
+  userFoodImage?: string;
   entityType: PassioIconType;
   foodItems: FoodItem[];
 }

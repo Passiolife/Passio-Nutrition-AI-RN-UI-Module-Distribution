@@ -25,6 +25,7 @@ const CustomFoods = ({
         imageName={''}
         name={item.name}
         brandName={item.brandName}
+        userImage={item.userFoodImage}
         onPressLog={() => onPressLog?.(item)}
         onPressEditor={() => onPressEditor?.(item)}
         onPressDelete={() => onPressDelete?.(item)}

@@ -16,6 +16,7 @@ export interface createFoodLogUsingFoodCreator {
   requireNutritionFact: Record<RequireNutritionFactsType, string>;
   otherNutritionFact: Record<NutrientType, string>;
   oldRecord?: CustomFood;
+  image?: string;
 }
 
 export const WEIGHT_UNIT_SPLIT_IDENTIFIER = '-';
@@ -35,6 +36,7 @@ export const createFoodLogUsingFoodCreator = ({
   requireNutritionFact,
   otherNutritionFact,
   oldRecord,
+  image,
 }: createFoodLogUsingFoodCreator) => {
   const uuid: string = oldRecord?.uuid ?? (uuid4.v4() as string);
 
@@ -124,6 +126,7 @@ export const createFoodLogUsingFoodCreator = ({
     ...foodItem,
     barcode: info.barcode,
     brandName: info.brand,
+    userFoodImage: image,
     uuid: uuid,
   };
 

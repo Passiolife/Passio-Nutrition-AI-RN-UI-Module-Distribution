@@ -18,6 +18,7 @@ interface Props {
   entityType: PassioIconType;
   name: string;
   imageName: string;
+  userFoodImage?: string;
   qty: number;
   servingUnit: string;
   longName?: string;
@@ -33,6 +34,7 @@ const LogInformationView = ({
   qty,
   servingUnit,
   weight,
+  userFoodImage,
   entityType,
   onMoreDetailPress,
   imageName,
@@ -53,6 +55,7 @@ const LogInformationView = ({
             passioID={imageName}
             style={styles.image}
             entityType={entityType}
+            userFoodImage={userFoodImage}
           />
         </View>
         <View style={styles.informationContent}>

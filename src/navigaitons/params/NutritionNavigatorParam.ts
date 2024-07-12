@@ -62,6 +62,7 @@ export type ImagePickerType = 'camera' | 'gallery';
 interface ImagePickerProps {
   onImages: (images: string[]) => void;
   type: ImagePickerType;
+  isMultiple?: boolean;
 }
 export interface AdvisorScreenProps {
   logToDate?: Date | undefined;

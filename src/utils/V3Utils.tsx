@@ -62,7 +62,8 @@ export const convertPassioFoodItemToFoodLog = (
     isOpenFood: foodItem.isOpenFood,
     meal: meal,
     imageName: foodItem.iconId,
-    entityType: PassioIDEntityType.group,
+    iconID: foodItem.iconId,
+    entityType: PassioIDEntityType.item,
     foodItems: newFoodIngredient,
     computedWeight: {
       unit: foodItem.amount.weight.unit,
@@ -114,7 +115,8 @@ function convertPassioIngredientToFoodItem(item: PassioIngredient): FoodItem {
     passioID: passioIngredient.refCode ?? passioIngredient.id,
     name: passioIngredient.name,
     imageName: passioIngredient.id,
-    entityType: PassioIDEntityType.group,
+    iconId: passioIngredient.iconId,
+    entityType: PassioIDEntityType.item,
     computedWeight: {
       unit: passioIngredient.amount.weight.unit,
       value: passioIngredient.amount.weight.value,

@@ -12,6 +12,8 @@ import {
 } from './FoodCreator.utils';
 import type { CustomFood } from '../../models';
 import { convertPassioFoodItemToFoodLog } from '../../utils/V3Utils';
+import RNFS from 'react-native-fs';
+import { Platform } from 'react-native';
 
 export type ScanningScreenNavigationProps = StackNavigationProp<
   ParamList,
@@ -25,6 +27,10 @@ export const useFoodCreator = () => {
   const { params } = useRoute<RouteProp<ParamList, 'FoodCreatorScreen'>>();
   const [foodLog, setCustomFood] = useState<CustomFood | undefined>(
     params.foodLog
+  );
+
+  const [image, setImage] = useState<string | undefined>(
+    foodLog?.userFoodImage
   );
 
   const otherNutritionFactsRef = useRef<OtherNutritionFactsRef>(null);
@@ -114,6 +120,7 @@ export const useFoodCreator = () => {
         info: info?.records,
         requireNutritionFact: requireNutritionFact?.records,
         otherNutritionFact: otherNutritionFact?.records,
+        image,
       });
 
       try {
@@ -128,13 +135,30 @@ export const useFoodCreator = () => {
     }
   };
 
+  const onEditImagePress = () => {
+    navigation.push('ImagePickerScreen', {
+      type: 'camera',
+      isMultiple: false,
+      onImages: async (uris) => {
+        if (uris) {
+          const uri = Platform.OS === 'android' ? `file://${uris[0]}` : uris[0];
+          const response = await RNFS.readFile(uri, 'base64');
+          setImage(response);
+          navigation.goBack();
+        }
+      },
+    });
+  };
+
   return {
     branding,
     foodLog,
+    image,
     otherNutritionFactsRef,
     requireNutritionFactsRef,
     foodCreatorFoodDetailRef,
     onSavePress,
     onBarcodePress,
+    onEditImagePress,
   };
 };

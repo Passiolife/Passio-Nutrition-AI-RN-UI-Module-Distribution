@@ -97,6 +97,7 @@ export const EditFoodLogScreen = () => {
             <LogInformationView
               imageName={foodLog.imageName}
               foodItems={foodLog.foodItems}
+              userFoodImage={foodLog.userFoodImage}
               longName={foodLog.longName}
               passioID={foodLog.passioID}
               isOpenFood={foodLog.isOpenFood}

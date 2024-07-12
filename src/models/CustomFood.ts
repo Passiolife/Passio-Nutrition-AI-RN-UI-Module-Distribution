@@ -12,4 +12,5 @@ export interface CustomFood
   > {
   barcode?: string;
   brandName?: string;
+  userFoodImage?: string;
 }

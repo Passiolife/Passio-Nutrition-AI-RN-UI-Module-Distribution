@@ -12,6 +12,7 @@ export const ImagePickerScreen = () => {
   return params.type === 'camera' ? (
     <TakePicture
       recognizePictureRemote={params.onImages}
+      isMultiple={params.isMultiple ?? true}
       animatedIndex={animatedIndex}
     />
   ) : (

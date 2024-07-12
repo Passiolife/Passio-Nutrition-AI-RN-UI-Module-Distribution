@@ -14,6 +14,7 @@ import {
   ROW_ENTITY_TYPE,
   ROW_EVENT_TIME_STAMP,
   ROW_FOOD_ITEMS,
+  ROW_ICON_ID,
   ROW_IMAGE_NAME,
   ROW_INGREDIENTS,
   ROW_MEAL,
@@ -25,6 +26,7 @@ import {
   ROW_SERVING_UNITS,
   ROW_TIME,
   ROW_TOTAL_SERVINGS,
+  ROW_USER_FOOD_IMAGE,
   ROW_UUID,
   ROW_WEIGHT,
   TABLE_CUSTOM_FOOD_LOGS,
@@ -47,7 +49,8 @@ export const saveFoodLog = async (
   foodLog: FoodLog
 ): Promise<void> => {
   return new Promise((resolve, reject) => {
-    const insertQuery = `INSERT or REPLACE INTO  ${TABLE_FOOD_LOGS} (${ROW_UUID}, ${ROW_NAME}, ${ROW_MEAL}, ${ROW_IMAGE_NAME}, ${ROW_ENTITY_TYPE}, ${ROW_EVENT_TIME_STAMP}, ${ROW_FOOD_ITEMS},${ROW_SERVING_SIZES},${ROW_SERVING_UNITS},${ROW_PASSIOID},${ROW_SELECTED_UNIT},${ROW_SELECTED_QUANTITY}) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)`;
+    const insertQuery = `INSERT or REPLACE INTO  ${TABLE_FOOD_LOGS} (${ROW_UUID}, ${ROW_NAME}, ${ROW_MEAL}, ${ROW_IMAGE_NAME}, ${ROW_ENTITY_TYPE}, ${ROW_EVENT_TIME_STAMP}, ${ROW_USER_FOOD_IMAGE}, ${ROW_ICON_ID}, ${ROW_FOOD_ITEMS},${ROW_SERVING_SIZES},${ROW_SERVING_UNITS},${ROW_PASSIOID},${ROW_SELECTED_UNIT},${ROW_SELECTED_QUANTITY}) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
+
     db.transaction((tx) => {
       tx.executeSql(
         insertQuery,
@@ -58,6 +61,8 @@ export const saveFoodLog = async (
           foodLog.imageName,
           foodLog.entityType,
           foodLog.eventTimestamp,
+          foodLog.userFoodImage,
+          foodLog.iconID,
           JSON.stringify(foodLog.foodItems),
           JSON.stringify(foodLog.servingSizes),
           JSON.stringify(foodLog.servingUnits),
@@ -82,7 +87,7 @@ export const saveCustomFood = async (
   foodLog: CustomFood
 ): Promise<void> => {
   return new Promise((resolve, reject) => {
-    const insertQuery = `INSERT or REPLACE INTO  ${TABLE_CUSTOM_FOOD_LOGS} (${ROW_UUID}, ${ROW_NAME}, ${ROW_IMAGE_NAME}, ${ROW_ENTITY_TYPE}, ${ROW_BARCODE}, ${ROW_BRAND_NAME}, ${ROW_COMPUTED_WEIGHT}, ${ROW_FOOD_ITEMS},${ROW_SERVING_SIZES},${ROW_SERVING_UNITS},${ROW_SELECTED_UNIT},${ROW_SELECTED_QUANTITY}) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)`;
+    const insertQuery = `INSERT or REPLACE INTO  ${TABLE_CUSTOM_FOOD_LOGS} (${ROW_UUID}, ${ROW_NAME}, ${ROW_IMAGE_NAME}, ${ROW_ENTITY_TYPE}, ${ROW_BARCODE}, ${ROW_BRAND_NAME}, ${ROW_USER_FOOD_IMAGE}, ${ROW_ICON_ID}, ${ROW_COMPUTED_WEIGHT}, ${ROW_FOOD_ITEMS},${ROW_SERVING_SIZES},${ROW_SERVING_UNITS},${ROW_SELECTED_UNIT},${ROW_SELECTED_QUANTITY}) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
     db.transaction((tx) => {
       tx.executeSql(
         insertQuery,
@@ -93,6 +98,8 @@ export const saveCustomFood = async (
           foodLog.entityType,
           foodLog.barcode,
           foodLog.brandName,
+          foodLog.userFoodImage,
+          foodLog.iconID,
           JSON.stringify(foodLog.computedWeight),
           JSON.stringify(foodLog.foodItems),
           JSON.stringify(foodLog.servingSizes),
@@ -266,8 +273,12 @@ export const getMealLogsByStartDateAndEndDate = async (
       );
       resolve(convertResultToFoodLog(results));
     } catch (error) {
-      console.error(`Failed to get food logs ${error} ${startDate}-${endDate}`);
-      reject(`Failed to get food logs ${error} ${startDate}-${endDate}`);
+      console.error(
+        `Failed to get food logs ${error} ========= ${startDate}-${endDate}`
+      );
+      reject(
+        `Failed to get food logs ${error} ========= ${startDate}-${endDate}`
+      );
       throw error;
     }
   });
@@ -378,7 +389,9 @@ export function convertResultToFoodLog(results: [ResultSet]): FoodLog[] {
     value.foodItems = JSON.parse(value.foodItems.toString());
     value.servingUnits = JSON.parse(value.servingUnits.toString());
     value.servingSizes = JSON.parse(value.servingSizes.toString());
-    value.computedWeight = JSON.parse((value.computedWeight ?? '').toString());
+    value.computedWeight = JSON.parse(
+      (value.computedWeight ?? '{}').toString()
+    );
   });
   return items;
 }

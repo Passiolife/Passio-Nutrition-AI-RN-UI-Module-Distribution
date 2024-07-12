@@ -15,6 +15,7 @@ interface Props {
   imageName: string;
   name: string;
   brandName?: string;
+  userImage?: string;
   onPressEditor: () => void;
   onPressDelete: () => void;
   onPressLog: () => void;
@@ -28,6 +29,7 @@ const CustomFoodsItem = ({
   onPressLog,
   onPressDelete,
   entityType,
+  userImage,
   brandName,
   imageName,
 }: Props) => {
@@ -41,6 +43,7 @@ const CustomFoodsItem = ({
               imageName={imageName}
               style={styles.mealImg}
               entityType={entityType}
+              userFoodImage={userImage}
             />
           </View>
           <View style={styles.mealDetail}>

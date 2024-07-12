@@ -74,13 +74,17 @@ export const FiledSelectionView = React.forwardRef<
             setError(undefined);
           }
 
-          if (isTextInput && !isValidDecimalNumber(value)) {
+          if (isTextInput && !isValidDecimalNumber(inputRef.current)) {
             setError('Please enter valid input');
           }
 
-          return isTextInput
-            ? !isValidDecimalNumber(value)
+          const isNotValid = isTextInput
+            ? !isValidDecimalNumber(inputRef.current) ||
+              value === undefined ||
+              value?.length === 0
             : value?.length === 0;
+
+          return isNotValid;
         },
       }),
       [isTextInput, value]

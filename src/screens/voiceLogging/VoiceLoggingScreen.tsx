@@ -22,6 +22,7 @@ export interface TakePictureScreenProps {
   logToDate?: Date | undefined;
   logToMeal?: MealLabel | undefined;
   type: 'picture' | 'camera';
+  isMultiple?: boolean;
   images?: string[];
 }
 

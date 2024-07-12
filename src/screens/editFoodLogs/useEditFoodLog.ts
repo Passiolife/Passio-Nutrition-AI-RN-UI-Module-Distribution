@@ -183,18 +183,20 @@ export function useEditFoodLog() {
   };
 
   const onSavePress = async () => {
-    await saveFoodLog();
-    ShowToast('Added food into meal log');
-    if (params.prevRouteName === 'MealLog') {
-      navigation.dispatch(StackActions.pop(1));
-    } else if (params.prevRouteName === ROUTES.RecipeEditorScreen) {
-      navigation.dispatch(StackActions.pop(3));
-    } else if (params.prevRouteName === 'QuickScan') {
-      navigation.dispatch(StackActions.pop(1));
-    } else {
-      navigation.dispatch(StackActions.pop(2));
-    }
-    params?.onSaveLogPress?.({ ...foodLog });
+    try {
+      await saveFoodLog();
+      ShowToast('Added food into meal log');
+      if (params.prevRouteName === 'MealLog') {
+        navigation.dispatch(StackActions.pop(1));
+      } else if (params.prevRouteName === ROUTES.RecipeEditorScreen) {
+        navigation.dispatch(StackActions.pop(3));
+      } else if (params.prevRouteName === 'QuickScan') {
+        navigation.dispatch(StackActions.pop(1));
+      } else {
+        navigation.dispatch(StackActions.pop(2));
+      }
+      params?.onSaveLogPress?.({ ...foodLog });
+    } catch (e) {}
   };
 
   const onCancelPress = async () => {
