@@ -1,4 +1,4 @@
-import React, { useImperativeHandle, useRef, useState } from 'react';
+import React, { useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { Card, Text } from '../../../components';
 import { StyleSheet, View } from 'react-native';
 import { Branding, useBranding } from '../../../contexts';
@@ -34,23 +34,29 @@ export const OtherNutritionFacts = React.forwardRef<
 
   const refs = useRef<Record<string, React.RefObject<FiledViewRef>>>({});
 
-  // Generate default nutrients where come from `foodLog
-  const defaultKey: DefaultNutrients[] | undefined =
-    foodLog?.foodItems?.[0]?.nutrients
-      .filter((i) => i.amount > 0 && OtherNutrients.includes(i.id))
-      .map((i) => {
-        const data: DefaultNutrients = {
-          label: i.id as NutrientType,
-          value: Number(i.amount.toFixed(2)),
-        };
-        return data;
-      });
+  const [defaultList, setDefaultList] = useState<NutrientType[]>([]);
+  const [list, setList] = useState<DefaultNutrients[]>([]);
 
-  const [defaultList, setDefaultList] = useState<NutrientType[]>(
-    OtherNutrients.filter((i) => !defaultKey?.find((l) => l.label === i))
-  );
+  useEffect(() => {
+    // Generate default nutrients where come from `foodLog
+    const defaultKey: DefaultNutrients[] | undefined =
+      foodLog?.foodItems?.[0]?.nutrients
+        .filter((i) => i.amount > 0 && OtherNutrients.includes(i.id))
+        .map((i) => {
+          const data: DefaultNutrients = {
+            label: i.id as NutrientType,
+            value: Number(i.amount.toFixed(2)),
+          };
+          return data;
+        });
 
-  const [list, setList] = useState<DefaultNutrients[]>(defaultKey ?? []);
+    setDefaultList(
+      OtherNutrients.filter((i) => !defaultKey?.find((l) => l.label === i)) ??
+        []
+    );
+    setList(defaultKey ?? []);
+  }, [foodLog]);
+
   const labelList = defaultList.map((i) => {
     return nutrientName[i].toString() ?? '';
   });

@@ -1,12 +1,15 @@
 import type { NutrientType } from '../../models';
 
 export const Units = [
-  'Servings',
-  'Piece',
+  'servings',
+  'piece',
   'cup',
   'oz',
-  'g',
+  'gram',
   'ml',
+  'small',
+  'medium',
+  'large',
   'handful',
   'scoop',
   'tbsp',

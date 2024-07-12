@@ -19,6 +19,16 @@ export interface createFoodLogUsingFoodCreator {
 }
 
 export const WEIGHT_UNIT_SPLIT_IDENTIFIER = '-';
+export const CUSTOM_FOOD_GRAM = 'gram';
+export const CUSTOM_FOOD_ML = 'ml';
+
+export const isGramOrML = (unit: string) => {
+  const isUnitGramOrML =
+    unit.toLowerCase() === 'g' ||
+    unit.toLowerCase() === 'gram' ||
+    unit.toLowerCase() === 'ml';
+  return isUnitGramOrML;
+};
 
 export const createFoodLogUsingFoodCreator = ({
   info,
@@ -68,8 +78,7 @@ export const createFoodLogUsingFoodCreator = ({
   ];
 
   const factUnits = requireNutritionFact?.Units!;
-  const isUnitGramOrML =
-    factUnits.toLowerCase() === 'g' || factUnits.toLowerCase() === 'ml';
+  const isUnitGramOrML = isGramOrML(factUnits);
   const factWeight = Number(
     isUnitGramOrML ? Number(requireNutritionFact?.ServingSize!) : weight
   );
