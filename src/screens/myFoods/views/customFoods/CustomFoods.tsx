@@ -1,4 +1,4 @@
-import { FlatList } from 'react-native';
+import { Alert, FlatList } from 'react-native';
 
 import React from 'react';
 import type { CustomFood } from '../../../../models';
@@ -18,6 +18,19 @@ const CustomFoods = ({
   onPressLog,
   onPressDelete,
 }: Props) => {
+  const onDeleteCustomFood = (item: CustomFood) => {
+    Alert.alert('Are you sure want to delete this from my food?', undefined, [
+      {
+        text: 'Cancel',
+        style: 'cancel',
+      },
+      {
+        text: 'Delete',
+        onPress: () => onPressDelete?.(item),
+        style: 'destructive',
+      },
+    ]);
+  };
   const renderCustomFood = ({ item }: { item: CustomFood }) => {
     return (
       <CustomFoodsItem
@@ -28,7 +41,7 @@ const CustomFoods = ({
         userImage={item.userFoodImage}
         onPressLog={() => onPressLog?.(item)}
         onPressEditor={() => onPressEditor?.(item)}
-        onPressDelete={() => onPressDelete?.(item)}
+        onPressDelete={() => onDeleteCustomFood?.(item)}
         entityType={PassioIDEntityType.barcode}
       />
     );
