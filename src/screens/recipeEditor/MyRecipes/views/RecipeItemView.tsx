@@ -31,6 +31,7 @@ const RecipeItemView = (props: RecipeItemViewProps) => {
   return (
     <SwipeToDelete
       swipeableContainer={styles.swipeableContainer}
+      onPressEdit={() => props.onRecipePress(props.recipe)}
       onPressDelete={() => props.deleteRecipe(props.recipe)}
     >
       <Card style={[styles.mainContainer, styles.recipeItem]}>

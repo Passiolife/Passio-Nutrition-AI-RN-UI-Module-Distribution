@@ -35,7 +35,11 @@ const CustomFoodsItem = ({
 }: Props) => {
   return (
     <Card style={styles.shadowContainer}>
-      <SwipeToDelete onPressDelete={onPressDelete} marginVertical={0}>
+      <SwipeToDelete
+        onPressDelete={onPressDelete}
+        marginVertical={0}
+        onPressEdit={onPressEditor}
+      >
         <TouchableOpacity style={styles.mealContainer} onPress={onPressEditor}>
           <View style={styles.mealImgLayout}>
             <PassioFoodIcon
