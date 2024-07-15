@@ -1,14 +1,15 @@
 import React from 'react';
 import {
   Modal,
-  View,
   Text,
   TouchableOpacity,
   StyleSheet,
   Image,
+  Pressable,
 } from 'react-native';
 import { ICONS } from '../../assets';
 import { COLORS } from '../../constants';
+import { screenHeight } from '../../utils';
 
 interface Props {
   onCloseModel: () => void;
@@ -22,8 +23,8 @@ const ImagePickerOptions = ({
 }: Props) => {
   return (
     <Modal transparent={true} visible={true} onRequestClose={onCloseModel}>
-      <View style={styles.modalOverlay}>
-        <View style={styles.modalContent}>
+      <Pressable onPress={onCloseModel} style={styles.modalOverlay}>
+        <Pressable style={styles.modalContent}>
           <TouchableOpacity
             style={{
               alignSelf: 'flex-end',
@@ -31,16 +32,30 @@ const ImagePickerOptions = ({
             }}
             onPress={onCloseModel}
           >
-            <Image source={ICONS.newClose} style={styles.closeButton} />
+            <Image
+              source={ICONS.newClose}
+              tintColor={COLORS.grayscaleLine}
+              style={styles.closeButton}
+            />
           </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={onSelectGallery}>
+            <Image
+              source={ICONS.camera}
+              tintColor={COLORS.grayscaleLine}
+              style={styles.buttonIcon}
+            />
             <Text style={styles.buttonText}>Select Gallery</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={onSelectCamera}>
+            <Image
+              source={ICONS.gallery}
+              tintColor={COLORS.grayscaleLine}
+              style={styles.buttonIcon}
+            />
             <Text style={styles.buttonText}>Select Camera</Text>
           </TouchableOpacity>
-        </View>
-      </View>
+        </Pressable>
+      </Pressable>
     </Modal>
   );
 };
@@ -48,18 +63,15 @@ const ImagePickerOptions = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   modalOverlay: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modalContent: {
-    minWidth: 300,
     padding: 20,
+    margin: 24,
+    top: screenHeight / 3.5,
     backgroundColor: 'white',
     borderRadius: 10,
     alignItems: 'center',
@@ -68,12 +80,19 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     paddingVertical: 10,
     paddingHorizontal: 20,
-    borderColor: COLORS.blue,
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderColor: COLORS.grayscaleLine,
     borderWidth: 1,
     borderRadius: 5,
   },
   buttonText: {
     fontSize: 16,
+  },
+  buttonIcon: {
+    height: 24,
+    width: 24,
+    marginEnd: 16,
   },
   closeButton: {
     height: 32,
