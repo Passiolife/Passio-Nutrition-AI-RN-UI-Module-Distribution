@@ -72,6 +72,7 @@ export interface FoodCreatorNavProps {
   logToDate?: Date | undefined;
   logToMeal?: MealLabel | undefined;
   foodLog?: CustomFood;
+  from?: Module;
 }
 export interface MyFoodsScreenNavProps {
   logToDate?: Date | undefined;

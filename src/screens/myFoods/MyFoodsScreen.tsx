@@ -2,14 +2,20 @@ import { View } from 'react-native';
 
 import React from 'react';
 import { myFoodScreenStyle } from './MyFoodsScreen.styles';
-import { MY_FOOD_SCREENS, useMyFoodScreen } from './useMyFoodScreen';
+import {
+  MYFoodScreens,
+  MYFoodScreensType,
+  useMyFoodScreen,
+} from './useMyFoodScreen';
 import { BackNavigation, BasicButton, TabBar } from '../../components';
 import CustomFoods from './views/customFoods/CustomFoods';
+import CustomRecipe from './views/customRecipe/CustomRecipe';
 
 export const MyFoodsScreen = () => {
   const {
     branding,
-    tabs,
+    tab,
+    setTab,
     customFoods,
     onCreateFoodPress,
     onEditorPress,
@@ -22,9 +28,9 @@ export const MyFoodsScreen = () => {
   const renderTab = () => {
     return (
       <TabBar
-        list={MY_FOOD_SCREENS}
+        list={MYFoodScreens}
         onTabSelect={(value) => {
-          tabs.value = value;
+          setTab(value as MYFoodScreensType);
         }}
       />
     );
@@ -34,18 +40,24 @@ export const MyFoodsScreen = () => {
     <View style={styles.body}>
       <BackNavigation title="My Foods" bottomView={renderTab()} />
       <View style={styles.container}>
-        <CustomFoods
-          customFoods={customFoods ?? []}
-          onPressEditor={onEditorPress}
-          onPressLog={onLogPress}
-          onPressDelete={onDeletePress}
-        />
+        {tab === 'Custom Foods' ? (
+          <CustomFoods
+            customFoods={customFoods ?? []}
+            onPressEditor={onEditorPress}
+            onPressLog={onLogPress}
+            onPressDelete={onDeletePress}
+          />
+        ) : (
+          <CustomRecipe />
+        )}
       </View>
-      <BasicButton
-        text="Create New Food"
-        style={styles.button}
-        onPress={onCreateFoodPress}
-      />
+      {tab === 'Custom Foods' && (
+        <BasicButton
+          text="Create New Food"
+          style={styles.button}
+          onPress={onCreateFoodPress}
+        />
+      )}
     </View>
   );
 };

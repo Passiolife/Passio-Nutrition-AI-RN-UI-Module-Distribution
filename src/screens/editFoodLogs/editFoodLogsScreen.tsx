@@ -75,9 +75,11 @@ export const EditFoodLogScreen = () => {
   const icon =
     from === 'MealLog'
       ? ICONS.delete
-      : from === 'QuickScan'
-        ? ICONS.swap
-        : undefined;
+      : from === 'Search'
+        ? ICONS.editGreyIc
+        : from === 'QuickScan'
+          ? ICONS.swap
+          : undefined;
 
   return (
     <View style={styles.container}>

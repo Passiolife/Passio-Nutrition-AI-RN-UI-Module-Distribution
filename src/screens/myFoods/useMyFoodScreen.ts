@@ -7,16 +7,16 @@ import { useIsFocused, useNavigation } from '@react-navigation/native';
 import uuid4 from 'react-native-uuid';
 import { getMealLog } from '../../utils';
 import { convertDateToDBFormat } from '../../utils/DateFormatter';
-import { useSharedValue } from 'react-native-reanimated';
 
-export const MY_FOOD_SCREENS = ['Custom Foods', 'Recipe'];
+export type MYFoodScreensType = 'Custom Foods' | 'Recipe';
+export const MYFoodScreens: MYFoodScreensType[] = ['Custom Foods', 'Recipe'];
 type ScreenNavigationProps = StackNavigationProp<ParamList, 'MyFoodsScreen'>;
 
 export const useMyFoodScreen = () => {
   const branding = useBranding();
   const services = useServices();
   const navigation = useNavigation<ScreenNavigationProps>();
-  const tabs = useSharedValue(MY_FOOD_SCREENS[0]);
+  const [tab, setTab] = useState(MYFoodScreens[0]);
 
   const [customFoods, setCustomFood] = useState<CustomFood[]>();
   const isFocused = useIsFocused();
@@ -67,7 +67,8 @@ export const useMyFoodScreen = () => {
   return {
     branding,
     customFoods,
-    tabs,
+    setTab,
+    tab,
     onCreateFoodPress,
     onEditorPress,
     onDeletePress,

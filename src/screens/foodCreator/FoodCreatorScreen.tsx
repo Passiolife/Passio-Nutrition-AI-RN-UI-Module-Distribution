@@ -1,4 +1,4 @@
-import { ScrollView, View } from 'react-native';
+import { View } from 'react-native';
 
 import React from 'react';
 import { foodCreatorStyle } from './FoodCreator.styles';
@@ -8,6 +8,7 @@ import { FoodCreatorFoodDetail } from './views/FoodCreatorFoodDetail';
 import { RequireNutritionFacts } from './views/RequireNutritionFacts';
 import { OtherNutritionFacts } from './views/OtherNutritionFacts';
 import ImagePickerOptions from '../../components/imagePickerOptions/ImagePickerOptions';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 export const FoodCreatorScreen = () => {
   const {
@@ -30,7 +31,10 @@ export const FoodCreatorScreen = () => {
   return (
     <View style={styles.body}>
       <BackNavigation title="Food Creator" />
-      <ScrollView style={{ flex: 1 }}>
+      <KeyboardAwareScrollView
+        style={{ flex: 1 }}
+        automaticallyAdjustKeyboardInsets
+      >
         <View>
           <FoodCreatorFoodDetail
             foodLog={foodLog}
@@ -47,7 +51,7 @@ export const FoodCreatorScreen = () => {
           <OtherNutritionFacts foodLog={foodLog} ref={otherNutritionFactsRef} />
           <View style={{ height: 100 }} />
         </View>
-      </ScrollView>
+      </KeyboardAwareScrollView>
       <View
         style={{
           flexDirection: 'row',

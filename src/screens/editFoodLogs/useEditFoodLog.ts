@@ -1,3 +1,4 @@
+import uuid4 from 'react-native-uuid';
 import { convertPassioFoodItemToFoodLog } from './../../utils/V3Utils';
 import type { FoodItem, FoodLog, MealLabel } from '../../models';
 import { convertFoodLogsToFavoriteFoodLog } from './../../utils';
@@ -161,6 +162,15 @@ export function useEditFoodLog() {
         onSaveData: (item: PassioFoodItem) => {
           onSwitchAlternative(item);
         },
+      });
+    } else if (params.prevRouteName === 'Search') {
+      const uuid: string = uuid4.v4() as string;
+      navigation.navigate('FoodCreatorScreen', {
+        foodLog: {
+          ...foodLog,
+          uuid: uuid,
+        },
+        from: 'Search',
       });
     } else {
       onDeleteFoodLogPress();

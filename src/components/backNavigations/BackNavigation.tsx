@@ -98,9 +98,9 @@ export const BackNavigation: React.FC<Props> = (props) => {
           ) : (
             <Pressable onPress={onRightPress} style={styles.leftSize}>
               {rightIcon ? (
-                <Image source={rightIcon} style={styles.backIcon} />
+                <Image source={rightIcon} style={styles.rightIcon} />
               ) : (
-                <View style={styles.backIcon} />
+                <View style={styles.rightIcon} />
               )}
             </Pressable>
           )}

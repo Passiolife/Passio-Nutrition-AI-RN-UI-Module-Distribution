@@ -14,6 +14,7 @@ import type { CustomFood } from '../../models';
 import { convertPassioFoodItemToFoodLog } from '../../utils/V3Utils';
 import RNFS from 'react-native-fs';
 import { Platform } from 'react-native';
+import { ShowToast } from '../../utils';
 
 export type ScanningScreenNavigationProps = StackNavigationProp<
   ParamList,
@@ -139,6 +140,14 @@ export const useFoodCreator = () => {
           uuid: foodLog?.uuid ?? modifiedFoodLog.uuid,
         };
         await services.dataService.saveCustomFood(updateCustomFood);
+
+        if (params.from === 'Search') {
+          ShowToast('Food added successfully into my food');
+        } else if (modifiedFoodLog) {
+          ShowToast('Food update successfully customized to my food');
+        } else {
+          ShowToast('Food added successfully into my food');
+        }
         navigation.goBack();
       } catch (error) {}
     }
