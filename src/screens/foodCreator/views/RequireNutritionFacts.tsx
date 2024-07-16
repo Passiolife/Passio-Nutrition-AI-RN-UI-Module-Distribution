@@ -68,6 +68,7 @@ export const RequireNutritionFacts = React.forwardRef<
 
     useEffect(() => {
       setFoodLog(defaultFoodLog);
+      setUnits(defaultFoodLog?.selectedUnit ?? '');
     }, [defaultFoodLog]);
 
     const refs = useMemo(
@@ -98,14 +99,13 @@ export const RequireNutritionFacts = React.forwardRef<
             const value = currentRef?.value();
             const input = currentRef?.input?.();
             currentRef?.errorCheck();
-            if (value === undefined || value.length === 0) {
-              isNotValid = true;
-            }
 
             if (key === 'Weight') {
-              const unit = record.Units;
-
+              const unit = units;
               if (isGramOrML(unit)) {
+                record[key] =
+                  record.ServingSize + WEIGHT_UNIT_SPLIT_IDENTIFIER + unit ??
+                  '';
               } else {
                 if (!isValidDecimalNumber(input)) {
                   isNotValid = true;
@@ -113,10 +113,13 @@ export const RequireNutritionFacts = React.forwardRef<
                 if (value === undefined || value.length === 0) {
                   isNotValid = true;
                 }
+                record[key] =
+                  input + WEIGHT_UNIT_SPLIT_IDENTIFIER + value ?? '';
               }
-
-              record[key] = input + WEIGHT_UNIT_SPLIT_IDENTIFIER + value ?? '';
             } else {
+              if (value === undefined || value.length === 0) {
+                isNotValid = true;
+              }
               record[key] = value ?? '';
             }
           });
@@ -127,7 +130,7 @@ export const RequireNutritionFacts = React.forwardRef<
           };
         },
       }),
-      [refs]
+      [refs, units]
     );
 
     let calories;

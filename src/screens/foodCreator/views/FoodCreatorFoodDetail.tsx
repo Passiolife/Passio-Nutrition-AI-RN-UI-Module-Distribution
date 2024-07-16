@@ -77,12 +77,13 @@ export const FoodCreatorFoodDetail = React.forwardRef<
           (Object.keys(refs) as FoodCreatorFoodDetailType[]).forEach((key) => {
             const currentRef = refs[key].current;
             const value = currentRef?.value();
-            currentRef?.errorCheck();
 
             if (key !== 'barcode' && key !== 'brand') {
+              currentRef?.errorCheck();
               if (value === undefined || value.length === 0) {
                 isNotValid = true;
               }
+            } else {
             }
 
             record[key] = value ?? '';
