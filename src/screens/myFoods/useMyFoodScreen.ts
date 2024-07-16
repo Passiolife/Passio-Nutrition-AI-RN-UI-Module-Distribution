@@ -7,6 +7,7 @@ import { useIsFocused, useNavigation } from '@react-navigation/native';
 import uuid4 from 'react-native-uuid';
 import { getMealLog } from '../../utils';
 import { convertDateToDBFormat } from '../../utils/DateFormatter';
+import { convertPassioFoodItemToFoodLog } from '../../utils/V3Utils';
 
 export type MYFoodScreensType = 'Custom Foods' | 'Recipe';
 export const MYFoodScreens: MYFoodScreensType[] = ['Custom Foods', 'Recipe'];
@@ -32,6 +33,29 @@ export const useMyFoodScreen = () => {
 
   const onCreateFoodPress = () => {
     navigation.navigate('FoodCreatorScreen', {});
+  };
+
+  const onCreateNewRecipe = () => {
+    navigation.navigate('FoodSearchScreen', {
+      from: 'Recipe',
+      onSaveData: (item) => {
+        const foodLog = convertPassioFoodItemToFoodLog(
+          item,
+          undefined,
+          undefined
+        );
+        navigation.navigate('EditIngredientScreen', {
+          foodItem: foodLog.foodItems[0],
+          updateIngredient: (_item) => {
+            navigation.pop(1);
+            navigation.replace('EditRecipeScreen', {
+              foodLog: foodLog,
+              prevRouteName: 'Recipe',
+            });
+          },
+        });
+      },
+    });
   };
 
   const onEditorPress = (food: CustomFood) => {
@@ -70,6 +94,7 @@ export const useMyFoodScreen = () => {
     setTab,
     tab,
     onCreateFoodPress,
+    onCreateNewRecipe,
     onEditorPress,
     onDeletePress,
     onLogPress,
