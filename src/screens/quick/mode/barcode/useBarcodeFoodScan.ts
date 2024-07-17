@@ -5,12 +5,15 @@ import {
   useRoute,
   type RouteProp,
 } from '@react-navigation/core';
-import { useServices } from '../../contexts';
-import type { FoodLog, QuickResult } from '../../models';
-import { ScreenType } from '../../models/ScreenType';
-import type { ParamList } from '../../navigaitons';
-import { recordAnalyticsFoodLogs, getLogToDate, getMealLog } from '../../utils';
-import type { ScanningScreenNavigationProps } from './QuickScanningScreen';
+import { useServices } from '../../../../contexts';
+import type { FoodLog, QuickResult } from '../../../../models';
+import { ScreenType } from '../../../../models/ScreenType';
+import type { ParamList } from '../../../../navigaitons';
+import {
+  recordAnalyticsFoodLogs,
+  getLogToDate,
+  getMealLog,
+} from '../../../../utils';
 import {
   PassioSDK,
   type BarcodeCandidate,
@@ -26,11 +29,12 @@ import {
   getDetectionCandidate,
   getPackageFoodResult,
   getPassioIDAttribute,
-} from '../../utils/QuickResultUtils';
-import { ShowToast } from '../../utils';
-import { convertPassioFoodItemToFoodLog } from '../../utils/V3Utils';
+} from '../../../../utils/QuickResultUtils';
+import { ShowToast } from '../../../../utils';
+import { convertPassioFoodItemToFoodLog } from '../../../../utils/V3Utils';
+import type { ScanningScreenNavigationProps } from '../../QuickScanningScreen';
 
-export const useQuickScan = () => {
+export const useBarcodeFoodScan = () => {
   const services = useServices();
   const navigation = useNavigation<ScanningScreenNavigationProps>();
   const passioQuickResultRef = useRef<QuickResult | null>(null);
@@ -215,41 +219,21 @@ export const useQuickScan = () => {
   useEffect(() => {
     const config: FoodDetectionConfig = {
       detectBarcodes: true,
-      detectPackagedFood: true,
+      detectPackagedFood: false,
     };
     let subscription = PassioSDK.startFoodDetection(
       config,
       (detection: FoodDetectionEvent) => {
         if (
-          (detection &&
-            detection?.candidates?.barcodeCandidates &&
-            detection.candidates?.barcodeCandidates?.length > 0) ||
-          (detection?.candidates?.detectedCandidates &&
-            detection.candidates?.detectedCandidates?.length > 0) ||
-          (detection?.candidates?.packagedFoodCode &&
-            detection.candidates?.packagedFoodCode?.length > 0)
+          detection &&
+          detection?.candidates?.barcodeCandidates &&
+          detection.candidates?.barcodeCandidates?.length > 0
         ) {
           const barcode = detection.candidates.barcodeCandidates?.[0]?.barcode;
-          const packageFood = detection.candidates.packagedFoodCode?.[0];
-          const passioID =
-            detection.candidates.detectedCandidates?.[0]?.passioID;
 
           if (
             barcode !== undefined &&
             barcode === passioQuickResultRef.current?.barcode
-          ) {
-            return;
-          }
-          if (
-            packageFood !== undefined &&
-            packageFood === passioQuickResultRef.current?.packageFood
-          ) {
-            return;
-          }
-
-          if (
-            passioID !== undefined &&
-            passioID === passioQuickResultRef.current?.passioID
           ) {
             return;
           }
