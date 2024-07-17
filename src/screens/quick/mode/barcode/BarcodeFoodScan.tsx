@@ -64,7 +64,7 @@ export const BarcodeFoodScan = gestureHandlerRootHOC(() => {
         >
           {passioQuickResults === null ? (
             <BottomSheetView>
-              <QuickScanningLoadingView />
+              <QuickScanningLoadingView text="Place your barcode within the frame." />
               <View style={{ height: 120, width: 100 }} />
             </BottomSheetView>
           ) : null}

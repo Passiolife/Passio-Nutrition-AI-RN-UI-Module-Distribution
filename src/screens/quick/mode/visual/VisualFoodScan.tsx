@@ -39,7 +39,7 @@ export const VisualFoodScan = gestureHandlerRootHOC(() => {
   const info = false;
 
   const snapPoints = useMemo(
-    () => [scaleHeight(Platform.OS === 'android' ? 260 : 240)],
+    () => [scaleHeight(Platform.OS === 'android' ? 260 : 260)],
     []
   );
 
@@ -64,7 +64,7 @@ export const VisualFoodScan = gestureHandlerRootHOC(() => {
         >
           {passioQuickResults === null ? (
             <BottomSheetView>
-              <QuickScanningLoadingView />
+              <QuickScanningLoadingView text="Place your food within the frame." />
               <View style={{ height: 120, width: 100 }} />
             </BottomSheetView>
           ) : null}

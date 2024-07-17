@@ -59,7 +59,7 @@ export const QuickScanningScreen = gestureHandlerRootHOC(() => {
           <Image
             tintColor={mode === 'Visual' ? branding.white : undefined}
             source={ICONS.modeVisual}
-            resizeMode="center"
+            resizeMode="contain"
             style={styles.icons}
           />
         </TouchableOpacity>
@@ -74,7 +74,7 @@ export const QuickScanningScreen = gestureHandlerRootHOC(() => {
         >
           <Image
             tintColor={mode === 'Barcode' ? branding.white : undefined}
-            resizeMode="center"
+            resizeMode="contain"
             source={ICONS.modeBarcode}
             style={styles.icons}
           />
@@ -90,7 +90,7 @@ export const QuickScanningScreen = gestureHandlerRootHOC(() => {
         >
           <Image
             tintColor={mode === 'NutritionFact' ? branding.white : undefined}
-            resizeMode="center"
+            resizeMode="contain"
             source={ICONS.modeNutritionFact}
             style={styles.icons}
           />
@@ -115,12 +115,11 @@ export const QuickScanningScreen = gestureHandlerRootHOC(() => {
           bottom: 0,
           right: 0,
           left: 0,
-          flex: 1,
         }}
       >
-        {mode === 'Visual' && <VisualFoodScan />}
-        {mode === 'Barcode' && <BarcodeFoodScan />}
-        {mode === 'NutritionFact' && <NutritionFactScan />}
+        {mode === 'Visual' && !info && <VisualFoodScan />}
+        {mode === 'Barcode' && !info && <BarcodeFoodScan />}
+        {mode === 'NutritionFact' && !info && <NutritionFactScan />}
       </View>
       <QuickScanningActionView
         onClosedPressed={() => navigation.goBack()}
@@ -152,14 +151,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   icons: {
-    height: 32,
-    width: 32,
+    height: 24,
+    width: 24,
   },
   iconsContainer: {
     backgroundColor: 'rgba(255, 255, 255, 0.4)',
     marginHorizontal: 8,
     borderRadius: 32,
-    padding: 8,
+    padding: 6,
   },
   iconsContainerSelected: {
     backgroundColor: 'rgba(79, 70, 229, 1)',

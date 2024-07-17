@@ -40,7 +40,8 @@ export const NutritionFactScan = gestureHandlerRootHOC(() => {
       >
         {nutritionFacts === null ? (
           <BottomSheetView>
-            <QuickScanningLoadingView />
+            <QuickScanningLoadingView text="Place the nutrition facts within the frame." />
+
             <View style={{ height: 120, width: 100 }} />
           </BottomSheetView>
         ) : null}

@@ -1,4 +1,5 @@
 import {
+  Image,
   TouchableOpacity,
   View,
   type ImageStyle,
@@ -9,8 +10,9 @@ import React from 'react';
 
 import { PassioFoodIcon } from '../../../components/passio/PassioFoodIcon';
 import { PassioIDEntityType } from '@passiolife/nutritionai-react-native-sdk-v3/src/sdk/v2';
-import { Text } from '../../../components';
+import { Card, Text } from '../../../components';
 import type { QuickResult } from '../../../models';
+import { ICONS } from '../../../assets';
 
 interface Props {
   result: QuickResult;
@@ -22,7 +24,7 @@ export const QuickScanningResultView = React.memo((props: Props) => {
   const result = props.result;
 
   return (
-    <View style={scanningResultBaseContainerStyle}>
+    <Card style={scanningResultBaseContainerStyle}>
       <TouchableOpacity
         activeOpacity={1}
         onPress={() => {
@@ -43,15 +45,25 @@ export const QuickScanningResultView = React.memo((props: Props) => {
               {props.result.name}
             </Text>
           </View>
+          <Image
+            source={ICONS.newAddPlus}
+            style={{
+              height: 28,
+              width: 28,
+              alignSelf: 'center',
+              marginHorizontal: 16,
+            }}
+          />
         </View>
       </TouchableOpacity>
-    </View>
+    </Card>
   );
 });
 
 // Scanning Result Styles....
 const scanningResultBaseContainerStyle: ViewStyle = {
   marginHorizontal: 10,
+  marginTop: 10,
 };
 
 const foodLogContainerStyle: ViewStyle = {
