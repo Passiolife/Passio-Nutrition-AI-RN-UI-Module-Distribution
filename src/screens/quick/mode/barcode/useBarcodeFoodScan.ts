@@ -20,7 +20,6 @@ import {
   type DetectedCandidate,
   type FoodDetectionConfig,
   type FoodDetectionEvent,
-  type NutritionFacts,
   type PackagedFoodCode,
   type PassioFoodItem,
 } from '@passiolife/nutritionai-react-native-sdk-v3';
@@ -30,7 +29,6 @@ import {
   getPackageFoodResult,
   getPassioIDAttribute,
 } from '../../../../utils/QuickResultUtils';
-import { ShowToast } from '../../../../utils';
 import { convertPassioFoodItemToFoodLog } from '../../../../utils/V3Utils';
 import type { ScanningScreenNavigationProps } from '../../QuickScanningScreen';
 
@@ -43,7 +41,6 @@ export const useBarcodeFoodScan = () => {
   const date = getLogToDate(params.logToDate, params.logToMeal);
   const meal = getMealLog(date, params.logToMeal);
 
-  const [info, setInfo] = useState(false);
   const [isStopScan, setStopScan] = useState<boolean>(false);
   const [isLodgedFood, setLoggedFood] = useState<boolean>(false);
   const [passioQuickResults, setPassioQuickResults] =
@@ -52,9 +49,7 @@ export const useBarcodeFoodScan = () => {
   const [alternatives, setPassioAlternatives] = useState<QuickResult[] | null>(
     []
   );
-  const [nutritionFacts, setNutritionFacts] = useState<NutritionFacts | null>(
-    null
-  );
+
   const [foodDetectEvents, setFoodDetectionEvent] =
     useState<FoodDetectionEvent | null>(null);
 
@@ -101,19 +96,8 @@ export const useBarcodeFoodScan = () => {
   const resetScanning = useCallback(() => {
     passioQuickResultRef.current = null;
     setFoodDetectionEvent(null);
-    setNutritionFacts(null);
     setPassioQuickResults(null);
     setStopScan(false);
-  }, []);
-
-  //  it's call when user tap on closed icon.
-  const onClosed = useCallback(() => {
-    resetScanning();
-    navigation.goBack();
-  }, [navigation, resetScanning]);
-
-  const onUpdatingNutritionFacFlag = useCallback(() => {
-    ShowToast('Coming soon');
   }, []);
 
   const onSavedLog = useCallback(
@@ -193,20 +177,11 @@ export const useBarcodeFoodScan = () => {
     });
   }, [onEditFoodLogPress, navigation]);
 
-  // Convert NutritionFacts to foodLog
-  const onSaveFoodLogUsingNutrientFact = useCallback(
-    (_nutrientFact: NutritionFacts, _name: string) => {
-      setNutritionFacts(null);
-    },
-    []
-  );
-
   const onContinueScanningPress = () => {
     setLoggedFood(false);
     setStopScan(false);
     setFoodDetectionEvent(null);
     setPassioQuickResults(null);
-    setNutritionFacts(null);
     passioQuickResultRef.current = null;
   };
   const onViewDiaryPress = () => {
@@ -296,25 +271,19 @@ export const useBarcodeFoodScan = () => {
     if (detection) {
       init();
     }
-  }, [foodDetectEvents, getQuickResults, isStopScan, nutritionFacts]);
+  }, [foodDetectEvents, getQuickResults, isStopScan]);
 
   return {
     alternatives,
-    info,
     isLodgedFood,
     isStopScan,
-    nutritionFacts,
     passioQuickResults,
-    onClosed,
     onContinueScanningPress,
     onFoodSearchManuallyPress,
     onLogFoodPress,
     onOpenFoodLogEditor,
-    onSaveFoodLogUsingNutrientFact,
-    onUpdatingNutritionFacFlag,
     onViewDiaryPress,
     resetScanning,
-    setInfo,
     setStopScan,
   };
 };

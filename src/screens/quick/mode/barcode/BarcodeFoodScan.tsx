@@ -23,7 +23,6 @@ import { useBarcodeFoodScan } from './useBarcodeFoodScan';
 export const BarcodeFoodScan = gestureHandlerRootHOC(() => {
   const {
     alternatives,
-    info,
     isLodgedFood,
     isStopScan,
     passioQuickResults,
@@ -35,6 +34,8 @@ export const BarcodeFoodScan = gestureHandlerRootHOC(() => {
     resetScanning,
     setStopScan,
   } = useBarcodeFoodScan();
+
+  const info = false;
 
   const branding = useBranding();
 
