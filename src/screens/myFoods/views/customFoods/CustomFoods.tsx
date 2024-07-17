@@ -34,8 +34,8 @@ const CustomFoods = ({
   const renderCustomFood = ({ item }: { item: CustomFood }) => {
     return (
       <CustomFoodsItem
-        passioID={''}
-        imageName={''}
+        passioID={item.iconID ?? ''}
+        imageName={item.iconID ?? ''}
         name={item.name}
         brandName={item.brandName}
         userImage={item.userFoodImage}
