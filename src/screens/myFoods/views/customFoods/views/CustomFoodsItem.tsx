@@ -43,7 +43,7 @@ const CustomFoodsItem = ({
         <TouchableOpacity style={styles.mealContainer} onPress={onPressEditor}>
           <View style={styles.mealImgLayout}>
             <PassioFoodIcon
-              passioID={passioID}
+              passioID={passioID ?? imageName}
               imageName={imageName}
               style={styles.mealImg}
               entityType={entityType}
