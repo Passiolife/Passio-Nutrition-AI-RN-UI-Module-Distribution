@@ -15,6 +15,7 @@ const width = Dimensions.get('screen').width;
 
 interface Props {
   recognizePictureRemote: (images: string[]) => void;
+  isMultiple?: boolean;
 }
 
 export interface SelectPhotosRef {
@@ -22,7 +23,10 @@ export interface SelectPhotosRef {
 }
 
 export const SelectPhotos = React.forwardRef<SelectPhotosRef, Props>(
-  ({ recognizePictureRemote }: Props, ref: React.Ref<SelectPhotosRef>) => {
+  (
+    { recognizePictureRemote, isMultiple = true }: Props,
+    ref: React.Ref<SelectPhotosRef>
+  ) => {
     const [images, setImages] = useState<string[]>([]);
     const navigation = useNavigation<TakePictureScreenProps>();
     const isFirstTime = useRef(true);
@@ -30,7 +34,7 @@ export const SelectPhotos = React.forwardRef<SelectPhotosRef, Props>(
     const onTakeImages = useCallback(async () => {
       try {
         const { assets } = await launchImageLibrary({
-          selectionLimit: PHOTO_LIMIT,
+          selectionLimit: isMultiple ? PHOTO_LIMIT : 1,
           mediaType: 'photo',
           quality: 0.4,
         });
@@ -48,7 +52,7 @@ export const SelectPhotos = React.forwardRef<SelectPhotosRef, Props>(
       } catch (e) {
         return [];
       }
-    }, [navigation, recognizePictureRemote]);
+    }, [isMultiple, navigation, recognizePictureRemote]);
 
     useImperativeHandle(
       ref,

@@ -1,15 +1,21 @@
-import React, { useImperativeHandle, useState } from 'react';
-import { Text, TextInput } from '..';
+import React, { useEffect, useImperativeHandle, useRef, useState } from 'react';
+import { Text } from '..';
 import {
   Image,
   KeyboardTypeOptions,
   StyleSheet,
+  TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
 import { Branding, useBranding } from '../../contexts';
 import { scaleHeight } from '../../utils';
 import { ICONS } from '../../assets';
+import {
+  cleanedDecimalNumber,
+  isValidDecimalNumber,
+} from '../../screens/foodCreator/FoodCreator.utils';
+import { COLORS } from '../../constants';
 
 interface Props {
   name: string;
@@ -18,10 +24,12 @@ interface Props {
   keyboardType?: KeyboardTypeOptions;
   isColum?: boolean;
   onDelete?: () => void;
+  isCharacter?: boolean;
 }
 
 export interface FiledViewRef {
   value: () => string | undefined;
+  input: () => string | undefined;
   errorCheck: () => boolean | undefined;
 }
 
@@ -33,32 +41,42 @@ export const FiledView = React.forwardRef<FiledViewRef, Props>(
       keyboardType = 'decimal-pad',
       label = 'value',
       isColum = false,
+      isCharacter = false,
       onDelete,
     }: Props,
     ref: React.Ref<FiledViewRef>
   ) => {
     const branding = useBranding();
-    const [value, setValue] = useState<string | undefined>(defaultValue);
+    const value = useRef<string | undefined>(defaultValue);
     const [error, setError] = useState<string>();
 
     const styles = requireNutritionFactStyle(branding);
+    const inputRef = useRef<TextInput>(null);
+    useEffect(() => {
+      value.current = defaultValue;
+    }, [defaultValue]);
 
     useImperativeHandle(
       ref,
       () => ({
         value: () => {
-          return value;
+          return value.current;
+        },
+        input: () => {
+          return value.current;
         },
         errorCheck: () => {
-          if (value === undefined || value?.length === 0) {
-            setError('please enter value');
-          } else {
+          if (value === undefined || value.current?.length === 0) {
+            setError('Please enter value');
+          } else if (isValidDecimalNumber(value?.current, isCharacter)) {
             setError(undefined);
+          } else {
+            setError('Please enter valid input');
           }
-          return value?.length === 0;
+          return !isValidDecimalNumber(value?.current, isCharacter);
         },
       }),
-      [value]
+      [isCharacter]
     );
 
     const renderFiled = () => {
@@ -72,19 +90,21 @@ export const FiledView = React.forwardRef<FiledViewRef, Props>(
           >
             {name}
           </Text>
-          <TextInput
-            style={styles.textInput}
-            onChangeText={(text) => {
-              setValue(text);
-              setError(undefined);
-            }}
-            value={defaultValue}
-            containerStyle={styles.containerTextInput}
-            placeholder={label}
-            error={error}
-            enterKeyHint="next"
-            keyboardType={keyboardType}
-          />
+          <View style={{ flex: 1 }}>
+            <TextInput
+              ref={inputRef}
+              style={styles.textInput}
+              onChangeText={(text) => {
+                value.current = cleanedDecimalNumber(text);
+                setError(undefined);
+              }}
+              returnKeyType="done"
+              defaultValue={defaultValue}
+              placeholder={label}
+              keyboardType={keyboardType}
+            />
+            {!!error && <Text style={styles.error}>{error}</Text>}
+          </View>
           {onDelete && (
             <TouchableOpacity onPress={onDelete}>
               <Image source={ICONS.delete} style={styles.delete} />
@@ -106,6 +126,7 @@ const requireNutritionFactStyle = ({ white, gray300 }: Branding) =>
       justifyContent: 'space-between',
       marginBottom: 10,
     },
+
     formColum: {
       flexDirection: 'column',
       justifyContent: 'space-between',
@@ -131,8 +152,18 @@ const requireNutritionFactStyle = ({ white, gray300 }: Branding) =>
       borderColor: gray300,
       paddingVertical: scaleHeight(8),
       borderRadius: scaleHeight(4),
+      borderWidth: 1,
+      paddingHorizontal: 8,
     },
     containerTextInput: {
       flex: 1,
+    },
+    errorContainer: {
+      borderColor: COLORS.red,
+    },
+    error: {
+      marginTop: 4,
+      color: COLORS.red,
+      fontSize: 12,
     },
   });

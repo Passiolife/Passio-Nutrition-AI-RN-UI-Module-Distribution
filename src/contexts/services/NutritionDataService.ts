@@ -1,5 +1,5 @@
 import type { Water } from 'src/models/Water';
-import type { NutritionProfile, Recipe } from '../../models';
+import type { CustomFood, NutritionProfile, Recipe } from '../../models';
 import type { FoodLog, FavoriteFoodItem } from '../../models';
 import type { PatientProfile } from '../../models';
 import type { Weight } from '../../models/Weight';
@@ -10,6 +10,9 @@ export interface NutritionDataService {
   saveFoodLog(foodLog: FoodLog): Promise<void>;
   deleteFoodLog(uuID: string): Promise<void>;
   getFoodLogs(): Promise<FoodLog[]>;
+  saveCustomFood(food: CustomFood): Promise<void>;
+  deleteCustomFood(uuID: string): Promise<void>;
+  getCustomFoodLogs(): Promise<CustomFood[]>;
   saveFavoriteFoodItem(favoriteFoodItem: FavoriteFoodItem): Promise<void>;
   getFavoriteFoodItems(): Promise<FavoriteFoodItem[]>;
   deleteFavoriteFoodItem(uuID: string): Promise<void>;

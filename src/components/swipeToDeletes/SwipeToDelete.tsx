@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useImperativeHandle, useRef } from 'react';
 import {
   Animated,
   Platform,
@@ -17,64 +17,94 @@ import { scaleHeight } from '../../utils';
 
 interface Props extends React.PropsWithChildren {
   onPressDelete: () => void;
+  onPressEdit?: () => void;
   swipeableContainer?: ViewStyle;
+  marginVertical?: number;
+}
+interface SwipeToDeleteRef {
+  closeSwipe: () => void;
 }
 
-export const SwipeToDelete: React.FC<Props> = (props) => {
-  const swipeableRef = useRef<Swipeable | null>(null);
+export const SwipeToDelete = React.forwardRef<SwipeToDeleteRef, Props>(
+  (props: Props, ref: React.Ref<SwipeToDeleteRef>) => {
+    const swipeReg = useRef<Swipeable | null>(null);
 
-  const rightActionMealLogView = (
-    _: Animated.AnimatedInterpolation<number>,
-    dragX: Animated.AnimatedInterpolation<number>
-  ) => {
-    const scale = dragX.interpolate({
-      inputRange: [-100, 50, 50, 50],
-      outputRange: [0, 90, 2, 10],
-    });
-
-    return (
-      <Animated.View
-        style={[
-          styles.actionContainer,
-          {
-            transform: [{ translateX: scale }],
-          },
-        ]}
-      >
-        <TouchableOpacity
-          style={styles.deleteBtnBackgroundColor}
-          onPress={props.onPressDelete}
-        >
-          <View style={[styles.swipeableButton]}>
-            <Text style={styles.swipeableBtnTxt}>Delete</Text>
-          </View>
-        </TouchableOpacity>
-      </Animated.View>
+    useImperativeHandle(
+      ref,
+      () => ({
+        closeSwipe: () => {
+          return swipeReg.current?.close();
+        },
+      }),
+      []
     );
-  };
 
-  let swipeableContainer = [
-    {
-      ...styles.swipeableContainer,
-      ...(props.swipeableContainer ? props.swipeableContainer : null),
-    },
-  ];
-  return (
-    <GestureHandlerRootView style={{ marginVertical: scaleHeight(8) }}>
-      <Swipeable
-        ref={swipeableRef}
-        containerStyle={swipeableContainer}
-        childrenContainerStyle={styles.shadowContainer}
-        overshootLeft={true}
-        renderRightActions={(progressAnimatedValue, dragAnimatedValue) =>
-          rightActionMealLogView(progressAnimatedValue, dragAnimatedValue)
-        }
+    const rightActionMealLogView = (
+      _: Animated.AnimatedInterpolation<number>,
+      dragX: Animated.AnimatedInterpolation<number>
+    ) => {
+      const scale = dragX.interpolate({
+        inputRange: [-150, 30, 30, 30],
+        outputRange: [0, 0, 2, 10],
+      });
+
+      return (
+        <Animated.View
+          style={[
+            styles.actionContainer,
+            {
+              transform: [{ translateX: scale }],
+            },
+          ]}
+        >
+          <TouchableOpacity
+            style={styles.editBtnBackground}
+            onPress={() => {
+              swipeReg?.current?.close();
+              props.onPressEdit?.();
+            }}
+          >
+            <View style={[styles.swipeableButton]}>
+              <Text style={styles.swipeableBtnTxt}>Edit</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.deleteBtnBackgroundColor}
+            onPress={props.onPressDelete}
+          >
+            <View style={[styles.swipeableButton]}>
+              <Text style={styles.swipeableBtnTxt}>Delete</Text>
+            </View>
+          </TouchableOpacity>
+        </Animated.View>
+      );
+    };
+
+    let swipeableContainer = [
+      {
+        ...styles.swipeableContainer,
+        ...(props.swipeableContainer ? props.swipeableContainer : null),
+      },
+    ];
+    return (
+      <GestureHandlerRootView
+        style={{ marginVertical: scaleHeight(props.marginVertical ?? 8) }}
       >
-        {props.children}
-      </Swipeable>
-    </GestureHandlerRootView>
-  );
-};
+        <Swipeable
+          ref={swipeReg}
+          containerStyle={swipeableContainer}
+          childrenContainerStyle={styles.shadowContainer}
+          overshootLeft={true}
+          renderRightActions={(progressAnimatedValue, dragAnimatedValue) =>
+            rightActionMealLogView(progressAnimatedValue, dragAnimatedValue)
+          }
+        >
+          {props.children}
+        </Swipeable>
+      </GestureHandlerRootView>
+    );
+  }
+);
 
 const styles = StyleSheet.create({
   swipeableContainer: {
@@ -103,7 +133,7 @@ const styles = StyleSheet.create({
   },
   swipeableButton: {
     flex: 1,
-    width: 85,
+    minWidth: 85,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -112,5 +142,9 @@ const styles = StyleSheet.create({
   },
   deleteBtnBackgroundColor: {
     backgroundColor: '#fd3c2f',
+    overflow: 'hidden',
+  },
+  editBtnBackground: {
+    backgroundColor: '#4F46E5',
   },
 });

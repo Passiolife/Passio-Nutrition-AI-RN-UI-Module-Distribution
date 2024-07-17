@@ -18,9 +18,13 @@ import {
   getWeightByStartDateAndEndDate,
   deleteWaterLog,
   deleteWeightLog,
+  getCustomFoods,
+  saveCustomFood,
+  deleteCustomFood,
 } from '../../../db';
 import {
   ActivityLevelType,
+  CustomFood,
   UnitSystem,
   type FavoriteFoodItem,
   type FoodLog,
@@ -37,6 +41,9 @@ const dataService: NutritionDataService = {
   async saveFoodLog(foodLog: FoodLog): Promise<void> {
     return saveFoodLog(await DBHandler.getInstance(), foodLog);
   },
+  async saveCustomFood(foodLog: CustomFood): Promise<void> {
+    return saveCustomFood(await DBHandler.getInstance(), foodLog);
+  },
   async saveWater(water: Water): Promise<void> {
     return saveWater(await DBHandler.getInstance(), water);
   },
@@ -47,8 +54,14 @@ const dataService: NutritionDataService = {
   getFoodLogs: function (): Promise<FoodLog[]> {
     return getFoodLogs();
   },
+  getCustomFoodLogs: function (): Promise<CustomFood[]> {
+    return getCustomFoods();
+  },
   async deleteFoodLog(uuid: string): Promise<void> {
     return deleteFoodLog(await DBHandler.getInstance(), uuid);
+  },
+  async deleteCustomFood(uuid: string): Promise<void> {
+    return deleteCustomFood(await DBHandler.getInstance(), uuid);
   },
   async deleteRecipe(uuid: string): Promise<void> {
     return deleteRecipe(await DBHandler.getInstance(), uuid);

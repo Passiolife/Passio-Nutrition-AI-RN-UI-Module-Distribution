@@ -1,10 +1,20 @@
-import type { FavoriteFoodItem, FoodLog, Recipe, Water } from './../models';
+import type {
+  CustomFood,
+  FavoriteFoodItem,
+  FoodLog,
+  Recipe,
+  Water,
+} from './../models';
 import {
+  ROW_BARCODE,
+  ROW_BRAND_NAME,
+  ROW_COMPUTED_WEIGHT,
   ROW_CONSUMED,
   ROW_DAY,
   ROW_ENTITY_TYPE,
   ROW_EVENT_TIME_STAMP,
   ROW_FOOD_ITEMS,
+  ROW_ICON_ID,
   ROW_IMAGE_NAME,
   ROW_INGREDIENTS,
   ROW_MEAL,
@@ -16,8 +26,10 @@ import {
   ROW_SERVING_UNITS,
   ROW_TIME,
   ROW_TOTAL_SERVINGS,
+  ROW_USER_FOOD_IMAGE,
   ROW_UUID,
   ROW_WEIGHT,
+  TABLE_CUSTOM_FOOD_LOGS,
   TABLE_FAVOURITE_FOOD_LOGS,
   TABLE_FOOD_LOGS,
   TABLE_RECIPE,
@@ -37,7 +49,8 @@ export const saveFoodLog = async (
   foodLog: FoodLog
 ): Promise<void> => {
   return new Promise((resolve, reject) => {
-    const insertQuery = `INSERT or REPLACE INTO  ${TABLE_FOOD_LOGS} (${ROW_UUID}, ${ROW_NAME}, ${ROW_MEAL}, ${ROW_IMAGE_NAME}, ${ROW_ENTITY_TYPE}, ${ROW_EVENT_TIME_STAMP}, ${ROW_FOOD_ITEMS},${ROW_SERVING_SIZES},${ROW_SERVING_UNITS},${ROW_PASSIOID},${ROW_SELECTED_UNIT},${ROW_SELECTED_QUANTITY}) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)`;
+    const insertQuery = `INSERT or REPLACE INTO  ${TABLE_FOOD_LOGS} (${ROW_UUID}, ${ROW_NAME}, ${ROW_MEAL}, ${ROW_IMAGE_NAME}, ${ROW_ENTITY_TYPE}, ${ROW_EVENT_TIME_STAMP}, ${ROW_USER_FOOD_IMAGE}, ${ROW_ICON_ID}, ${ROW_FOOD_ITEMS},${ROW_SERVING_SIZES},${ROW_SERVING_UNITS},${ROW_PASSIOID},${ROW_SELECTED_UNIT},${ROW_SELECTED_QUANTITY}) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
+
     db.transaction((tx) => {
       tx.executeSql(
         insertQuery,
@@ -48,10 +61,49 @@ export const saveFoodLog = async (
           foodLog.imageName,
           foodLog.entityType,
           foodLog.eventTimestamp,
+          foodLog.userFoodImage,
+          foodLog.iconID,
           JSON.stringify(foodLog.foodItems),
           JSON.stringify(foodLog.servingSizes),
           JSON.stringify(foodLog.servingUnits),
           foodLog.passioID,
+          foodLog.selectedUnit,
+          foodLog.selectedQuantity,
+        ],
+        () => {
+          resolve();
+        },
+        (_, error) => {
+          console.error(`Failed to save food logs ${error}`);
+          reject(error);
+        }
+      );
+    });
+  });
+};
+
+export const saveCustomFood = async (
+  db: SQLiteDatabase,
+  foodLog: CustomFood
+): Promise<void> => {
+  return new Promise((resolve, reject) => {
+    const insertQuery = `INSERT or REPLACE INTO  ${TABLE_CUSTOM_FOOD_LOGS} (${ROW_UUID}, ${ROW_NAME}, ${ROW_IMAGE_NAME}, ${ROW_ENTITY_TYPE}, ${ROW_BARCODE}, ${ROW_BRAND_NAME}, ${ROW_USER_FOOD_IMAGE}, ${ROW_ICON_ID}, ${ROW_COMPUTED_WEIGHT}, ${ROW_FOOD_ITEMS},${ROW_SERVING_SIZES},${ROW_SERVING_UNITS},${ROW_SELECTED_UNIT},${ROW_SELECTED_QUANTITY}) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
+    db.transaction((tx) => {
+      tx.executeSql(
+        insertQuery,
+        [
+          foodLog.uuid,
+          foodLog.name,
+          foodLog.imageName,
+          foodLog.entityType,
+          foodLog.barcode,
+          foodLog.brandName,
+          foodLog.userFoodImage,
+          foodLog.iconID,
+          JSON.stringify(foodLog.computedWeight),
+          JSON.stringify(foodLog.foodItems),
+          JSON.stringify(foodLog.servingSizes),
+          JSON.stringify(foodLog.servingUnits),
           foodLog.selectedUnit,
           foodLog.selectedQuantity,
         ],
@@ -74,6 +126,28 @@ export const deleteFoodLog = async (
 ): Promise<void> => {
   return new Promise((resolve, reject) => {
     const deleteQuery = `DELETE from ${TABLE_FOOD_LOGS} where ${ROW_UUID} = "${uuId}"`;
+    db.transaction((tx) => {
+      tx.executeSql(
+        deleteQuery,
+        [],
+        () => {
+          resolve();
+        },
+        (_, error) => {
+          reject(error);
+        }
+      );
+    });
+  });
+};
+
+// Delete Food logs into local storage
+export const deleteCustomFood = async (
+  db: SQLiteDatabase,
+  uuId: string
+): Promise<void> => {
+  return new Promise((resolve, reject) => {
+    const deleteQuery = `DELETE from ${TABLE_CUSTOM_FOOD_LOGS} where ${ROW_UUID} = "${uuId}"`;
     db.transaction((tx) => {
       tx.executeSql(
         deleteQuery,
@@ -158,6 +232,20 @@ export const getFoodLogs = async (): Promise<FoodLog[]> => {
   }
 };
 
+// Get Food Logs List from local storage
+export const getCustomFoods = async (): Promise<CustomFood[]> => {
+  try {
+    const db = await DBHandler.getInstance();
+    const results = await db.executeSql(
+      `SELECT * FROM ${TABLE_CUSTOM_FOOD_LOGS}`
+    );
+    return convertResultToFoodLog(results);
+  } catch (error) {
+    console.error(`Failed to get food logs ${error}`);
+    throw error;
+  }
+};
+
 // Get Favorite Food Logs from favourite_food_table
 export const getFavoriteFoodItems = async (): Promise<FavoriteFoodItem[]> => {
   try {
@@ -185,8 +273,12 @@ export const getMealLogsByStartDateAndEndDate = async (
       );
       resolve(convertResultToFoodLog(results));
     } catch (error) {
-      console.error(`Failed to get food logs ${error} ${startDate}-${endDate}`);
-      reject(`Failed to get food logs ${error} ${startDate}-${endDate}`);
+      console.error(
+        `Failed to get food logs ${error} ========= ${startDate}-${endDate}`
+      );
+      reject(
+        `Failed to get food logs ${error} ========= ${startDate}-${endDate}`
+      );
       throw error;
     }
   });
@@ -297,6 +389,9 @@ export function convertResultToFoodLog(results: [ResultSet]): FoodLog[] {
     value.foodItems = JSON.parse(value.foodItems.toString());
     value.servingUnits = JSON.parse(value.servingUnits.toString());
     value.servingSizes = JSON.parse(value.servingSizes.toString());
+    value.computedWeight = JSON.parse(
+      (value.computedWeight ?? '{}').toString()
+    );
   });
   return items;
 }

@@ -18,5 +18,7 @@ module.exports = {
     'react-native-screens': {},
     'react-native-vision-camera': {},
     'react-native-image-picker': {},
+    'react-native-keyboard-aware-scroll-view': {},
+    'react-native-fs': {},
   },
 };

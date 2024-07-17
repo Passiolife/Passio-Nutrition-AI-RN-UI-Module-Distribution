@@ -1,34 +1,46 @@
 import {
   IconSize,
   type PassioID,
-  PassioIDEntityType,
   PassioIconView,
 } from '@passiolife/nutritionai-react-native-sdk-v3/src/sdk/v2';
-import type { ImageStyle, StyleProp } from 'react-native';
+import { Image, type ImageStyle, type StyleProp } from 'react-native';
 
 import React from 'react';
+import type { PassioIconType } from '../../models';
 
 interface Props {
   style?: StyleProp<ImageStyle>;
   passioID?: PassioID;
   imageName?: string;
+  userFoodImage?: string;
+  iconID?: string;
   size?: IconSize;
-  entityType: PassioIDEntityType | 'user-recipe';
+  entityType?: PassioIconType;
 }
 
 /*
   PassioFoodIcon: RENDER FOOD IMAGE From Server
   */
 export const PassioFoodIcon = (props: Props) => {
-  const { passioID, imageName, size } = props;
+  const { passioID, imageName, size, userFoodImage, iconID } = props;
   return (
-    <PassioIconView
-      testID="testPassioFoodIconImage"
-      style={[props.style]}
-      config={{
-        passioID: imageName ?? passioID ?? '',
-        iconSize: size ?? IconSize.PX90,
-      }}
-    />
+    <>
+      {userFoodImage ? (
+        <Image
+          testID="testPassioFoodIconImage"
+          style={[props.style]}
+          source={{ uri: `data:image/png;base64,${userFoodImage}` }}
+        />
+      ) : (
+        <PassioIconView
+          testID="testPassioFoodIconImage"
+          style={[props.style]}
+          config={{
+            passioID: iconID ?? imageName ?? passioID ?? '',
+            iconSize: size ?? IconSize.PX90,
+          }}
+        />
+      )}
+    </>
   );
 };
