@@ -18,7 +18,6 @@ export const MyFoodsScreen = () => {
     setTab,
     customFoods,
     onCreateFoodPress,
-    onCreateNewRecipe,
     onEditorPress,
     onDeletePress,
     onLogPress,
@@ -59,13 +58,13 @@ export const MyFoodsScreen = () => {
           onPress={onCreateFoodPress}
         />
       )}
-      {tab !== 'Custom Foods' && (
+      {/* {tab !== 'Custom Foods' && (
         <BasicButton
           text="Create New Recipe"
           style={styles.button}
           onPress={onCreateNewRecipe}
         />
-      )}
+      )} */}
     </View>
   );
 };
