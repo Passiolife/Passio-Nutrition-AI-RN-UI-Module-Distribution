@@ -122,31 +122,10 @@ export const BarcodeFoodScan = gestureHandlerRootHOC(() => {
 });
 
 const styles = StyleSheet.create({
-  touchAreaStyle: {
-    flex: 1,
-    position: 'absolute',
-    height: '100%',
-    width: '100%',
-  },
-  scanIcon: {
-    position: 'absolute',
-    top: 0,
-    bottom: 50,
-    right: 0,
-    left: 0,
-    marginHorizontal: 16,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   bottomSheetChildrenContainer: {
     flex: 1,
   },
   pullTray: {
     alignSelf: 'center',
   },
-  camera: {
-    flex: 1,
-    width: '100%',
-  },
-  container: {},
 });
