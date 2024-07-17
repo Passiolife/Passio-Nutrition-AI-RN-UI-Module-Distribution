@@ -47,9 +47,7 @@ export const EditIngredient = (props?: EditIngredientsScreenProps) => {
   );
 
   const onSavePress = async () => {
-    await saveIngredient().then(() => {
-      navigation.goBack();
-    });
+    await saveIngredient().then(() => {});
   };
 
   const saveIngredient = async () => {

@@ -10,7 +10,6 @@ import {
 } from '@react-navigation/native';
 import { useBranding, useServices } from '../../contexts';
 import { getLogToDate, mealLabelByDate } from '../../utils';
-import { FoodSearchScreenRoute } from '../../navigaitons/Route';
 import type { ParamList } from '../../navigaitons';
 import type {
   PassioFoodDataInfo,
@@ -87,7 +86,7 @@ export function useFoodSearch() {
       if (isOpenEditor) {
         navigation.navigate('EditFoodLogScreen', {
           foodLog: foodLog,
-          prevRouteName: FoodSearchScreenRoute,
+          prevRouteName: 'Search',
         });
       } else {
         await services.dataService.saveFoodLog(foodLog);

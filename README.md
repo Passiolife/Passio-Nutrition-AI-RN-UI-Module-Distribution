@@ -51,6 +51,8 @@ module.exports = {
     '@react-native-async-storage/async-storage': {},
     'react-native-vision-camera': {},
     'react-native-image-picker': {},
+    'react-native-keyboard-aware-scroll-view': {},
+    'react-native-fs': {},
   },
 };
 ```

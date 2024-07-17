@@ -16,6 +16,7 @@ import { scaleHeight, scaleWidth } from '../../../../utils';
 
 interface Props {
   foodItems: FoodItem[];
+  isShowAll?: boolean;
   onAddIngredients: () => void;
   deleteIngredientsItem: (foodItem: FoodItem) => void;
   navigateToEditIngredientsScreen: (
@@ -29,6 +30,7 @@ export const IngredientsView = ({
   onAddIngredients,
   deleteIngredientsItem,
   navigateToEditIngredientsScreen,
+  isShowAll = false,
 }: Props) => {
   const branding = useBranding();
   const styles = ingredientViewStyle(branding);
@@ -61,7 +63,7 @@ export const IngredientsView = ({
         </TouchableOpacity>
 
         <>
-          {foodItems.length > 1 ? (
+          {isShowAll || foodItems.length > 1 ? (
             <View>
               <View style={styles.line} />
               <FlatList

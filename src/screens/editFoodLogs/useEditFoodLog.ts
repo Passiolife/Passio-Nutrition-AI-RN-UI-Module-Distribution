@@ -1,3 +1,4 @@
+import uuid4 from 'react-native-uuid';
 import { convertPassioFoodItemToFoodLog } from './../../utils/V3Utils';
 import type { FoodItem, FoodLog, MealLabel } from '../../models';
 import { convertFoodLogsToFavoriteFoodLog } from './../../utils';
@@ -162,6 +163,15 @@ export function useEditFoodLog() {
           onSwitchAlternative(item);
         },
       });
+    } else if (params.prevRouteName === 'Search') {
+      const uuid: string = uuid4.v4() as string;
+      navigation.navigate('FoodCreatorScreen', {
+        foodLog: {
+          ...foodLog,
+          uuid: uuid,
+        },
+        from: 'Search',
+      });
     } else {
       onDeleteFoodLogPress();
     }
@@ -183,18 +193,20 @@ export function useEditFoodLog() {
   };
 
   const onSavePress = async () => {
-    await saveFoodLog();
-    ShowToast('Added food into meal log');
-    if (params.prevRouteName === 'MealLog') {
-      navigation.dispatch(StackActions.pop(1));
-    } else if (params.prevRouteName === ROUTES.RecipeEditorScreen) {
-      navigation.dispatch(StackActions.pop(3));
-    } else if (params.prevRouteName === 'QuickScan') {
-      navigation.dispatch(StackActions.pop(1));
-    } else {
-      navigation.dispatch(StackActions.pop(2));
-    }
-    params?.onSaveLogPress?.({ ...foodLog });
+    try {
+      await saveFoodLog();
+      ShowToast('Added food into meal log');
+      if (params.prevRouteName === 'MealLog') {
+        navigation.dispatch(StackActions.pop(1));
+      } else if (params.prevRouteName === ROUTES.RecipeEditorScreen) {
+        navigation.dispatch(StackActions.pop(3));
+      } else if (params.prevRouteName === 'QuickScan') {
+        navigation.dispatch(StackActions.pop(1));
+      } else {
+        navigation.dispatch(StackActions.pop(2));
+      }
+      params?.onSaveLogPress?.({ ...foodLog });
+    } catch (e) {}
   };
 
   const onCancelPress = async () => {

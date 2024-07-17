@@ -1,12 +1,15 @@
 import type { NutrientType } from '../../models';
 
 export const Units = [
-  'Servings',
-  'Piece',
+  'servings',
+  'piece',
   'cup',
   'oz',
-  'g',
+  'gram',
   'ml',
+  'small',
+  'medium',
+  'large',
   'handful',
   'scoop',
   'tbsp',
@@ -31,4 +34,4 @@ export const OtherNutrients: NutrientType[] = [
   'iron',
   'potassium',
 ];
-export const Weights = ['grams', 'ml'];
+export const Weights = ['g', 'ml'];

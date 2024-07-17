@@ -10,7 +10,15 @@ import type {
   HomeScreenScreenProps,
 } from '../../screens';
 import type { IngredientQuickScanScreenProps } from '../../screens/recipeEditor/RecipesScan/IngredientQuickScanScreen/IngredientQuickScanScreen';
-import type { MealLabel, Nutrient, Water, Weight } from '../../models';
+import type {
+  BarcodeCustomResult,
+  CustomFood,
+  FoodLog,
+  MealLabel,
+  Nutrient,
+  Water,
+  Weight,
+} from '../../models';
 import type { FavoritesScreenProps } from '../../screens/myFavoritess';
 import type {
   TakePictureScreenProps,
@@ -24,6 +32,7 @@ export type Module =
   | 'Other'
   | 'Favorites'
   | 'VoiceLogging'
+  | 'Recipe'
   | 'Ingredient';
 
 export interface HomeBottom {
@@ -55,6 +64,7 @@ export type ImagePickerType = 'camera' | 'gallery';
 interface ImagePickerProps {
   onImages: (images: string[]) => void;
   type: ImagePickerType;
+  isMultiple?: boolean;
 }
 export interface AdvisorScreenProps {
   logToDate?: Date | undefined;
@@ -63,16 +73,31 @@ export interface AdvisorScreenProps {
 export interface FoodCreatorNavProps {
   logToDate?: Date | undefined;
   logToMeal?: MealLabel | undefined;
+  foodLog?: CustomFood;
+  from?: Module;
 }
 export interface MyFoodsScreenNavProps {
   logToDate?: Date | undefined;
   logToMeal?: MealLabel | undefined;
+}
+export interface BarcodeScanScreenNavProps {
+  onCreateFoodAnyWay?: (result?: BarcodeCustomResult) => void;
+  onViewExistingItem?: (result?: BarcodeCustomResult) => void;
+  onBarcodePress?: (result?: BarcodeCustomResult) => void;
+}
+export interface EditRecipeScreenProps {
+  foodLog: FoodLog;
+  prevRouteName: String | Module;
+  onSaveLogPress?: (foodLog: FoodLog) => void;
+  onDeleteLogPress?: (foodLog: FoodLog) => void;
+  onCancelPress?: () => void;
 }
 
 export type ParamList = {
   MealLogScreen: MealLogScreenProps;
   ScanningScreen: ScanningScreenProps;
   EditFoodLogScreen: EditFoodLogScreenProps;
+  EditRecipeScreen: EditRecipeScreenProps;
   ProfileScreen: undefined;
   ProfileScreenApp: undefined;
   DashboardScreen: undefined;
@@ -99,4 +124,5 @@ export type ParamList = {
   ImagePickerScreen: ImagePickerProps;
   FoodCreatorScreen: FoodCreatorNavProps;
   MyFoodsScreen: MyFoodsScreenNavProps;
+  BarcodeScanScreen: BarcodeScanScreenNavProps;
 };

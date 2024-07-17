@@ -9,7 +9,8 @@ export interface FoodItem extends ServingInfo {
   passioID: PassioID;
   name: string;
   imageName: string;
-  entityType: PassioIDEntityType;
+  iconId?: string;
+  entityType: PassioIDEntityType | 'user-food';
   computedWeight: ComputedWeight;
   ingredientsDescription?: string;
   barcode?: string;

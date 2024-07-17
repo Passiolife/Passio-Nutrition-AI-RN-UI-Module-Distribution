@@ -45,6 +45,10 @@ const headerStyle = ({}: Branding, insets: EdgeInsets) => {
       width: scaleWidth(28),
       height: scaleHeight(28),
     },
+    rightIcon: {
+      width: scaleWidth(20),
+      height: scaleHeight(20),
+    },
   });
 };
 
