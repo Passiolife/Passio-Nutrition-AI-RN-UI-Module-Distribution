@@ -8,7 +8,10 @@ import {
 import uuid4 from 'react-native-uuid';
 import type { FoodCreatorFoodDetailType } from './views/FoodCreatorFoodDetail';
 import type { RequireNutritionFactsType } from './views/RequireNutritionFacts';
-import type { PassioFoodItem } from '@passiolife/nutritionai-react-native-sdk-v3';
+import type {
+  NutritionFacts,
+  PassioFoodItem,
+} from '@passiolife/nutritionai-react-native-sdk-v3';
 import { convertPassioFoodItemToFoodLog } from '../../utils/V3Utils';
 
 export interface createFoodLogUsingFoodCreator {
@@ -166,4 +169,121 @@ export const isValidDecimalNumber = (text?: string, isCharacter?: boolean) => {
   } else {
     return false;
   }
+};
+export const createCustomFoodUsingNutritionFact = (
+  facts: NutritionFacts,
+  barcode?: string
+) => {
+  let nutrients: Nutrient[] = [];
+
+  if (facts.calories) {
+    nutrients.push({
+      id: 'calories',
+      amount: facts.calories,
+      unit: nutrientUnits.calories,
+    });
+  }
+
+  if (facts.fat) {
+    nutrients.push({
+      id: 'fat',
+      amount: facts.fat,
+      unit: nutrientUnits.fat,
+    });
+  }
+
+  if (facts.carbs) {
+    nutrients.push({
+      id: 'carbs',
+      amount: facts.carbs,
+      unit: nutrientUnits.carbs,
+    });
+  }
+
+  if (facts.protein) {
+    nutrients.push({
+      id: 'protein',
+      amount: facts.protein,
+      unit: nutrientUnits.protein,
+    });
+  }
+
+  if (facts.saturatedFat) {
+    nutrients.push({
+      id: 'satFat',
+      amount: facts.saturatedFat,
+      unit: nutrientUnits.satFat,
+    });
+  }
+
+  if (facts.transFat) {
+    nutrients.push({
+      id: 'transFat',
+      amount: facts.transFat,
+      unit: nutrientUnits.fat,
+    });
+  }
+
+  if (facts.cholesterol) {
+    nutrients.push({
+      id: 'cholesterol',
+      amount: facts.cholesterol,
+      unit: nutrientUnits.cholesterol,
+    });
+  }
+
+  if (facts.sugars) {
+    nutrients.push({
+      id: 'sugars',
+      amount: facts.sugars,
+      unit: nutrientUnits.sugars,
+    });
+  }
+
+  if (facts.sugarAlcohol) {
+    nutrients.push({
+      id: 'sugarAlcohol',
+      amount: facts.sugarAlcohol,
+      unit: nutrientUnits.sugarAlcohol,
+    });
+  }
+
+  if (facts.dietaryFiber) {
+    nutrients.push({
+      id: 'fiber',
+      amount: facts.dietaryFiber,
+      unit: nutrientUnits.fiber,
+    });
+  }
+
+  if (facts.sodium) {
+    nutrients.push({
+      id: 'sodium',
+      amount: facts.sodium,
+      unit: nutrientUnits.sodium,
+    });
+  }
+
+  const foodItems: FoodItem = {
+    nutrients: nutrients,
+    passioID: '',
+    name: '',
+    imageName: '',
+    entityType: 'user-food',
+    computedWeight: {
+      unit: facts.servingSizeUnit ?? '',
+      value: 0,
+    },
+    selectedUnit: facts.servingSizeUnitName ?? '',
+    selectedQuantity: facts.servingSizeQuantity ?? 0,
+    servingSizes: [],
+    servingUnits: [],
+  };
+  const customFood: CustomFood = {
+    barcode: barcode,
+    uuid: '',
+    foodItems: [foodItems],
+    ...foodItems,
+  };
+  return customFood;
 };

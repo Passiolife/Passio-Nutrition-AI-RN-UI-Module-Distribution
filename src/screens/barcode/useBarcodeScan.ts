@@ -59,29 +59,37 @@ export const useBarcodeScan = () => {
             return;
           }
 
-          let attribute: QuickResult | null =
-            await getQuickResults(barcodeCandidate);
-
           const existingCustomFood = customFoods?.find(
             (i) => i.barcode === barcodeCandidate.barcode
           );
 
+          let attribute: QuickResult | null =
+            await getQuickResults(barcodeCandidate);
+
           if (attribute === null) {
-            setPassioQuickResults({
+            const result: BarcodeCustomResult = {
               name: barcodeCandidate.barcode,
               type: 'Barcode',
               customFood: existingCustomFood,
               barcode: barcodeCandidate.barcode,
               passioIDAttributes: null,
-            });
+            };
+            if (existingCustomFood) {
+              setPassioQuickResults(result);
+            } else {
+              params?.onBarcodePress?.(result);
+            }
           } else {
-            setPassioQuickResults({
+            const result: BarcodeCustomResult = {
               ...attribute,
+              name: barcodeCandidate.barcode,
+              type: 'Barcode',
               customFood: existingCustomFood,
               barcode: barcodeCandidate.barcode,
-              type: 'Barcode',
-            });
+            };
+            setPassioQuickResults(result);
           }
+
           setLoading(false);
           barcodeRef.current = barcodeCandidate.barcode;
         }
@@ -91,7 +99,7 @@ export const useBarcodeScan = () => {
     if (detection) {
       init();
     }
-  }, [customFoods, foodDetectEvents, getQuickResults]);
+  }, [customFoods, foodDetectEvents, getQuickResults, params]);
 
   useEffect(() => {
     const config: FoodDetectionConfig = {

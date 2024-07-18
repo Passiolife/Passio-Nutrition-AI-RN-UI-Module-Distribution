@@ -15,6 +15,7 @@ import { convertPassioFoodItemToFoodLog } from '../../utils/V3Utils';
 import RNFS from 'react-native-fs';
 import { Platform } from 'react-native';
 import { ShowToast } from '../../utils';
+import uuid4 from 'react-native-uuid';
 
 export type ScanningScreenNavigationProps = StackNavigationProp<
   ParamList,
@@ -85,12 +86,11 @@ export const useFoodCreator = () => {
         navigation.goBack();
         if (item?.customFood) {
           //If they click on "Create Custom Food Without Barcode", the barcode value is left as empty in the Food Creator screen.
-          if (item?.passioIDAttributes) {
-            const customFood = convertPassioFoodItemToCustomFood(
-              item.passioIDAttributes
-            );
-            setCustomFood(customFood);
-          }
+          setCustomFood({
+            ...item?.customFood,
+            barcode: undefined,
+            uuid: uuid4.v4() as string,
+          });
         } else {
           // custom food doesn't exist
           // If they click on "Create Custom Food Anyway", the barcode value is imported into the Food Creator screen.

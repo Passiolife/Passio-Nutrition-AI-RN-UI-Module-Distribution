@@ -15,7 +15,7 @@ interface Props {
   foodItems: FoodItem[];
   passioID: PassioID;
   isOpenFood?: boolean;
-  entityType: PassioIconType;
+  entityType?: PassioIconType;
   name: string;
   imageName: string;
   userFoodImage?: string;
