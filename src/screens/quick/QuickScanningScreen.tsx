@@ -16,6 +16,7 @@ import { ICONS } from '../../assets';
 import { VisualFoodScan } from './mode/visual/VisualFoodScan';
 import { useBranding } from '../../contexts';
 import { NutritionFactScan } from './mode/nutritionFact/NutritionFactScan';
+import { ShowToast } from '../../utils';
 
 export interface ScanningScreenProps {
   logToDate: Date | undefined;
@@ -54,6 +55,7 @@ export const QuickScanningScreen = gestureHandlerRootHOC(() => {
           ]}
           onPress={() => {
             setMode('Visual');
+            ShowToast('Whole Food Mode');
           }}
         >
           <Image
@@ -70,6 +72,7 @@ export const QuickScanningScreen = gestureHandlerRootHOC(() => {
           ]}
           onPress={() => {
             setMode('Barcode');
+            ShowToast('Barcode Mode');
           }}
         >
           <Image
@@ -81,6 +84,7 @@ export const QuickScanningScreen = gestureHandlerRootHOC(() => {
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
+            ShowToast('Nutrition Facts Mode');
             setMode('NutritionFact');
           }}
           style={[

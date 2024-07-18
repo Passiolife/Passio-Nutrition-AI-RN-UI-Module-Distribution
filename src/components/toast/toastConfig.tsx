@@ -1,7 +1,13 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import { scaledSize, scaleHeight, scaleWidth, screenWidth } from '../../utils';
+import {
+  scaledSize,
+  scaleHeight,
+  scaleWidth,
+  screenHeight,
+  screenWidth,
+} from '../../utils';
 
 import { Text } from '../texts';
 
@@ -47,7 +53,7 @@ export const styles = StyleSheet.create({
     borderColor: 'rgba(0, 0, 0, 0.6)',
     borderRadius: scaledSize(7),
     borderWidth: 0.2,
-    marginBottom: 120,
+    marginBottom: screenHeight / 2,
     flexDirection: 'row',
     height: scaledSize(50),
     overflow: 'hidden',
