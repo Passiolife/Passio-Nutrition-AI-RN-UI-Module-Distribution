@@ -17,16 +17,13 @@ import {
 import {
   PassioSDK,
   type BarcodeCandidate,
-  type DetectedCandidate,
   type FoodDetectionConfig,
   type FoodDetectionEvent,
-  type PackagedFoodCode,
   type PassioFoodItem,
 } from '@passiolife/nutritionai-react-native-sdk-v3';
 import {
   getBarcodeResult,
   getDetectionCandidate,
-  getPackageFoodResult,
   getPassioIDAttribute,
 } from '../../../../utils/QuickResultUtils';
 import { convertPassioFoodItemToFoodLog } from '../../../../utils/V3Utils';
@@ -54,38 +51,16 @@ export const useBarcodeFoodScan = () => {
     useState<FoodDetectionEvent | null>(null);
 
   const getQuickResults = useCallback(
-    async (
-      barcodeCandidate?: BarcodeCandidate,
-      packagedFoodCode?: PackagedFoodCode,
-      detectedCandidate?: DetectedCandidate
-    ) => {
+    async (barcodeCandidate?: BarcodeCandidate) => {
       if (
         barcodeCandidate &&
         passioQuickResultRef.current?.barcode === barcodeCandidate.barcode
       ) {
         return null;
       }
-      if (
-        packagedFoodCode &&
-        passioQuickResultRef.current?.packageFood === packagedFoodCode
-      ) {
-        return null;
-      }
-      if (
-        detectedCandidate &&
-        detectedCandidate.passioID === passioQuickResultRef.current?.passioID
-      ) {
-        return null;
-      }
 
       if (barcodeCandidate) {
         return await getBarcodeResult(barcodeCandidate);
-      }
-      if (packagedFoodCode) {
-        return await getPackageFoodResult(packagedFoodCode);
-      }
-      if (detectedCandidate) {
-        return getDetectionCandidate(detectedCandidate);
       }
 
       return null;
@@ -232,9 +207,7 @@ export const useBarcodeFoodScan = () => {
         if (candidates) {
           const detectedCandidate = candidates.detectedCandidates?.[0];
           let attribute: QuickResult | null = await getQuickResults(
-            candidates.barcodeCandidates?.[0],
-            candidates.packagedFoodCode?.[0],
-            detectedCandidate
+            candidates.barcodeCandidates?.[0]
           );
 
           /** Now Check attribute and alternative */

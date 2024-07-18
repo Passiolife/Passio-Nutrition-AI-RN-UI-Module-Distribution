@@ -118,7 +118,13 @@ export const QuickScanningScreen = gestureHandlerRootHOC(() => {
         }}
       >
         {mode === 'Visual' && !info && <VisualFoodScan />}
-        {mode === 'Barcode' && !info && <BarcodeFoodScan />}
+        {mode === 'Barcode' && !info && (
+          <BarcodeFoodScan
+            onScanNutritionFacts={() => {
+              setMode('NutritionFact');
+            }}
+          />
+        )}
         {mode === 'NutritionFact' && !info && <NutritionFactScan />}
       </View>
       <QuickScanningActionView
