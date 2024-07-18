@@ -33,9 +33,9 @@ export const MessageRecords = ({
   onViewDiary,
   response,
 }: Props) => {
-  const [selected, setSelected] = useState<Selection[]>([]);
   const branding = useBranding();
   const { records = [] } = response;
+  const [selected, setSelected] = useState<Selection[]>(records);
 
   const onFoodSelect = (result: Selection) => {
     const find = selected?.find((item) => item.index === result?.index);
