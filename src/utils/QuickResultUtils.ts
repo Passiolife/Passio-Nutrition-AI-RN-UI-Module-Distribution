@@ -26,6 +26,7 @@ export const getBarcodeResult = async (barcodeCandidate?: BarcodeCandidate) => {
         name: barcodeCandidate.barcode,
         type: 'Barcode',
         barcode: barcodeCandidate.barcode,
+        passioIDAttributes: null,
       };
       return attribute;
     }

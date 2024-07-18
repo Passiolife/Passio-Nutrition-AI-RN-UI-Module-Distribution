@@ -172,6 +172,10 @@ export const useFoodCreator = () => {
     });
   };
 
+  const onCancelPress = () => {
+    navigation.goBack();
+  };
+
   return {
     branding,
     foodLog,
@@ -185,6 +189,7 @@ export const useFoodCreator = () => {
     closeImagePickerModal,
     onSavePress,
     onBarcodePress,
+    onCancelPress,
     onEditImagePress,
   };
 };

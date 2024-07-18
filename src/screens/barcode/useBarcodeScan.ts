@@ -66,7 +66,7 @@ export const useBarcodeScan = () => {
           let attribute: QuickResult | null =
             await getQuickResults(barcodeCandidate);
 
-          if (attribute === null) {
+          if (attribute?.passioIDAttributes === null) {
             const result: BarcodeCustomResult = {
               name: barcodeCandidate.barcode,
               type: 'Barcode',
