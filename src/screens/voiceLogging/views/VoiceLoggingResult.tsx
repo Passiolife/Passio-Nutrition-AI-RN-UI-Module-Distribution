@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   type StyleProp,
   StyleSheet,
@@ -15,10 +15,11 @@ import { BasicButton } from '../../../components';
 import { ICONS } from '../../../assets';
 import { FlatList } from 'react-native-gesture-handler';
 import { getUpdatedCaloriesOfPassioAdvisorFoodInfo } from '../../../utils';
+import type { VoiceLogRecord } from '../useVoiceLoggingScreen';
 
 interface Props {
   style?: StyleProp<ViewStyle>;
-  passioSpeechRecognitionResults: Array<PassioSpeechRecognitionModel>;
+  result: Array<VoiceLogRecord>;
   onTryAgain: () => void;
   onSearchManuallyPress: () => void;
   onLogSelect: (selected: PassioSpeechRecognitionModel[]) => void;
@@ -27,48 +28,50 @@ export interface VoiceLoggingResultRef {}
 
 export const VoiceLoggingResult = React.forwardRef(
   (
-    {
-      style,
-      passioSpeechRecognitionResults,
-      onTryAgain,
-      onLogSelect,
-      onSearchManuallyPress,
-    }: Props,
+    { style, result, onTryAgain, onLogSelect, onSearchManuallyPress }: Props,
     _ref: React.Ref<VoiceLoggingResultRef>
   ) => {
-    const [selected, setSelected] = useState<PassioSpeechRecognitionModel[]>(
-      []
-    );
+    const [voiceRecords, setVoiceRecords] = useState<VoiceLogRecord[]>(result);
 
-    const onFoodSelect = (result: PassioSpeechRecognitionModel) => {
-      const find = selected?.find(
-        (item) =>
-          item.advisorInfo?.recognisedName ===
-          result.advisorInfo?.recognisedName
+    useEffect(() => {
+      setVoiceRecords(result);
+    }, [result]);
+
+    const onFoodSelect = (record: VoiceLogRecord) => {
+      setVoiceRecords((item) =>
+        item?.map((i) => {
+          if (
+            i.advisorInfo?.recognisedName === record.advisorInfo?.recognisedName
+          ) {
+            return {
+              ...i,
+              isSelected: !(i.isSelected ?? false),
+            };
+          } else {
+            return i;
+          }
+        })
       );
-      if (find) {
-        setSelected((item) =>
-          item?.filter(
-            (i) =>
-              i.advisorInfo?.recognisedName !==
-              result.advisorInfo?.recognisedName
-          )
-        );
-      } else {
-        setSelected((item) => [...(item ?? []), result]);
-      }
     };
 
     const onClearPress = () => {
-      setSelected([]);
+      setVoiceRecords((item) =>
+        item?.map((i) => {
+          return {
+            ...i,
+            isSelected: false,
+          };
+        })
+      );
     };
 
+    const isSelected = voiceRecords?.find((i) => i.isSelected) !== undefined;
     return (
       <View style={[styles.itemsContainer, style]}>
         <View style={styles.clearBtnView}>
           <TouchableOpacity onPress={onClearPress} style={styles.clearBtn}>
             <Text size="_14px" weight="400" style={styles.clearBtnText}>
-              {selected && selected.length > 0 ? 'Clear' : ''}
+              {isSelected ? 'Clear' : ''}
             </Text>
           </TouchableOpacity>
         </View>
@@ -90,17 +93,10 @@ export const VoiceLoggingResult = React.forwardRef(
         </Text>
         <FlatList
           style={styles.list}
-          data={passioSpeechRecognitionResults}
+          data={voiceRecords}
           showsVerticalScrollIndicator={false}
-          renderItem={({ item }: { item: PassioSpeechRecognitionModel }) => {
+          renderItem={({ item }: { item: VoiceLogRecord }) => {
             const foodDataInfo = item.advisorInfo?.foodDataInfo;
-            const isSelected =
-              selected?.find(
-                (it) =>
-                  it.advisorInfo?.recognisedName ===
-                  item.advisorInfo?.recognisedName
-              ) !== undefined;
-
             const { calories } = getUpdatedCaloriesOfPassioAdvisorFoodInfo(
               item.advisorInfo
             );
@@ -113,7 +109,7 @@ export const VoiceLoggingResult = React.forwardRef(
                 onFoodLogSelect={() => {
                   onFoodSelect(item);
                 }}
-                isSelected={isSelected}
+                isSelected={item.isSelected ?? false}
               />
             );
           }}
@@ -148,10 +144,10 @@ export const VoiceLoggingResult = React.forwardRef(
           />
           <BasicButton
             onPress={() => {
-              onLogSelect(selected ?? []);
+              onLogSelect(voiceRecords.filter((i) => i.isSelected));
             }}
             style={styles.buttonLogSelected}
-            enable={selected && selected.length > 0}
+            enable={isSelected}
             text="Log Selected"
           />
         </View>
