@@ -14,8 +14,7 @@ import {
   type PassioMealPlanItem,
 } from '@passiolife/nutritionai-react-native-sdk-v3';
 import type { ParamList } from '../../../navigaitons';
-import { convertPassioFoodItemToFoodLog } from '../../../utils/V3Utils';
-import { ShowToast } from '../../../utils';
+import { createFoodLogUsingPortionSize, ShowToast } from '../../../utils';
 
 export function useMealPlan() {
   const services = useServices();
@@ -44,22 +43,20 @@ export function useMealPlan() {
   const convertFoodLog = async (item: PassioMealPlanItem) => {
     let result = await PassioSDK.fetchFoodItemForDataInfo(item.meal);
 
+    let qty = item.meal?.nutritionPreview?.servingQuantity ?? '1';
+    let servingUnit = item.meal?.nutritionPreview?.servingUnit ?? '';
+    let weightGram = item.meal?.nutritionPreview?.weightQuantity ?? 0;
+    const portionSize = `${qty} ${servingUnit}`;
+
     if (result) {
-      if (item.meal) {
-        result.amount.weight = {
-          unit: item.meal.nutritionPreview?.weightUnit ?? 'gram',
-          value: item.meal.nutritionPreview?.weightQuantity ?? 0,
-        };
-        result.amount.selectedUnit =
-          item.meal.nutritionPreview?.servingUnit ?? 'gram';
-        result.amount.selectedQuantity =
-          item.meal.nutritionPreview?.servingQuantity ?? 0;
-      }
-      const log = convertPassioFoodItemToFoodLog(
+      let log = createFoodLogUsingPortionSize(
         result,
-        params.logToDate,
-        item.mealTime.toLowerCase() as MealLabel
+        params.logToDate ?? new Date(),
+        item.mealTime.toLowerCase() as MealLabel,
+        weightGram,
+        portionSize
       );
+
       return log;
     } else {
       return null;

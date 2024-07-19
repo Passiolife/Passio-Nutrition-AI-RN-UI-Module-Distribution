@@ -57,23 +57,25 @@ const DoughnutChart: React.FC<DoughnutChartProps> = ({
 
   return (
     <View style={{ width: size, height: size }}>
-      <Svg width={size + 10} height={size + 10}>
-        {data.map((item, index) => {
-          const path = calculatePath(item.progress, index);
-          startAngle += 360 * (item.progress / totalProgress);
-          return (
-            <G key={index}>
-              <Path
-                d={path}
-                fill="transparent"
-                stroke={item.color}
-                strokeWidth={strokeWidth}
-                strokeLinecap={strokeLinecap}
-              />
-            </G>
-          );
-        })}
-      </Svg>
+      {totalProgress > 0 && (
+        <Svg width={size + 10} height={size + 10}>
+          {data.map((item, index) => {
+            const path = calculatePath(item.progress, index);
+            startAngle += 360 * (item.progress / totalProgress);
+            return (
+              <G key={index}>
+                <Path
+                  d={path}
+                  fill="transparent"
+                  stroke={item.color}
+                  strokeWidth={strokeWidth}
+                  strokeLinecap={strokeLinecap}
+                />
+              </G>
+            );
+          })}
+        </Svg>
+      )}
     </View>
   );
 };
