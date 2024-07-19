@@ -271,8 +271,8 @@ export const createCustomFoodUsingNutritionFact = (
     imageName: '',
     entityType: 'user-food',
     computedWeight: {
-      unit: facts.servingSizeUnit ?? '',
-      value: 0,
+      unit: facts.servingSizeUnit ?? 'g',
+      value: facts.servingSizeGram ?? 0,
     },
     selectedUnit: facts.servingSizeUnitName ?? '',
     selectedQuantity: facts.servingSizeQuantity ?? 0,

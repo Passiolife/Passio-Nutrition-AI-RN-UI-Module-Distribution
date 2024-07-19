@@ -165,17 +165,17 @@ export function useEditFoodLog() {
           onSwitchAlternative(item);
         },
       });
-    } else if (params.prevRouteName === 'Search') {
+    } else if (params.prevRouteName === 'MealLog') {
+      onDeleteFoodLogPress();
+    } else {
       const uuid: string = uuid4.v4() as string;
-      navigation.navigate('FoodCreatorScreen', {
+      navigation.push('FoodCreatorScreen', {
         foodLog: {
           ...foodLog,
           uuid: uuid,
         },
         from: 'Search',
       });
-    } else {
-      onDeleteFoodLogPress();
     }
   };
 

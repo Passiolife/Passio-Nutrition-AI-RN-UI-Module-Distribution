@@ -67,7 +67,7 @@ export const useFoodCreator = () => {
             );
             navigation.navigate('EditFoodLogScreen', {
               foodLog: barcodeFoodLog,
-              prevRouteName: 'Other',
+              prevRouteName: 'MyFood',
             });
           }
         }

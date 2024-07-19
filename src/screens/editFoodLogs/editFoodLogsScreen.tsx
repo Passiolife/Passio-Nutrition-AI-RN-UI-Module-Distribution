@@ -75,11 +75,11 @@ export const EditFoodLogScreen = () => {
   const icon =
     from === 'MealLog'
       ? ICONS.delete
-      : from === 'Search'
+      : from === 'Search' || from === 'MyFood'
         ? ICONS.editGreyIc
         : from === 'QuickScan'
           ? ICONS.swap
-          : undefined;
+          : ICONS.editGreyIc;
 
   return (
     <View style={styles.container}>
@@ -194,7 +194,7 @@ export const EditFoodLogScreen = () => {
           />
           <BasicButton
             style={bottomActionStyle.bottomActionButton}
-            text={content.log}
+            text={from === 'MealLog' ? 'Update' : content.log}
             testId="testButtonSave"
             small
             secondary={false}
