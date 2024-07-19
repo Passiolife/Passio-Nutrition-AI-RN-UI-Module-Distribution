@@ -75,8 +75,9 @@ export function useEditFoodLog() {
       updatedFoodLog.foodItems.push(foodItem);
       setFoodLog(recalculateFoodLogServing(updatedFoodLog));
       ShowToast('Ingredient added successfully');
+      navigation.goBack();
     },
-    [foodLog, recalculateFoodLogServing]
+    [foodLog, navigation, recalculateFoodLogServing]
   );
 
   const deleteIngredient = useCallback(
@@ -99,8 +100,9 @@ export function useEditFoodLog() {
       );
       let foodLogData: FoodLog = { ...foodLog, foodItems: updatedFoodItems };
       setFoodLog(recalculateFoodLogServing(foodLogData));
+      navigation.goBack();
     },
-    [foodLog, recalculateFoodLogServing]
+    [foodLog, navigation, recalculateFoodLogServing]
   );
 
   const onUpdateFoodLog = useCallback((item: FoodLog) => {
@@ -262,7 +264,10 @@ export function useEditFoodLog() {
     (foodItem: FoodItem) => {
       navigation.navigate('EditIngredientScreen', {
         foodItem: foodItem,
-        deleteIngredient,
+        deleteIngredient: (item) => {
+          deleteIngredient(item);
+          navigation.goBack();
+        },
         updateIngredient,
       });
     },

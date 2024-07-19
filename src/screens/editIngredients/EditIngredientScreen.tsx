@@ -62,7 +62,6 @@ export const EditIngredient = (props?: EditIngredientsScreenProps) => {
       async onDelete() {
         if (params.deleteIngredient !== undefined && foodItem) {
           params.deleteIngredient(foodItem);
-          navigation.goBack();
         }
       },
     });

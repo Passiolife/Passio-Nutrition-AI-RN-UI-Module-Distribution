@@ -53,7 +53,7 @@ export const styles = StyleSheet.create({
     borderColor: 'rgba(0, 0, 0, 0.6)',
     borderRadius: scaledSize(7),
     borderWidth: 0.2,
-    marginBottom: screenHeight / 2,
+    marginBottom: screenHeight / 3,
     flexDirection: 'row',
     height: scaledSize(50),
     overflow: 'hidden',

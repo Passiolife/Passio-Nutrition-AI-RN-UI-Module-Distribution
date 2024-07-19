@@ -60,8 +60,10 @@ export function useEditRecipe() {
       updatedFoodLog.foodItems.push(foodItem);
       setFoodLog(recalculateFoodLogServing(updatedFoodLog));
       ShowToast('Ingredient added successfully');
+      console.warn('here');
+      navigation.goBack();
     },
-    [foodLog, recalculateFoodLogServing]
+    [foodLog, navigation, recalculateFoodLogServing]
   );
 
   const deleteIngredient = useCallback(
@@ -84,8 +86,9 @@ export function useEditRecipe() {
       );
       let foodLogData: FoodLog = { ...foodLog, foodItems: updatedFoodItems };
       setFoodLog(recalculateFoodLogServing(foodLogData));
+      navigation.goBack();
     },
-    [foodLog, recalculateFoodLogServing]
+    [foodLog, navigation, recalculateFoodLogServing]
   );
 
   const onUpdateFoodLog = useCallback((item: FoodLog) => {
@@ -104,7 +107,7 @@ export function useEditRecipe() {
   };
 
   const onAddIngredientPress = () => {
-    navigation.push('FoodSearchScreen', {
+    navigation.navigate('FoodSearchScreen', {
       onSaveData: (item) => {
         const foodItem = convertPassioFoodItemToFoodLog(
           item,
@@ -123,7 +126,10 @@ export function useEditRecipe() {
     (foodItem: FoodItem) => {
       navigation.navigate('EditIngredientScreen', {
         foodItem: foodItem,
-        deleteIngredient,
+        deleteIngredient: (food) => {
+          deleteIngredient(food);
+          navigation.goBack();
+        },
         updateIngredient,
       });
     },
