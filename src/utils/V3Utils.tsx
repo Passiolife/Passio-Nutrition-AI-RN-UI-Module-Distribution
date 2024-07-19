@@ -239,3 +239,34 @@ export const passioSuggestedFoods = async (
     })
   );
 };
+
+export const macroNutrientPercentages = (
+  carbsG: number,
+  fatG: number,
+  proteinG: number
+) => {
+  // Calculate calories contributed by each macro nutrient
+  let carbsContributeOfCalories = carbsG * 4;
+  let fatContributeOfCalories = fatG * 9;
+  let proteinContributeOfCalories = proteinG * 4;
+
+  // Calculate total calories from macro nutrients
+  let totalMacroNutrientCalories =
+    carbsContributeOfCalories +
+    fatContributeOfCalories +
+    proteinContributeOfCalories;
+
+  // Calculate percentages
+  let carbsPercentage =
+    (carbsContributeOfCalories / totalMacroNutrientCalories) * 100;
+  let fatPercentage =
+    (fatContributeOfCalories / totalMacroNutrientCalories) * 100;
+  let proteinPercentage =
+    (proteinContributeOfCalories / totalMacroNutrientCalories) * 100;
+
+  return {
+    carbsPercentage: carbsPercentage,
+    fatPercentage: fatPercentage,
+    proteinPercentage: proteinPercentage,
+  };
+};

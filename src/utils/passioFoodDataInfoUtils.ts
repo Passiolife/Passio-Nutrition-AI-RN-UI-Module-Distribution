@@ -45,7 +45,21 @@ export const createFoodLogUsingPortionSize = (
   weightGram: number,
   portionSize: string
 ) => {
-  const [qty, unit] = portionSize.split(' ');
+  const array = portionSize.split(' ');
+
+  let qty = 1;
+  let unit = '';
+
+  if (array.length > 1) {
+    if (typeof array[0] === 'number') {
+      qty = array[0];
+      unit = array.slice(1, array.length).join('');
+    } else {
+      unit = array.slice(0, array.length).join('');
+    }
+  } else {
+    unit = array[0];
+  }
 
   const isNotIncludedUnit =
     foodItem?.amount.servingUnits?.filter(
@@ -64,6 +78,12 @@ export const createFoodLogUsingPortionSize = (
       newQuantity < 10 ? newQuantity.toFixed(2) : Math.round(newQuantity)
     );
     foodLog.selectedUnit = 'gram';
+    if (foodLog.computedWeight?.value === undefined) {
+      foodLog.computedWeight = {
+        value: weightGram,
+        unit: 'gram',
+      };
+    }
     foodLog = updateQuantityOfFoodLog(foodLog, weightGram);
     return foodLog;
   } else {
