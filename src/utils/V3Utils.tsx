@@ -246,9 +246,9 @@ export const macroNutrientPercentages = (
   proteinG?: number
 ) => {
   // Calculate calories contributed by each macro nutrient
-  let carbsContributeOfCalories = carbsG ?? 0 * 4;
-  let fatContributeOfCalories = fatG ?? 0 * 9;
-  let proteinContributeOfCalories = proteinG ?? 0 * 4;
+  let carbsContributeOfCalories = (carbsG ?? 0) * 4;
+  let fatContributeOfCalories = (fatG ?? 0) * 9;
+  let proteinContributeOfCalories = (proteinG ?? 0) * 4;
 
   // Calculate total calories from macro nutrients
   let totalMacroNutrientCalories =

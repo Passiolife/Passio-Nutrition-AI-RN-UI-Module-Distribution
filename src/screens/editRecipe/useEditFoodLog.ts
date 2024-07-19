@@ -60,7 +60,6 @@ export function useEditRecipe() {
       updatedFoodLog.foodItems.push(foodItem);
       setFoodLog(recalculateFoodLogServing(updatedFoodLog));
       ShowToast('Ingredient added successfully');
-      console.warn('here');
       navigation.goBack();
     },
     [foodLog, navigation, recalculateFoodLogServing]

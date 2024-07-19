@@ -14,11 +14,7 @@ import {
 } from '../../components';
 import { COLORS } from '../../constants';
 import LogInformationView from '../editFoodLogs/views/logInformationsView';
-import {
-  type RouteProp,
-  useNavigation,
-  useRoute,
-} from '@react-navigation/native';
+import { type RouteProp, useRoute } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import EditServingAmountView from '../editFoodLogs/views/EditServingAmountView';
 import { useEditIngredient } from './useEditIngredient';
@@ -40,7 +36,6 @@ export const EditIngredientScreen = () => {
 
 export const EditIngredient = (props?: EditIngredientsScreenProps) => {
   const { params } = useRoute<RouteProp<ParamList, 'EditIngredientScreen'>>();
-  const navigation = useNavigation<EditIngredientNavigationProps>();
 
   const { foodItem, updateFoodItem, onSwitchAlternative } = useEditIngredient(
     params ?? props

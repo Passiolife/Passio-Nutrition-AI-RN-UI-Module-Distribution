@@ -113,7 +113,7 @@ const LogInformationView = ({
               testID="testNutrientCalories"
               style={styles.calorieItemValue}
             >
-              {calories.toFixed(1)}
+              {Math.round(calories)}
             </Text>
             <Text
               weight="500"
