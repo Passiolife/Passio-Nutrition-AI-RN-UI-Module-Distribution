@@ -83,6 +83,19 @@ export const VisualFoodScan = gestureHandlerRootHOC(() => {
                   onFoodLog={onLogFoodPress}
                   onClear={resetScanning}
                 />
+                {alternatives && alternatives?.length > 0 && (
+                  <Text
+                    style={{
+                      marginTop: 16,
+                      marginBottom: 8,
+                      marginHorizontal: 16,
+                    }}
+                    size="_14px"
+                    weight="600"
+                  >
+                    Alternatives
+                  </Text>
+                )}
                 <FlatList
                   data={alternatives ?? []}
                   style={{ maxHeight: Dimensions.get('window').height - 100 }}
@@ -92,7 +105,10 @@ export const VisualFoodScan = gestureHandlerRootHOC(() => {
                       testID="testAlternateFoodLogItem"
                       onPress={() => onOpenFoodLogEditor(item)}
                     >
-                      <AlternateFoodLogView {...item} />
+                      <AlternateFoodLogView
+                        alternate={item}
+                        onLogPress={onLogFoodPress}
+                      />
                     </TouchableOpacity>
                   )}
                 />

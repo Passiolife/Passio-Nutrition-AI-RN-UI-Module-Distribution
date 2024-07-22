@@ -164,6 +164,7 @@ export function useEditFoodLog() {
       foodLog: {
         ...foodLog,
         uuid: uuid,
+        barcode: foodLog?.foodItems?.[0].barcode,
       },
       from: 'Search',
     });

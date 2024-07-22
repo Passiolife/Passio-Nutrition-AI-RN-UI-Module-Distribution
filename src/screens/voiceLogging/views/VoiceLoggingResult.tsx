@@ -103,7 +103,10 @@ export const VoiceLoggingResult = React.forwardRef(
 
             return (
               <VoiceLoggingResultItemView
-                foodName={item.advisorInfo?.recognisedName}
+                foodName={
+                  item.advisorInfo?.foodDataInfo?.foodName ??
+                  item.advisorInfo.recognisedName
+                }
                 imageName={foodDataInfo?.iconID}
                 bottom={`${item.advisorInfo?.portionSize} | ${Math.round(calories)} cal`}
                 onFoodLogSelect={() => {

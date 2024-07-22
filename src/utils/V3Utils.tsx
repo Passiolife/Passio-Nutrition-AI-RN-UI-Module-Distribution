@@ -118,6 +118,8 @@ function convertPassioIngredientToFoodItem(item: PassioIngredient): FoodItem {
     imageName: passioIngredient.id,
     iconId: passioIngredient.iconId,
     entityType: PassioIDEntityType.item,
+    barcode: passioIngredient?.metadata?.barcode,
+    ingredientsDescription: passioIngredient?.metadata?.ingredientsDescription,
     computedWeight: {
       unit: passioIngredient.amount.weight.unit,
       value: passioIngredient.amount.weight.value,

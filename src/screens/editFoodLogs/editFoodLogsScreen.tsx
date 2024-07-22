@@ -53,6 +53,7 @@ export const EditFoodLogScreen = () => {
     isHideTimeStamp,
     closeDatePicker,
     closeFavoriteFoodLogAlert,
+    onSwitchAlternativePress,
     closeSaveFoodNameAlert,
     deleteIngredient,
     onDateChangePress,
@@ -84,6 +85,17 @@ export const EditFoodLogScreen = () => {
               <Pressable onPress={onDeleteFoodLogPress} style={{}}>
                 <Image
                   source={ICONS.delete}
+                  style={{
+                    width: scaleWidth(28),
+                    height: scaleHeight(28),
+                  }}
+                />
+              </Pressable>
+            )}
+            {from === 'QuickScan' && (
+              <Pressable onPress={onSwitchAlternativePress} style={{}}>
+                <Image
+                  source={ICONS.swap}
                   style={{
                     width: scaleWidth(28),
                     height: scaleHeight(28),
