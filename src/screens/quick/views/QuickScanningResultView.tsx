@@ -17,6 +17,7 @@ import { ICONS } from '../../../assets';
 interface Props {
   result: QuickResult;
   onOpenFoodLogEditor: (passioIDAttributes: QuickResult) => void;
+  onFoodLog: (passioIDAttributes: QuickResult) => void;
   onClear?: () => void;
 }
 
@@ -44,16 +45,35 @@ export const QuickScanningResultView = React.memo((props: Props) => {
             <Text weight="600" size="_14px" style={foodLogNameStyle}>
               {props.result.name}
             </Text>
+            {props.result.barcode && (
+              <Text
+                weight="500"
+                size="_14px"
+                color={'secondaryText'}
+                style={foodLogNameStyle}
+              >
+                {`UPC: ${props.result.barcode}`}
+              </Text>
+            )}
           </View>
-          <Image
-            source={ICONS.newAddPlus}
+          <TouchableOpacity
             style={{
-              height: 28,
-              width: 28,
               alignSelf: 'center',
-              marginHorizontal: 16,
             }}
-          />
+            onPress={() => {
+              props.onFoodLog(props.result);
+            }}
+          >
+            <Image
+              source={ICONS.newAddPlus}
+              style={{
+                height: 28,
+                width: 28,
+                alignSelf: 'center',
+                marginHorizontal: 16,
+              }}
+            />
+          </TouchableOpacity>
         </View>
       </TouchableOpacity>
     </Card>

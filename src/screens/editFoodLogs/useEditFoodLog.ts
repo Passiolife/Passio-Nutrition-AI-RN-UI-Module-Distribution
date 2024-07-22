@@ -157,26 +157,25 @@ export function useEditFoodLog() {
     setFoodLog({ ...newFoodLog });
   };
 
-  const onRightActionPress = () => {
-    if (params.prevRouteName === 'QuickScan') {
-      navigation.navigate('FoodSearchScreen', {
-        from: 'Other',
-        onSaveData: (item: PassioFoodItem) => {
-          onSwitchAlternative(item);
-        },
-      });
-    } else if (params.prevRouteName === 'MealLog') {
-      onDeleteFoodLogPress();
-    } else {
-      const uuid: string = uuid4.v4() as string;
-      navigation.push('FoodCreatorScreen', {
-        foodLog: {
-          ...foodLog,
-          uuid: uuid,
-        },
-        from: 'Search',
-      });
-    }
+  const onEditCustomFoodPress = () => {
+    const uuid: string = uuid4.v4() as string;
+
+    navigation.push('FoodCreatorScreen', {
+      foodLog: {
+        ...foodLog,
+        uuid: uuid,
+      },
+      from: 'Search',
+    });
+  };
+
+  const onSwitchAlternativePress = () => {
+    navigation.navigate('FoodSearchScreen', {
+      from: 'Other',
+      onSaveData: (item: PassioFoodItem) => {
+        onSwitchAlternative(item);
+      },
+    });
   };
 
   const onMoreDetailPress = () => {
@@ -310,10 +309,12 @@ export function useEditFoodLog() {
     onAddIngredientPress,
     onCancelPress,
     onDateChangePress,
+    onDeleteFoodLogPress,
     onDeleteFavoritePress,
+    onEditCustomFoodPress,
     onEditIngredientPress,
     onMealLabelPress,
-    onRightActionPress,
+    onSwitchAlternativePress,
     onSaveFavoriteFoodLog,
     onSaveFoodLogName,
     onSavePress,

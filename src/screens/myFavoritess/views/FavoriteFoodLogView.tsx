@@ -23,6 +23,7 @@ const FavoriteFoodLogView = (props: Props) => {
           <View style={styles.mealImgLayout}>
             <PassioFoodIcon
               imageName={foodLog.imageName}
+              userFoodImage={foodLog.imageName}
               passioID={foodLog.passioID}
               style={styles.mealImg}
               entityType={foodLog.entityType}

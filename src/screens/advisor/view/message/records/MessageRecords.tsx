@@ -63,9 +63,11 @@ export const MessageRecords = ({
         color="white"
         style={styles.quickSuggestionTextStyle}
       >
-        {
-          'Based on the image you took, I’ve recognized the following items. Please select the items you want and log them.'
-        }
+        {response.isLogged
+          ? 'I’ve add the items below to your log:'
+          : response.recordType === 'searchTool'
+            ? 'Here are the items from the recipe above'
+            : 'Based on the image you took, I’ve recognized the following items. Please select the items you want and log them.'}
       </Text>
       <FlatList
         style={styles.list}

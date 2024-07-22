@@ -80,6 +80,7 @@ export const VisualFoodScan = gestureHandlerRootHOC(() => {
                 <QuickScanningResultView
                   result={passioQuickResults}
                   onOpenFoodLogEditor={onOpenFoodLogEditor}
+                  onFoodLog={onLogFoodPress}
                   onClear={resetScanning}
                 />
                 <FlatList

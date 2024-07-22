@@ -51,12 +51,16 @@ export const useFoodCreator = () => {
   const onBarcodePress = async () => {
     navigation.navigate('BarcodeScanScreen', {
       onViewExistingItem: (item) => {
-        navigation.goBack();
         if (item?.customFood) {
           // If the user clicks on the "View Food Item", they're navigated to the food details screen of that custom food.
           // Might be in this case they navigate to the new create food detail screen.
-          setCustomFood(item?.customFood);
+          navigation.push('FoodCreatorScreen', {
+            from: 'MyFood',
+            foodLog: item.customFood,
+          });
+          // setCustomFood(item?.customFood);
         } else {
+          navigation.goBack();
           // custom food doesn't exist
           // . If the user clicks on the "View Food Item", they're navigated to the food details screen of that food item
           if (item?.passioIDAttributes) {
@@ -65,7 +69,7 @@ export const useFoodCreator = () => {
               undefined,
               undefined
             );
-            navigation.navigate('EditFoodLogScreen', {
+            navigation.push('EditFoodLogScreen', {
               foodLog: barcodeFoodLog,
               prevRouteName: 'MyFood',
             });

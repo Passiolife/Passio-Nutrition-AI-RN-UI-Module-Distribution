@@ -45,7 +45,7 @@ export const BarcodeFoodScan = gestureHandlerRootHOC(
     const branding = useBranding();
 
     const snapPoints = useMemo(
-      () => [scaleHeight(Platform.OS === 'android' ? 260 : 240)],
+      () => [scaleHeight(Platform.OS === 'android' ? 260 : 260)],
       []
     );
 
@@ -106,6 +106,7 @@ export const BarcodeFoodScan = gestureHandlerRootHOC(
                   <QuickScanningResultView
                     result={passioQuickResults}
                     onOpenFoodLogEditor={onOpenFoodLogEditor}
+                    onFoodLog={onLogFoodPress}
                     onClear={resetScanning}
                   />
                   <FlatList

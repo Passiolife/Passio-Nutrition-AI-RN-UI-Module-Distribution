@@ -19,6 +19,7 @@ import { convertDateToDBFormat } from './DateFormatter';
 import { getMealLog } from '../utils';
 import type { PassioIngredient } from '@passiolife/nutritionai-react-native-sdk-v3/src';
 import type { QuickSuggestion } from 'src/models/QuickSuggestion';
+import type { DefaultNutrients } from '../screens/foodCreator/views/OtherNutritionFacts';
 
 export const convertPassioFoodItemToFoodLog = (
   item: PassioFoodItem,
@@ -270,3 +271,22 @@ export const macroNutrientPercentages = (
     proteinPercentage: isNaN(proteinPercentage) ? 0 : proteinPercentage,
   };
 };
+
+export function sumNutrients(
+  nutrients: DefaultNutrients[]
+): DefaultNutrients[] {
+  const nutrientMap = nutrients.reduce(
+    (acc, nutrient) => {
+      if (nutrient.value !== undefined) {
+        acc[nutrient.label] = (acc[nutrient.label] || 0) + nutrient.value;
+      }
+      return acc;
+    },
+    {} as Record<NutrientType, number>
+  );
+
+  return Object.keys(nutrientMap).map((label) => ({
+    label: label as NutrientType,
+    value: nutrientMap[label as NutrientType],
+  }));
+}
