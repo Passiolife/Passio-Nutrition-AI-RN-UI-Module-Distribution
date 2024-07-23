@@ -96,7 +96,7 @@ export function useEditFoodLog() {
   const updateIngredient = useCallback(
     (foodLogObj: FoodItem) => {
       let updatedFoodItems = foodLog.foodItems.map((value) =>
-        value.name === foodLogObj.refCode ? foodLogObj : value
+        value.refCode === foodLogObj.refCode ? foodLogObj : value
       );
       let foodLogData: FoodLog = { ...foodLog, foodItems: updatedFoodItems };
       setFoodLog(recalculateFoodLogServing(foodLogData));
