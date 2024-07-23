@@ -15,17 +15,17 @@ export const deleteRecipe = (uuId: string, recipes: Recipe[]): Recipe[] => {
   return recipes.filter((value) => value.uuid !== uuId);
 };
 export const addOrUpdateIngredients = (
-  passioID: PassioID,
+  refCode: PassioID,
   foodItem: FoodItem,
   foodItems: FoodItem[]
 ): FoodItem[] => {
-  return [...foodItems.filter((o) => o.passioID !== passioID), { ...foodItem }];
+  return [...foodItems.filter((o) => o.refCode !== refCode), { ...foodItem }];
 };
 export const deleteIngredient = (
-  passioID: PassioID,
+  refCode: PassioID,
   foodItems: FoodItem[]
 ): FoodItem[] => {
-  return foodItems.filter((value) => value.passioID !== passioID);
+  return foodItems.filter((value) => value.refCode !== refCode);
 };
 export const macroPerService = (
   foodItems: FoodItem[],

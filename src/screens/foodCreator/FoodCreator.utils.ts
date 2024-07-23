@@ -100,13 +100,12 @@ export const createFoodLogUsingFoodCreator = ({
       unit: unit,
       value: factWeight,
     },
-    passioID: '',
     name: info?.name!,
     barcode: info?.barcode,
-    imageName: '',
     iconId: image,
     entityType: 'user-food',
     nutrients: nutrients,
+    refCode: '',
     selectedUnit: factUnits!,
     selectedQuantity: Number(requireNutritionFact?.ServingSize!),
     servingSizes: [
@@ -275,9 +274,7 @@ export const createCustomFoodUsingNutritionFact = (
 
   const foodItems: FoodItem = {
     nutrients: nutrients,
-    passioID: '',
     name: '',
-    imageName: '',
     entityType: 'user-food',
     computedWeight: {
       unit: facts.servingSizeUnit ?? 'g',
@@ -285,6 +282,7 @@ export const createCustomFoodUsingNutritionFact = (
     },
     selectedUnit: facts.servingSizeUnitName ?? '',
     selectedQuantity: facts.servingSizeQuantity ?? 0,
+    refCode: '',
     servingSizes: [],
     servingUnits: [],
   };

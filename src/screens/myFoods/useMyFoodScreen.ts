@@ -77,7 +77,6 @@ export const useMyFoodScreen = () => {
 
     const foodLog: FoodLog = {
       ...food,
-      passioID: '',
       eventTimestamp: convertDateToDBFormat(date),
       meal: meal,
       uuid: uuid,

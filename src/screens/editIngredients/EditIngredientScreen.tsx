@@ -6,12 +6,7 @@ import {
   calculateComputedWeightAmount,
   DeleteIngredientAlert,
 } from '../editFoodLogs';
-import {
-  BasicButton,
-  DeleteButton,
-  AlternativeFoodLogsView,
-  BackNavigation,
-} from '../../components';
+import { BasicButton, DeleteButton, BackNavigation } from '../../components';
 import { COLORS } from '../../constants';
 import LogInformationView from '../editFoodLogs/views/logInformationsView';
 import { type RouteProp, useRoute } from '@react-navigation/native';
@@ -37,9 +32,7 @@ export const EditIngredientScreen = () => {
 export const EditIngredient = (props?: EditIngredientsScreenProps) => {
   const { params } = useRoute<RouteProp<ParamList, 'EditIngredientScreen'>>();
 
-  const { foodItem, updateFoodItem, onSwitchAlternative } = useEditIngredient(
-    params ?? props
-  );
+  const { foodItem, updateFoodItem } = useEditIngredient(params ?? props);
 
   const onSavePress = async () => {
     await saveIngredient().then(() => {});
@@ -95,12 +88,6 @@ export const EditIngredient = (props?: EditIngredientsScreenProps) => {
                   updateFoodItem(copyOfFavFoodItem);
                 }
               }}
-            />
-            <AlternativeFoodLogsView
-              passioId={foodItem.passioID}
-              onAlternateItemCall={async (passioIDAttributes) =>
-                onSwitchAlternative(passioIDAttributes)
-              }
             />
             <View style={styles.lastContainer} />
           </View>

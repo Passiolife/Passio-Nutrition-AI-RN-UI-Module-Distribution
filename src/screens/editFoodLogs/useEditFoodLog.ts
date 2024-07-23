@@ -85,7 +85,7 @@ export function useEditFoodLog() {
       const newFoodLog = {
         ...foodLog,
         foodItems: foodLog.foodItems.filter(
-          (value) => value.passioID !== foodItem.passioID
+          (value) => value.refCode !== foodItem.refCode
         ),
       };
       setFoodLog(recalculateFoodLogServing(newFoodLog));
@@ -96,7 +96,7 @@ export function useEditFoodLog() {
   const updateIngredient = useCallback(
     (foodLogObj: FoodItem) => {
       let updatedFoodItems = foodLog.foodItems.map((value) =>
-        value.passioID === foodLogObj.passioID ? foodLogObj : value
+        value.name === foodLogObj.refCode ? foodLogObj : value
       );
       let foodLogData: FoodLog = { ...foodLog, foodItems: updatedFoodItems };
       setFoodLog(recalculateFoodLogServing(foodLogData));
@@ -284,12 +284,12 @@ export function useEditFoodLog() {
       const favoriteFoodItems =
         await services.dataService.getFavoriteFoodItems();
       setFavorite(
-        favoriteFoodItems.filter((item) => item.passioID === foodLog.passioID)
+        favoriteFoodItems.filter((item) => item.refCode === foodLog.refCode)
           .length >= 1
       );
     }
     init();
-  }, [foodLog.passioID, services.dataService]);
+  }, [foodLog.refCode, services.dataService]);
 
   return {
     branding,

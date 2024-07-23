@@ -92,7 +92,7 @@ export const useVisualFoodScan = () => {
     async (item: FoodLog) => {
       await services.dataService.saveFoodLog(item);
       await recordAnalyticsFoodLogs({
-        id: item.refCode ?? item.passioID,
+        id: item.refCode ?? '',
         screen: ScreenType.quickScan,
         foodLog: item,
       });
