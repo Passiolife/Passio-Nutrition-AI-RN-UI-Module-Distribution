@@ -30,11 +30,9 @@ const MealLogItemView = (props: Props) => {
       <TouchableOpacity onPress={onPress} style={styles.touchContainer}>
         <View style={styles.mealImgLayout}>
           <PassioFoodIcon
-            passioID={foodLog.imageName}
+            iconID={foodLog.iconID}
             style={styles.mealImg}
             entityType={foodLog.entityType}
-            userFoodImage={foodLog.userFoodImage}
-            imageName={foodLog.imageName}
           />
         </View>
         <View style={styles.mealDetail}>

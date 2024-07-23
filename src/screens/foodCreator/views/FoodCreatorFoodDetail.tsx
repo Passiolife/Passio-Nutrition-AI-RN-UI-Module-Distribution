@@ -6,11 +6,10 @@ import React, {
   useState,
 } from 'react';
 import { Card, Text } from '../../../components';
-import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Branding, useBranding } from '../../../contexts';
 import { FiledView, FiledViewRef } from '../../../components/filed/FiledView';
 import type { FiledSelectionViewRef } from '../../../components/filed/FiledSelectionView';
-import { ICONS } from '../../../assets';
 import { FiledViewClick } from '../../../components/filed/FiledViewClick';
 import type { CustomFood } from '../../../models';
 import { PassioFoodIcon } from '../../../components/passio/PassioFoodIcon';
@@ -105,22 +104,7 @@ export const FoodCreatorFoodDetail = React.forwardRef<
             <Text style={styles.title}>{'Scan Description'}</Text>
             <View style={styles.container}>
               <TouchableOpacity onPress={onEditImagePress} style={styles.left}>
-                {image || foodLog?.iconID ? (
-                  <PassioFoodIcon
-                    style={styles.icon}
-                    iconID={foodLog?.iconID}
-                    userFoodImage={image}
-                  />
-                ) : (
-                  <Image
-                    source={
-                      image
-                        ? { uri: `data:image/png;base64,${image}` }
-                        : ICONS.FoodEditImage
-                    }
-                    style={styles.icon}
-                  />
-                )}
+                <PassioFoodIcon style={styles.icon} iconID={image} />
                 <Text
                   size="_12px"
                   color="primaryColor"

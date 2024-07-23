@@ -9,6 +9,8 @@ import type { ImagePickerType, ParamList } from '../../navigaitons';
 import {
   convertPassioFoodItemToCustomFood,
   createFoodLogUsingFoodCreator,
+  CUSTOM_USER_FOOD,
+  generateCustomID,
 } from './FoodCreator.utils';
 import type { CustomFood } from '../../models';
 import { convertPassioFoodItemToFoodLog } from '../../utils/V3Utils';
@@ -31,9 +33,7 @@ export const useFoodCreator = () => {
     params.foodLog
   );
 
-  const [image, setImage] = useState<string | undefined>(
-    foodLog?.userFoodImage
-  );
+  const [image, setImage] = useState<string | undefined>(foodLog?.iconID);
   const [isImagePickerVisible, setImagePickerModalVisible] = useState(false);
 
   const otherNutritionFactsRef = useRef<OtherNutritionFactsRef>(null);
@@ -169,7 +169,15 @@ export const useFoodCreator = () => {
         if (uris) {
           const uri = Platform.OS === 'android' ? `file://${uris[0]}` : uris[0];
           const response = await RNFS.readFile(uri, 'base64');
-          setImage(response);
+          let id = generateCustomID();
+          if (image?.includes(CUSTOM_USER_FOOD)) {
+            id = image;
+          }
+          let customFoodImageID = await services.dataService.saveImage({
+            id: id,
+            base64: response,
+          });
+          setImage(customFoodImageID);
           navigation.goBack();
         }
       },

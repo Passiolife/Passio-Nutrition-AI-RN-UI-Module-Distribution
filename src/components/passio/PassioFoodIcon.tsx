@@ -5,8 +5,10 @@ import {
 } from '@passiolife/nutritionai-react-native-sdk-v3/src/sdk/v2';
 import { Image, type ImageStyle, type StyleProp } from 'react-native';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import type { PassioIconType } from '../../models';
+import { CUSTOM_USER_FOOD } from '../../screens/foodCreator/FoodCreator.utils';
+import { useServices } from '../../contexts';
 
 interface Props {
   style?: StyleProp<ImageStyle>;
@@ -21,15 +23,31 @@ interface Props {
 /*
   PassioFoodIcon: RENDER FOOD IMAGE From Server
   */
+
 export const PassioFoodIcon = (props: Props) => {
-  const { passioID, imageName, size, userFoodImage, iconID } = props;
+  const { passioID, imageName, size, iconID } = props;
+  const [base64, setBase64] = useState('');
+  const { dataService } = useServices();
+
+  useEffect(() => {
+    async function init() {
+      if (iconID && iconID.includes(CUSTOM_USER_FOOD)) {
+        const image = await dataService.getImage(iconID);
+        if (image) {
+          setBase64(image.base64);
+        }
+      }
+    }
+    init();
+  }, [dataService, iconID]);
+
   return (
     <>
-      {userFoodImage ? (
+      {base64 ? (
         <Image
           testID="testPassioFoodIconImage"
           style={[props.style]}
-          source={{ uri: `data:image/png;base64,${userFoodImage}` }}
+          source={{ uri: `data:image/png;base64,${base64}` }}
         />
       ) : (
         <PassioIconView

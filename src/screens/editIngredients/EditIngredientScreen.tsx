@@ -71,10 +71,9 @@ export const EditIngredient = (props?: EditIngredientsScreenProps) => {
           <View style={styles.body}>
             <LogInformationView
               foodItems={[foodItem]}
-              passioID={foodItem.passioID}
+              iconID={foodItem.iconId}
               name={foodItem.name}
               qty={foodItem.selectedQuantity}
-              imageName={foodItem.imageName}
               servingUnit={foodItem.selectedUnit}
               entityType={foodItem.entityType}
               weight={calculateComputedWeightAmount(

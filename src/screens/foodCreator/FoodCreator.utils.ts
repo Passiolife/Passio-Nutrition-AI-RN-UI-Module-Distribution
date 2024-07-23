@@ -14,6 +14,13 @@ import type {
 } from '@passiolife/nutritionai-react-native-sdk-v3';
 import { convertPassioFoodItemToFoodLog } from '../../utils/V3Utils';
 
+export const CUSTOM_USER_FOOD = 'user-food-';
+
+export const generateCustomID = () => {
+  const uuid: string = uuid4.v4() as string;
+  return CUSTOM_USER_FOOD + uuid;
+};
+
 export interface createFoodLogUsingFoodCreator {
   info: Record<FoodCreatorFoodDetailType, string>;
   requireNutritionFact: Record<RequireNutritionFactsType, string>;
@@ -97,6 +104,7 @@ export const createFoodLogUsingFoodCreator = ({
     name: info?.name!,
     barcode: info?.barcode,
     imageName: '',
+    iconId: image,
     entityType: 'user-food',
     nutrients: nutrients,
     selectedUnit: factUnits!,
@@ -130,6 +138,7 @@ export const createFoodLogUsingFoodCreator = ({
     barcode: info.barcode,
     brandName: info.brand,
     userFoodImage: image,
+    iconID: image,
     uuid: uuid,
   };
 

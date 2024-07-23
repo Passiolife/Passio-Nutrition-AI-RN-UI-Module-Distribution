@@ -12,10 +12,9 @@ import { scaled } from '../../../../../utils';
 
 interface Props {
   passioID: PassioID;
-  imageName: string;
+  iconID: string;
   name: string;
   brandName?: string;
-  userImage?: string;
   onPressEditor: () => void;
   onPressDelete: () => void;
   onPressLog: () => void;
@@ -23,15 +22,13 @@ interface Props {
 }
 
 const CustomFoodsItem = ({
-  passioID,
   name,
   onPressEditor,
   onPressLog,
   onPressDelete,
   entityType,
-  userImage,
+  iconID,
   brandName,
-  imageName,
 }: Props) => {
   return (
     <Card style={styles.shadowContainer}>
@@ -43,11 +40,10 @@ const CustomFoodsItem = ({
         <TouchableOpacity style={styles.mealContainer} onPress={onPressEditor}>
           <View style={styles.mealImgLayout}>
             <PassioFoodIcon
-              passioID={passioID ?? imageName}
-              imageName={imageName}
+              passioID={iconID}
+              iconID={iconID}
               style={styles.mealImg}
               entityType={entityType}
-              userFoodImage={userImage}
             />
           </View>
           <View style={styles.mealDetail}>

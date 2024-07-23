@@ -127,15 +127,9 @@ export const EditFoodLogScreen = () => {
             activeOpacity={1}
           >
             <LogInformationView
-              imageName={foodLog.imageName}
+              iconID={foodLog.iconID}
               foodItems={foodLog.foodItems}
-              userFoodImage={
-                isFavorite
-                  ? foodLog.imageName ?? foodLog.userFoodImage
-                  : foodLog.userFoodImage
-              }
               longName={foodLog.longName}
-              passioID={foodLog.passioID}
               isOpenFood={foodLog.isOpenFood}
               onMoreDetailPress={onMoreDetailPress}
               name={foodLog.name}

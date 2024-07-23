@@ -4,7 +4,6 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import type { FoodItem, PassioIconType } from '../../../models';
 import { PassioFoodIcon } from '../../../components/passio/PassioFoodIcon';
-import type { PassioID } from '@passiolife/nutritionai-react-native-sdk-v3/src/sdk/v2';
 import { content } from '../../../constants/Content';
 import { totalAmountOfNutrientWithoutRound } from '../utils';
 import { scaleHeight, scaleWidth } from '../../../utils';
@@ -14,12 +13,10 @@ import { macroNutrientPercentages } from '../../../utils/V3Utils';
 
 interface Props {
   foodItems: FoodItem[];
-  passioID: PassioID;
   isOpenFood?: boolean;
   entityType?: PassioIconType;
   name: string;
-  imageName: string;
-  userFoodImage?: string;
+  iconID?: string;
   qty: number;
   servingUnit: string;
   longName?: string;
@@ -32,10 +29,9 @@ const LogInformationView = ({
   foodItems,
   name,
   isOpenFood,
-  userFoodImage,
+  iconID,
   entityType,
   onMoreDetailPress,
-  imageName,
   rightIconForHeader,
   longName,
 }: Props) => {
@@ -51,11 +47,9 @@ const LogInformationView = ({
       <View style={styles.informationRow}>
         <View style={styles.imageContainer}>
           <PassioFoodIcon
-            imageName={imageName}
-            passioID={imageName}
+            iconID={iconID}
             style={styles.image}
             entityType={entityType}
-            userFoodImage={userFoodImage}
           />
         </View>
         <View style={styles.informationContent}>
