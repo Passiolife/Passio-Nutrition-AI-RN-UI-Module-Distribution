@@ -10,6 +10,7 @@ export function usePassioConfig({ key }: { key: string }) {
   const [isReady, setIsReady] = useState(false);
   const [leftFile, setDownloadingLeft] = useState<number | null>(null);
   const [downloadError, setDownloadError] = useState<string | null>(null);
+  const [error, setError] = useState<string | undefined>(undefined);
 
   useEffect(() => {
     async function getAuth() {
@@ -18,8 +19,11 @@ export function usePassioConfig({ key }: { key: string }) {
         autoUpdate: true,
         debugMode: true,
       });
-
+      setError(undefined);
       setIsReady(passioSDKStatus.mode === 'isReadyForDetection');
+      if (passioSDKStatus.mode === 'error') {
+        setError(passioSDKStatus.errorMessage);
+      }
     }
 
     getAuth();
@@ -45,6 +49,7 @@ export function usePassioConfig({ key }: { key: string }) {
     isReady,
     leftFile,
     downloadError,
+    error,
     requestCameraAuthorization,
   };
 }

@@ -11,14 +11,14 @@ import { Branding, useBranding } from '../../../contexts';
 import { FiledView, FiledViewRef } from '../../../components/filed/FiledView';
 import type { FiledSelectionViewRef } from '../../../components/filed/FiledSelectionView';
 import { FiledViewClick } from '../../../components/filed/FiledViewClick';
-import type { CustomFood } from '../../../models';
+import type { CustomFood, Image } from '../../../models';
 import { PassioFoodIcon } from '../../../components/passio/PassioFoodIcon';
 
 interface Props {
   foodLog?: CustomFood;
   onBarcodePress?: () => void;
   onEditImagePress?: () => void;
-  image?: string;
+  image?: Image;
 }
 
 export type FoodCreatorFoodDetailType = 'name' | 'brand' | 'barcode';
@@ -104,7 +104,11 @@ export const FoodCreatorFoodDetail = React.forwardRef<
             <Text style={styles.title}>{'Scan Description'}</Text>
             <View style={styles.container}>
               <TouchableOpacity onPress={onEditImagePress} style={styles.left}>
-                <PassioFoodIcon style={styles.icon} iconID={image} />
+                <PassioFoodIcon
+                  style={styles.icon}
+                  iconID={image?.id}
+                  extra={image?.base64}
+                />
                 <Text
                   size="_12px"
                   color="primaryColor"

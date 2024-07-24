@@ -12,7 +12,7 @@ import {
   CUSTOM_USER_FOOD,
   generateCustomID,
 } from './FoodCreator.utils';
-import type { CustomFood } from '../../models';
+import type { CustomFood, Image } from '../../models';
 import { convertPassioFoodItemToFoodLog } from '../../utils/V3Utils';
 import RNFS from 'react-native-fs';
 import { Platform } from 'react-native';
@@ -33,7 +33,14 @@ export const useFoodCreator = () => {
     params.foodLog
   );
 
-  const [image, setImage] = useState<string | undefined>(foodLog?.iconID);
+  const [image, setImage] = useState<Image | undefined>(
+    foodLog?.iconID
+      ? {
+          id: foodLog?.iconID,
+          base64: '',
+        }
+      : undefined
+  );
   const [isImagePickerVisible, setImagePickerModalVisible] = useState(false);
 
   const otherNutritionFactsRef = useRef<OtherNutritionFactsRef>(null);
@@ -134,7 +141,7 @@ export const useFoodCreator = () => {
         info: info?.records,
         requireNutritionFact: requireNutritionFact?.records,
         otherNutritionFact: otherNutritionFact?.records,
-        image,
+        image: image?.id,
       });
 
       try {
@@ -170,14 +177,17 @@ export const useFoodCreator = () => {
           const uri = Platform.OS === 'android' ? `file://${uris[0]}` : uris[0];
           const response = await RNFS.readFile(uri, 'base64');
           let id = generateCustomID();
-          if (image?.includes(CUSTOM_USER_FOOD)) {
-            id = image;
+          if (image?.id.includes(CUSTOM_USER_FOOD)) {
+            id = image?.id;
           }
           let customFoodImageID = await services.dataService.saveImage({
             id: id,
             base64: response,
           });
-          setImage(customFoodImageID);
+          setImage({
+            id: customFoodImageID,
+            base64: response,
+          });
           navigation.goBack();
         }
       },

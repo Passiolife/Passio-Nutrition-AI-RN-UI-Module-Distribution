@@ -3,12 +3,19 @@ import {
   type PassioID,
   PassioIconView,
 } from '@passiolife/nutritionai-react-native-sdk-v3/src/sdk/v2';
-import { Image, type ImageStyle, type StyleProp } from 'react-native';
+
+import {
+  Image,
+  ImageSourcePropType,
+  type ImageStyle,
+  type StyleProp,
+} from 'react-native';
 
 import React, { useEffect, useState } from 'react';
 import type { PassioIconType } from '../../models';
 import { CUSTOM_USER_FOOD } from '../../screens/foodCreator/FoodCreator.utils';
 import { useServices } from '../../contexts';
+import { ICONS } from '../../assets';
 
 interface Props {
   style?: StyleProp<ImageStyle>;
@@ -16,8 +23,10 @@ interface Props {
   imageName?: string;
   userFoodImage?: string;
   iconID?: string;
+  extra?: string;
   size?: IconSize;
   entityType?: PassioIconType;
+  defaultImage?: ImageSourcePropType | undefined;
 }
 
 /*
@@ -25,7 +34,7 @@ interface Props {
   */
 
 export const PassioFoodIcon = (props: Props) => {
-  const { passioID, imageName, size, iconID } = props;
+  const { passioID, imageName, size, iconID, extra, defaultImage } = props;
   const [base64, setBase64] = useState('');
   const { dataService } = useServices();
 
@@ -39,7 +48,7 @@ export const PassioFoodIcon = (props: Props) => {
       }
     }
     init();
-  }, [dataService, iconID]);
+  }, [dataService, iconID, extra]);
 
   return (
     <>
@@ -49,7 +58,7 @@ export const PassioFoodIcon = (props: Props) => {
           style={[props.style]}
           source={{ uri: `data:image/png;base64,${base64}` }}
         />
-      ) : (
+      ) : iconID ? (
         <PassioIconView
           testID="testPassioFoodIconImage"
           style={[props.style]}
@@ -57,6 +66,12 @@ export const PassioFoodIcon = (props: Props) => {
             passioID: iconID ?? imageName ?? passioID ?? '',
             iconSize: size ?? IconSize.PX90,
           }}
+        />
+      ) : (
+        <Image
+          testID="testPassioFoodIconImage"
+          style={[props.style]}
+          source={defaultImage ?? ICONS.FoodEditImage}
         />
       )}
     </>
