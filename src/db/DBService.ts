@@ -6,6 +6,7 @@ import {
 } from 'react-native-sqlite-storage';
 import {
   ROW_BARCODE,
+  ROW_BASE_64,
   ROW_BRAND_NAME,
   ROW_COMPUTED_WEIGHT,
   ROW_CONSUMED,
@@ -31,6 +32,7 @@ import {
   TABLE_CUSTOM_FOOD_LOGS,
   TABLE_FAVOURITE_FOOD_LOGS,
   TABLE_FOOD_LOGS,
+  TABLE_IMAGES,
   TABLE_RECIPE,
   TABLE_WATER,
   TABLE_WEIGHT,
@@ -75,6 +77,10 @@ export const createTable = async (db: SQLiteDatabase): Promise<void> => {
 
         txn.executeSql(
           `CREATE TABLE IF NOT EXISTS ${TABLE_WEIGHT} (${ROW_UUID} TEXT PRIMARY KEY, ${ROW_WEIGHT} TEXT, ${ROW_DAY} TEXT, ${ROW_TIME} TEXT)`,
+          []
+        );
+        txn.executeSql(
+          `CREATE TABLE IF NOT EXISTS ${TABLE_IMAGES} (${ROW_UUID} TEXT PRIMARY KEY, ${ROW_BASE_64} TEXT)`,
           []
         );
       },

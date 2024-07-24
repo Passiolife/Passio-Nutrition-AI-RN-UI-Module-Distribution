@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 import { ICONS } from '../../assets';
 import { COLORS } from '../../constants';
-import { screenHeight } from '../../utils';
 
 interface Props {
   onCloseModel: () => void;
@@ -70,8 +69,12 @@ const styles = StyleSheet.create({
   },
   modalContent: {
     padding: 20,
-    margin: 24,
-    top: screenHeight / 3.5,
+    margin: 2,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    paddingBottom: 42,
+    position: 'absolute',
     backgroundColor: 'white',
     borderRadius: 10,
     alignItems: 'center',

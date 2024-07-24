@@ -34,11 +34,10 @@ const CustomFoods = ({
   const renderCustomFood = ({ item }: { item: CustomFood }) => {
     return (
       <CustomFoodsItem
-        passioID={item.iconID ?? ''}
-        imageName={item.iconID ?? ''}
+        passioID={item.iconID ?? item.iconID ?? item.iconID ?? ''}
         name={item.name}
         brandName={item.brandName}
-        userImage={item.userFoodImage}
+        iconID={item.iconID ?? ''}
         onPressLog={() => onPressLog?.(item)}
         onPressEditor={() => onPressEditor?.(item)}
         onPressDelete={() => onDeleteCustomFood?.(item)}

@@ -1,5 +1,11 @@
 import type { Water } from 'src/models/Water';
-import type { CustomFood, NutritionProfile, Recipe } from '../../models';
+import type {
+  CustomFood,
+  CustomImageID,
+  Image,
+  NutritionProfile,
+  Recipe,
+} from '../../models';
 import type { FoodLog, FavoriteFoodItem } from '../../models';
 import type { PatientProfile } from '../../models';
 import type { Weight } from '../../models/Weight';
@@ -27,4 +33,6 @@ export interface NutritionDataService {
   saveWater: (water: Water) => Promise<void>;
   getWeight: (startDate: Date, endDate: Date) => Promise<Weight[]>;
   saveWeight: (weight: Weight) => Promise<void>;
+  saveImage: (image: Image) => Promise<CustomImageID>;
+  getImage: (id: CustomImageID) => Promise<Image | undefined | null>;
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image, ImageBackground, StyleSheet, Text, View } from 'react-native';
 
-export const SplashScreen = () => {
+export const SplashScreen = ({ error }: { error: string | undefined }) => {
   return (
     <ImageBackground
       resizeMethod="resize"
@@ -17,7 +17,7 @@ export const SplashScreen = () => {
       />
       <View style={styles.actions}>
         <Text style={styles.config}>
-          {'Please wait...\nSDK Configuring...'}
+          {error ? error : 'Please wait...\nSDK Configuring...'}
         </Text>
       </View>
     </ImageBackground>

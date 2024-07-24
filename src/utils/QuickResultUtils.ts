@@ -21,7 +21,14 @@ export const getBarcodeResult = async (barcodeCandidate?: BarcodeCandidate) => {
       };
       return attribute;
     } else {
-      return null;
+      const attribute: QuickResult = {
+        passioID: '',
+        name: barcodeCandidate.barcode,
+        type: 'Barcode',
+        barcode: barcodeCandidate.barcode,
+        passioIDAttributes: null,
+      };
+      return attribute;
     }
   } else {
     return null;

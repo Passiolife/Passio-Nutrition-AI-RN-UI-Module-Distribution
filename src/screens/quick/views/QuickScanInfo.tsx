@@ -10,8 +10,10 @@ interface Props {
 export const QuickScanInfo = ({ onOkPress }: Props) => {
   const renderIcon = (title: string, icon: number) => {
     return (
-      <View style={styles.iconContainer}>
-        <Image source={icon} style={styles.icon} />
+      <View style={styles.modeContainer}>
+        <View style={styles.iconContainer}>
+          <Image resizeMode="contain" source={icon} style={styles.icon} />
+        </View>
         <Text size={'_12px'} style={styles.description}>
           {title}
         </Text>
@@ -28,15 +30,14 @@ export const QuickScanInfo = ({ onOkPress }: Props) => {
               What you can scan
             </Text>
             <Text style={styles.description}>
-              You can scan your foods using a variety of ways:
+              You can quickly switch between scanning modes to log your food a
+              variety of ways
             </Text>
           </View>
           <View style={styles.iconInfoContainer}>
-            {renderIcon('Foods', ICONS.foodScannerFoods)}
-            {renderIcon('Beverages', ICONS.foodScannerBeverage)}
-            {renderIcon('Packaging', ICONS.foodScannerPackaging)}
-            {renderIcon('Nutrition Facts', ICONS.foodScannerFacts)}
-            {renderIcon('Barcodes', ICONS.foodScannerBarcode)}
+            {renderIcon('Whole Foods Mode', ICONS.modeVisual)}
+            {renderIcon('Barcode Mode', ICONS.modeBarcode)}
+            {renderIcon('Nutrition Facts Mode', ICONS.modeNutritionFact)}
           </View>
           <View style={styles.buttonContainer}>
             <BasicButton
@@ -75,9 +76,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   icon: {
-    height: 32,
-    width: 32,
-    marginVertical: 8,
+    height: 24,
+    width: 24,
+    alignSelf: 'center',
   },
   title: {
     marginVertical: 3,
@@ -86,6 +87,7 @@ const styles = StyleSheet.create({
   description: {
     marginBottom: 16,
     fontSize: 12,
+    marginHorizontal: 24,
     textAlign: 'center',
   },
   buttonContainer: {
@@ -99,9 +101,20 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignContent: 'space-around',
   },
-  iconContainer: {
+  modeContainer: {
     alignItems: 'center',
     flex: 1,
+  },
+  iconContainer: {
+    backgroundColor: 'rgba(79, 70, 229, 1)',
+    width: 42,
+    alignItems: 'center',
+    alignSelf: 'center',
+    alignContent: 'center',
+    justifyContent: 'center',
+    marginVertical: 8,
+    height: 42,
+    borderRadius: 32,
   },
   button: {
     flex: 1,

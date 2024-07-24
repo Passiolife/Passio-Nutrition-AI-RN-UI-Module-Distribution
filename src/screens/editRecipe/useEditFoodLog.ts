@@ -60,8 +60,9 @@ export function useEditRecipe() {
       updatedFoodLog.foodItems.push(foodItem);
       setFoodLog(recalculateFoodLogServing(updatedFoodLog));
       ShowToast('Ingredient added successfully');
+      navigation.goBack();
     },
-    [foodLog, recalculateFoodLogServing]
+    [foodLog, navigation, recalculateFoodLogServing]
   );
 
   const deleteIngredient = useCallback(
@@ -69,7 +70,7 @@ export function useEditRecipe() {
       const newFoodLog = {
         ...foodLog,
         foodItems: foodLog.foodItems.filter(
-          (value) => value.passioID !== foodItem.passioID
+          (value) => value.refCode !== foodItem.refCode
         ),
       };
       setFoodLog(recalculateFoodLogServing(newFoodLog));
@@ -80,12 +81,13 @@ export function useEditRecipe() {
   const updateIngredient = useCallback(
     (foodLogObj: FoodItem) => {
       let updatedFoodItems = foodLog.foodItems.map((value) =>
-        value.passioID === foodLogObj.passioID ? foodLogObj : value
+        value.refCode === foodLogObj.refCode ? foodLogObj : value
       );
       let foodLogData: FoodLog = { ...foodLog, foodItems: updatedFoodItems };
       setFoodLog(recalculateFoodLogServing(foodLogData));
+      navigation.goBack();
     },
-    [foodLog, recalculateFoodLogServing]
+    [foodLog, navigation, recalculateFoodLogServing]
   );
 
   const onUpdateFoodLog = useCallback((item: FoodLog) => {
@@ -104,7 +106,7 @@ export function useEditRecipe() {
   };
 
   const onAddIngredientPress = () => {
-    navigation.push('FoodSearchScreen', {
+    navigation.navigate('FoodSearchScreen', {
       onSaveData: (item) => {
         const foodItem = convertPassioFoodItemToFoodLog(
           item,
@@ -123,7 +125,10 @@ export function useEditRecipe() {
     (foodItem: FoodItem) => {
       navigation.navigate('EditIngredientScreen', {
         foodItem: foodItem,
-        deleteIngredient,
+        deleteIngredient: (food) => {
+          deleteIngredient(food);
+          navigation.goBack();
+        },
         updateIngredient,
       });
     },

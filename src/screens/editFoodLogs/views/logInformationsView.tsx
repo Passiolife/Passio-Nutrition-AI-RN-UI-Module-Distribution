@@ -4,21 +4,19 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import type { FoodItem, PassioIconType } from '../../../models';
 import { PassioFoodIcon } from '../../../components/passio/PassioFoodIcon';
-import type { PassioID } from '@passiolife/nutritionai-react-native-sdk-v3/src/sdk/v2';
 import { content } from '../../../constants/Content';
-import { totalAmountOfNutrient } from '../utils';
+import { totalAmountOfNutrientWithoutRound } from '../utils';
 import { scaleHeight, scaleWidth } from '../../../utils';
 import DoughnutChart from '../../../components/doughnutChart/DoughnutChart';
 import { useBranding } from '../../../contexts';
+import { macroNutrientPercentages } from '../../../utils/V3Utils';
 
 interface Props {
   foodItems: FoodItem[];
-  passioID: PassioID;
   isOpenFood?: boolean;
-  entityType: PassioIconType;
+  entityType?: PassioIconType;
   name: string;
-  imageName: string;
-  userFoodImage?: string;
+  iconID?: string;
   qty: number;
   servingUnit: string;
   longName?: string;
@@ -31,31 +29,27 @@ const LogInformationView = ({
   foodItems,
   name,
   isOpenFood,
-  qty,
-  servingUnit,
-  weight,
-  userFoodImage,
+  iconID,
   entityType,
   onMoreDetailPress,
-  imageName,
   rightIconForHeader,
   longName,
 }: Props) => {
-  const calories = totalAmountOfNutrient(foodItems, 'calories');
-  const carbs = totalAmountOfNutrient(foodItems, 'carbs');
-  const protein = totalAmountOfNutrient(foodItems, 'protein');
-  const fat = totalAmountOfNutrient(foodItems, 'fat');
+  const calories = totalAmountOfNutrientWithoutRound(foodItems, 'calories');
+  const carbs = totalAmountOfNutrientWithoutRound(foodItems, 'carbs');
+  const protein = totalAmountOfNutrientWithoutRound(foodItems, 'protein');
+  const fat = totalAmountOfNutrientWithoutRound(foodItems, 'fat');
   const branding = useBranding();
+  const { carbsPercentage, fatPercentage, proteinPercentage } =
+    macroNutrientPercentages(carbs, fat, protein);
   return (
     <Card style={styles.informationContainer}>
       <View style={styles.informationRow}>
         <View style={styles.imageContainer}>
           <PassioFoodIcon
-            imageName={imageName}
-            passioID={imageName}
+            iconID={iconID}
             style={styles.image}
             entityType={entityType}
-            userFoodImage={userFoodImage}
           />
         </View>
         <View style={styles.informationContent}>
@@ -68,14 +62,16 @@ const LogInformationView = ({
           >
             {name}
           </Text>
-          <Text
-            weight="400"
-            size="_14px"
-            color="secondaryText"
-            style={styles.logSize}
-          >
-            {longName ? longName : `${qty} ${servingUnit} (${weight}${'g'})`}
-          </Text>
+          {longName && (
+            <Text
+              weight="400"
+              size="_14px"
+              color="secondaryText"
+              style={styles.logSize}
+            >
+              {longName}
+            </Text>
+          )}
         </View>
         {rightIconForHeader ? (
           <View style={styles.rightIconView}>
@@ -88,15 +84,15 @@ const LogInformationView = ({
           <DoughnutChart
             data={[
               {
-                progress: 50,
+                progress: carbsPercentage,
                 color: branding.carbs,
               },
               {
-                progress: 25,
+                progress: proteinPercentage,
                 color: branding.proteins,
               },
               {
-                progress: 25,
+                progress: fatPercentage,
                 color: branding.fat,
               },
             ]}
@@ -111,7 +107,7 @@ const LogInformationView = ({
               testID="testNutrientCalories"
               style={styles.calorieItemValue}
             >
-              {calories}
+              {Math.round(calories)}
             </Text>
             <Text
               weight="500"
@@ -140,7 +136,7 @@ const LogInformationView = ({
               testID="testNutrientCarbs"
               style={styles.otherNutrientTValue}
             >
-              {carbs} g
+              {carbs.toFixed(1)} g
             </Text>
             <Text
               weight="400"
@@ -148,7 +144,7 @@ const LogInformationView = ({
               color="secondaryText"
               style={styles.percentage}
             >
-              (30%)
+              {`(${carbsPercentage.toFixed(1)}%)`}
             </Text>
           </View>
           <View style={styles.otherNutrientItem}>
@@ -167,7 +163,7 @@ const LogInformationView = ({
               testID="testNutrientProtein"
               style={styles.otherNutrientTValue}
             >
-              {protein} g
+              {protein.toFixed(1)} g
             </Text>
             <Text
               weight="400"
@@ -175,7 +171,7 @@ const LogInformationView = ({
               color="secondaryText"
               style={styles.percentage}
             >
-              (30%)
+              {`(${proteinPercentage.toFixed(1)}%)`}
             </Text>
           </View>
           <View style={styles.otherNutrientItem}>
@@ -195,7 +191,7 @@ const LogInformationView = ({
               testID="testNutrientFat"
               style={styles.otherNutrientTValue}
             >
-              {fat} g
+              {fat.toFixed(1)} g
             </Text>
             <Text
               weight="400"
@@ -203,7 +199,7 @@ const LogInformationView = ({
               color="secondaryText"
               style={styles.percentage}
             >
-              (30%)
+              {`(${fatPercentage.toFixed(1)}%)`}
             </Text>
           </View>
         </View>

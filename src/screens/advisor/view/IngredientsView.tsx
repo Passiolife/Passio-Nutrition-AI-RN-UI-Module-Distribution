@@ -34,7 +34,9 @@ const IngredientsView = ({ response, onClose }: Props) => {
               }}
               style={styles.icon}
             />
-            <Text style={styles.text}>{item.recognisedName}</Text>
+            <Text style={styles.text}>
+              {item.foodDataInfo?.foodName ?? item.recognisedName}
+            </Text>
           </View>
         )}
       />

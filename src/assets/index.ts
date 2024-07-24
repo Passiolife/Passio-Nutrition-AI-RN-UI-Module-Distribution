@@ -16,6 +16,9 @@ export const ICONS = {
   calendar: require('./icons/new_calander.png'),
   left: require('./icons/new_diary_left_arrow.png'),
   apple: require('./icons/new_apple_blue.png'),
+  modeBarcode: require('./icons/mode_barcode.png'),
+  modeNutritionFact: require('./icons/mode_nutritionfact.png'),
+  modeVisual: require('./icons/mode_visual.png'),
   chart: require('./icons/new_macro_chart.png'),
   weeklyAdherence: require('./icons/weekly_adherence.png'),
   right: require('./icons/new_diary_right_arrow.png'),
@@ -45,6 +48,7 @@ export const ICONS = {
   foodScannerInfo: require('./icons/food_scanner_info.png'),
   addedToDiary: require('./icons/added_to_diary.png'),
   barcode: require('./icons/barocde.png'),
+  barcodeNotFound: require('./icons/scan_barcode_not_fouind.png'),
 
   foodScannerBarcode: require('./icons/food_scanner_barcode.png'),
   foodScannerBeverage: require('./icons/food_scanner_beverage.png'),

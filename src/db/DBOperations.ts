@@ -1,12 +1,15 @@
 import type {
   CustomFood,
+  CustomImageID,
   FavoriteFoodItem,
   FoodLog,
+  Image,
   Recipe,
   Water,
 } from './../models';
 import {
   ROW_BARCODE,
+  ROW_BASE_64,
   ROW_BRAND_NAME,
   ROW_COMPUTED_WEIGHT,
   ROW_CONSUMED,
@@ -32,6 +35,7 @@ import {
   TABLE_CUSTOM_FOOD_LOGS,
   TABLE_FAVOURITE_FOOD_LOGS,
   TABLE_FOOD_LOGS,
+  TABLE_IMAGES,
   TABLE_RECIPE,
   TABLE_WATER,
   TABLE_WEIGHT,
@@ -58,15 +62,15 @@ export const saveFoodLog = async (
           foodLog.uuid,
           foodLog.name,
           foodLog.meal,
-          foodLog.imageName,
+          undefined,
           foodLog.entityType,
           foodLog.eventTimestamp,
-          foodLog.userFoodImage,
+          undefined,
           foodLog.iconID,
           JSON.stringify(foodLog.foodItems),
           JSON.stringify(foodLog.servingSizes),
           JSON.stringify(foodLog.servingUnits),
-          foodLog.passioID,
+          undefined,
           foodLog.selectedUnit,
           foodLog.selectedQuantity,
         ],
@@ -94,7 +98,7 @@ export const saveCustomFood = async (
         [
           foodLog.uuid,
           foodLog.name,
-          foodLog.imageName,
+          undefined,
           foodLog.entityType,
           foodLog.barcode,
           foodLog.brandName,
@@ -116,6 +120,47 @@ export const saveCustomFood = async (
         }
       );
     });
+  });
+};
+
+export const saveImage = async (
+  db: SQLiteDatabase,
+  image: Image
+): Promise<CustomImageID> => {
+  return new Promise((resolve, reject) => {
+    const insertQuery = `INSERT or REPLACE INTO  ${TABLE_IMAGES} (${ROW_UUID}, ${ROW_BASE_64}) VALUES (?,?)`;
+
+    db.transaction((tx) => {
+      tx.executeSql(
+        insertQuery,
+        [image.id, image.base64],
+        () => {
+          resolve(image.id);
+        },
+        (_, error) => {
+          console.error(`Failed to save image ${error}`);
+          reject(error);
+        }
+      );
+    });
+  });
+};
+export const getImage = async (
+  id: CustomImageID
+): Promise<Image | undefined> => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const db = await DBHandler.getInstance();
+      const results = await db.executeSql(
+        `SELECT * FROM ${TABLE_IMAGES} WHERE ${ROW_UUID} = ?`,
+        [id]
+      );
+      resolve(convertResultToImage(results)?.[0]);
+    } catch (error) {
+      console.error(`Failed to get image  ${error} ========= ${id}`);
+      reject(`Failed to get image ${error} ========= ${id}`);
+      throw error;
+    }
   });
 };
 
@@ -199,12 +244,12 @@ export const saveFavouriteFood = async (
           favoriteFoodItem.uuid,
           favoriteFoodItem.name,
           favoriteFoodItem.meal,
-          favoriteFoodItem.imageName,
+          undefined,
           favoriteFoodItem.entityType,
           JSON.stringify(favoriteFoodItem.foodItems),
           JSON.stringify(favoriteFoodItem.servingSizes),
           JSON.stringify(favoriteFoodItem.servingUnits),
-          favoriteFoodItem.passioID,
+          favoriteFoodItem.iconID ?? undefined,
           favoriteFoodItem.selectedUnit,
           favoriteFoodItem.selectedQuantity,
         ],
@@ -392,6 +437,15 @@ export function convertResultToFoodLog(results: [ResultSet]): FoodLog[] {
     value.computedWeight = JSON.parse(
       (value.computedWeight ?? '{}').toString()
     );
+  });
+  return items;
+}
+export function convertResultToImage(results: [ResultSet]): Image[] {
+  const items: Image[] = [];
+  results.forEach((result) => {
+    for (let index = 0; index < result.rows.length; index++) {
+      items.push(result.rows.item(index));
+    }
   });
   return items;
 }

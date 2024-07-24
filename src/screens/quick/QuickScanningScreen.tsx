@@ -1,35 +1,22 @@
-import React, { useMemo } from 'react';
-import {
-  Dimensions,
-  FlatList,
-  Platform,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import React, { useState } from 'react';
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import { DetectionCameraView } from '@passiolife/nutritionai-react-native-sdk-v3/src/sdk/v2';
 import type { MealLabel } from '../../models';
-import {
-  QuickScanningActionView,
-  QuickScanningLoadingView,
-  QuickScanningResultView,
-} from './views';
+import { QuickScanningActionView } from './views';
 
 import type { StackNavigationProp } from '@react-navigation/stack';
 import type { ParamList } from '../../navigaitons';
-import { useQuickScan } from './useQuickScan';
-import NutritionFactView from './views/NutritionFactView';
 import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
-import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
-import { scaleHeight } from '../../utils';
-import { Text } from '../../components';
 import ScanSVG from '../../components/svgs/scan';
-import { useBranding } from '../../contexts';
-import AlternateFoodLogView from '../../components/alternatives/alternativesItem';
-import { QuickScanItemAddedToDiaryView } from './views/QuickSacnItemAddedToDiaryView';
-import { QuickScanLogButtonView } from './views/QuickScanLogButtonView';
 import QuickScanInfo from './views/QuickScanInfo';
+import { useNavigation } from '@react-navigation/native';
+import { BarcodeFoodScan } from './mode/barcode/BarcodeFoodScan';
+import { ICONS } from '../../assets';
+import { VisualFoodScan } from './mode/visual/VisualFoodScan';
+import { useBranding } from '../../contexts';
+import { NutritionFactScan } from './mode/nutritionFact/NutritionFactScan';
+import { ShowToast } from '../../utils';
 
 export interface ScanningScreenProps {
   logToDate: Date | undefined;
@@ -41,134 +28,117 @@ export type ScanningScreenNavigationProps = StackNavigationProp<
   'ScanningScreen'
 >;
 
-export const QuickScanningScreen = gestureHandlerRootHOC(() => {
-  const {
-    alternatives,
-    info,
-    isLodgedFood,
-    isStopScan,
-    nutritionFacts,
-    passioQuickResults,
-    onClosed,
-    onContinueScanningPress,
-    onFoodSearchManuallyPress,
-    onLogFoodPress,
-    onOpenFoodLogEditor,
-    onSaveFoodLogUsingNutrientFact,
-    onUpdatingNutritionFacFlag,
-    onViewDiaryPress,
-    resetScanning,
-    setInfo,
-    setStopScan,
-  } = useQuickScan();
+export type ScanningMode = 'Visual' | 'Barcode' | 'NutritionFact';
 
+export const QuickScanningScreen = gestureHandlerRootHOC(() => {
+  const [info, setInfo] = useState(false);
+  const [mode, setMode] = useState<ScanningMode>('Visual');
+  const navigation = useNavigation<ScanningScreenNavigationProps>();
   const branding = useBranding();
 
-  const snapPoints = useMemo(
-    () => [scaleHeight(Platform.OS === 'android' ? 260 : 240)],
-    []
-  );
+  const renderMode = () => {
+    return (
+      <View
+        style={{
+          position: 'absolute',
+          top: 120,
+          right: 0,
+          left: 0,
+          justifyContent: 'center',
+          flexDirection: 'row',
+        }}
+      >
+        <TouchableOpacity
+          style={[
+            styles.iconsContainer,
+            mode === 'Visual' && styles.iconsContainerSelected,
+          ]}
+          onPress={() => {
+            setMode('Visual');
+            ShowToast('Whole Food Mode');
+          }}
+        >
+          <Image
+            tintColor={mode === 'Visual' ? branding.white : undefined}
+            source={ICONS.modeVisual}
+            resizeMode="contain"
+            style={styles.icons}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[
+            styles.iconsContainer,
+            mode === 'Barcode' && styles.iconsContainerSelected,
+          ]}
+          onPress={() => {
+            setMode('Barcode');
+            ShowToast('Barcode Mode');
+          }}
+        >
+          <Image
+            tintColor={mode === 'Barcode' ? branding.white : undefined}
+            resizeMode="contain"
+            source={ICONS.modeBarcode}
+            style={styles.icons}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            ShowToast('Nutrition Facts Mode');
+            setMode('NutritionFact');
+          }}
+          style={[
+            styles.iconsContainer,
+            mode === 'NutritionFact' && styles.iconsContainerSelected,
+          ]}
+        >
+          <Image
+            tintColor={mode === 'NutritionFact' ? branding.white : undefined}
+            resizeMode="contain"
+            source={ICONS.modeNutritionFact}
+            style={styles.icons}
+          />
+        </TouchableOpacity>
+      </View>
+    );
+  };
 
   return (
     <View style={styles.container}>
       <DetectionCameraView style={styles.camera} />
-      <TouchableOpacity style={styles.touchAreaStyle} activeOpacity={1} />
+
       {!info && (
         <View style={styles.scanIcon}>
           <ScanSVG />
         </View>
       )}
-      {!isLodgedFood && !info && (
-        <BottomSheet
-          enablePanDownToClose={false}
-          onClose={() => {}}
-          index={isLodgedFood ? -1 : 0}
-          enableDynamicSizing
-          onChange={(index) => {
-            if (alternatives && alternatives?.length > 0) {
-              setStopScan(index === 1);
-            }
-          }}
-          snapPoints={snapPoints}
-          handleIndicatorStyle={{
-            backgroundColor: nutritionFacts ? 'white' : branding.border,
-          }}
-          backgroundStyle={styles.bottomSheetChildrenContainer}
-        >
-          {passioQuickResults === null && nutritionFacts === null ? (
-            <BottomSheetView>
-              <QuickScanningLoadingView />
-              <View style={{ height: 120, width: 100 }} />
-            </BottomSheetView>
-          ) : null}
-
-          {nutritionFacts !== null ? (
-            <NutritionFactView
-              nutritionFact={nutritionFacts}
-              onCancel={() => resetScanning()}
-              onPreventToUpdatingNutritionFact={onUpdatingNutritionFacFlag}
-              onNext={onSaveFoodLogUsingNutrientFact}
-            />
-          ) : (
-            <>
-              {passioQuickResults !== undefined &&
-              passioQuickResults !== null ? (
-                <BottomSheetView>
-                  <Text weight="400" size="_14px" style={styles.pullTray}>
-                    {!isStopScan && alternatives && alternatives?.length > 0
-                      ? ' Pull tray up to see more options. '
-                      : ''}
-                  </Text>
-                  <QuickScanningResultView
-                    result={passioQuickResults}
-                    onOpenFoodLogEditor={onOpenFoodLogEditor}
-                    onClear={resetScanning}
-                  />
-                  <FlatList
-                    data={alternatives ?? []}
-                    style={{ maxHeight: Dimensions.get('window').height - 100 }}
-                    bounces={false}
-                    renderItem={({ item }) => (
-                      <TouchableOpacity
-                        testID="testAlternateFoodLogItem"
-                        onPress={() => onOpenFoodLogEditor(item)}
-                      >
-                        <AlternateFoodLogView {...item} />
-                      </TouchableOpacity>
-                    )}
-                  />
-                  <View style={{ height: 140, width: 100 }} />
-                </BottomSheetView>
-              ) : null}
-            </>
-          )}
-        </BottomSheet>
-      )}
-
-      {isLodgedFood === false &&
-      !info &&
-      nutritionFacts === null &&
-      passioQuickResults ? (
-        <QuickScanLogButtonView
-          onOpenFoodLogEditor={() => onOpenFoodLogEditor(passioQuickResults)}
-          onSaveFoodLog={() => onLogFoodPress(passioQuickResults)}
-          onFoodSearchManuallyPress={onFoodSearchManuallyPress}
-        />
-      ) : null}
-
-      {isLodgedFood && (
-        <QuickScanItemAddedToDiaryView
-          onContinueScanningPress={onContinueScanningPress}
-          onViewDiaryPress={onViewDiaryPress}
-        />
-      )}
+      <View
+        style={{
+          position: 'absolute',
+          top: 0,
+          bottom: 0,
+          right: 0,
+          left: 0,
+        }}
+      >
+        {mode === 'Visual' && !info && <VisualFoodScan />}
+        {mode === 'Barcode' && !info && (
+          <BarcodeFoodScan
+            onScanNutritionFacts={() => {
+              setMode('NutritionFact');
+            }}
+          />
+        )}
+        {mode === 'NutritionFact' && !info && <NutritionFactScan />}
+      </View>
       <QuickScanningActionView
-        onClosedPressed={onClosed}
+        onClosedPressed={() => navigation.goBack()}
         onInfoPress={() => {
           setInfo((i) => !i);
         }}
       />
       {info && <QuickScanInfo onOkPress={() => setInfo(false)} />}
+      {renderMode()}
     </View>
   );
 });
@@ -189,6 +159,19 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  icons: {
+    height: 24,
+    width: 24,
+  },
+  iconsContainer: {
+    backgroundColor: 'rgba(255, 255, 255, 0.4)',
+    marginHorizontal: 8,
+    borderRadius: 32,
+    padding: 6,
+  },
+  iconsContainerSelected: {
+    backgroundColor: 'rgba(79, 70, 229, 1)',
   },
   bottomSheetChildrenContainer: {
     flex: 1,

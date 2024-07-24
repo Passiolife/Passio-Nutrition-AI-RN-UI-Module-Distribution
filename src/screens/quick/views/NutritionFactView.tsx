@@ -1,5 +1,4 @@
 import {
-  Alert,
   type KeyboardTypeOptions,
   StyleSheet,
   TouchableOpacity,
@@ -10,7 +9,6 @@ import React, { useState } from 'react';
 
 import { EditValueAlertPrompt } from '../alerts/UpdateNutrtionUnitValueAlert';
 import type { NutritionFacts } from '@passiolife/nutritionai-react-native-sdk-v3/src/sdk/v2';
-import { SaveFoodAlert } from '../alerts/SaveFoodAlert';
 import { useBranding } from '../../../contexts/branding/BrandingContext';
 
 interface Props {
@@ -33,23 +31,12 @@ const NutritionFactView = (props: Props) => {
   const copyOfNutritionFact = { ...props.nutritionFact };
   const [openEditAlertType, setEditOpenEditAlertType] =
     useState<EditNutritionUnitAlertType | null>(null);
-  const [isOpenSaveFoodAlert, setOpenSaveFoodAlert] = useState<boolean>(false);
   const [nutrientAlertValue] = useState<string | number | undefined>(undefined);
   const [nutrientAlertTitle] = useState<string>('');
   const [keyboardType] = useState<KeyboardTypeOptions | undefined>();
 
   const dismissNutrientEditAlert = () => {
     setEditOpenEditAlertType(null);
-  };
-  const dismissSaveFoodAlert = () => {
-    setOpenSaveFoodAlert(false);
-  };
-  const openSaveFoodAlert = () => {
-    setOpenSaveFoodAlert(true);
-  };
-
-  const onNext = (_title: string | undefined) => {
-    Alert.alert('Under development');
   };
 
   const BottomActionView = () => {
@@ -68,7 +55,7 @@ const NutritionFactView = (props: Props) => {
           text="Next"
           small
           secondary={false}
-          onPress={() => openSaveFoodAlert()}
+          onPress={() => props.onNext(props.nutritionFact, '')}
         />
       </View>
     );
@@ -154,12 +141,6 @@ const NutritionFactView = (props: Props) => {
             hint={'Enter value'}
           />
         ) : null}
-        <SaveFoodAlert
-          text={''}
-          onSave={(input) => onNext(input)}
-          onClose={async () => dismissSaveFoodAlert()}
-          isVisible={isOpenSaveFoodAlert}
-        />
       </View>
     );
   };

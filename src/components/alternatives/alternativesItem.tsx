@@ -1,4 +1,4 @@
-import { StyleSheet, View } from 'react-native';
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { PassioIDEntityType } from '@passiolife/nutritionai-react-native-sdk-v3/src/sdk/v2';
 import React from 'react';
 
@@ -7,10 +7,14 @@ import { useBranding, type Branding } from '../../contexts';
 import { scaleHeight } from '../../utils';
 import { Text } from '../texts';
 import type { QuickResult } from '../../models';
+import { ICONS } from '../../assets';
 
-const AlternateFoodLogView: React.FC<QuickResult> = (
-  alternate: QuickResult
-) => {
+interface Props {
+  alternate: QuickResult;
+  onLogPress: (result: QuickResult) => void;
+}
+
+const AlternateFoodLogView = ({ alternate, onLogPress }: Props) => {
   const styles = alternateFoodLogViewStyle(useBranding());
   return (
     <View style={styles.container}>
@@ -25,7 +29,7 @@ const AlternateFoodLogView: React.FC<QuickResult> = (
       <View style={styles.textConainer}>
         <Text
           weight="600"
-          size="_12px"
+          size="_14px"
           numberOfLines={2}
           ellipsizeMode="tail"
           style={styles.text}
@@ -33,6 +37,24 @@ const AlternateFoodLogView: React.FC<QuickResult> = (
           {alternate.name}
         </Text>
       </View>
+      <TouchableOpacity
+        style={{
+          alignSelf: 'center',
+        }}
+        onPress={() => {
+          onLogPress(alternate);
+        }}
+      >
+        <Image
+          source={ICONS.newAddPlus}
+          style={{
+            height: 28,
+            width: 28,
+            alignSelf: 'center',
+            marginHorizontal: 16,
+          }}
+        />
+      </TouchableOpacity>
     </View>
   );
 };
@@ -66,6 +88,7 @@ const alternateFoodLogViewStyle = ({ indigo50 }: Branding) =>
     textConainer: {
       alignSelf: 'center',
       textTransform: 'capitalize',
+      flex: 1,
       marginHorizontal: 16,
     },
   });
