@@ -5,7 +5,7 @@ import type { StackNavigationProp } from '@react-navigation/stack';
 import type { ParamList } from '../../navigaitons';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import uuid4 from 'react-native-uuid';
-import { getMealLog } from '../../utils';
+import { getMealLog, ShowToast } from '../../utils';
 import { convertDateToDBFormat } from '../../utils/DateFormatter';
 import { convertPassioFoodItemToFoodLog } from '../../utils/V3Utils';
 
@@ -70,7 +70,7 @@ export const useMyFoodScreen = () => {
     });
   };
 
-  const onLogPress = (food: CustomFood) => {
+  const onLogPress = async (food: CustomFood) => {
     const date = new Date();
     const meal = getMealLog(date, undefined);
     const uuid: string = uuid4.v4() as string;
@@ -81,11 +81,8 @@ export const useMyFoodScreen = () => {
       meal: meal,
       uuid: uuid,
     };
-
-    navigation.navigate('EditFoodLogScreen', {
-      foodLog: foodLog,
-      prevRouteName: 'Other',
-    });
+    await services.dataService.saveFoodLog(foodLog);
+    ShowToast('Added your food into ' + meal);
   };
   return {
     branding,

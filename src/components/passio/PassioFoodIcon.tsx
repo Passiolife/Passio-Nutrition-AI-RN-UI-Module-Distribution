@@ -50,6 +50,8 @@ export const PassioFoodIcon = (props: Props) => {
     init();
   }, [dataService, iconID, extra]);
 
+  let icon = iconID || passioID || imageName;
+
   return (
     <>
       {base64 ? (
@@ -58,19 +60,25 @@ export const PassioFoodIcon = (props: Props) => {
           style={[props.style]}
           source={{ uri: `data:image/png;base64,${base64}` }}
         />
-      ) : iconID ? (
+      ) : icon ? (
         <PassioIconView
           testID="testPassioFoodIconImage"
           style={[props.style]}
           config={{
-            passioID: iconID ?? imageName ?? passioID ?? '',
+            passioID: icon ?? '',
             iconSize: size ?? IconSize.PX90,
           }}
         />
       ) : (
         <Image
           testID="testPassioFoodIconImage"
-          style={[props.style]}
+          style={[
+            {
+              height: 24,
+              width: 24,
+            },
+            props.style,
+          ]}
           source={defaultImage ?? ICONS.FoodEditImage}
         />
       )}
