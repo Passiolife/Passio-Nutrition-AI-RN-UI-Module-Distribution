@@ -41,7 +41,6 @@ const CustomFoodsItem = ({
           <View style={styles.mealImgLayout}>
             <PassioFoodIcon
               passioID={iconID}
-              iconID={iconID}
               style={styles.mealImg}
               entityType={entityType}
             />
