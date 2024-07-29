@@ -20,6 +20,7 @@ import {
   WEIGHT_UNIT_SPLIT_IDENTIFIER,
 } from '../FoodCreator.utils';
 import type { CustomFood } from '../../../models';
+import { totalAmountOfNutrient } from '../../../screens/editFoodLogs';
 
 interface Props {
   foodLog?: CustomFood;
@@ -138,15 +139,10 @@ export const RequireNutritionFacts = React.forwardRef<
     let carbs;
     let proteins;
 
-    foodLog?.foodItems?.[0].nutrients.forEach((i) => {
-      if (i.amount) {
-        const amount = i.amount.toFixed(2).toString();
-        if (i.id === 'calories') calories = amount;
-        if (i.id === 'carbs') carbs = amount;
-        if (i.id === 'protein') proteins = amount;
-        if (i.id === 'fat') fat = amount;
-      }
-    });
+    calories = totalAmountOfNutrient(foodLog?.foodItems ?? [], 'calories');
+    carbs = totalAmountOfNutrient(foodLog?.foodItems ?? [], 'carbs');
+    proteins = totalAmountOfNutrient(foodLog?.foodItems ?? [], 'protein');
+    fat = totalAmountOfNutrient(foodLog?.foodItems ?? [], 'fat');
 
     return (
       <Card style={styles.card}>
@@ -172,8 +168,15 @@ export const RequireNutritionFacts = React.forwardRef<
             <FiledSelectionView
               isTextInput
               ref={weightRef}
-              value={foodLog?.computedWeight?.unit}
-              input={(foodLog?.computedWeight?.value ?? '').toString()}
+              value={
+                foodLog?.computedWeight?.unit ??
+                foodLog?.foodItems?.[0]?.computedWeight?.unit
+              }
+              input={(
+                foodLog?.computedWeight?.value ??
+                foodLog?.foodItems?.[0]?.computedWeight?.value ??
+                ''
+              ).toString()}
               lists={Weights}
               name="Weight"
             />
@@ -181,24 +184,24 @@ export const RequireNutritionFacts = React.forwardRef<
           <FiledView
             ref={caloriesRef}
             name="Calories"
-            value={calories}
+            value={calories ? calories.toString() : ''}
             keyboardType="decimal-pad"
           />
           <FiledView
             ref={fatRef}
-            value={fat}
+            value={fat ? fat.toString() : ''}
             name="Fat"
             keyboardType="decimal-pad"
           />
           <FiledView
             ref={carbsRef}
-            value={carbs}
+            value={carbs ? carbs.toString() : ''}
             name="Carbs"
             keyboardType="decimal-pad"
           />
           <FiledView
             ref={proteinRef}
-            value={proteins}
+            value={proteins ? proteins.toString() : ''}
             name="Protein"
             keyboardType="decimal-pad"
           />

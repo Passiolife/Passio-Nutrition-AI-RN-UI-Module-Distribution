@@ -20,3 +20,4 @@ export * from './Water';
 export * from './Weight';
 export * from './CustomFood';
 export * from './BarcodeCustomResult';
+export * from './Image';

@@ -139,12 +139,11 @@ export const FoodLogEditorModal = React.memo((props: Props) => {
           >
             <LogInformationView
               foodItems={foodLog.foodItems}
-              passioID={foodLog.passioID}
               name={foodLog.name}
               qty={foodLog.selectedQuantity}
               servingUnit={foodLog.selectedUnit}
               entityType={foodLog.entityType}
-              imageName={foodLog.imageName}
+              iconID={foodLog.iconID}
               weight={calculateComputedWeightAmount(
                 foodLog.selectedQuantity,
                 foodLog.servingUnits,

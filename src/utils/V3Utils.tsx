@@ -19,6 +19,7 @@ import { convertDateToDBFormat } from './DateFormatter';
 import { getMealLog } from '../utils';
 import type { PassioIngredient } from '@passiolife/nutritionai-react-native-sdk-v3/src';
 import type { QuickSuggestion } from 'src/models/QuickSuggestion';
+import type { DefaultNutrients } from '../screens/foodCreator/views/OtherNutritionFacts';
 
 export const convertPassioFoodItemToFoodLog = (
   item: PassioFoodItem,
@@ -56,12 +57,10 @@ export const convertPassioFoodItemToFoodLog = (
     name: foodItem.name,
     uuid: uuid,
     longName: foodItem.details,
-    passioID: foodItem.refCode ?? foodItem.id,
     refCode: foodItem.refCode,
     eventTimestamp: dateFormat,
     isOpenFood: foodItem.isOpenFood,
     meal: meal,
-    imageName: foodItem.iconId,
     iconID: foodItem.iconId,
     entityType: PassioIDEntityType.item,
     foodItems: newFoodIngredient,
@@ -112,11 +111,12 @@ function convertPassioIngredientToFoodItem(item: PassioIngredient): FoodItem {
     passioIngredient.amount.weight
   );
   const foodItem: FoodItem = {
-    passioID: passioIngredient.refCode ?? passioIngredient.id,
     name: passioIngredient.name,
-    imageName: passioIngredient.id,
+    refCode: passioIngredient.refCode ?? '',
     iconId: passioIngredient.iconId,
     entityType: PassioIDEntityType.item,
+    barcode: passioIngredient?.metadata?.barcode,
+    ingredientsDescription: passioIngredient?.metadata?.ingredientsDescription,
     computedWeight: {
       unit: passioIngredient.amount.weight.unit,
       value: passioIngredient.amount.weight.value,
@@ -239,3 +239,53 @@ export const passioSuggestedFoods = async (
     })
   );
 };
+
+export const macroNutrientPercentages = (
+  carbsG?: number,
+  fatG?: number,
+  proteinG?: number
+) => {
+  // Calculate calories contributed by each macro nutrient
+  let carbsContributeOfCalories = (carbsG ?? 0) * 4;
+  let fatContributeOfCalories = (fatG ?? 0) * 9;
+  let proteinContributeOfCalories = (proteinG ?? 0) * 4;
+
+  // Calculate total calories from macro nutrients
+  let totalMacroNutrientCalories =
+    carbsContributeOfCalories +
+    fatContributeOfCalories +
+    proteinContributeOfCalories;
+
+  // Calculate percentages
+  let carbsPercentage =
+    (carbsContributeOfCalories / totalMacroNutrientCalories) * 100;
+  let fatPercentage =
+    (fatContributeOfCalories / totalMacroNutrientCalories) * 100;
+  let proteinPercentage =
+    (proteinContributeOfCalories / totalMacroNutrientCalories) * 100;
+
+  return {
+    carbsPercentage: isNaN(carbsPercentage) ? 0 : carbsPercentage,
+    fatPercentage: isNaN(fatPercentage) ? 0 : fatPercentage,
+    proteinPercentage: isNaN(proteinPercentage) ? 0 : proteinPercentage,
+  };
+};
+
+export function sumNutrients(
+  nutrients: DefaultNutrients[]
+): DefaultNutrients[] {
+  const nutrientMap = nutrients.reduce(
+    (acc, nutrient) => {
+      if (nutrient.value !== undefined) {
+        acc[nutrient.label] = (acc[nutrient.label] || 0) + nutrient.value;
+      }
+      return acc;
+    },
+    {} as Record<NutrientType, number>
+  );
+
+  return Object.keys(nutrientMap).map((label) => ({
+    label: label as NutrientType,
+    value: nutrientMap[label as NutrientType],
+  }));
+}

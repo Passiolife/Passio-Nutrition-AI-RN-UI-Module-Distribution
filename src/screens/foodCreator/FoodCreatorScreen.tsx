@@ -20,6 +20,7 @@ export const FoodCreatorScreen = () => {
     image,
     isImagePickerVisible,
     onSavePress,
+    onCancelPress,
     onBarcodePress,
     onEditImagePress,
     onSelectImagePress,
@@ -61,6 +62,7 @@ export const FoodCreatorScreen = () => {
       >
         <BasicButton
           text={'Cancel'}
+          onPress={onCancelPress}
           secondary
           style={{
             flexDirection: 'row',

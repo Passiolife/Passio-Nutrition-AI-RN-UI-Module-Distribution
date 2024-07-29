@@ -17,7 +17,7 @@ const cardStyle = ({ card }: Branding) => {
   return StyleSheet.create({
     container: {
       backgroundColor: card,
-      borderRadius: 12,
+      borderRadius: 8,
       shadowColor: '#00000029',
       shadowOpacity: 1,
       shadowOffset: {

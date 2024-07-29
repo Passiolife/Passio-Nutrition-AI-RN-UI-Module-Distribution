@@ -6,19 +6,10 @@ import {
   calculateComputedWeightAmount,
   DeleteIngredientAlert,
 } from '../editFoodLogs';
-import {
-  BasicButton,
-  DeleteButton,
-  AlternativeFoodLogsView,
-  BackNavigation,
-} from '../../components';
+import { BasicButton, DeleteButton, BackNavigation } from '../../components';
 import { COLORS } from '../../constants';
 import LogInformationView from '../editFoodLogs/views/logInformationsView';
-import {
-  type RouteProp,
-  useNavigation,
-  useRoute,
-} from '@react-navigation/native';
+import { type RouteProp, useRoute } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import EditServingAmountView from '../editFoodLogs/views/EditServingAmountView';
 import { useEditIngredient } from './useEditIngredient';
@@ -40,11 +31,8 @@ export const EditIngredientScreen = () => {
 
 export const EditIngredient = (props?: EditIngredientsScreenProps) => {
   const { params } = useRoute<RouteProp<ParamList, 'EditIngredientScreen'>>();
-  const navigation = useNavigation<EditIngredientNavigationProps>();
 
-  const { foodItem, updateFoodItem, onSwitchAlternative } = useEditIngredient(
-    params ?? props
-  );
+  const { foodItem, updateFoodItem } = useEditIngredient(params ?? props);
 
   const onSavePress = async () => {
     await saveIngredient().then(() => {});
@@ -62,7 +50,6 @@ export const EditIngredient = (props?: EditIngredientsScreenProps) => {
       async onDelete() {
         if (params.deleteIngredient !== undefined && foodItem) {
           params.deleteIngredient(foodItem);
-          navigation.goBack();
         }
       },
     });
@@ -77,10 +64,9 @@ export const EditIngredient = (props?: EditIngredientsScreenProps) => {
           <View style={styles.body}>
             <LogInformationView
               foodItems={[foodItem]}
-              passioID={foodItem.passioID}
+              iconID={foodItem.iconId}
               name={foodItem.name}
               qty={foodItem.selectedQuantity}
-              imageName={foodItem.imageName}
               servingUnit={foodItem.selectedUnit}
               entityType={foodItem.entityType}
               weight={calculateComputedWeightAmount(
@@ -102,12 +88,6 @@ export const EditIngredient = (props?: EditIngredientsScreenProps) => {
                   updateFoodItem(copyOfFavFoodItem);
                 }
               }}
-            />
-            <AlternativeFoodLogsView
-              passioId={foodItem.passioID}
-              onAlternateItemCall={async (passioIDAttributes) =>
-                onSwitchAlternative(passioIDAttributes)
-              }
             />
             <View style={styles.lastContainer} />
           </View>

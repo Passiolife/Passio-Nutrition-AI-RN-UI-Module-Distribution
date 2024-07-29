@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   Image,
+  Pressable,
   ScrollView,
   StyleSheet,
   TouchableOpacity,
@@ -20,7 +21,7 @@ import { calculateComputedWeightAmount } from './utils';
 import { useEditFoodLog } from './useEditFoodLog';
 import { content } from '../../constants/Content';
 import type { Branding } from '../../contexts';
-import { scaleWidth, scaled, scaledSize } from '../../utils';
+import { scaleHeight, scaleWidth, scaled, scaledSize } from '../../utils';
 import { ICONS } from '../../assets';
 import NewEditServingAmountView from './views/newEditServingsAmountView';
 
@@ -52,13 +53,15 @@ export const EditFoodLogScreen = () => {
     isHideTimeStamp,
     closeDatePicker,
     closeFavoriteFoodLogAlert,
+    onSwitchAlternativePress,
     closeSaveFoodNameAlert,
     deleteIngredient,
     onDateChangePress,
     onAddIngredientPress,
     onEditIngredientPress,
     onCancelPress,
-    onRightActionPress,
+    onDeleteFoodLogPress,
+    onEditCustomFoodPress,
     onSaveFavoriteFoodLog,
     onSaveFoodLogName,
     onSavePress,
@@ -72,21 +75,48 @@ export const EditFoodLogScreen = () => {
   } = useEditFoodLog();
   const styles = editFoodLogStyle(branding);
 
-  const icon =
-    from === 'MealLog'
-      ? ICONS.delete
-      : from === 'Search'
-        ? ICONS.editGreyIc
-        : from === 'QuickScan'
-          ? ICONS.swap
-          : undefined;
-
   return (
     <View style={styles.container}>
       <BackNavigation
         title={'Edit'}
-        rightIcon={icon}
-        onRightPress={onRightActionPress}
+        rightSide={
+          <View style={{ flexDirection: 'row', marginHorizontal: 16 }}>
+            {from === 'MealLog' && (
+              <Pressable onPress={onDeleteFoodLogPress} style={{}}>
+                <Image
+                  source={ICONS.delete}
+                  style={{
+                    width: scaleWidth(28),
+                    height: scaleHeight(28),
+                  }}
+                />
+              </Pressable>
+            )}
+            {from === 'QuickScan' && (
+              <Pressable onPress={onSwitchAlternativePress} style={{}}>
+                <Image
+                  source={ICONS.swap}
+                  style={{
+                    width: scaleWidth(28),
+                    height: scaleHeight(28),
+                  }}
+                />
+              </Pressable>
+            )}
+            <Pressable
+              onPress={onEditCustomFoodPress}
+              style={{ marginStart: 16 }}
+            >
+              <Image
+                source={ICONS.editGreyIc}
+                style={{
+                  width: scaleWidth(24),
+                  height: scaleHeight(24),
+                }}
+              />
+            </Pressable>
+          </View>
+        }
       />
       <ScrollView>
         <View style={styles.body}>
@@ -97,11 +127,9 @@ export const EditFoodLogScreen = () => {
             activeOpacity={1}
           >
             <LogInformationView
-              imageName={foodLog.imageName}
+              iconID={foodLog.iconID}
               foodItems={foodLog.foodItems}
-              userFoodImage={foodLog.userFoodImage}
               longName={foodLog.longName}
-              passioID={foodLog.passioID}
               isOpenFood={foodLog.isOpenFood}
               onMoreDetailPress={onMoreDetailPress}
               name={foodLog.name}
@@ -194,7 +222,7 @@ export const EditFoodLogScreen = () => {
           />
           <BasicButton
             style={bottomActionStyle.bottomActionButton}
-            text={content.log}
+            text={from === 'MealLog' ? 'Update' : content.log}
             testId="testButtonSave"
             small
             secondary={false}

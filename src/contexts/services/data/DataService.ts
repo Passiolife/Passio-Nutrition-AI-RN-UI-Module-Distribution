@@ -21,10 +21,14 @@ import {
   getCustomFoods,
   saveCustomFood,
   deleteCustomFood,
+  getImage,
+  saveImage,
 } from '../../../db';
 import {
   ActivityLevelType,
   CustomFood,
+  CustomImageID,
+  Image,
   UnitSystem,
   type FavoriteFoodItem,
   type FoodLog,
@@ -108,6 +112,12 @@ const dataService: NutritionDataService = {
   },
   getRecipes: function (): Promise<Recipe[]> {
     return getRecipes();
+  },
+  getImage: function (id: CustomImageID): Promise<Image | undefined> {
+    return getImage(id);
+  },
+  saveImage: async function (image: Image): Promise<CustomImageID> {
+    return saveImage(await DBHandler.getInstance(), image);
   },
   getNutritionProfile: (): Promise<NutritionProfile | undefined> => {
     return new Promise<NutritionProfile | undefined>((resolve, reject) => {

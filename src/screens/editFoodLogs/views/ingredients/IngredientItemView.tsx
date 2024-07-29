@@ -97,8 +97,7 @@ const IngredientView = (props: Props) => {
         >
           <View style={styles.mealImgLayout}>
             <PassioFoodIcon
-              passioID={foodItem.imageName}
-              imageName={foodItem.imageName}
+              iconID={foodItem.iconId}
               style={styles.mealImg}
               entityType={foodItem.entityType}
             />

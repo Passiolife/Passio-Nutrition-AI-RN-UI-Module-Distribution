@@ -61,11 +61,11 @@ export function useRecipeEditor(
 
   const updateIngredientsItem = (foodItem: FoodItem) => {
     setIngredients(
-      addOrUpdateIngredients(foodItem.passioID, foodItem, ingredients)
+      addOrUpdateIngredients(foodItem.refCode, foodItem, ingredients)
     );
   };
   const deleteIngredientsItem = (foodItem: FoodItem) => {
-    setIngredients(deleteIngredient(foodItem.passioID, ingredients));
+    setIngredients(deleteIngredient(foodItem.refCode, ingredients));
   };
 
   const updateRecipeName = (name: string) => {
@@ -112,21 +112,18 @@ export function useRecipeEditor(
   };
 
   function deleteIngredient(
-    passioID: PassioID,
+    refCode: PassioID,
     foodItems: FoodItem[]
   ): FoodItem[] {
-    return foodItems.filter((value) => value.passioID !== passioID);
+    return foodItems.filter((value) => value.refCode !== refCode);
   }
 
   function addOrUpdateIngredients(
-    passioID: PassioID,
+    refCode: PassioID,
     foodItem: FoodItem,
     foodItems: FoodItem[]
   ): FoodItem[] {
-    return [
-      ...foodItems.filter((o) => o.passioID !== passioID),
-      { ...foodItem },
-    ];
+    return [...foodItems.filter((o) => o.refCode !== refCode), { ...foodItem }];
   }
 
   return {

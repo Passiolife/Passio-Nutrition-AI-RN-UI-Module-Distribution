@@ -1,15 +1,13 @@
 import type { Nutrient, NutrientType } from './Nutrient';
 
 import type { ComputedWeight } from './ComputedWeight';
-import type { PassioID } from '@passiolife/nutritionai-react-native-sdk-v3/src/sdk/v2';
 import type { PassioIDEntityType } from '@passiolife/nutritionai-react-native-sdk-v3/src/sdk/v2';
 import type { ServingInfo } from './ServingInfo';
 
 export interface FoodItem extends ServingInfo {
-  passioID: PassioID;
   name: string;
-  imageName: string;
   iconId?: string;
+  refCode: string;
   entityType: PassioIDEntityType | 'user-food';
   computedWeight: ComputedWeight;
   ingredientsDescription?: string;

@@ -29,6 +29,10 @@ export type VoiceLoggingScreenNavigationProps = StackNavigationProp<
   'VoiceLoggingScreen'
 >;
 
+export interface VoiceLogRecord extends PassioSpeechRecognitionModel {
+  isSelected?: boolean;
+}
+
 export function useVoiceLogging() {
   const services = useServices();
   const navigation = useNavigation<VoiceLoggingScreenNavigationProps>();
@@ -41,17 +45,25 @@ export function useVoiceLogging() {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const searchQueryRef = useRef<string>('');
 
-  const [PassioSpeechRecognitionResult, setPassioSpeechRecognitionModel] =
-    useState<PassioSpeechRecognitionModel[] | null>(null);
+  const [voiceRecords, setVoiceRecords] = useState<VoiceLogRecord[] | null>(
+    null
+  );
 
   const recognizeSpeechRemote = useCallback(async (text: string) => {
     try {
       setFetchResponse(true);
-      setPassioSpeechRecognitionModel(null);
+      setVoiceRecords(null);
       const val = await PassioSDK.recognizeSpeechRemote(text);
       if (val && val.length > 0) {
         bottomSheetModalRef.current?.expand();
-        setPassioSpeechRecognitionModel(val);
+        setVoiceRecords(
+          val.map((o) => {
+            return {
+              ...o,
+              isSelected: true,
+            };
+          })
+        );
       } else {
         setSearchQuery('');
         ShowToast("Sorry we didn't recognize your input, please try again");
@@ -87,7 +99,7 @@ export function useVoiceLogging() {
   };
 
   const onClearPress = () => {
-    setPassioSpeechRecognitionModel(null);
+    setVoiceRecords(null);
   };
 
   const onLogSelectPress = async (selected: PassioSpeechRecognitionModel[]) => {
@@ -171,7 +183,7 @@ export function useVoiceLogging() {
   }, []);
 
   return {
-    PassioSpeechRecognitionResult,
+    voiceRecords,
     bottomSheetModalRef,
     snapPoints,
     isRecording,

@@ -75,8 +75,9 @@ export function useEditFoodLog() {
       updatedFoodLog.foodItems.push(foodItem);
       setFoodLog(recalculateFoodLogServing(updatedFoodLog));
       ShowToast('Ingredient added successfully');
+      navigation.goBack();
     },
-    [foodLog, recalculateFoodLogServing]
+    [foodLog, navigation, recalculateFoodLogServing]
   );
 
   const deleteIngredient = useCallback(
@@ -84,7 +85,7 @@ export function useEditFoodLog() {
       const newFoodLog = {
         ...foodLog,
         foodItems: foodLog.foodItems.filter(
-          (value) => value.passioID !== foodItem.passioID
+          (value) => value.refCode !== foodItem.refCode
         ),
       };
       setFoodLog(recalculateFoodLogServing(newFoodLog));
@@ -95,12 +96,13 @@ export function useEditFoodLog() {
   const updateIngredient = useCallback(
     (foodLogObj: FoodItem) => {
       let updatedFoodItems = foodLog.foodItems.map((value) =>
-        value.passioID === foodLogObj.passioID ? foodLogObj : value
+        value.refCode === foodLogObj.refCode ? foodLogObj : value
       );
       let foodLogData: FoodLog = { ...foodLog, foodItems: updatedFoodItems };
       setFoodLog(recalculateFoodLogServing(foodLogData));
+      navigation.goBack();
     },
-    [foodLog, recalculateFoodLogServing]
+    [foodLog, navigation, recalculateFoodLogServing]
   );
 
   const onUpdateFoodLog = useCallback((item: FoodLog) => {
@@ -155,26 +157,26 @@ export function useEditFoodLog() {
     setFoodLog({ ...newFoodLog });
   };
 
-  const onRightActionPress = () => {
-    if (params.prevRouteName === 'QuickScan') {
-      navigation.navigate('FoodSearchScreen', {
-        from: 'Other',
-        onSaveData: (item: PassioFoodItem) => {
-          onSwitchAlternative(item);
-        },
-      });
-    } else if (params.prevRouteName === 'Search') {
-      const uuid: string = uuid4.v4() as string;
-      navigation.navigate('FoodCreatorScreen', {
-        foodLog: {
-          ...foodLog,
-          uuid: uuid,
-        },
-        from: 'Search',
-      });
-    } else {
-      onDeleteFoodLogPress();
-    }
+  const onEditCustomFoodPress = () => {
+    const uuid: string = uuid4.v4() as string;
+
+    navigation.push('FoodCreatorScreen', {
+      foodLog: {
+        ...foodLog,
+        uuid: uuid,
+        barcode: foodLog?.foodItems?.[0].barcode,
+      },
+      from: 'Search',
+    });
+  };
+
+  const onSwitchAlternativePress = () => {
+    navigation.navigate('FoodSearchScreen', {
+      from: 'Other',
+      onSaveData: (item: PassioFoodItem) => {
+        onSwitchAlternative(item);
+      },
+    });
   };
 
   const onMoreDetailPress = () => {
@@ -262,7 +264,10 @@ export function useEditFoodLog() {
     (foodItem: FoodItem) => {
       navigation.navigate('EditIngredientScreen', {
         foodItem: foodItem,
-        deleteIngredient,
+        deleteIngredient: (item) => {
+          deleteIngredient(item);
+          navigation.goBack();
+        },
         updateIngredient,
       });
     },
@@ -279,12 +284,12 @@ export function useEditFoodLog() {
       const favoriteFoodItems =
         await services.dataService.getFavoriteFoodItems();
       setFavorite(
-        favoriteFoodItems.filter((item) => item.passioID === foodLog.passioID)
+        favoriteFoodItems.filter((item) => item.refCode === foodLog.refCode)
           .length >= 1
       );
     }
     init();
-  }, [foodLog.passioID, services.dataService]);
+  }, [foodLog.refCode, services.dataService]);
 
   return {
     branding,
@@ -305,10 +310,12 @@ export function useEditFoodLog() {
     onAddIngredientPress,
     onCancelPress,
     onDateChangePress,
+    onDeleteFoodLogPress,
     onDeleteFavoritePress,
+    onEditCustomFoodPress,
     onEditIngredientPress,
     onMealLabelPress,
-    onRightActionPress,
+    onSwitchAlternativePress,
     onSaveFavoriteFoodLog,
     onSaveFoodLogName,
     onSavePress,

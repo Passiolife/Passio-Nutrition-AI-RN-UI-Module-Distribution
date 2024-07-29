@@ -9,12 +9,15 @@ import type { ImagePickerType, ParamList } from '../../navigaitons';
 import {
   convertPassioFoodItemToCustomFood,
   createFoodLogUsingFoodCreator,
+  CUSTOM_USER_FOOD,
+  generateCustomID,
 } from './FoodCreator.utils';
-import type { CustomFood } from '../../models';
+import type { CustomFood, Image } from '../../models';
 import { convertPassioFoodItemToFoodLog } from '../../utils/V3Utils';
 import RNFS from 'react-native-fs';
 import { Platform } from 'react-native';
 import { ShowToast } from '../../utils';
+import uuid4 from 'react-native-uuid';
 
 export type ScanningScreenNavigationProps = StackNavigationProp<
   ParamList,
@@ -30,8 +33,13 @@ export const useFoodCreator = () => {
     params.foodLog
   );
 
-  const [image, setImage] = useState<string | undefined>(
-    foodLog?.userFoodImage
+  const [image, setImage] = useState<Image | undefined>(
+    foodLog?.iconID
+      ? {
+          id: foodLog?.iconID,
+          base64: '',
+        }
+      : undefined
   );
   const [isImagePickerVisible, setImagePickerModalVisible] = useState(false);
 
@@ -50,12 +58,16 @@ export const useFoodCreator = () => {
   const onBarcodePress = async () => {
     navigation.navigate('BarcodeScanScreen', {
       onViewExistingItem: (item) => {
-        navigation.goBack();
         if (item?.customFood) {
           // If the user clicks on the "View Food Item", they're navigated to the food details screen of that custom food.
           // Might be in this case they navigate to the new create food detail screen.
-          setCustomFood(item?.customFood);
+          navigation.push('FoodCreatorScreen', {
+            from: 'MyFood',
+            foodLog: item.customFood,
+          });
+          // setCustomFood(item?.customFood);
         } else {
+          navigation.goBack();
           // custom food doesn't exist
           // . If the user clicks on the "View Food Item", they're navigated to the food details screen of that food item
           if (item?.passioIDAttributes) {
@@ -64,9 +76,9 @@ export const useFoodCreator = () => {
               undefined,
               undefined
             );
-            navigation.navigate('EditFoodLogScreen', {
+            navigation.push('EditFoodLogScreen', {
               foodLog: barcodeFoodLog,
-              prevRouteName: 'Other',
+              prevRouteName: 'MyFood',
             });
           }
         }
@@ -85,12 +97,11 @@ export const useFoodCreator = () => {
         navigation.goBack();
         if (item?.customFood) {
           //If they click on "Create Custom Food Without Barcode", the barcode value is left as empty in the Food Creator screen.
-          if (item?.passioIDAttributes) {
-            const customFood = convertPassioFoodItemToCustomFood(
-              item.passioIDAttributes
-            );
-            setCustomFood(customFood);
-          }
+          setCustomFood({
+            ...item?.customFood,
+            barcode: undefined,
+            uuid: uuid4.v4() as string,
+          });
         } else {
           // custom food doesn't exist
           // If they click on "Create Custom Food Anyway", the barcode value is imported into the Food Creator screen.
@@ -130,7 +141,7 @@ export const useFoodCreator = () => {
         info: info?.records,
         requireNutritionFact: requireNutritionFact?.records,
         otherNutritionFact: otherNutritionFact?.records,
-        image,
+        image: image?.id,
       });
 
       try {
@@ -165,11 +176,26 @@ export const useFoodCreator = () => {
         if (uris) {
           const uri = Platform.OS === 'android' ? `file://${uris[0]}` : uris[0];
           const response = await RNFS.readFile(uri, 'base64');
-          setImage(response);
+          let id = generateCustomID();
+          if (image?.id.includes(CUSTOM_USER_FOOD)) {
+            id = image?.id;
+          }
+          let customFoodImageID = await services.dataService.saveImage({
+            id: id,
+            base64: response,
+          });
+          setImage({
+            id: customFoodImageID,
+            base64: response,
+          });
           navigation.goBack();
         }
       },
     });
+  };
+
+  const onCancelPress = () => {
+    navigation.goBack();
   };
 
   return {
@@ -185,6 +211,7 @@ export const useFoodCreator = () => {
     closeImagePickerModal,
     onSavePress,
     onBarcodePress,
+    onCancelPress,
     onEditImagePress,
   };
 };

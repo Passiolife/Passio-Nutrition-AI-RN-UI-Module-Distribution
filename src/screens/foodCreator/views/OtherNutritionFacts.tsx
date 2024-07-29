@@ -7,6 +7,7 @@ import { FiledSelectionView } from '../../../components/filed/FiledSelectionView
 import { OtherNutrients } from '../data';
 import { FlatList } from 'react-native';
 import { CustomFood, nutrientName, type NutrientType } from '../../../models';
+import { sumNutrients } from '../../../utils/V3Utils';
 
 interface Props {
   foodLog?: CustomFood;
@@ -20,7 +21,7 @@ export interface OtherNutritionFactsRef {
   getValue: () => Value;
 }
 
-interface DefaultNutrients {
+export interface DefaultNutrients {
   label: NutrientType;
   value?: number;
 }
@@ -39,16 +40,18 @@ export const OtherNutritionFacts = React.forwardRef<
 
   useEffect(() => {
     // Generate default nutrients where come from `foodLog
-    const defaultKey: DefaultNutrients[] | undefined =
-      foodLog?.foodItems?.[0]?.nutrients
-        .filter((i) => i.amount > 0 && OtherNutrients.includes(i.id))
-        .map((i) => {
-          const data: DefaultNutrients = {
-            label: i.id as NutrientType,
-            value: Number(i.amount.toFixed(2)),
-          };
-          return data;
-        });
+    const allNutrients: DefaultNutrients[] | undefined = foodLog?.foodItems
+      ?.flatMap((o) => o.nutrients)
+      .filter((i) => i.amount > 0 && OtherNutrients.includes(i.id))
+      .map((i) => {
+        const data: DefaultNutrients = {
+          label: i.id as NutrientType,
+          value: Number(i.amount.toFixed(2)),
+        };
+        return data;
+      });
+
+    const defaultKey = sumNutrients(allNutrients ?? []);
 
     setDefaultList(
       OtherNutrients.filter((i) => !defaultKey?.find((l) => l.label === i)) ??

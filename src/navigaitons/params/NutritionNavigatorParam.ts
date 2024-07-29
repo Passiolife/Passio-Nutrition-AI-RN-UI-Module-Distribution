@@ -32,6 +32,7 @@ export type Module =
   | 'Other'
   | 'Favorites'
   | 'VoiceLogging'
+  | 'MyFood'
   | 'Recipe'
   | 'Ingredient';
 

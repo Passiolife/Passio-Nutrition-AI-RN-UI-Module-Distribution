@@ -31,7 +31,7 @@ export const VoiceLoggingScreen = gestureHandlerRootHOC(() => {
     bottomSheetModalRef,
     snapPoints,
     searchQuery,
-    PassioSpeechRecognitionResult,
+    voiceRecords,
     isFetchingResponse,
     isRecording,
     onRecordingPress,
@@ -118,7 +118,7 @@ export const VoiceLoggingScreen = gestureHandlerRootHOC(() => {
           onLogSelect={onLogSelectPress}
           onTryAgain={onTryAgainPress}
           onSearchManuallyPress={onSearchManuallyPress}
-          passioSpeechRecognitionResults={PassioSpeechRecognitionResult ?? []}
+          result={voiceRecords ?? []}
         />
       </BottomSheet>
     </>
