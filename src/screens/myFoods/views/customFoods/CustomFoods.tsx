@@ -35,7 +35,6 @@ const CustomFoods = ({
     return (
       <CustomFoodsItem
         passioID={item.iconID ?? item.iconID ?? item.iconID ?? ''}
-        imageName={item.iconID ?? ''}
         name={item.name}
         brandName={item.brandName}
         iconID={item.iconID ?? ''}
