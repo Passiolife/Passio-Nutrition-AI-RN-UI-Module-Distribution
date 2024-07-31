@@ -54,6 +54,14 @@ export const BarChart = ({
 
   let maxValue = Math.max(...barData.map((o) => o.value));
 
+  if (target) {
+    if (maxValue < target) {
+      maxValue = Math.round(target + (target % 20));
+    } else {
+      maxValue = maxValue > 0 ? Math.round(maxValue + 10) : 30;
+    }
+  }
+
   maxValue = maxValue > 0 ? maxValue : 30;
   return (
     <View style={barChartContainerStyle}>
