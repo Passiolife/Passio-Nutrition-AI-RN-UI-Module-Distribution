@@ -26,7 +26,18 @@ export const useWeights = () => {
 
   const [isContentVisible, setIsContentVisible] = useState(true);
   const [weights, setWeightSection] = useState<Weight[]>([]);
+  const [target, setTarget] = useState<number>(1000);
   const [weightTrendData, seTWeightTrendData] = useState<any[]>([]);
+
+  useEffect(() => {
+    services.dataService.getNutritionProfile().then((profile) => {
+      if (isImperialWeight) {
+        setTarget(convertKGToPounds(profile?.targetWeight ?? 0));
+      } else {
+        setTarget(profile?.targetWeight ?? 0);
+      }
+    });
+  }, [isImperialWeight, services.dataService]);
 
   const getWeights = useCallback(
     (startDate: Date, endDate: Date, type: SwitchTabLabelEnum) => {
@@ -104,6 +115,7 @@ export const useWeights = () => {
   };
 
   return {
+    target,
     calendarCarouselRef,
     isContentVisible,
     weightLabel,

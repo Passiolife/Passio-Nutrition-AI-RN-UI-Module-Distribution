@@ -5,6 +5,7 @@ import {
   VictoryTheme,
   VictoryAxis,
   VictoryLine,
+  VictoryScatter,
 } from 'victory-native';
 import { useBranding } from '../../../contexts';
 import { scaleHeight, scaledSize } from '../../../utils';
@@ -16,30 +17,38 @@ export type WeightTrendChart = {
 
 interface WeightTrendChartProps {
   data: WeightTrendChart[];
+  target: number;
 }
 
-export const WeightTrendChart = ({ data }: WeightTrendChartProps) => {
+export const WeightTrendChart = ({ data, target }: WeightTrendChartProps) => {
   const { primaryColor, black } = useBranding();
 
-  const maxValue = Math.max(...data.map((o) => o.value));
+  let maxValue = Math.max(...data.map((o) => o.value));
+
+  if (maxValue < target) {
+    maxValue = Math.round(target + (target % 20));
+  } else {
+    maxValue = maxValue > 0 ? Math.round(maxValue + 10) : 30;
+  }
 
   return (
     <View
       style={{
         overflow: 'hidden',
         marginTop: scaleHeight(0),
-        padding: scaledSize(16),
+        paddingVertical: scaledSize(16),
       }}
     >
       <VictoryChart
         domainPadding={{ x: 16 }}
         width={Dimensions.get('window').width - 60}
         theme={VictoryTheme.material}
-        padding={{ left: 30, right: 30, bottom: 30, top: 0 }}
-        height={125}
+        padding={{ left: 40, right: 40, bottom: 30, top: 10 }}
+        height={140}
       >
         <VictoryAxis
           dependentAxis={true}
+          tickValues={[0, Math.round(maxValue / 2), maxValue]}
           maxDomain={{ y: maxValue }}
           minDomain={{ y: 0 }}
           style={{
@@ -62,16 +71,9 @@ export const WeightTrendChart = ({ data }: WeightTrendChartProps) => {
                 : undefined;
           }}
           style={{
-            tickLabels: {
-              fontSize: 12,
-              paddingTop: 0,
-              angle: 0,
-              fill: black,
-            },
             grid: { stroke: 'none' },
             ticks: { stroke: 'node' },
             axis: { stroke: 'none' },
-            axisLabel: { color: 'red' },
           }}
           maxDomain={{ y: maxValue }}
           minDomain={{ y: 0 }}
@@ -85,7 +87,35 @@ export const WeightTrendChart = ({ data }: WeightTrendChartProps) => {
           x="label"
           y="value"
           data={data}
-          interpolation="basis"
+          interpolation="monotoneX"
+        />
+
+        <VictoryScatter
+          data={data.filter((o) => o.value > 0)}
+          size={4}
+          style={{
+            labels: { display: 'none' },
+            data: { fill: primaryColor },
+          }}
+          x="label"
+          y="value"
+        />
+
+        {/* Dotted Line for Target */}
+        <VictoryLine
+          data={[
+            { x: data[0]?.label, y: target },
+            { x: data[data.length - 1]?.label, y: target },
+          ]}
+          style={{
+            data: {
+              stroke: 'rgba(16, 185, 129, 1)', // Set your preferred color for the dotted line
+              strokeDasharray: '5, 5', // Dotted line style
+            },
+            labels: { display: 'none' },
+          }}
+          x="x"
+          y="y"
         />
       </VictoryChart>
     </View>

@@ -18,6 +18,7 @@ const WaterEntry = () => {
     consumed,
     isEdit,
     dateRef,
+    error,
     timeRef,
     unitLabel,
     water,
@@ -48,11 +49,7 @@ const WaterEntry = () => {
             onChangeText={handleWaterInput}
             style={styles.textInput}
             returnKeyType="done"
-            error={
-              consumed?.toString() === '' || Number(consumed) <= 0
-                ? 'Required'
-                : ''
-            }
+            error={error}
             keyboardType="numeric"
           />
           <Text

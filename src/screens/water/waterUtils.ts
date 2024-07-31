@@ -40,7 +40,7 @@ export const prepareWeekly = (
   const chartData: ChartData[] = Object.entries(sumByLabel).map(
     ([dayOfWeek, value]) => ({
       label: dayOfWeek,
-      value: value,
+      value: Math.round(value),
     })
   );
 

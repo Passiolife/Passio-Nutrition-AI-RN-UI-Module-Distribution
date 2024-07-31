@@ -29,6 +29,7 @@ const WaterScreen = () => {
   const {
     calendarCarouselRef,
     chartData,
+    target,
     isContentVisible,
     isImperialWeight,
     ogMlLabel,
@@ -115,6 +116,7 @@ const WaterScreen = () => {
             barData={chartData}
             title="Water Trend"
             barChartContainerStyle={{ marginTop: 16 }}
+            target={target}
           />
         )}
         <QuickAddTracking
