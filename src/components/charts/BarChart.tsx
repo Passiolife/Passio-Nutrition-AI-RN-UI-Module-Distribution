@@ -92,7 +92,7 @@ export const BarChart = ({
                 axis: { stroke: 'none' },
                 tickLabels: { fill: black },
               }}
-              tickValues={[0, maxValue / 2, maxValue]}
+              tickValues={[0, Math.round(maxValue / 2), maxValue]}
             />
             <VictoryAxis
               tickFormat={(item, index) => {
