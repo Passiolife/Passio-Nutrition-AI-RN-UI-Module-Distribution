@@ -12,6 +12,7 @@ import type { ParamList } from 'src/navigaitons';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import { useSettingScreen } from '../../../../screens/setting/useSettingScreen';
 import { convertPoundsToKG } from '../../../../screens/nutritionProfile/unitConversions';
+import { isValidDecimalNumber } from '../../../../screens/foodCreator/FoodCreator.utils';
 type ScreenNavigationProps = StackNavigationProp<ParamList, 'WeightEntry'>;
 
 export const useWeightEntry = () => {
@@ -21,15 +22,17 @@ export const useWeightEntry = () => {
   const navigation = useNavigation<ScreenNavigationProps>();
   const { isImperialWeight, weightLabel } = useSettingScreen();
   const [weight, setWeight] = useState('');
-
+  const [error, setError] = useState('');
   useEffect(() => {
-    setWeight(
-      (isImperialWeight
-        ? Math.round(
-            convertKGToPounds(Number(params.weight?.weight ?? 0))
-          ).toString()
-        : params.weight?.weight) ?? '50'
-    );
+    if (params.weight?.weight) {
+      setWeight(
+        (isImperialWeight
+          ? Math.round(
+              convertKGToPounds(Number(params.weight?.weight ?? 0))
+            ).toString()
+          : params.weight?.weight) ?? '50'
+      );
+    }
   }, [isImperialWeight, params.weight?.weight]);
 
   const service = useServices();
@@ -42,6 +45,10 @@ export const useWeightEntry = () => {
     navigation.goBack();
   };
   const handlePressOk = () => {
+    if (!isValidDecimalNumber(weight)) {
+      setError('Please enter valid input');
+      return;
+    }
     const updateDate = dateRef.current?.getTimeStamp();
     const updateTime = timeRef.current?.getTimeStamp();
 
@@ -74,6 +81,7 @@ export const useWeightEntry = () => {
     timeRef,
     weight,
     weightLabel,
+    error,
     handlePressCancel,
     handlePressOk,
     handleWeightInput,

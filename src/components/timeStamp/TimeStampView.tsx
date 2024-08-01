@@ -23,7 +23,7 @@ export const TimeStampView = React.forwardRef(
   ) => {
     const styles = timeStampViewStyle(useBranding());
 
-    const f = format ?? mode === 'time' ? 'HH:MM a' : 'MMM dd, yyyy';
+    const f = format ?? mode === 'time' ? 'hh:mm a' : 'MMM dd, yyyy';
 
     useImperativeHandle(ref, () => {
       return {
@@ -68,7 +68,7 @@ export const TimeStampView = React.forwardRef(
 const timeStampViewStyle = ({ border, white }: Branding) =>
   StyleSheet.create({
     timeStampContainer: {
-      marginTop: scaleHeight(12),
+      marginTop: scaleHeight(6),
       marginBottom: scaleHeight(12),
       paddingHorizontal: 19,
       borderColor: border,

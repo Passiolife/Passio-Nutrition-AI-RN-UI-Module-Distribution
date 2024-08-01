@@ -19,6 +19,7 @@ const WeightEntry = () => {
     prevWeight,
     timeRef,
     weight,
+    error,
     isEdit,
     weightLabel,
     handlePressCancel,
@@ -48,9 +49,7 @@ const WeightEntry = () => {
             onChangeText={handleWeightInput}
             style={styles.textInput}
             returnKeyType="done"
-            error={
-              weight?.toString() === '' || Number(weight) <= 0 ? 'Required' : ''
-            }
+            error={error}
             keyboardType="numeric"
           />
           <Text

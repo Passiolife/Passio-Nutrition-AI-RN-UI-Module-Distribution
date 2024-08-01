@@ -54,17 +54,11 @@ export const useNutritionAdvisor = ({ key }: { key: string }) => {
   useEffect(() => {
     const initializeNutritionAdvisor = async () => {
       try {
-        const status = await NutritionAdvisor.configure(key);
-        if (status?.status === 'Success') {
-          const conversationResponse =
-            await NutritionAdvisor.initConversation();
-          setConfigureStatus(
-            conversationResponse?.status === 'Success' ? 'Success' : 'Error'
-          );
-        } else {
-          setConfigureStatus('Error');
-          setSDKError(status?.message);
-        }
+        const conversationResponse = await NutritionAdvisor.initConversation();
+
+        setConfigureStatus(
+          conversationResponse?.status === 'Success' ? 'Success' : 'Error'
+        );
       } catch (err) {
         setConfigureStatus('Error');
         setSDKError('Error');
