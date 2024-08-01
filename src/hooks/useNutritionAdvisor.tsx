@@ -12,6 +12,8 @@ import type {
 } from '../screens/advisor/model/advisorResponse';
 import { LayoutAnimation, type FlatList } from 'react-native';
 import uuid4 from 'react-native-uuid';
+import { useAdvisorSession } from '../contexts/adviosr/AdviosrContext';
+import { ShowToast } from '../utils';
 
 export type SDKStatus = 'Success' | 'Error' | 'Init';
 
@@ -33,23 +35,42 @@ const defaultResponse: AdvisorResponse = {
 export const useNutritionAdvisor = ({ key }: { key: string }) => {
   const [configureStatus, setConfigureStatus] = useState<SDKStatus>('Init');
   const [sdkError, setSDKError] = useState<string | undefined>(undefined);
+  const { storedMessages, storeMessageAtGlobal } = useAdvisorSession();
 
-  const [messages, setMessage] = useState<AdvisorResponse[]>([]);
+  const [messages, setMessage] = useState<AdvisorResponse[]>(
+    storedMessages ?? []
+  );
   const [sending, setSending] = useState(false);
   const [ingredientAdvisorResponse, setIngredientAdvisorResponse] =
     useState<PassioAdvisorResponse | null>(null);
   const listRef = useRef<FlatList>(null);
   const firstRender = useRef(true);
+  const messageStoreRef = useRef<AdvisorResponse[]>();
+
+  useEffect(() => {
+    // When updating messages, they need to be stored in a ref to maintain them at a global level,
+    // even when the screen is exited.
+    messageStoreRef.current = messages;
+  }, [messages]);
+
+  useEffect(() => {
+    return () => {
+      // update messages at global level
+      storeMessageAtGlobal(messageStoreRef.current ?? []);
+    };
+  }, [storeMessageAtGlobal]);
 
   useEffect(() => {
     if (firstRender.current) {
       setTimeout(() => {
-        LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-        setMessage([defaultResponse]);
-        firstRender.current = false;
+        if (storedMessages === undefined || storedMessages?.length === 0) {
+          LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+          setMessage([defaultResponse]);
+          firstRender.current = false;
+        }
       }, 1000);
     }
-  }, []);
+  }, [storedMessages]);
 
   useEffect(() => {
     const initializeNutritionAdvisor = async () => {
@@ -59,14 +80,24 @@ export const useNutritionAdvisor = ({ key }: { key: string }) => {
         setConfigureStatus(
           conversationResponse?.status === 'Success' ? 'Success' : 'Error'
         );
+        if (conversationResponse?.status === 'Error') {
+          ShowToast(conversationResponse?.message);
+        }
       } catch (err) {
         setConfigureStatus('Error');
         setSDKError('Error');
       }
     };
 
-    initializeNutritionAdvisor();
-  }, [key]);
+    if (storedMessages === undefined || storedMessages?.length === 0) {
+      initializeNutritionAdvisor();
+    } else {
+      setConfigureStatus('Success');
+      setTimeout(() => {
+        listRef.current?.scrollToEnd();
+      }, 300);
+    }
+  }, [key, storedMessages]);
 
   const handleAdvisorResponse = async (
     response: PassioAdvisorMessageResultStatus | null,
