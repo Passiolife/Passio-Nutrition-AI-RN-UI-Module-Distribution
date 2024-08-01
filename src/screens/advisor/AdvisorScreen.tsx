@@ -20,6 +20,7 @@ import { BackNavigation, Text } from '../../components';
 import { useBranding, type Branding } from '../../contexts';
 import { MessageRecords } from './view/message/records/MessageRecords';
 import { ImageScanning } from './view/message/ImageScanning';
+import { SessionError } from './view/message/SessionError';
 
 export const AdvisorScreen = () => {
   const {
@@ -86,6 +87,8 @@ export const AdvisorScreen = () => {
         return <TypingView />;
       case 'imageScanning':
         return <ImageScanning />;
+      case 'sessionError':
+        return <SessionError />;
       default:
         return <></>;
     }

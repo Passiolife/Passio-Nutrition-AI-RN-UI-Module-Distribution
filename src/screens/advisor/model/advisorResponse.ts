@@ -10,6 +10,7 @@ export type messageType =
   | 'records'
   | 'typing'
   | 'imageScanning'
+  | 'sessionError'
   | 'defaultResponse';
 
 export type RecordType = 'image' | 'searchTool';
