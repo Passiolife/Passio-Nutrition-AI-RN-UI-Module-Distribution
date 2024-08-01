@@ -64,7 +64,7 @@ export const QuickScanningScreen = gestureHandlerRootHOC(() => {
       <View
         style={{
           position: 'absolute',
-          top: Platform.OS === 'android' ? 100 : 130,
+          top: Platform.OS === 'android' ? 100 : 120,
           right: 0,
           left: 0,
           justifyContent: 'center',
@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
   scanIcon: {
     position: 'absolute',
     top: 0,
-    bottom: Platform.OS === 'android' ? 100 : 80,
+    bottom: Platform.OS === 'android' ? 100 : 100,
     right: 0,
     left: 0,
     marginHorizontal: 16,
@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
   },
   slider: {
     position: 'absolute',
-    bottom: Platform.OS === 'android' ? 230 : 250,
+    bottom: Platform.OS === 'android' ? 230 : 230,
     left: 0,
     marginHorizontal: 16,
     right: 0,
