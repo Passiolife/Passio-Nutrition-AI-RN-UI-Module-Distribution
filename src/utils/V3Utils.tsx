@@ -105,7 +105,7 @@ function convertPassioIngredientToFoodItem(item: PassioIngredient): FoodItem {
       name: passioIngredient.name,
       iconId: passioIngredient.iconId,
       amount: passioIngredient.amount,
-      weight: passioIngredient.weight,
+      ingredientWeight: passioIngredient.weight,
       id: passioIngredient.id,
     },
     passioIngredient.amount.weight

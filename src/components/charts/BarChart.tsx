@@ -16,6 +16,7 @@ import {
   VictoryChart,
   VictoryTheme,
   VictoryAxis,
+  VictoryLine,
 } from 'victory-native';
 
 import { Card } from '../cards';
@@ -39,18 +40,29 @@ export interface BarChartProps {
   title?: string;
   barChartContainerStyle?: StyleProp<ViewStyle>;
   barData: ChartData[];
+  target?: number;
 }
 
 export const BarChart = ({
   title = 'Calories',
   barChartContainerStyle,
   barData,
+  target,
 }: BarChartProps) => {
   const { calories, black } = useBranding();
   const styles = barChartStyle(useBranding());
 
-  const maxValue = Math.max(...barData.map((o) => o.value));
+  let maxValue = Math.max(...barData.map((o) => o.value));
 
+  if (target) {
+    if (maxValue < target) {
+      maxValue = Math.round(target + (target % 20));
+    } else {
+      maxValue = maxValue > 0 ? Math.round(maxValue + 10) : 30;
+    }
+  }
+
+  maxValue = maxValue > 0 ? maxValue : 30;
   return (
     <View style={barChartContainerStyle}>
       <Card style={styles.roundedAndShadowView}>
@@ -122,6 +134,25 @@ export const BarChart = ({
                 data: { fill: calories },
               }}
             />
+
+            {/* Dotted Line for Target */}
+            {target && (
+              <VictoryLine
+                data={[
+                  { x: barData[0]?.label, y: target },
+                  { x: barData[barData.length - 1]?.label, y: target },
+                ]}
+                style={{
+                  data: {
+                    stroke: 'rgba(16, 185, 129, 1)', // Set your preferred color for the dotted line
+                    strokeDasharray: '5, 5', // Dotted line style
+                  },
+                  labels: { display: 'none' },
+                }}
+                x="x"
+                y="y"
+              />
+            )}
           </VictoryChart>
         </View>
       </Card>

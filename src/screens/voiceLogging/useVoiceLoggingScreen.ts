@@ -10,7 +10,7 @@ import {
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   ShowToast,
-  createFoodLogUsingPortionSize,
+  createFoodLogUsingWeightGram,
   getLogToDate,
   mealLabelByDate,
 } from '../../utils';
@@ -115,10 +115,11 @@ export function useVoiceLogging() {
     for (const item of selected) {
       if (item.advisorInfo.foodDataInfo) {
         const foodItem = await PassioSDK.fetchFoodItemForDataInfo(
-          item.advisorInfo.foodDataInfo
+          item.advisorInfo.foodDataInfo,
+          item.advisorInfo.weightGrams
         );
         if (foodItem) {
-          let foodLog = createFoodLogUsingPortionSize(
+          let foodLog = createFoodLogUsingWeightGram(
             foodItem,
             logToDate,
             meal,

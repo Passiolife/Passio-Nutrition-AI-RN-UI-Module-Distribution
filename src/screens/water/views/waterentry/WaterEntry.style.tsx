@@ -17,6 +17,7 @@ const waterEntryStyle = ({ white, backgroundColor }: Branding) =>
     textInput: {
       padding: scaleHeight(12),
       marginVertical: scaleHeight(4),
+      fontSize: 16,
       paddingStart: scaleWidth(16),
       backgroundColor: white,
     },
@@ -31,7 +32,7 @@ const waterEntryStyle = ({ white, backgroundColor }: Branding) =>
       marginTop: 10,
     },
     inputTitle: {
-      marginTop: scaleHeight(16),
+      marginTop: scaleHeight(8),
     },
 
     actionContainer: {

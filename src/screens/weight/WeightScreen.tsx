@@ -27,6 +27,7 @@ import { WeightTrendChart } from './linechart/lineChart';
 
 const WeightScreen = () => {
   const {
+    target,
     calendarCarouselRef,
     isContentVisible,
     weightLabel,
@@ -119,7 +120,7 @@ const WeightScreen = () => {
             <Text style={styles.headerOvr}>Weight Trend</Text>
           </View>
           {weightTrendData.length > 0 ? (
-            <WeightTrendChart data={weightTrendData} />
+            <WeightTrendChart data={weightTrendData} target={target} />
           ) : null}
         </Card>
         <Card style={styles.roundedAndShadowView}>

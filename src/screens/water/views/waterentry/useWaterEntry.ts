@@ -14,26 +14,30 @@ import {
   type RouteProp,
 } from '@react-navigation/native';
 import { useSettingScreen } from '../../../../screens/setting/useSettingScreen';
+import { isValidDecimalNumber } from '../../../../screens/foodCreator/FoodCreator.utils';
 
 type ScreenNavigationProps = StackNavigationProp<ParamList, 'WaterEntry'>;
 
 export const useWaterEntry = () => {
   const { params } = useRoute<RouteProp<ParamList, 'WaterEntry'>>();
 
-  const [consumed, setConsumed] = useState('50');
+  const [consumed, setConsumed] = useState('');
   const dateRef = useRef<TimeStampViewRef>(null);
   const timeRef = useRef<TimeStampViewRef>(null);
   const navigation = useNavigation<ScreenNavigationProps>();
   const { isImperialWeight, ogMlLabel } = useSettingScreen();
+  const [error, setError] = useState('');
 
   useEffect(() => {
-    setConsumed(
-      (isImperialWeight
-        ? Math.round(
-            convertMlToOg(Number(params.water?.consumed ?? 0))
-          ).toString()
-        : params.water?.consumed) ?? '50'
-    );
+    if (params.water?.consumed) {
+      setConsumed(
+        (isImperialWeight
+          ? Math.round(
+              convertMlToOg(Number(params.water?.consumed ?? 0))
+            ).toString()
+          : params.water?.consumed) ?? '50'
+      );
+    }
   }, [isImperialWeight, params.water?.consumed]);
 
   const service = useServices();
@@ -46,6 +50,11 @@ export const useWaterEntry = () => {
     navigation.goBack();
   };
   const handlePressOk = () => {
+    if (!isValidDecimalNumber(consumed)) {
+      setError('Please enter valid input');
+      return;
+    }
+
     const updateDate = dateRef.current?.getTimeStamp();
     const updateTime = timeRef.current?.getTimeStamp();
 
@@ -77,6 +86,7 @@ export const useWaterEntry = () => {
     water: params.water,
     unitLabel: ogMlLabel,
     isEdit: params.water !== undefined,
+    error,
     handlePressCancel,
     handlePressOk,
     handleWaterInput,

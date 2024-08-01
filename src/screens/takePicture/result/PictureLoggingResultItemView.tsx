@@ -36,7 +36,7 @@ export const PictureLoggingResultItemView = (props: Props) => {
         <Text
           weight="400"
           size="_12px"
-          style={[styles.text, styles.secondaryText]}
+          style={[styles.bottom, styles.secondaryText]}
         >
           {bottom}
         </Text>
@@ -89,6 +89,11 @@ const styles = StyleSheet.create({
   },
   text: {
     textTransform: 'capitalize',
+    marginStart: 16,
+    marginVertical: 2,
+    marginRight: 10,
+  },
+  bottom: {
     marginStart: 16,
     marginVertical: 2,
     marginRight: 10,

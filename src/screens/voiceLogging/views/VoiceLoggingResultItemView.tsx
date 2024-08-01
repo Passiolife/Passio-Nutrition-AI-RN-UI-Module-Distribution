@@ -36,7 +36,7 @@ export const VoiceLoggingResultItemView = (props: Props) => {
         <Text
           weight="400"
           size="_12px"
-          style={[styles.text, styles.secondaryText]}
+          style={[styles.bottomText, styles.secondaryText]}
         >
           {bottom}
         </Text>
@@ -88,6 +88,11 @@ const styles = StyleSheet.create({
   },
   text: {
     textTransform: 'capitalize',
+    marginStart: 16,
+    marginVertical: 2,
+    marginRight: 10,
+  },
+  bottomText: {
     marginStart: 16,
     marginVertical: 2,
     marginRight: 10,

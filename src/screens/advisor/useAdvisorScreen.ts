@@ -7,7 +7,7 @@ import { Keyboard } from 'react-native';
 import { PassioSDK } from '@passiolife/nutritionai-react-native-sdk-v3';
 import {
   ShowToast,
-  createFoodLogUsingPortionSize,
+  createFoodLogUsingWeightGram,
   getLogToDate,
   mealLabelByDate,
 } from '../../utils';
@@ -108,10 +108,11 @@ export const useAdvisorScreen = () => {
     for (const item of selected) {
       if (item.foodDataInfo) {
         const foodItem = await PassioSDK.fetchFoodItemForDataInfo(
-          item.foodDataInfo
+          item.foodDataInfo,
+          item.weightGrams
         );
         if (foodItem) {
-          let foodLog = createFoodLogUsingPortionSize(
+          let foodLog = createFoodLogUsingWeightGram(
             foodItem,
             logToDate,
             meal,

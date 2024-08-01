@@ -83,7 +83,7 @@ export const MessageRecords = ({
             <MessageRecordItem
               foodName={item?.recognisedName}
               imageName={foodDataInfo?.iconID}
-              bottom={`${item?.portionSize} | ${Math.round(calories)} cal`}
+              bottom={`${item?.weightGrams} g | ${Math.round(calories)} cal`}
               onFoodLogSelect={() => {
                 if (response.isLogged) {
                   return;

@@ -22,7 +22,8 @@ export const createFoodLogUsingFoodDataInfo = async (
   for (const item of foods) {
     if (item && item.foodDataInfo) {
       const foodItem = await PassioSDK.fetchFoodItemForDataInfo(
-        item.foodDataInfo
+        item.foodDataInfo,
+        item.weightGrams
       );
       if (foodItem) {
         const foodLog = convertPassioFoodItemToFoodLog(
@@ -36,6 +37,18 @@ export const createFoodLogUsingFoodDataInfo = async (
   }
 
   return foodLogs;
+};
+
+export const createFoodLogUsingWeightGram = (
+  foodItem: PassioFoodItem,
+  logToDate: Date,
+  meal: MealLabel,
+  _weightGram: number,
+  _portionSize: string
+) => {
+  let foodLog = convertPassioFoodItemToFoodLog(foodItem, logToDate, meal);
+
+  return foodLog;
 };
 
 export const createFoodLogUsingPortionSize = (
