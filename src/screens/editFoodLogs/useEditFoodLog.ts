@@ -283,13 +283,15 @@ export function useEditFoodLog() {
     async function init() {
       const favoriteFoodItems =
         await services.dataService.getFavoriteFoodItems();
-      setFavorite(
-        favoriteFoodItems.filter((item) => item.name === foodLog.name).length >=
-          1
-      );
+      setTimeout(() => {
+        setFavorite(
+          favoriteFoodItems.filter((item) => item.refCode === foodLog.refCode)
+            .length >= 1
+        );
+      }, 100);
     }
     init();
-  }, [foodLog.name, services.dataService]);
+  }, [foodLog.refCode, services.dataService]);
 
   return {
     branding,
