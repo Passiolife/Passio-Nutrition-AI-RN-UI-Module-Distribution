@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Image,
-  Platform,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import { DetectionCameraView } from '@passiolife/nutritionai-react-native-sdk-v3/src/sdk/v2';
 import type { MealLabel } from '../../models';
@@ -15,7 +9,6 @@ import type { StackNavigationProp } from '@react-navigation/stack';
 import type { ParamList } from '../../navigaitons';
 import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
 import ScanSVG from '../../components/svgs/scan';
-import QuickScanInfo from './views/QuickScanInfo';
 import { useNavigation } from '@react-navigation/native';
 import { BarcodeFoodScan } from './mode/barcode/BarcodeFoodScan';
 import { ICONS } from '../../assets';
@@ -63,12 +56,9 @@ export const QuickScanningScreen = gestureHandlerRootHOC(() => {
     return (
       <View
         style={{
-          position: 'absolute',
-          top: Platform.OS === 'android' ? 100 : 120,
-          right: 0,
-          left: 0,
           justifyContent: 'center',
           flexDirection: 'row',
+          marginTop: 16,
         }}
       >
         <TouchableOpacity
@@ -144,45 +134,55 @@ export const QuickScanningScreen = gestureHandlerRootHOC(() => {
       </View>
     );
   };
+  const renderFocus = () => {
+    return (
+      <>
+        {!info && (
+          <View style={styles.scanIcon}>
+            <ScanSVG />
+          </View>
+        )}
+      </>
+    );
+  };
   return (
-    <View style={styles.container}>
-      <DetectionCameraView style={styles.camera} volumeDetectionMode="none" />
-
-      {!info && (
-        <View style={styles.scanIcon}>
-          <ScanSVG />
-        </View>
-      )}
-      <View
-        style={{
-          position: 'absolute',
-          top: 0,
-          bottom: 0,
-          right: 0,
-          left: 0,
-        }}
-      >
-        {mode === 'Visual' && !info && <VisualFoodScan />}
-        {mode === 'Barcode' && !info && (
-          <BarcodeFoodScan
-            onScanNutritionFacts={() => {
-              setMode('NutritionFact');
+    <>
+      <View style={styles.container}>
+        <View style={{ flex: 1 }}>
+          <QuickScanningActionView
+            onClosedPressed={() => navigation.goBack()}
+            onInfoPress={() => {
+              setInfo((i) => !i);
             }}
           />
-        )}
-        {mode === 'NutritionFact' && !info && <NutritionFactScan />}
+          <View style={{ flex: 1 }}>
+            <DetectionCameraView
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+              }}
+              volumeDetectionMode="none"
+            />
+            {renderMode()}
+            {renderFocus()}
+            {level && renderZoomIndicator()}
+          </View>
+        </View>
       </View>
-      <QuickScanningActionView
-        onClosedPressed={() => navigation.goBack()}
-        onInfoPress={() => {
-          setInfo((i) => !i);
-        }}
-      />
-      {info && <QuickScanInfo onOkPress={() => setInfo(false)} />}
-      {renderMode()}
 
-      {level && renderZoomIndicator()}
-    </View>
+      {mode === 'Visual' && !info && <VisualFoodScan />}
+      {mode === 'Barcode' && !info && (
+        <BarcodeFoodScan
+          onScanNutritionFacts={() => {
+            setMode('NutritionFact');
+          }}
+        />
+      )}
+      {mode === 'NutritionFact' && !info && <NutritionFactScan />}
+    </>
   );
 });
 
@@ -194,22 +194,14 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   scanIcon: {
-    position: 'absolute',
-    top: 0,
-    bottom: Platform.OS === 'android' ? 100 : 100,
-    right: 0,
-    left: 0,
     marginHorizontal: 16,
     alignItems: 'center',
     justifyContent: 'center',
   },
   slider: {
-    position: 'absolute',
-    bottom: Platform.OS === 'android' ? 230 : 230,
-    left: 0,
     marginHorizontal: 16,
-    right: 0,
     justifyContent: 'center',
+    bottom: 4,
   },
   icons: {
     height: 24,

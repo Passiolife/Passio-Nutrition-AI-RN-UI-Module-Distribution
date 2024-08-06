@@ -37,6 +37,7 @@ export const ICONS = {
   search: require('./ic_search.png'),
   favoritesBlue: require('./ic_contacts_blue.png'),
   contentBlue: require('./ic_contacts_blue.png'),
+  scanFrame: require('./icons/scan_frame.png'),
   rebalancedPortFolioBlue: require('./ic_contacts_blue.png'),
   submitResumeBlue: require('./ic_contacts_blue.png'),
   saladBlue: require('./ic_salad_blue_4x.png'),
