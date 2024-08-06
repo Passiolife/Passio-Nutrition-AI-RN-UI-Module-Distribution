@@ -1,17 +1,10 @@
 import React from 'react';
-import {
-  FlatList,
-  Image,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { useBranding, type Branding } from '../../../../contexts';
 import type { FoodItem } from '../../../../models';
-import { ICONS } from '../../../../assets';
 import IngredientItemView from './IngredientItemView';
 import { content } from '../../../../constants/Content';
-import { Card, Text } from '../../../../components';
+import { BasicButton, Card, Text } from '../../../../components';
 import { scaleHeight, scaleWidth } from '../../../../utils';
 
 interface Props {
@@ -42,10 +35,7 @@ export const IngredientsView = ({
   return (
     <View>
       <Card style={styles.container}>
-        <TouchableOpacity
-          style={styles.plusTouchOpacity}
-          onPress={onAddIngredients}
-        >
+        <TouchableOpacity style={styles.plusTouchOpacity}>
           <Text
             weight="600"
             size="_16px"
@@ -55,11 +45,19 @@ export const IngredientsView = ({
             {content.addIngredients}
           </Text>
 
-          <Image
-            resizeMode="contain"
-            source={ICONS.newAddPlus}
-            style={styles.plusIcon}
-          />
+          {foodItems.length > 1 ? (
+            <BasicButton
+              onPress={onAddIngredients}
+              text={'Edit recipe'}
+              style={{ paddingVertical: 0 }}
+            />
+          ) : (
+            <BasicButton
+              onPress={onAddIngredients}
+              text={'Make custom recipe'}
+              style={{ paddingVertical: 0 }}
+            />
+          )}
         </TouchableOpacity>
 
         <>
@@ -105,6 +103,7 @@ const ingredientViewStyle = ({ border }: Branding) =>
     ingredientText: {},
     plusTouchOpacity: {
       flexDirection: 'row',
+      alignItems: 'center',
       paddingHorizontal: scaleWidth(13),
       alignContent: 'space-between',
       justifyContent: 'space-between',

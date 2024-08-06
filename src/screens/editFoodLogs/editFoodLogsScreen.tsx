@@ -78,27 +78,16 @@ export const EditFoodLogScreen = () => {
   return (
     <View style={styles.container}>
       <BackNavigation
-        title={'Edit'}
+        title={'Food Details'}
         rightSide={
           <View style={{ flexDirection: 'row', marginHorizontal: 16 }}>
-            {from === 'MealLog' && (
-              <Pressable onPress={onDeleteFoodLogPress} style={{}}>
-                <Image
-                  source={ICONS.delete}
-                  style={{
-                    width: scaleWidth(28),
-                    height: scaleHeight(28),
-                  }}
-                />
-              </Pressable>
-            )}
             {from === 'QuickScan' && (
               <Pressable onPress={onSwitchAlternativePress} style={{}}>
                 <Image
                   source={ICONS.swap}
                   style={{
-                    width: scaleWidth(28),
-                    height: scaleHeight(28),
+                    width: scaleWidth(20),
+                    height: scaleHeight(20),
                   }}
                 />
               </Pressable>
@@ -110,8 +99,8 @@ export const EditFoodLogScreen = () => {
               <Image
                 source={ICONS.editGreyIc}
                 style={{
-                  width: scaleWidth(24),
-                  height: scaleHeight(24),
+                  width: scaleWidth(18),
+                  height: scaleHeight(18),
                 }}
               />
             </Pressable>
@@ -220,6 +209,14 @@ export const EditFoodLogScreen = () => {
             secondary={true}
             onPress={() => onCancelPress()}
           />
+          {from === 'MealLog' && (
+            <BasicButton
+              style={bottomActionStyle.deleteActionButton}
+              text={content.delete}
+              small
+              onPress={() => onDeleteFoodLogPress()}
+            />
+          )}
           <BasicButton
             style={bottomActionStyle.bottomActionButton}
             text={from === 'MealLog' ? 'Update' : content.log}
@@ -333,6 +330,14 @@ const bottomActionStyle = StyleSheet.create({
     flex: 1,
     marginHorizontal: 8,
     borderRadius: scaledSize(4),
+    justifyContent: 'center',
+  },
+  deleteActionButton: {
+    flex: 1,
+    marginHorizontal: 8,
+    borderRadius: scaledSize(4),
+    backgroundColor: 'rgba(239, 68, 68, 1)',
+    borderColor: 'rgba(239, 68, 68, 1)',
     justifyContent: 'center',
   },
 });

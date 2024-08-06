@@ -20,6 +20,7 @@ interface Props extends React.PropsWithChildren {
   onPressEdit?: () => void;
   swipeableContainer?: ViewStyle;
   marginVertical?: number;
+  action1?: string;
 }
 interface SwipeToDeleteRef {
   closeSwipe: () => void;
@@ -65,7 +66,9 @@ export const SwipeToDelete = React.forwardRef<SwipeToDeleteRef, Props>(
             }}
           >
             <View style={[styles.swipeableButton]}>
-              <Text style={styles.swipeableBtnTxt}>Edit</Text>
+              <Text style={styles.swipeableBtnTxt}>
+                {props.action1 ?? 'Edit'}
+              </Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity

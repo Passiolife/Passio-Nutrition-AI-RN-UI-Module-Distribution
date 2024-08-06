@@ -284,12 +284,12 @@ export function useEditFoodLog() {
       const favoriteFoodItems =
         await services.dataService.getFavoriteFoodItems();
       setFavorite(
-        favoriteFoodItems.filter((item) => item.refCode === foodLog.refCode)
-          .length >= 1
+        favoriteFoodItems.filter((item) => item.name === foodLog.name).length >=
+          1
       );
     }
     init();
-  }, [foodLog.refCode, services.dataService]);
+  }, [foodLog.name, services.dataService]);
 
   return {
     branding,
