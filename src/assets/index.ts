@@ -37,6 +37,7 @@ export const ICONS = {
   search: require('./ic_search.png'),
   favoritesBlue: require('./ic_contacts_blue.png'),
   contentBlue: require('./ic_contacts_blue.png'),
+  scanFrame: require('./icons/scan_frame.png'),
   rebalancedPortFolioBlue: require('./ic_contacts_blue.png'),
   submitResumeBlue: require('./ic_contacts_blue.png'),
   saladBlue: require('./ic_salad_blue_4x.png'),
@@ -87,6 +88,7 @@ export const ICONS = {
   Tick: require('./icons/tick.png'),
   CloseRed: require('./icons/close_red.png'),
   CaptureIcon: require('./icons/capture.png'),
+  flash: require('./icons/flash.png'),
 };
 export const onBoardingAssets = {
   onBoardingStep1: require('./images/onboarding_01.png'),

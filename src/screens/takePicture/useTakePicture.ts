@@ -19,6 +19,10 @@ export type TakePictureScreenProps = StackNavigationProp<
 
 export const PHOTO_LIMIT = 7;
 
+export interface PicturePassioAdvisorFoodInfo extends PassioAdvisorFoodInfo {
+  isSelected?: boolean;
+}
+
 export function useTakePicture() {
   const navigation = useNavigation<TakePictureScreenProps>();
   const services = useServices();
@@ -32,7 +36,7 @@ export function useTakePicture() {
   const [isFetchingResponse, setFetchResponse] = useState(false);
   const [isPreparingLog, setPreparingLog] = useState(false);
   const [passioAdvisorFoodInfo, setPassioAdvisorFoodInfo] = useState<
-    PassioAdvisorFoodInfo[] | null
+    PicturePassioAdvisorFoodInfo[] | null
   >(null);
 
   const recognizePictureRemote = useCallback(
@@ -59,7 +63,12 @@ export function useTakePicture() {
           setFetchResponse(false);
           bottomSheetModalRef.current?.expand();
           setPassioAdvisorFoodInfo(
-            foodInfoArrayFlat as PassioAdvisorFoodInfo[]
+            (foodInfoArrayFlat as PassioAdvisorFoodInfo[]).map((i) => {
+              return {
+                ...i,
+                isSelected: true,
+              };
+            })
           );
         } else {
           bottomSheetModalRef.current?.expand();
@@ -73,13 +82,13 @@ export function useTakePicture() {
   );
 
   const onLogSelectPress = useCallback(
-    async (selected: PassioAdvisorFoodInfo[]) => {
+    async (selected: PicturePassioAdvisorFoodInfo[]) => {
       if (isPreparingLog) {
         return;
       }
       setPreparingLog(true);
       const foodLogs = await createFoodLogUsingFoodDataInfo(
-        selected,
+        selected.filter((i) => i.isSelected),
         route.params.logToDate,
         route.params.logToMeal
       );

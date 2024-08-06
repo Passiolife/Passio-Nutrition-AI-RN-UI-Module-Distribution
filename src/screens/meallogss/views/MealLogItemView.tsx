@@ -26,7 +26,11 @@ const MealLogItemView = (props: Props) => {
   }, [foodLog, props]);
 
   return (
-    <SwipeToDelete onPressDelete={onDeleteFoodLog} onPressEdit={onPress}>
+    <SwipeToDelete
+      onPressDelete={onDeleteFoodLog}
+      onPressEdit={onPress}
+      action1="Details"
+    >
       <TouchableOpacity onPress={onPress} style={styles.touchContainer}>
         <View style={styles.mealImgLayout}>
           <PassioFoodIcon

@@ -50,21 +50,23 @@ export const MessageResponseView = ({
       >
         {renderText()}
       </Markdown>
-      {tools && tools?.length > 0 && (
-        <View style={styles.buttonContainer}>
-          <BasicButton
-            onPress={() => {
-              onFindFoodPress?.();
-            }}
-            backgroundColor={branding.backgroundColor}
-            boarderColor={branding.backgroundColor}
-            textColor={branding.primaryColor}
-            style={styles.buttonLogSelected}
-            isLoading={isLoading}
-            text={'Find Foods'}
-          />
-        </View>
-      )}
+      {tools &&
+        tools?.length > 0 &&
+        tools.includes('SearchIngredientMatches') && (
+          <View style={styles.buttonContainer}>
+            <BasicButton
+              onPress={() => {
+                onFindFoodPress?.();
+              }}
+              backgroundColor={branding.backgroundColor}
+              boarderColor={branding.backgroundColor}
+              textColor={branding.primaryColor}
+              style={styles.buttonLogSelected}
+              isLoading={isLoading}
+              text={'Find Foods'}
+            />
+          </View>
+        )}
     </View>
   );
 };

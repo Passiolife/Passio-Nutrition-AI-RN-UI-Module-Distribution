@@ -10,7 +10,6 @@ import {
 
 import { QuickScanningLoadingView, QuickScanningResultView } from '../../views';
 
-import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 import { scaleHeight } from '../../../../utils';
 import { Text } from '../../../../components';
@@ -20,7 +19,7 @@ import { QuickScanItemAddedToDiaryView } from '../../views/QuickSacnItemAddedToD
 import { QuickScanLogButtonView } from '../../views/QuickScanLogButtonView';
 import { useVisualFoodScan } from './useVisualFoodScan';
 
-export const VisualFoodScan = gestureHandlerRootHOC(() => {
+export const VisualFoodScan = () => {
   const {
     alternatives,
     isLodgedFood,
@@ -59,6 +58,11 @@ export const VisualFoodScan = gestureHandlerRootHOC(() => {
           snapPoints={snapPoints}
           handleIndicatorStyle={{
             backgroundColor: branding.border,
+          }}
+          containerStyle={{
+            position: 'absolute',
+            zIndex: 10,
+            bottom: 0,
           }}
           backgroundStyle={styles.bottomSheetChildrenContainer}
         >
@@ -135,7 +139,7 @@ export const VisualFoodScan = gestureHandlerRootHOC(() => {
       )}
     </>
   );
-});
+};
 
 const styles = StyleSheet.create({
   touchAreaStyle: {

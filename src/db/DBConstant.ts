@@ -6,6 +6,7 @@ export const TABLE_CUSTOM_FOOD_LOGS = 'custom_food_logs';
 export const TABLE_WATER = 'water';
 export const TABLE_WEIGHT = 'weight';
 export const TABLE_FAVOURITE_FOOD_LOGS = 'favourite_food_table';
+export const TABLE_NEW_FAVOURITE_FOOD_LOGS = 'new_favourite_food_table';
 export const TABLE_RECIPE = 'recipe_table';
 
 // nutrition  food_logs rows

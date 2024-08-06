@@ -33,9 +33,9 @@ import {
   ROW_UUID,
   ROW_WEIGHT,
   TABLE_CUSTOM_FOOD_LOGS,
-  TABLE_FAVOURITE_FOOD_LOGS,
   TABLE_FOOD_LOGS,
   TABLE_IMAGES,
+  TABLE_NEW_FAVOURITE_FOOD_LOGS,
   TABLE_RECIPE,
   TABLE_WATER,
   TABLE_WEIGHT,
@@ -62,7 +62,7 @@ export const saveFoodLog = async (
           foodLog.uuid,
           foodLog.name,
           foodLog.meal,
-          undefined,
+          foodLog.longName,
           foodLog.entityType,
           foodLog.eventTimestamp,
           undefined,
@@ -214,7 +214,7 @@ export const deleteFavoriteFoodLog = async (
   uuId: string
 ): Promise<void> => {
   return new Promise((resolve, reject) => {
-    const deleteQuery = `DELETE from ${TABLE_FAVOURITE_FOOD_LOGS} where ${ROW_UUID} = "${uuId}"`;
+    const deleteQuery = `DELETE from ${TABLE_NEW_FAVOURITE_FOOD_LOGS} where ${ROW_UUID} = "${uuId}"`;
     db.transaction((tx) => {
       tx.executeSql(
         deleteQuery,
@@ -231,27 +231,32 @@ export const deleteFavoriteFoodLog = async (
 };
 
 // Save Favorite Food logs into local storage
+
 export const saveFavouriteFood = async (
   db: SQLiteDatabase,
-  favoriteFoodItem: FavoriteFoodItem
+  foodLog: FavoriteFoodItem
 ): Promise<void> => {
   return new Promise((resolve, reject) => {
-    const insertQuery = `INSERT or REPLACE INTO  ${TABLE_FAVOURITE_FOOD_LOGS} (${ROW_UUID}, ${ROW_NAME}, ${ROW_MEAL}, ${ROW_IMAGE_NAME}, ${ROW_ENTITY_TYPE}, ${ROW_FOOD_ITEMS},${ROW_SERVING_SIZES},${ROW_SERVING_UNITS},${ROW_PASSIOID},${ROW_SELECTED_UNIT},${ROW_SELECTED_QUANTITY}) VALUES (?,?,?,?,?,?,?,?,?,?,?)`;
+    const insertQuery = `INSERT or REPLACE INTO  ${TABLE_NEW_FAVOURITE_FOOD_LOGS} (${ROW_UUID}, ${ROW_NAME}, ${ROW_MEAL}, ${ROW_IMAGE_NAME}, ${ROW_ENTITY_TYPE}, ${ROW_EVENT_TIME_STAMP}, ${ROW_USER_FOOD_IMAGE}, ${ROW_ICON_ID}, ${ROW_FOOD_ITEMS},${ROW_SERVING_SIZES},${ROW_SERVING_UNITS},${ROW_PASSIOID},${ROW_SELECTED_UNIT},${ROW_SELECTED_QUANTITY}) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
+
     db.transaction((tx) => {
       tx.executeSql(
         insertQuery,
         [
-          favoriteFoodItem.uuid,
-          favoriteFoodItem.name,
-          favoriteFoodItem.meal,
+          foodLog.uuid,
+          foodLog.name,
+          foodLog.meal,
+          foodLog.longName,
+          foodLog.entityType,
+          foodLog.eventTimestamp,
           undefined,
-          favoriteFoodItem.entityType,
-          JSON.stringify(favoriteFoodItem.foodItems),
-          JSON.stringify(favoriteFoodItem.servingSizes),
-          JSON.stringify(favoriteFoodItem.servingUnits),
-          favoriteFoodItem.iconID ?? undefined,
-          favoriteFoodItem.selectedUnit,
-          favoriteFoodItem.selectedQuantity,
+          foodLog.iconID,
+          JSON.stringify(foodLog.foodItems),
+          JSON.stringify(foodLog.servingSizes),
+          JSON.stringify(foodLog.servingUnits),
+          undefined,
+          foodLog.selectedUnit,
+          foodLog.selectedQuantity,
         ],
         () => {
           resolve();
@@ -291,16 +296,16 @@ export const getCustomFoods = async (): Promise<CustomFood[]> => {
   }
 };
 
-// Get Favorite Food Logs from favourite_food_table
+// Get Favorite Food Logs from favorite_food_table
 export const getFavoriteFoodItems = async (): Promise<FavoriteFoodItem[]> => {
   try {
     const db = await DBHandler.getInstance();
     const results = await db.executeSql(
-      `SELECT * FROM ${TABLE_FAVOURITE_FOOD_LOGS}`
+      `SELECT * FROM ${TABLE_NEW_FAVOURITE_FOOD_LOGS}`
     );
-    return convertResultToFavoriteFoodItem(results);
+    return convertResultToFoodLog(results);
   } catch (error) {
-    console.error(`Failed to get food logs ${error}`);
+    console.error(`Failed to get favorite food logs ${error}`);
     throw error;
   }
 };
@@ -430,6 +435,7 @@ export function convertResultToFoodLog(results: [ResultSet]): FoodLog[] {
     }
   });
   items.forEach((value) => {
+    value.longName = value?.imageName;
     value.selectedQuantity = parseFloat(value.selectedQuantity.toString());
     value.foodItems = JSON.parse(value.foodItems.toString());
     value.servingUnits = JSON.parse(value.servingUnits.toString());
