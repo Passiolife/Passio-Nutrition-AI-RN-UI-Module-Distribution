@@ -225,7 +225,7 @@ export function convertFoodLogsToFavoriteFoodLog(
   return {
     ...foodLog,
     name: name,
-    uuid: uuid4.v4() as string,
+    uuid: foodLog.refCode ?? (uuid4.v4() as string),
   };
 }
 

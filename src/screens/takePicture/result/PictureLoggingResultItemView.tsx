@@ -19,9 +19,8 @@ export const PictureLoggingResultItemView = (props: Props) => {
     <TouchableOpacity onPress={onFoodLogSelect} style={styles.container}>
       <View style={styles.imageContainer}>
         <PassioFoodIcon
-          imageName={imageName}
           style={styles.image}
-          passioID={imageName}
+          iconID={imageName}
           entityType={PassioIDEntityType.group}
         />
       </View>
@@ -76,6 +75,7 @@ const styles = StyleSheet.create({
 
   image: {
     width: 42,
+    height: 42,
     aspectRatio: 1,
   },
   addIcon: {

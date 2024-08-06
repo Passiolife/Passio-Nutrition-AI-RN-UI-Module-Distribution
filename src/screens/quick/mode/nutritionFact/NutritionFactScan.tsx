@@ -4,13 +4,12 @@ import { Platform, StyleSheet, View } from 'react-native';
 import { QuickScanningLoadingView } from './../../views';
 
 import NutritionFactView from './../../views/NutritionFactView';
-import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 import { scaleHeight } from '../../../../utils';
 import { useBranding } from '../../../../contexts';
 import { useNutritionFactScan } from './useNutritionFactScan';
 
-export const NutritionFactScan = gestureHandlerRootHOC(() => {
+export const NutritionFactScan = () => {
   const {
     nutritionFacts,
     onSaveFoodLogUsingNutrientFact,
@@ -57,7 +56,7 @@ export const NutritionFactScan = gestureHandlerRootHOC(() => {
       </BottomSheet>
     </>
   );
-});
+};
 
 const styles = StyleSheet.create({
   touchAreaStyle: {

@@ -23,8 +23,4 @@ export const QuickScanningActionView = (props: Props) => {
   );
 };
 
-const closeActionContainer: ViewStyle = {
-  position: 'absolute',
-  left: 0,
-  right: 0,
-};
+const closeActionContainer: ViewStyle = {};

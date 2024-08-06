@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   type StyleProp,
   StyleSheet,
@@ -14,19 +14,16 @@ import { PictureLoggingResultItemView } from './PictureLoggingResultItemView';
 import { BasicButton } from '../../../components';
 import { FlatList } from 'react-native-gesture-handler';
 import { ICONS } from '../../../assets';
+import type { PicturePassioAdvisorFoodInfo } from '../useTakePicture';
 
 interface Props {
   style?: StyleProp<ViewStyle>;
-  passioAdvisorFoodInfoResult: Array<PassioAdvisorFoodInfo>;
+  passioAdvisorFoodInfoResult: Array<PicturePassioAdvisorFoodInfo>;
   onRetake: () => void;
   type: 'camera' | 'picture';
   onLogSelect: (selected: PassioAdvisorFoodInfo[]) => void;
   onCancel: () => void;
   isPreparingLog: boolean;
-}
-
-interface Selection extends PassioAdvisorFoodInfo {
-  index: number;
 }
 
 export const PictureLoggingResult = ({
@@ -38,19 +35,30 @@ export const PictureLoggingResult = ({
   onLogSelect,
   onCancel,
 }: Props) => {
-  const [selected, setSelected] = useState<Selection[]>([]);
+  const [advisorFoodInfo, setPicturePassioAdvisorFoodInfo] = useState<
+    PicturePassioAdvisorFoodInfo[]
+  >([]);
 
-  const onFoodSelect = (result: Selection) => {
-    const find = selected?.find((item) => item.index === result?.index);
-    if (find) {
-      setSelected((item) => item?.filter((i) => i.index !== result?.index));
-    } else {
-      setSelected((item) => [...(item ?? []), result]);
-    }
+  useEffect(() => {
+    setPicturePassioAdvisorFoodInfo(passioAdvisorFoodInfoResult);
+  }, [passioAdvisorFoodInfoResult]);
+
+  const onFoodSelect = (record: PicturePassioAdvisorFoodInfo) => {
+    setPicturePassioAdvisorFoodInfo((item) =>
+      item?.map((i) => {
+        if (i.recognisedName === record?.recognisedName) {
+          return {
+            ...i,
+            isSelected: !(i.isSelected ?? false),
+          };
+        } else {
+          return i;
+        }
+      })
+    );
   };
-
   const onClearPress = () => {
-    setSelected([]);
+    setPicturePassioAdvisorFoodInfo([]);
   };
 
   const renderNoDataFound = () => {
@@ -62,12 +70,14 @@ export const PictureLoggingResult = ({
     );
   };
 
+  const selectedCount = advisorFoodInfo?.filter((i) => i.isSelected).length;
+
   return (
     <View style={[styles.itemsContainer, style]}>
       <View style={styles.clearBtnView}>
         <TouchableOpacity onPress={onClearPress} style={styles.clearBtn}>
           <Text size="_14px" weight="400" style={styles.clearBtnText}>
-            {selected && selected.length > 0 ? 'Clear' : ''}
+            {selectedCount && selectedCount > 0 ? 'Clear' : ''}
           </Text>
         </TouchableOpacity>
       </View>
@@ -96,14 +106,12 @@ export const PictureLoggingResult = ({
       )}
       <FlatList
         style={styles.list}
-        data={passioAdvisorFoodInfoResult}
+        data={advisorFoodInfo}
+        extraData={advisorFoodInfo}
         showsVerticalScrollIndicator={false}
         ListEmptyComponent={renderNoDataFound}
-        renderItem={({ item, index }) => {
+        renderItem={({ item }) => {
           const foodDataInfo = item.foodDataInfo;
-          const isSelected =
-            selected?.find((it) => it?.index === index) !== undefined;
-
           const npCalories =
             item?.foodDataInfo?.nutritionPreview?.calories ?? 0;
           const npWeightQuantity =
@@ -118,9 +126,9 @@ export const PictureLoggingResult = ({
               imageName={foodDataInfo?.iconID}
               bottom={`${item?.weightGrams} g | ${Math.round(calories)} cal`}
               onFoodLogSelect={() => {
-                onFoodSelect({ ...item, index: index });
+                onFoodSelect(item);
               }}
-              isSelected={isSelected}
+              isSelected={item.isSelected ?? false}
             />
           );
         }}
@@ -141,11 +149,11 @@ export const PictureLoggingResult = ({
           />
           <BasicButton
             onPress={() => {
-              onLogSelect(selected ?? []);
+              onLogSelect(advisorFoodInfo ?? []);
             }}
             style={styles.buttonLogSelected}
             isLoading={isPreparingLog}
-            enable={selected && selected.length > 0}
+            enable={selectedCount > 0}
             text="Log Selected"
           />
         </View>

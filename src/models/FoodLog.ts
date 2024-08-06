@@ -15,6 +15,8 @@ export interface FoodLog extends ServingInfo {
   iconID?: string;
   entityType?: PassioIconType;
   foodItems: FoodItem[];
+  // Not used
+  imageName?: string;
 }
 
 export type PassioIconType = PassioIDEntityType | 'user-recipe' | 'user-food';

@@ -97,7 +97,7 @@ const LogInformationView = ({
               },
             ]}
             size={100}
-            gap={12}
+            gap={4}
           />
           <View style={styles.calorieItem}>
             <Text

@@ -38,7 +38,7 @@ export function caloriesText(
     'calories'
   );
   if (calorie !== undefined) {
-    calorieText = `${calorie.toFixed(0)} ${text}`;
+    calorieText = `${Math.round(calorie)} ${text}`;
   }
   return calorieText;
 }
