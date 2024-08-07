@@ -114,16 +114,22 @@ export function useEditFoodLog() {
     setFoodLog({ ...foodLog });
   };
 
-  const onSaveFavoriteFoodLog = async (input: string | undefined) => {
-    if (input != null) {
-      await services.dataService.saveFavoriteFoodItem(
-        convertFoodLogsToFavoriteFoodLog(input, foodLog)
-      );
+  const onSaveFavoriteFoodLog = async () => {
+    if (foodLog.refCode) {
+      if (isFavorite) {
+        await services.dataService.deleteFavoriteFoodItem(foodLog.refCode);
+      } else {
+        await services.dataService.saveFavoriteFoodItem(
+          convertFoodLogsToFavoriteFoodLog(foodLog)
+        );
+      }
+
       ShowToast(isFavorite ? 'Removed from favorite' : 'Added to favorite');
+      setFavorite(!isFavorite);
+      setOpenFavoriteAlert(false);
     } else {
+      ShowToast('refcode missing');
     }
-    setFavorite(!isFavorite);
-    setOpenFavoriteAlert(false);
   };
 
   const closeFavoriteFoodLogAlert = () => {
@@ -291,7 +297,7 @@ export function useEditFoodLog() {
       }, 100);
     }
     init();
-  }, [foodLog.refCode, services.dataService]);
+  }, [foodLog, foodLog.refCode, services.dataService]);
 
   return {
     branding,

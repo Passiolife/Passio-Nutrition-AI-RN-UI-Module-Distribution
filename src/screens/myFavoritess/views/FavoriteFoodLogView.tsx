@@ -2,7 +2,7 @@ import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import type { FavoriteFoodItem } from '../../../models';
 import { servingLabel } from '../../../utils/StringUtils';
-import { Card } from '../../../components';
+import { SwipeToDelete } from '../../../components';
 import { COLORS } from '../../../constants';
 import { PassioFoodIcon } from '../../../components/passio/PassioFoodIcon';
 import { ICONS } from '../../../assets';
@@ -11,14 +11,24 @@ interface Props {
   foodLog: FavoriteFoodItem;
   onLogItem: (favoriteFoodItem: FavoriteFoodItem) => void;
   onTap: (favoriteFoodItem: FavoriteFoodItem) => void;
+  onDeleteFoodLog: (favoriteFoodItem: FavoriteFoodItem) => void;
 }
 
 const FavoriteFoodLogView = (props: Props) => {
   const { foodLog } = props;
 
   return (
-    <Card style={styles.shadowContainer}>
-      <TouchableOpacity onPress={() => props.onTap(foodLog)}>
+    <SwipeToDelete
+      onPressDelete={() => props.onDeleteFoodLog(foodLog)}
+      onPressEdit={() => props.onTap(foodLog)}
+      marginVertical={4}
+      swipeableContainer={{ marginHorizontal: 20 }}
+      childrenContainerStyle={styles.shadowContainer}
+    >
+      <TouchableOpacity
+        style={{ flex: 1 }}
+        onPress={() => props.onTap(foodLog)}
+      >
         <View style={styles.mealContainer}>
           <View style={styles.mealImgLayout}>
             <PassioFoodIcon
@@ -38,7 +48,7 @@ const FavoriteFoodLogView = (props: Props) => {
           </TouchableOpacity>
         </View>
       </TouchableOpacity>
-    </Card>
+    </SwipeToDelete>
   );
 };
 
@@ -46,11 +56,17 @@ export default React.memo(FavoriteFoodLogView);
 
 const styles = StyleSheet.create({
   shadowContainer: {
-    marginTop: 8,
     borderRadius: 8,
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-    marginHorizontal: 16,
+    marginVertical: 4,
+    marginHorizontal: 8,
+    shadowColor: '#00000029',
+    shadowOpacity: 1,
+    shadowOffset: {
+      width: 1.5,
+      height: 2.0,
+    },
+    shadowRadius: 2.85,
+    elevation: 12,
   },
   mealContainer: {
     flexDirection: 'row',

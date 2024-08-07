@@ -134,7 +134,7 @@ export const EditFoodLogScreen = () => {
                 !isHideFavorite ? (
                   <TouchableOpacity
                     onPress={() => {
-                      onSaveFavoriteFoodLog(foodLog.name);
+                      onSaveFavoriteFoodLog();
                     }}
                   >
                     <Image
@@ -237,7 +237,7 @@ export const EditFoodLogScreen = () => {
       />
       <SaveFavoriteFoodItem
         text={''}
-        onSave={(input) => onSaveFavoriteFoodLog(input)}
+        onSave={() => onSaveFavoriteFoodLog()}
         onClose={async () => closeFavoriteFoodLogAlert()}
         isVisible={isOpenFavoriteFoodAlert}
       />

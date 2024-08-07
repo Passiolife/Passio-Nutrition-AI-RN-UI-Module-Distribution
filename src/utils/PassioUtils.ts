@@ -219,12 +219,10 @@ export function convertPassioRecipe(recipe: PassioRecipe): FoodRecipe {
 
 // Convert foodLogs Data Into  FavoriteFoodItem
 export function convertFoodLogsToFavoriteFoodLog(
-  name: string,
   foodLog: FoodLog
 ): FavoriteFoodItem {
   return {
     ...foodLog,
-    name: name,
     uuid: foodLog.refCode ?? (uuid4.v4() as string),
   };
 }
