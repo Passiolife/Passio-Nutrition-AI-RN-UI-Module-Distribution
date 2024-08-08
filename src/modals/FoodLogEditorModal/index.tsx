@@ -68,9 +68,7 @@ export const FoodLogEditorModal = React.memo((props: Props) => {
     async (input: string | undefined) => {
       if (input != null) {
         if (props.onFavoriteFoodLog) {
-          props.onFavoriteFoodLog(
-            convertFoodLogsToFavoriteFoodLog(input, foodLog)
-          );
+          props.onFavoriteFoodLog(convertFoodLogsToFavoriteFoodLog(foodLog));
         }
       }
       setFavoriteAlertPromptOpen(false);

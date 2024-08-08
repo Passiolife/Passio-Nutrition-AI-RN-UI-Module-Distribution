@@ -59,7 +59,7 @@ export const QuickScanningScreen = gestureHandlerRootHOC(() => {
           />
           {!info && <ScanningModeSelector mode={mode} setMode={setMode} />}
           {!info && <ScanSVG />}
-          {!info && level && <ZoomIndicator level={level} />}
+          {!info && level && <ZoomIndicator mode={mode} level={level} />}
           {info && <QuickScanInfo onOkPress={() => setInfo(false)} />}
         </View>
       </View>

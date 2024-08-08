@@ -76,6 +76,7 @@ export interface FoodCreatorNavProps {
   logToMeal?: MealLabel | undefined;
   foodLog?: CustomFood;
   from?: Module;
+  onSave?: (customFood?: CustomFood) => void;
 }
 export interface MyFoodsScreenNavProps {
   logToDate?: Date | undefined;

@@ -20,6 +20,7 @@ import { useDatePicker } from './useDatePicker';
 import { DeleteFoodLogAlert } from './alerts';
 import type { PassioFoodItem } from '@passiolife/nutritionai-react-native-sdk-v3';
 import { mergeNutrients } from '../../utils/NutritentsUtils';
+import dataService from '../../contexts/services/data/DataService';
 
 export function useEditFoodLog() {
   const services = useServices();
@@ -114,16 +115,22 @@ export function useEditFoodLog() {
     setFoodLog({ ...foodLog });
   };
 
-  const onSaveFavoriteFoodLog = async (input: string | undefined) => {
-    if (input != null) {
-      await services.dataService.saveFavoriteFoodItem(
-        convertFoodLogsToFavoriteFoodLog(input, foodLog)
-      );
+  const onSaveFavoriteFoodLog = async () => {
+    if (foodLog.refCode) {
+      if (isFavorite) {
+        await services.dataService.deleteFavoriteFoodItem(foodLog.refCode);
+      } else {
+        await services.dataService.saveFavoriteFoodItem(
+          convertFoodLogsToFavoriteFoodLog(foodLog)
+        );
+      }
+
       ShowToast(isFavorite ? 'Removed from favorite' : 'Added to favorite');
+      setFavorite(!isFavorite);
+      setOpenFavoriteAlert(false);
     } else {
+      ShowToast('refcode missing');
     }
-    setFavorite(!isFavorite);
-    setOpenFavoriteAlert(false);
   };
 
   const closeFavoriteFoodLogAlert = () => {
@@ -157,17 +164,44 @@ export function useEditFoodLog() {
     setFoodLog({ ...newFoodLog });
   };
 
-  const onEditCustomFoodPress = () => {
-    const uuid: string = uuid4.v4() as string;
+  const onEditCustomFoodPress = async () => {
+    if (foodLog.refCustomFoodID) {
+      const customFood = await services.dataService?.getCustomFoodLog(
+        foodLog.refCustomFoodID
+      );
+      if (customFood) {
+        navigation.push('FoodCreatorScreen', {
+          foodLog: customFood,
+          from: 'Search',
+        });
+      } else {
+        // Custom food not found in
+      }
+    } else {
+      const uuid: string = uuid4.v4() as string;
 
-    navigation.push('FoodCreatorScreen', {
-      foodLog: {
-        ...foodLog,
-        uuid: uuid,
-        barcode: foodLog?.foodItems?.[0].barcode,
-      },
-      from: 'Search',
-    });
+      navigation.push('FoodCreatorScreen', {
+        foodLog: {
+          ...foodLog,
+          uuid: uuid,
+          barcode: foodLog?.foodItems?.[0].barcode,
+        },
+        onSave: async (customFood) => {
+          await dataService.saveFoodLog({
+            ...params.foodLog,
+            refCustomFoodID: customFood?.uuid,
+          });
+
+          setFoodLog((i) => {
+            return {
+              ...i,
+              refCustomFoodID: customFood?.uuid,
+            };
+          });
+        },
+        from: 'Search',
+      });
+    }
   };
 
   const onSwitchAlternativePress = () => {
@@ -283,13 +317,15 @@ export function useEditFoodLog() {
     async function init() {
       const favoriteFoodItems =
         await services.dataService.getFavoriteFoodItems();
-      setFavorite(
-        favoriteFoodItems.filter((item) => item.name === foodLog.name).length >=
-          1
-      );
+      setTimeout(() => {
+        setFavorite(
+          favoriteFoodItems.filter((item) => item.refCode === foodLog.refCode)
+            .length >= 1
+        );
+      }, 100);
     }
     init();
-  }, [foodLog.name, services.dataService]);
+  }, [foodLog, foodLog.refCode, services.dataService]);
 
   return {
     branding,

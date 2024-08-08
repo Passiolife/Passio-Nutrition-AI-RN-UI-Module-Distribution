@@ -19,10 +19,11 @@ interface Props extends React.PropsWithChildren {
   onPressDelete: () => void;
   onPressEdit?: () => void;
   swipeableContainer?: ViewStyle;
+  childrenContainerStyle?: ViewStyle;
   marginVertical?: number;
   action1?: string;
 }
-interface SwipeToDeleteRef {
+export interface SwipeToDeleteRef {
   closeSwipe: () => void;
 }
 
@@ -96,7 +97,10 @@ export const SwipeToDelete = React.forwardRef<SwipeToDeleteRef, Props>(
         <Swipeable
           ref={swipeReg}
           containerStyle={swipeableContainer}
-          childrenContainerStyle={styles.shadowContainer}
+          childrenContainerStyle={[
+            styles.shadowContainer,
+            props.childrenContainerStyle,
+          ]}
           overshootLeft={true}
           renderRightActions={(progressAnimatedValue, dragAnimatedValue) =>
             rightActionMealLogView(progressAnimatedValue, dragAnimatedValue)

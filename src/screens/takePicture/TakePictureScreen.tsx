@@ -50,11 +50,13 @@ export const TakePictureScreen = gestureHandlerRootHOC(() => {
           recognizePictureRemote={recognizePictureRemote}
           animatedIndex={animatedIndex}
           ref={takePictureRef}
+          isMultiple
         />
       ) : (
         <SelectPhotos
           recognizePictureRemote={recognizePictureRemote}
           ref={selectPhotoRef}
+          isMultiple
         />
       )}
       <BottomSheet

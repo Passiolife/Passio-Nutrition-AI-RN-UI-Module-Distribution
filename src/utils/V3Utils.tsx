@@ -26,7 +26,7 @@ export const convertPassioFoodItemToFoodLog = (
   logDate: Date | undefined,
   logMeal: MealLabel | undefined
 ): FoodLog => {
-  const uuid: string = uuid4.v4() as string;
+  const uuid: string = `${uuid4.v4() as string}`;
   const date = logDate ?? new Date();
   const meal = logMeal ?? getMealLog(date, undefined);
 
