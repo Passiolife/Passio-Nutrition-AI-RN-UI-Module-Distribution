@@ -1,5 +1,5 @@
 import { convertPassioFoodItemToFoodLog } from './../../utils/V3Utils';
-import type { FoodItem, FoodLog } from '../../models';
+import type { FoodItem, FoodLog, Image } from '../../models';
 import { useCallback, useState } from 'react';
 
 import { content } from '../../constants/Content';
@@ -25,6 +25,15 @@ export function useEditRecipe() {
   const navigation = useNavigation<EditRecipeScreenNavigationProps>();
 
   const [foodLog, setFoodLog] = useState<FoodLog>(params.foodLog);
+
+  const [image, _setImage] = useState<Image | undefined>(
+    foodLog?.iconID
+      ? {
+          id: foodLog?.iconID,
+          base64: '',
+        }
+      : undefined
+  );
 
   const recalculateFoodLogServing = useCallback((value: FoodLog) => {
     const updatedFoodLog = { ...value };
@@ -136,13 +145,14 @@ export function useEditRecipe() {
   );
 
   return {
-    from: params.prevRouteName,
     branding,
-    foodLog,
     deleteIngredient,
+    foodLog,
+    from: params.prevRouteName,
+    image,
     onAddIngredientPress,
-    onEditIngredientPress,
     onCancelPress,
+    onEditIngredientPress,
     onSavePress,
     onUpdateFoodLog,
   };

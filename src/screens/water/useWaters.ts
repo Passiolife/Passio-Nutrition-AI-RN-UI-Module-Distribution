@@ -40,9 +40,9 @@ export const useWaters = () => {
   useEffect(() => {
     services.dataService.getNutritionProfile().then((profile) => {
       if (isImperialWeight) {
-        setTarget(convertKGToPounds(profile?.targetWeight ?? 0));
+        setTarget(convertKGToPounds(profile?.targetWater ?? 0));
       } else {
-        setTarget(profile?.targetWeight ?? 0);
+        setTarget(profile?.targetWater ?? 0);
       }
     });
   }, [isImperialWeight, services.dataService]);

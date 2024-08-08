@@ -89,6 +89,7 @@ export const ICONS = {
   CloseRed: require('./icons/close_red.png'),
   CaptureIcon: require('./icons/capture.png'),
   flash: require('./icons/flash.png'),
+  recipe: require('./icons/recipe.png'),
 };
 export const onBoardingAssets = {
   onBoardingStep1: require('./images/onboarding_01.png'),

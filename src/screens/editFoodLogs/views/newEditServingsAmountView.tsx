@@ -64,7 +64,7 @@ const NewEditServingAmountView = ({ foodLog, onUpdateFoodLog }: Props) => {
   return (
     <Card style={styles.container}>
       <View style={styles.cardHeader}>
-        <Text weight="600" size="_16px" color="text" style={styles.headerText}>
+        <Text weight="600" size="title" color="text" style={styles.headerText}>
           {content.editAmount}
           <Text
             weight="400"

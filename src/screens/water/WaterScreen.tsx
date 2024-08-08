@@ -77,7 +77,7 @@ const WaterScreen = () => {
     return (
       <View style={styles.header}>
         <View style={styles.headerContent}>
-          <Text style={styles.headerText}>
+          <Text weight="600" size="title" style={styles.headerText}>
             {DateTime.fromJSDate(
               calendarCarouselRef?.current?.getStartDate() ?? new Date()
             ).toFormat('MM/dd/yy') +
@@ -193,8 +193,7 @@ const waterIntakeStyle = ({ white, border }: Branding) =>
       marginVertical: scaleHeight(16),
     },
     headerText: {
-      fontSize: scaledSize(14),
-      fontWeight: '600',
+      marginStart: 8,
     },
     weight: {
       fontSize: scaledSize(14),

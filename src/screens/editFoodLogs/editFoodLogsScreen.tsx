@@ -24,6 +24,8 @@ import type { Branding } from '../../contexts';
 import { scaleHeight, scaleWidth, scaled, scaledSize } from '../../utils';
 import { ICONS } from '../../assets';
 import NewEditServingAmountView from './views/newEditServingsAmountView';
+import AlertCustomFood from './views/AlertCustomFood';
+import FoodNotFound from './views/FoodNotFound';
 
 export type EditFoodLogScreenNavigationProps = StackNavigationProp<
   ParamList,
@@ -40,18 +42,22 @@ export interface EditFoodLogScreenProps {
 
 export const EditFoodLogScreen = () => {
   const {
+    alertCustomFoodRef,
+    foodNotFoundRef,
     branding,
     eventTimeStamp,
     foodLog,
     from,
     isFavorite,
     isHideFavorite,
+    isHideMealTime,
+    isHideTimeStamp,
     isOpenDatePicker,
     isOpenFavoriteFoodAlert,
     isOpenFoodNameAlert,
-    isHideMealTime,
-    isHideTimeStamp,
     closeDatePicker,
+    onCreateCustomFood,
+    onEditCustomFood,
     closeFavoriteFoodLogAlert,
     onSwitchAlternativePress,
     closeSaveFoodNameAlert,
@@ -247,6 +253,12 @@ export const EditFoodLogScreen = () => {
         onClose={() => closeSaveFoodNameAlert()}
         isVisible={isOpenFoodNameAlert}
       />
+      <AlertCustomFood
+        ref={alertCustomFoodRef}
+        onCreatePress={onCreateCustomFood}
+        onEditPress={onEditCustomFood}
+      />
+      <FoodNotFound ref={foodNotFoundRef} onCreatePress={onCreateCustomFood} />
     </View>
   );
 };
@@ -335,7 +347,6 @@ const bottomActionStyle = StyleSheet.create({
   deleteActionButton: {
     flex: 1,
     marginHorizontal: 8,
-    borderRadius: scaledSize(4),
     backgroundColor: 'rgba(239, 68, 68, 1)',
     borderColor: 'rgba(239, 68, 68, 1)',
     justifyContent: 'center',

@@ -56,6 +56,7 @@ const LogInformationView = ({
           <Text
             weight="600"
             color="text"
+            size="secondlyTitle"
             numberOfLines={2}
             ellipsizeMode="tail"
             style={styles.logName}
@@ -97,7 +98,7 @@ const LogInformationView = ({
               },
             ]}
             size={100}
-            gap={4}
+            gap={10}
           />
           <View style={styles.calorieItem}>
             <Text

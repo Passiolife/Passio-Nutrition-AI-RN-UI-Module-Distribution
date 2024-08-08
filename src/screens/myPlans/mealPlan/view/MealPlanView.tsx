@@ -51,7 +51,7 @@ const RenderItem = ({
       <View style={mealLogViewStyles.heder}>
         <Text
           weight={'600'}
-          size="_16px"
+          size="title"
           color="text"
           style={mealLogViewStyles.title}
         >
@@ -65,7 +65,7 @@ const RenderItem = ({
         >
           <Text
             weight={'500'}
-            size="_14px"
+            size="title"
             color="primaryColor"
             style={mealLogViewStyles.logEntire}
           >

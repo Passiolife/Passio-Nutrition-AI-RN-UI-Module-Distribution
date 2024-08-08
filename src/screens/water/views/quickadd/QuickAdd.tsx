@@ -41,7 +41,7 @@ export const QuickAddTracking = ({
     <Card style={styles.itemsContainer}>
       <Text
         weight="600"
-        size="_18px"
+        size="title"
         color="text"
         style={styles.quickAddTextStyle}
       >

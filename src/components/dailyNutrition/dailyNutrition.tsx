@@ -19,7 +19,7 @@ export const DailyNutrition = ({ foodLogs }: DailyNutritionProps) => {
       <TouchableOpacity onPress={onReportPress}>
         <TouchableOpacity style={styles.macroTitleContainer}>
           <Image source={ICONS.apple} style={styles.headerBodyIcon} />
-          <Text weight="600" size="_18px" style={styles.macroTitle}>
+          <Text weight="600" size="title" style={styles.macroTitle}>
             Daily Nutrition
           </Text>
           <TouchableOpacity onPress={onReportPress}>

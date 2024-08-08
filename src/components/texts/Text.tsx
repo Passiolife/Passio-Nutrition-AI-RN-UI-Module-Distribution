@@ -9,7 +9,6 @@ import {
   View,
   StyleSheet,
 } from 'react-native';
-import { scaledSize } from '../../utils';
 import { useBranding, type Branding } from '../../contexts';
 
 export type TextColor =
@@ -39,6 +38,8 @@ export type TextSize =
   | '_28px'
   | '_18px'
   | '_20px'
+  | 'title'
+  | 'secondlyTitle'
   | '_24px';
 
 export type TextFontWeight = '400' | '500' | '600' | '700' | '800';
@@ -53,20 +54,22 @@ export interface TextProps extends RNTextProps {
 }
 
 const sizeMap = {
-  _12px: scaledSize(12),
-  _14px: scaledSize(14),
-  _15px: scaledSize(15),
-  _16px: scaledSize(16),
-  _18px: scaledSize(18),
-  _20px: scaledSize(20),
-  _24px: scaledSize(24),
-  _28px: scaledSize(28),
-  _32px: scaledSize(32),
-  extra: scaledSize(22),
-  large: scaledSize(16),
-  medium: scaledSize(14),
-  normal: scaledSize(12),
-  small: scaledSize(8),
+  _12px: 12,
+  _14px: 14,
+  _15px: 15,
+  _16px: 16,
+  _18px: 18,
+  _20px: 20,
+  _24px: 24,
+  _28px: 28,
+  _32px: 32,
+  extra: 22,
+  large: 16,
+  medium: 14,
+  normal: 12,
+  small: 8,
+  title: 16,
+  secondlyTitle: 15,
 };
 
 const weights = {

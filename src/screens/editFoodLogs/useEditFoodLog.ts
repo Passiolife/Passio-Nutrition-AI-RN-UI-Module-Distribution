@@ -1,8 +1,8 @@
 import uuid4 from 'react-native-uuid';
 import { convertPassioFoodItemToFoodLog } from './../../utils/V3Utils';
-import type { FoodItem, FoodLog, MealLabel } from '../../models';
+import type { CustomFood, FoodItem, FoodLog, MealLabel } from '../../models';
 import { convertFoodLogsToFavoriteFoodLog } from './../../utils';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, useRef } from 'react';
 
 import type { EditFoodLogScreenNavigationProps } from './editFoodLogsScreen';
 import { content } from '../../constants/Content';
@@ -20,7 +20,9 @@ import { useDatePicker } from './useDatePicker';
 import { DeleteFoodLogAlert } from './alerts';
 import type { PassioFoodItem } from '@passiolife/nutritionai-react-native-sdk-v3';
 import { mergeNutrients } from '../../utils/NutritentsUtils';
-import dataService from '../../contexts/services/data/DataService';
+import type { AlertCustomFoodRef } from './views/AlertCustomFood';
+import { combineCustomFoodAndFoodLog } from '../foodCreator/FoodCreator.utils';
+import type { FoodNotFoundRef } from './views/FoodNotFound';
 
 export function useEditFoodLog() {
   const services = useServices();
@@ -41,6 +43,9 @@ export function useEditFoodLog() {
     openDatePicker,
     updateEventTimeStamp,
   } = useDatePicker(params.foodLog.eventTimestamp);
+
+  const alertCustomFoodRef = useRef<AlertCustomFoodRef>(null);
+  const foodNotFoundRef = useRef<FoodNotFoundRef>(null);
 
   const recalculateFoodLogServing = useCallback((value: FoodLog) => {
     const updatedFoodLog = { ...value };
@@ -164,44 +169,45 @@ export function useEditFoodLog() {
     setFoodLog({ ...newFoodLog });
   };
 
-  const onEditCustomFoodPress = async () => {
+  const onCreateCustomFood = () => {
+    const uuid: string = uuid4.v4() as string;
+
+    navigateToFoodCreatorScreen({
+      ...foodLog,
+      uuid: uuid,
+      barcode: foodLog?.foodItems?.[0].barcode,
+    });
+  };
+
+  const onEditCustomFood = async () => {
     if (foodLog.refCustomFoodID) {
       const customFood = await services.dataService?.getCustomFoodLog(
         foodLog.refCustomFoodID
       );
       if (customFood) {
-        navigation.push('FoodCreatorScreen', {
-          foodLog: customFood,
-          from: 'Search',
-        });
+        navigateToFoodCreatorScreen(customFood);
       } else {
-        // Custom food not found in
+        foodNotFoundRef?.current?.onShow(foodLog.refCustomFoodID);
       }
-    } else {
-      const uuid: string = uuid4.v4() as string;
-
-      navigation.push('FoodCreatorScreen', {
-        foodLog: {
-          ...foodLog,
-          uuid: uuid,
-          barcode: foodLog?.foodItems?.[0].barcode,
-        },
-        onSave: async (customFood) => {
-          await dataService.saveFoodLog({
-            ...params.foodLog,
-            refCustomFoodID: customFood?.uuid,
-          });
-
-          setFoodLog((i) => {
-            return {
-              ...i,
-              refCustomFoodID: customFood?.uuid,
-            };
-          });
-        },
-        from: 'Search',
-      });
     }
+  };
+
+  const navigateToFoodCreatorScreen = (customFood: CustomFood) => {
+    navigation.push('FoodCreatorScreen', {
+      foodLog: customFood,
+      onSave: async (item) => {
+        if (item) {
+          setFoodLog((food) => {
+            return combineCustomFoodAndFoodLog(item, food);
+          });
+        }
+      },
+      from: 'Search',
+    });
+  };
+
+  const onEditCustomFoodPress = async () => {
+    alertCustomFoodRef.current?.onShow(foodLog.refCustomFoodID);
   };
 
   const onSwitchAlternativePress = () => {
@@ -328,17 +334,19 @@ export function useEditFoodLog() {
   }, [foodLog, foodLog.refCode, services.dataService]);
 
   return {
+    alertCustomFoodRef,
+    foodNotFoundRef,
     branding,
     eventTimeStamp,
     foodLog,
     from: params.prevRouteName,
     isFavorite,
+    isHideFavorite: params.prevRouteName === 'Favorites',
+    isHideMealTime: params.prevRouteName === 'Favorites',
+    isHideTimeStamp: params.prevRouteName === 'Favorites',
     isOpenDatePicker,
     isOpenFavoriteFoodAlert,
     isOpenFoodNameAlert,
-    isHideMealTime: params.prevRouteName === 'Favorites',
-    isHideTimeStamp: params.prevRouteName === 'Favorites',
-    isHideFavorite: params.prevRouteName === 'Favorites',
     closeDatePicker,
     closeFavoriteFoodLogAlert,
     closeSaveFoodNameAlert,
@@ -361,5 +369,7 @@ export function useEditFoodLog() {
     openDatePicker,
     setOpenFoodNameAlert,
     onMoreDetailPress,
+    onCreateCustomFood,
+    onEditCustomFood,
   };
 }

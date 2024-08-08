@@ -10,9 +10,9 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Branding, useBranding } from '../../../contexts';
 import { FiledView, FiledViewRef } from '../../../components/filed/FiledView';
 import type { FiledSelectionViewRef } from '../../../components/filed/FiledSelectionView';
-import { FiledViewClick } from '../../../components/filed/FiledViewClick';
 import type { CustomFood, Image } from '../../../models';
 import { PassioFoodIcon } from '../../../components/passio/PassioFoodIcon';
+import { ICONS } from '../../../assets';
 
 interface Props {
   foodLog?: CustomFood;
@@ -32,12 +32,9 @@ export interface FoodCreatorFoodDetailRef {
   getValue: () => Value;
 }
 
-export const FoodCreatorFoodDetail = React.forwardRef<
-  FoodCreatorFoodDetailRef,
-  Props
->(
+export const EditRecipeName = React.forwardRef<FoodCreatorFoodDetailRef, Props>(
   (
-    { foodLog: defaultFoodLog, onBarcodePress, onEditImagePress, image }: Props,
+    { foodLog: defaultFoodLog, onEditImagePress, image }: Props,
     ref: React.Ref<FoodCreatorFoodDetailRef>
   ) => {
     const branding = useBranding();
@@ -102,7 +99,7 @@ export const FoodCreatorFoodDetail = React.forwardRef<
         {
           <View>
             <Text size="title" weight="600" style={styles.title}>
-              {'Scan Description'}
+              {'Recipe Details'}
             </Text>
             <View style={styles.container}>
               <TouchableOpacity onPress={onEditImagePress} style={styles.left}>
@@ -110,12 +107,13 @@ export const FoodCreatorFoodDetail = React.forwardRef<
                   style={styles.icon}
                   iconID={image?.id}
                   extra={image?.base64}
+                  entityType="user-recipe"
+                  defaultImage={ICONS.recipe}
                 />
                 <Text
                   size="_12px"
                   color="primaryColor"
                   isLink
-                  onPress={onEditImagePress}
                   style={styles.editImage}
                 >
                   {'Edit Image'}
@@ -125,27 +123,11 @@ export const FoodCreatorFoodDetail = React.forwardRef<
                 <FiledView
                   value={foodLog?.name}
                   ref={nameRef}
-                  label="enter name"
+                  label="RecipeName"
                   isColum
                   isCharacter
                   keyboardType="default"
-                  name="Name"
-                />
-                <FiledView
-                  ref={brandNameRef}
-                  label="enter brand"
-                  value={foodLog?.brandName}
-                  isColum
-                  isCharacter
-                  keyboardType="default"
-                  name="Brand"
-                />
-                <FiledViewClick
-                  value={foodLog?.barcode}
-                  ref={barcodeRef}
-                  isColum
-                  name="Barcode"
-                  onValuePress={onBarcodePress}
+                  name="Recipe Name"
                 />
               </View>
             </View>
@@ -159,7 +141,6 @@ export const FoodCreatorFoodDetail = React.forwardRef<
 const requireNutritionFactStyle = ({}: Branding) =>
   StyleSheet.create({
     card: {
-      marginHorizontal: 16,
       marginVertical: 16,
       padding: 16,
     },
@@ -168,6 +149,7 @@ const requireNutritionFactStyle = ({}: Branding) =>
     },
     container: {
       flexDirection: 'row',
+      paddingVertical: 16,
       alignContent: 'space-around',
       justifyContent: 'space-between',
     },
@@ -185,8 +167,8 @@ const requireNutritionFactStyle = ({}: Branding) =>
       fontSize: 10,
     },
     icon: {
-      height: 80,
-      width: 80,
+      height: 100,
+      width: 100,
       alignItems: 'center',
       alignSelf: 'center',
       justifyContent: 'center',

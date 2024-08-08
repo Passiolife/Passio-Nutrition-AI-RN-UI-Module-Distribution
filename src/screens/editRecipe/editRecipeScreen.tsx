@@ -8,9 +8,11 @@ import type { Branding } from '../../contexts';
 import { scaleWidth, scaled, scaledSize } from '../../utils';
 import NewEditServingAmountView from '../editFoodLogs/views/newEditServingsAmountView';
 import { useEditRecipe } from './useEditFoodLog';
+import { EditRecipeName } from './views/EditRecipeName';
 
 export const EditRecipeScreen = () => {
   const {
+    image,
     branding,
     foodLog,
     deleteIngredient,
@@ -29,6 +31,7 @@ export const EditRecipeScreen = () => {
       <BackNavigation title={'Edit Recipe'} rightIcon={icon} />
       <ScrollView>
         <View style={styles.body}>
+          <EditRecipeName foodLog={foodLog} image={image} />
           <NewEditServingAmountView
             foodLog={foodLog}
             onUpdateFoodLog={onUpdateFoodLog}
@@ -36,6 +39,7 @@ export const EditRecipeScreen = () => {
           <IngredientsView
             foodItems={foodLog.foodItems}
             isShowAll
+            type="EditRecipe"
             onAddIngredients={onAddIngredientPress}
             deleteIngredientsItem={deleteIngredient}
             navigateToEditIngredientsScreen={onEditIngredientPress}

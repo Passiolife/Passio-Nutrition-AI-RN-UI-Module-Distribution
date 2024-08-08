@@ -42,7 +42,7 @@ const MealLogItemView = (props: Props) => {
         <View style={styles.mealDetail}>
           <Text
             weight="600"
-            size="_14px"
+            size="secondlyTitle"
             color="text"
             numberOfLines={2}
             ellipsizeMode="tail"

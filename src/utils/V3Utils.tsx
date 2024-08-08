@@ -34,8 +34,13 @@ export const convertPassioFoodItemToFoodLog = (
 
   const foodItem = item;
 
-  let newFoodIngredient = (foodItem.ingredients ?? []).map(
-    convertPassioIngredientToFoodItem
+  let newFoodIngredient = (foodItem.ingredients ?? []).map((i) =>
+    convertPassioIngredientToFoodItem(
+      i,
+      foodItem.ingredients && foodItem.ingredients?.length === 1
+        ? foodItem.iconId
+        : i.iconId
+    )
   );
 
   const selectedUnit = foodItem.amount.servingSizes?.find(
@@ -88,7 +93,10 @@ export const convertPassioFoodItemToFoodLog = (
   return log;
 };
 
-function convertPassioIngredientToFoodItem(item: PassioIngredient): FoodItem {
+function convertPassioIngredientToFoodItem(
+  item: PassioIngredient,
+  iconID?: string
+): FoodItem {
   let passioIngredient = item;
   const selectedUnit = passioIngredient.amount.servingSizes?.find(
     (i) => i.unitName === passioIngredient?.amount.selectedUnit
@@ -103,7 +111,10 @@ function convertPassioIngredientToFoodItem(item: PassioIngredient): FoodItem {
     {
       ingredients: [passioIngredient],
       name: passioIngredient.name,
-      iconId: passioIngredient.iconId,
+      iconId:
+        passioIngredient.iconId?.length > 0
+          ? passioIngredient.iconId
+          : (iconID ?? ''),
       amount: passioIngredient.amount,
       ingredientWeight: passioIngredient.weight,
       id: passioIngredient.id,
@@ -113,7 +124,10 @@ function convertPassioIngredientToFoodItem(item: PassioIngredient): FoodItem {
   const foodItem: FoodItem = {
     name: passioIngredient.name,
     refCode: passioIngredient.refCode ?? '',
-    iconId: passioIngredient.iconId,
+    iconId:
+      passioIngredient.iconId?.length > 0
+        ? passioIngredient.iconId
+        : (iconID ?? ''),
     entityType: PassioIDEntityType.item,
     barcode: passioIngredient?.metadata?.barcode,
     ingredientsDescription: passioIngredient?.metadata?.ingredientsDescription,

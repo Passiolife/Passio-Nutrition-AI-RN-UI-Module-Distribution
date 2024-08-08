@@ -1,6 +1,7 @@
 import {
   CustomFood,
   FoodItem,
+  FoodLog,
   Nutrient,
   NutrientType,
   nutrientUnits,
@@ -293,4 +294,49 @@ export const createCustomFoodUsingNutritionFact = (
     ...foodItems,
   };
   return customFood;
+};
+
+export const combineCustomFoodAndFoodLog = (
+  customFood: CustomFood,
+  foodLog: FoodLog
+): FoodLog => {
+  const mergedServingUnits = [
+    ...customFood.servingUnits,
+    ...(foodLog?.servingUnits ?? []),
+  ];
+
+  const mergedServingSizes = [
+    ...customFood.servingSizes,
+    ...(foodLog?.servingSizes ?? []),
+  ];
+
+  const uniqueServingUnits = mergedServingUnits.filter(
+    (unit, index, self) =>
+      index ===
+      self.findIndex((t) => t.unit === unit.unit && t.mass === unit.mass)
+  );
+  const uniqueServingSizes = mergedServingSizes.filter(
+    (unit, index, self) =>
+      index ===
+      self.findIndex(
+        (t) => t.unit === unit.unit && t.quantity === unit.quantity
+      )
+  );
+
+  return {
+    ...foodLog,
+    ...customFood,
+    refCustomFoodID: customFood?.uuid,
+    uuid: foodLog.uuid,
+    servingUnits: uniqueServingUnits,
+    servingSizes: uniqueServingSizes,
+    refCode: foodLog.refCode,
+    eventTimestamp: foodLog.eventTimestamp,
+    meal: foodLog.meal,
+    selectedQuantity: customFood.selectedQuantity,
+    selectedUnit: customFood.selectedUnit,
+    computedWeight: customFood.computedWeight,
+    isOpenFood: foodLog.isOpenFood,
+    longName: foodLog.longName,
+  };
 };

@@ -1,11 +1,18 @@
 import React from 'react';
-import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native';
+import {
+  FlatList,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { useBranding, type Branding } from '../../../../contexts';
 import type { FoodItem } from '../../../../models';
 import IngredientItemView from './IngredientItemView';
 import { content } from '../../../../constants/Content';
 import { BasicButton, Card, Text } from '../../../../components';
 import { scaleHeight, scaleWidth } from '../../../../utils';
+import { ICONS } from '../../../../assets';
 
 interface Props {
   foodItems: FoodItem[];
@@ -16,6 +23,7 @@ interface Props {
     foodItem: FoodItem,
     deleteIngredientsItem: (foodItem: FoodItem) => void
   ) => void;
+  type?: 'EditRecipe' | 'Other';
 }
 
 export const IngredientsView = ({
@@ -24,6 +32,7 @@ export const IngredientsView = ({
   deleteIngredientsItem,
   navigateToEditIngredientsScreen,
   isShowAll = false,
+  type = 'Other',
 }: Props) => {
   const branding = useBranding();
   const styles = ingredientViewStyle(branding);
@@ -38,25 +47,36 @@ export const IngredientsView = ({
         <TouchableOpacity style={styles.plusTouchOpacity}>
           <Text
             weight="600"
-            size="_16px"
+            size="title"
             color="text"
             style={[styles.ingredientText]}
           >
             {content.addIngredients}
           </Text>
-
-          {foodItems.length > 1 ? (
-            <BasicButton
-              onPress={onAddIngredients}
-              text={'Edit recipe'}
-              style={{ paddingVertical: 0 }}
+          {type === 'EditRecipe' ? (
+            <Image
+              source={ICONS.newAddPlus}
+              style={{
+                height: 24,
+                width: 24,
+              }}
             />
           ) : (
-            <BasicButton
-              onPress={onAddIngredients}
-              text={'Make custom recipe'}
-              style={{ paddingVertical: 0 }}
-            />
+            <>
+              {foodItems.length > 1 ? (
+                <BasicButton
+                  onPress={onAddIngredients}
+                  text={'Edit recipe'}
+                  style={{ paddingVertical: 0 }}
+                />
+              ) : (
+                <BasicButton
+                  onPress={onAddIngredients}
+                  text={'Make custom recipe'}
+                  style={{ paddingVertical: 0 }}
+                />
+              )}
+            </>
           )}
         </TouchableOpacity>
 

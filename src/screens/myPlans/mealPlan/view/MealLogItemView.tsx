@@ -39,6 +39,7 @@ const MealLogItemView = (props: Props) => {
             numberOfLines={2}
             ellipsizeMode="tail"
             color="text"
+            size="secondlyTitle"
             style={styles.mealName}
           >
             {meal.foodName}

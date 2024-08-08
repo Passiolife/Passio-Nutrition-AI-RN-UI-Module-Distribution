@@ -147,7 +147,9 @@ export const RequireNutritionFacts = React.forwardRef<
     return (
       <Card style={styles.card}>
         <View>
-          <Text style={styles.title}>{'Required Nutrition Facts'}</Text>
+          <Text size="title" weight="600" style={styles.title}>
+            {'Required Nutrition Facts'}
+          </Text>
           <FiledView
             ref={servingSizeRef}
             name="Serving Size"

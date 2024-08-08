@@ -126,7 +126,7 @@ export default React.memo(IngredientView);
 const styles = StyleSheet.create({
   mealContainer: {
     flexDirection: 'row',
-    alignContent: 'space-around',
+    justifyContent: 'center',
   },
   mealImgLayout: {
     flexShrink: 0,
@@ -137,6 +137,7 @@ const styles = StyleSheet.create({
   },
   mealDetail: {
     marginHorizontal: 10,
+    alignSelf: 'center',
     flex: 1,
   },
   rightArrowIcon: {

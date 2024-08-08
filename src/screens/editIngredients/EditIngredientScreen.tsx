@@ -94,6 +94,14 @@ export const EditIngredient = (props?: EditIngredientsScreenProps) => {
         </ScrollView>
       ) : null}
       <View style={bottomActionStyle.bottomActionContainer}>
+        <BasicButton
+          style={bottomActionStyle.bottomActionButton}
+          text="Cancel"
+          testId="testButtonSave"
+          small
+          secondary
+          onPress={() => onSavePress()}
+        />
         {params.deleteIngredient !== undefined && (
           <DeleteButton
             style={bottomActionStyle.bottomActionButton}
@@ -101,9 +109,10 @@ export const EditIngredient = (props?: EditIngredientsScreenProps) => {
             onPress={onDeleteIngredient}
           />
         )}
+
         <BasicButton
           style={bottomActionStyle.bottomActionButton}
-          text="Save"
+          text="Add Ingredient"
           testId="testButtonSave"
           small
           secondary={false}
@@ -175,12 +184,11 @@ const bottomActionStyle = StyleSheet.create({
     justifyContent: 'space-evenly',
     marginVertical: 32,
     marginBottom: 60,
-    marginHorizontal: 32,
+    marginHorizontal: 24,
   },
   bottomActionButton: {
     flex: 1,
-    marginHorizontal: 8,
-    borderRadius: 14,
+    marginHorizontal: 5,
     justifyContent: 'center',
   },
 });
