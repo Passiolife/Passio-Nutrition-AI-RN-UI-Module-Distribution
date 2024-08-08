@@ -19,6 +19,7 @@ export interface NutritionDataService {
   saveCustomFood(food: CustomFood): Promise<void>;
   deleteCustomFood(uuID: string): Promise<void>;
   getCustomFoodLogs(): Promise<CustomFood[]>;
+  getCustomFoodLog(uuID: string): Promise<CustomFood | undefined | null>;
   saveFavoriteFoodItem(favoriteFoodItem: FavoriteFoodItem): Promise<void>;
   getFavoriteFoodItems(): Promise<FavoriteFoodItem[]>;
   deleteFavoriteFoodItem(uuID: string): Promise<void>;

@@ -1,6 +1,6 @@
 // nutrition tables
 
-export const TABLE_FOOD_LOGS = 'food_logsss_1';
+export const TABLE_FOOD_LOGS = 'food_logsss_2';
 export const TABLE_IMAGES = 'images_table';
 export const TABLE_CUSTOM_FOOD_LOGS = 'custom_food_logs';
 export const TABLE_WATER = 'water';
@@ -16,7 +16,7 @@ export const ROW_ICON_ID = 'iconID';
 export const ROW_EVENT_TIME_STAMP = 'eventTimestamp';
 export const ROW_NAME = 'name';
 export const ROW_REF_CODE = 'refCode';
-export const ROW_REF_CUSTOM_FOOD_ID = 'refCustomFoodId';
+export const ROW_REF_CUSTOM_FOOD_ID = 'refCustomFoodID';
 export const ROW_LONG_NAME = 'longName';
 export const ROW_MEAL = 'meal';
 export const ROW_FOOD_ITEMS = 'foodItems';

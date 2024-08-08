@@ -20,6 +20,7 @@ import { useDatePicker } from './useDatePicker';
 import { DeleteFoodLogAlert } from './alerts';
 import type { PassioFoodItem } from '@passiolife/nutritionai-react-native-sdk-v3';
 import { mergeNutrients } from '../../utils/NutritentsUtils';
+import dataService from '../../contexts/services/data/DataService';
 
 export function useEditFoodLog() {
   const services = useServices();
@@ -163,17 +164,44 @@ export function useEditFoodLog() {
     setFoodLog({ ...newFoodLog });
   };
 
-  const onEditCustomFoodPress = () => {
-    const uuid: string = uuid4.v4() as string;
+  const onEditCustomFoodPress = async () => {
+    if (foodLog.refCustomFoodID) {
+      const customFood = await services.dataService?.getCustomFoodLog(
+        foodLog.refCustomFoodID
+      );
+      if (customFood) {
+        navigation.push('FoodCreatorScreen', {
+          foodLog: customFood,
+          from: 'Search',
+        });
+      } else {
+        // Custom food not found in
+      }
+    } else {
+      const uuid: string = uuid4.v4() as string;
 
-    navigation.push('FoodCreatorScreen', {
-      foodLog: {
-        ...foodLog,
-        uuid: uuid,
-        barcode: foodLog?.foodItems?.[0].barcode,
-      },
-      from: 'Search',
-    });
+      navigation.push('FoodCreatorScreen', {
+        foodLog: {
+          ...foodLog,
+          uuid: uuid,
+          barcode: foodLog?.foodItems?.[0].barcode,
+        },
+        onSave: async (customFood) => {
+          await dataService.saveFoodLog({
+            ...params.foodLog,
+            refCustomFoodID: customFood?.uuid,
+          });
+
+          setFoodLog((i) => {
+            return {
+              ...i,
+              refCustomFoodID: customFood?.uuid,
+            };
+          });
+        },
+        from: 'Search',
+      });
+    }
   };
 
   const onSwitchAlternativePress = () => {

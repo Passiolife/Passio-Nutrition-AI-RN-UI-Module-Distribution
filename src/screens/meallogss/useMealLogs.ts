@@ -1,3 +1,4 @@
+import uuid4 from 'react-native-uuid';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { MealLogScreenNavigationProps } from '.';
 import {
@@ -87,8 +88,10 @@ export function useMealLogs() {
     }
 
     if (foodLog !== undefined) {
+      const uuid: string = `${uuid4.v4() as string}`;
       const updateFoodLog = {
         ...foodLog,
+        uuid: uuid,
         eventTimestamp: convertDateToDBFormat(date),
         meal: getMealLog(date, undefined),
       };
@@ -98,7 +101,7 @@ export function useMealLogs() {
       } else {
         await services.dataService.saveFoodLog(updateFoodLog);
         ShowToast(`"${updateFoodLog.name}" added into "${updateFoodLog.meal}"`);
-        setFoodLogs((value) => [...value, foodLog!]);
+        setFoodLogs((value) => [...value, updateFoodLog!]);
       }
       bottomSheetModalRef.current?.snapToIndex(0);
     }
