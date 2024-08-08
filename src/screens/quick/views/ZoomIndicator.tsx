@@ -7,12 +7,14 @@ import {
   PassioSDK,
 } from '@passiolife/nutritionai-react-native-sdk-v3';
 import { ICONS } from '../../../assets';
+import type { ScanningMode } from '../QuickScanningScreen';
 
 interface ZoomIndicatorProps {
   level: PassioCameraZoomLevel;
+  mode: ScanningMode;
 }
 
-const ZoomIndicator: React.FC<ZoomIndicatorProps> = ({ level }) => {
+const ZoomIndicator: React.FC<ZoomIndicatorProps> = ({ level, mode }) => {
   const branding = useBranding();
 
   const [isEnableTorch, setEnableTorch] = useState(false);
@@ -21,10 +23,20 @@ const ZoomIndicator: React.FC<ZoomIndicatorProps> = ({ level }) => {
     PassioSDK.enableFlashlight(isEnableTorch);
   }, [isEnableTorch]);
 
+  useEffect(() => {
+    setTimeout(() => {
+      if (mode === 'Barcode') {
+        PassioSDK.setCameraZoomLevel(2);
+      } else {
+        PassioSDK.setCameraZoomLevel(1);
+      }
+    }, 400);
+  }, [mode]);
+
   return (
     <View style={styles.container}>
       <ProgressSlider
-        sliderValue={1}
+        sliderValue={mode === 'Barcode' ? 2 : 1}
         minimumValue={level?.minZoomLevel ?? 0}
         sliderMaxValue={level?.maxZoomLevel ?? 1}
         step={0.1}

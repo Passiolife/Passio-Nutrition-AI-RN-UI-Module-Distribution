@@ -20,9 +20,12 @@ import {
   ROW_ICON_ID,
   ROW_IMAGE_NAME,
   ROW_INGREDIENTS,
+  ROW_LONG_NAME,
   ROW_MEAL,
   ROW_NAME,
   ROW_PASSIOID,
+  ROW_REF_CODE,
+  ROW_REF_CUSTOM_FOOD_ID,
   ROW_SELECTED_QUANTITY,
   ROW_SELECTED_UNIT,
   ROW_SERVING_SIZES,
@@ -33,9 +36,9 @@ import {
   ROW_UUID,
   ROW_WEIGHT,
   TABLE_CUSTOM_FOOD_LOGS,
+  TABLE_FAVOURITE_FOOD_LOGS,
   TABLE_FOOD_LOGS,
   TABLE_IMAGES,
-  TABLE_NEW_FAVOURITE_FOOD_LOGS,
   TABLE_RECIPE,
   TABLE_WATER,
   TABLE_WEIGHT,
@@ -53,7 +56,7 @@ export const saveFoodLog = async (
   foodLog: FoodLog
 ): Promise<void> => {
   return new Promise((resolve, reject) => {
-    const insertQuery = `INSERT or REPLACE INTO  ${TABLE_FOOD_LOGS} (${ROW_UUID}, ${ROW_NAME}, ${ROW_MEAL}, ${ROW_IMAGE_NAME}, ${ROW_ENTITY_TYPE}, ${ROW_EVENT_TIME_STAMP}, ${ROW_USER_FOOD_IMAGE}, ${ROW_ICON_ID}, ${ROW_FOOD_ITEMS},${ROW_SERVING_SIZES},${ROW_SERVING_UNITS},${ROW_PASSIOID},${ROW_SELECTED_UNIT},${ROW_SELECTED_QUANTITY}) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
+    const insertQuery = `INSERT or REPLACE INTO  ${TABLE_FOOD_LOGS} (${ROW_UUID}, ${ROW_NAME}, ${ROW_MEAL}, ${ROW_IMAGE_NAME}, ${ROW_ENTITY_TYPE}, ${ROW_EVENT_TIME_STAMP},${ROW_REF_CODE},${ROW_REF_CUSTOM_FOOD_ID},${ROW_LONG_NAME}, ${ROW_USER_FOOD_IMAGE}, ${ROW_ICON_ID}, ${ROW_FOOD_ITEMS},${ROW_SERVING_SIZES},${ROW_SERVING_UNITS},${ROW_PASSIOID},${ROW_SELECTED_UNIT},${ROW_SELECTED_QUANTITY}) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
 
     db.transaction((tx) => {
       tx.executeSql(
@@ -65,6 +68,9 @@ export const saveFoodLog = async (
           foodLog.longName,
           foodLog.entityType,
           foodLog.eventTimestamp,
+          foodLog.refCode,
+          foodLog.refCustomFoodID,
+          foodLog.longName,
           undefined,
           foodLog.iconID,
           JSON.stringify(foodLog.foodItems),
@@ -214,7 +220,7 @@ export const deleteFavoriteFoodLog = async (
   uuId: string
 ): Promise<void> => {
   return new Promise((resolve, reject) => {
-    const deleteQuery = `DELETE from ${TABLE_NEW_FAVOURITE_FOOD_LOGS} where ${ROW_UUID} = "${uuId}"`;
+    const deleteQuery = `DELETE from ${TABLE_FAVOURITE_FOOD_LOGS} where ${ROW_UUID} = "${uuId}"`;
     db.transaction((tx) => {
       tx.executeSql(
         deleteQuery,
@@ -237,7 +243,7 @@ export const saveFavouriteFood = async (
   foodLog: FavoriteFoodItem
 ): Promise<void> => {
   return new Promise((resolve, reject) => {
-    const insertQuery = `INSERT or REPLACE INTO  ${TABLE_NEW_FAVOURITE_FOOD_LOGS} (${ROW_UUID}, ${ROW_NAME}, ${ROW_MEAL}, ${ROW_IMAGE_NAME}, ${ROW_ENTITY_TYPE}, ${ROW_EVENT_TIME_STAMP}, ${ROW_USER_FOOD_IMAGE}, ${ROW_ICON_ID}, ${ROW_FOOD_ITEMS},${ROW_SERVING_SIZES},${ROW_SERVING_UNITS},${ROW_PASSIOID},${ROW_SELECTED_UNIT},${ROW_SELECTED_QUANTITY}) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
+    const insertQuery = `INSERT or REPLACE INTO  ${TABLE_FAVOURITE_FOOD_LOGS} (${ROW_UUID}, ${ROW_NAME}, ${ROW_MEAL}, ${ROW_IMAGE_NAME}, ${ROW_ENTITY_TYPE}, ${ROW_EVENT_TIME_STAMP},${ROW_REF_CODE},${ROW_REF_CUSTOM_FOOD_ID},${ROW_LONG_NAME}, ${ROW_USER_FOOD_IMAGE}, ${ROW_ICON_ID}, ${ROW_FOOD_ITEMS},${ROW_SERVING_SIZES},${ROW_SERVING_UNITS},${ROW_PASSIOID},${ROW_SELECTED_UNIT},${ROW_SELECTED_QUANTITY}) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
 
     db.transaction((tx) => {
       tx.executeSql(
@@ -249,6 +255,9 @@ export const saveFavouriteFood = async (
           foodLog.longName,
           foodLog.entityType,
           foodLog.eventTimestamp,
+          foodLog.refCode,
+          foodLog.refCustomFoodID,
+          foodLog.longName,
           undefined,
           foodLog.iconID,
           JSON.stringify(foodLog.foodItems),
@@ -301,7 +310,7 @@ export const getFavoriteFoodItems = async (): Promise<FavoriteFoodItem[]> => {
   try {
     const db = await DBHandler.getInstance();
     const results = await db.executeSql(
-      `SELECT * FROM ${TABLE_NEW_FAVOURITE_FOOD_LOGS}`
+      `SELECT * FROM ${TABLE_FAVOURITE_FOOD_LOGS}`
     );
     return convertResultToFoodLog(results);
   } catch (error) {
@@ -435,7 +444,6 @@ export function convertResultToFoodLog(results: [ResultSet]): FoodLog[] {
     }
   });
   items.forEach((value) => {
-    value.longName = value?.imageName;
     value.selectedQuantity = parseFloat(value.selectedQuantity.toString());
     value.foodItems = JSON.parse(value.foodItems.toString());
     value.servingUnits = JSON.parse(value.servingUnits.toString());
@@ -643,4 +651,26 @@ export const getWaters = async (): Promise<Water[]> => {
     console.error(`Failed to get waters logs ${error}`);
     throw error;
   }
+};
+
+export const getCustomFood = async (
+  uuid: string
+): Promise<CustomFood | null | undefined> => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const db = await DBHandler.getInstance();
+      const results = await db.executeSql(
+        `SELECT * FROM ${TABLE_CUSTOM_FOOD_LOGS} where ${ROW_UUID} >= "${uuid}";`
+      );
+      resolve(convertResultToFoodLog(results)?.[0]);
+    } catch (error) {
+      console.error(
+        `Failed to get custom food logs ${error} ========= ${uuid}-${uuid}`
+      );
+      reject(
+        `Failed to get custom food logs ${error} ========= ${uuid}-${uuid}`
+      );
+      throw error;
+    }
+  });
 };

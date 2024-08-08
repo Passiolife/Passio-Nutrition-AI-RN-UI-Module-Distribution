@@ -24,10 +24,11 @@ export interface FavoritesScreenProps {
 
 const MyFavoritesScreen = () => {
   const {
-    onSaveFoodLogs,
-    navigateToFavoriteFoodLogEditor,
-    favoriteFoodLogs,
     branding,
+    favoriteFoodLogs,
+    navigateToFavoriteFoodLogEditor,
+    onDeleteFavoritePress,
+    onSaveFoodLogs,
   } = useFavorites();
 
   const styles = myFavoritesStyle(branding);
@@ -45,6 +46,7 @@ const MyFavoritesScreen = () => {
               return (
                 <FavoriteFoodLogView
                   foodLog={item}
+                  onDeleteFoodLog={(fav) => onDeleteFavoritePress(fav.uuid)}
                   onLogItem={onSaveFoodLogs}
                   onTap={navigateToFavoriteFoodLogEditor}
                 />

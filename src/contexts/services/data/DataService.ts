@@ -23,6 +23,7 @@ import {
   deleteCustomFood,
   getImage,
   saveImage,
+  getCustomFood,
 } from '../../../db';
 import {
   ActivityLevelType,
@@ -146,6 +147,11 @@ const dataService: NutritionDataService = {
           reject(reason);
         });
     });
+  },
+  getCustomFoodLog: function (
+    uuID: string
+  ): Promise<CustomFood | undefined | null> {
+    return getCustomFood(uuID);
   },
 };
 export default dataService;

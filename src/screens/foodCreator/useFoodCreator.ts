@@ -159,6 +159,8 @@ export const useFoodCreator = () => {
         } else {
           ShowToast('Food added successfully into my food');
         }
+
+        params.onSave?.(updateCustomFood);
         navigation.goBack();
       } catch (error) {}
     }

@@ -8,6 +8,7 @@ export interface FoodLog extends ServingInfo {
   name: string;
   uuid: string;
   refCode?: string;
+  refCustomFoodID?: string;
   eventTimestamp: string;
   isOpenFood?: boolean;
   longName?: string;
