@@ -10,6 +10,7 @@ import {
 import { BackNavigation, BasicButton, TabBar } from '../../components';
 import CustomFoods from './views/customFoods/CustomFoods';
 import CustomRecipe from './views/customRecipe/CustomRecipe';
+import { EmptyView } from '../../components/empty';
 
 export const MyFoodsScreen = () => {
   const {
@@ -42,12 +43,20 @@ export const MyFoodsScreen = () => {
       <BackNavigation title="My Foods" bottomView={renderTab()} />
       <View style={styles.container}>
         {tab === 'Custom Foods' ? (
-          <CustomFoods
-            customFoods={customFoods ?? []}
-            onPressEditor={onEditorPress}
-            onPressLog={onLogPress}
-            onPressDelete={onDeletePress}
-          />
+          <>
+            {customFoods && customFoods?.length > 0 && (
+              <CustomFoods
+                customFoods={customFoods ?? []}
+                onPressEditor={onEditorPress}
+                onPressLog={onLogPress}
+                onPressDelete={onDeletePress}
+              />
+            )}
+            {customFoods === undefined ||
+              (customFoods?.length === 0 && (
+                <EmptyView title={''} description={'There is no custom food'} />
+              ))}
+          </>
         ) : (
           <CustomRecipe />
         )}
