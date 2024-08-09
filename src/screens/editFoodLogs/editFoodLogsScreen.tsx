@@ -98,18 +98,21 @@ export const EditFoodLogScreen = () => {
                 />
               </Pressable>
             )}
-            <Pressable
-              onPress={onEditCustomFoodPress}
-              style={{ marginStart: 16 }}
-            >
-              <Image
-                source={ICONS.editGreyIc}
-                style={{
-                  width: scaleWidth(18),
-                  height: scaleHeight(18),
-                }}
-              />
-            </Pressable>
+            {foodLog.foodItems.length === 1 && (
+              <Pressable
+                onPress={onEditCustomFoodPress}
+                style={{ marginStart: 16 }}
+              >
+                <Image
+                  source={ICONS.editGreyIc}
+                  style={{
+                    width: scaleWidth(18),
+                    height: scaleHeight(18),
+                    marginEnd: 8,
+                  }}
+                />
+              </Pressable>
+            )}
           </View>
         }
       />
@@ -225,7 +228,7 @@ export const EditFoodLogScreen = () => {
           )}
           <BasicButton
             style={bottomActionStyle.bottomActionButton}
-            text={from === 'MealLog' ? 'Update' : content.log}
+            text={from === 'MealLog' ? 'Save' : content.log}
             testId="testButtonSave"
             small
             secondary={false}
@@ -346,7 +349,6 @@ const bottomActionStyle = StyleSheet.create({
   },
   deleteActionButton: {
     flex: 1,
-    marginHorizontal: 8,
     backgroundColor: 'rgba(239, 68, 68, 1)',
     borderColor: 'rgba(239, 68, 68, 1)',
     justifyContent: 'center',

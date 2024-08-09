@@ -34,6 +34,7 @@ export type Module =
   | 'VoiceLogging'
   | 'MyFood'
   | 'Recipe'
+  | 'NutritionFact'
   | 'Ingredient';
 
 export interface HomeBottom {

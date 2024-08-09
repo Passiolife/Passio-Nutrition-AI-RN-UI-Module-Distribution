@@ -5,8 +5,8 @@ import { BasicButton, Card, Text } from '../../../components';
 import Modal from 'react-native-modal';
 import { useBranding } from '../../../contexts';
 interface Props {
-  onCreatePress?: (isUpdateUponCreating?: boolean) => void;
-  onEditPress?: (isUpdateUponCreating?: boolean) => void;
+  onCreatePress?: (isUpdateUponCreating: boolean) => void;
+  onEditPress?: (isUpdateUponCreating: boolean) => void;
 }
 
 export interface AlertCustomFoodRef {
@@ -38,7 +38,9 @@ export const AlertCustomFood = React.forwardRef<AlertCustomFoodRef, Props>(
       }),
       []
     );
-
+    if (!isVisible) {
+      return <></>;
+    }
     return (
       <Modal
         backdropOpacity={0.4}

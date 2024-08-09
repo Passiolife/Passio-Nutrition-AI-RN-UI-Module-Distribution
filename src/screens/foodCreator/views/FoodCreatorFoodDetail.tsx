@@ -16,6 +16,7 @@ import { PassioFoodIcon } from '../../../components/passio/PassioFoodIcon';
 
 interface Props {
   foodLog?: CustomFood;
+  barcode?: string;
   onBarcodePress?: () => void;
   onEditImagePress?: () => void;
   image?: Image;
@@ -37,7 +38,13 @@ export const FoodCreatorFoodDetail = React.forwardRef<
   Props
 >(
   (
-    { foodLog: defaultFoodLog, onBarcodePress, onEditImagePress, image }: Props,
+    {
+      foodLog: defaultFoodLog,
+      barcode: defaultBarcode,
+      onBarcodePress,
+      onEditImagePress,
+      image,
+    }: Props,
     ref: React.Ref<FoodCreatorFoodDetailRef>
   ) => {
     const branding = useBranding();
@@ -45,10 +52,15 @@ export const FoodCreatorFoodDetail = React.forwardRef<
     const styles = requireNutritionFactStyle(branding);
 
     const [foodLog, setFoodLog] = useState(defaultFoodLog);
+    const [barcode, setBarcode] = useState(defaultBarcode);
 
     useEffect(() => {
       setFoodLog(defaultFoodLog);
     }, [defaultFoodLog]);
+
+    useEffect(() => {
+      setBarcode(defaultBarcode);
+    }, [defaultBarcode]);
 
     const nameRef = useRef<FiledViewRef>(null);
     const brandNameRef = useRef<FiledViewRef>(null);
@@ -141,7 +153,7 @@ export const FoodCreatorFoodDetail = React.forwardRef<
                   name="Brand"
                 />
                 <FiledViewClick
-                  value={foodLog?.barcode}
+                  value={barcode}
                   ref={barcodeRef}
                   isColum
                   name="Barcode"
@@ -168,11 +180,9 @@ const requireNutritionFactStyle = ({}: Branding) =>
     },
     container: {
       flexDirection: 'row',
-      alignContent: 'space-around',
-      justifyContent: 'space-between',
     },
     left: {
-      flex: 1,
+      marginHorizontal: 16,
       alignContent: 'center',
       alignItems: 'center',
       alignSelf: 'center',
@@ -185,12 +195,12 @@ const requireNutritionFactStyle = ({}: Branding) =>
       fontSize: 10,
     },
     icon: {
-      height: 80,
-      width: 80,
+      height: 100,
+      width: 100,
       alignItems: 'center',
       alignSelf: 'center',
       justifyContent: 'center',
-      borderRadius: 40,
+      borderRadius: 100,
       overflow: 'hidden',
       alignContent: 'center',
     },

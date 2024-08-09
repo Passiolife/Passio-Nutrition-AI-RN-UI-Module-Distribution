@@ -12,14 +12,18 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 
 export const FoodCreatorScreen = () => {
   const {
+    title,
     branding,
+    from,
     otherNutritionFactsRef,
     requireNutritionFactsRef,
     foodCreatorFoodDetailRef,
+    barcode,
     foodLog,
     image,
     isImagePickerVisible,
     onSavePress,
+    onNutritionFactSave,
     onCancelPress,
     onBarcodePress,
     onEditImagePress,
@@ -31,7 +35,7 @@ export const FoodCreatorScreen = () => {
 
   return (
     <View style={styles.body}>
-      <BackNavigation title="Food Creator" />
+      <BackNavigation title={title} />
       <KeyboardAwareScrollView
         style={{ flex: 1 }}
         automaticallyAdjustKeyboardInsets
@@ -39,6 +43,7 @@ export const FoodCreatorScreen = () => {
         <View>
           <FoodCreatorFoodDetail
             foodLog={foodLog}
+            barcode={barcode}
             ref={foodCreatorFoodDetailRef}
             onBarcodePress={onBarcodePress}
             onEditImagePress={onEditImagePress}
@@ -71,16 +76,29 @@ export const FoodCreatorScreen = () => {
             height: 40,
           }}
         />
-        <BasicButton
-          text={'Save'}
-          onPress={onSavePress}
-          style={{
-            flexDirection: 'row',
-            flex: 1,
-            marginHorizontal: 8,
-            height: 40,
-          }}
-        />
+        {from === 'NutritionFact' ? (
+          <BasicButton
+            text={'Done'}
+            onPress={onNutritionFactSave}
+            style={{
+              flexDirection: 'row',
+              flex: 1,
+              marginHorizontal: 8,
+              height: 40,
+            }}
+          />
+        ) : (
+          <BasicButton
+            text={'Save'}
+            onPress={onSavePress}
+            style={{
+              flexDirection: 'row',
+              flex: 1,
+              marginHorizontal: 8,
+              height: 40,
+            }}
+          />
+        )}
       </View>
       {isImagePickerVisible && (
         <ImagePickerOptions

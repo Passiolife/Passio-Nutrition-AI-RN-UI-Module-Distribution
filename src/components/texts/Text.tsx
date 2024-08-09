@@ -68,7 +68,7 @@ const sizeMap = {
   medium: 14,
   normal: 12,
   small: 8,
-  title: 16,
+  title: 17,
   secondlyTitle: 15,
 };
 

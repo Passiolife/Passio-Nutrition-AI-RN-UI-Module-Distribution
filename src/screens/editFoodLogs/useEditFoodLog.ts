@@ -17,6 +17,7 @@ import {
 import type { ParamList } from '../../navigaitons';
 import { ROUTES } from '../../navigaitons/Route';
 import { useDatePicker } from './useDatePicker';
+
 import { DeleteFoodLogAlert } from './alerts';
 import type { PassioFoodItem } from '@passiolife/nutritionai-react-native-sdk-v3';
 import { mergeNutrients } from '../../utils/NutritentsUtils';
@@ -169,34 +170,43 @@ export function useEditFoodLog() {
     setFoodLog({ ...newFoodLog });
   };
 
-  const onCreateCustomFood = () => {
+  const onCreateCustomFood = (isUpdateUponCreating: boolean) => {
     const uuid: string = uuid4.v4() as string;
 
-    navigateToFoodCreatorScreen({
-      ...foodLog,
-      uuid: uuid,
-      barcode: foodLog?.foodItems?.[0].barcode,
-    });
+    navigateToFoodCreatorScreen(
+      {
+        ...foodLog,
+        uuid: uuid,
+        barcode: foodLog?.foodItems?.[0].barcode,
+      },
+      isUpdateUponCreating
+    );
   };
 
-  const onEditCustomFood = async () => {
+  const onEditCustomFood = async (isUpdateUponCreating: boolean) => {
     if (foodLog.refCustomFoodID) {
       const customFood = await services.dataService?.getCustomFoodLog(
         foodLog.refCustomFoodID
       );
       if (customFood) {
-        navigateToFoodCreatorScreen(customFood);
+        navigateToFoodCreatorScreen(customFood, isUpdateUponCreating);
       } else {
-        foodNotFoundRef?.current?.onShow(foodLog.refCustomFoodID);
+        alertCustomFoodRef?.current?.onHide();
+        setTimeout(() => {
+          foodNotFoundRef?.current?.onShow(foodLog.refCustomFoodID);
+        }, 200);
       }
     }
   };
 
-  const navigateToFoodCreatorScreen = (customFood: CustomFood) => {
+  const navigateToFoodCreatorScreen = (
+    customFood: CustomFood,
+    isUpdateUponCreating: boolean
+  ) => {
     navigation.push('FoodCreatorScreen', {
       foodLog: customFood,
       onSave: async (item) => {
-        if (item) {
+        if (item && isUpdateUponCreating) {
           setFoodLog((food) => {
             return combineCustomFoodAndFoodLog(item, food);
           });

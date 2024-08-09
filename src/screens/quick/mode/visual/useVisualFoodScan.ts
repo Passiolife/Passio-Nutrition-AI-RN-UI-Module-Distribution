@@ -184,6 +184,7 @@ export const useVisualFoodScan = () => {
       detectBarcodes: false,
       detectPackagedFood: true,
       detectVisual: true,
+      volumeDetectionMode: 'none',
     };
     let subscription = PassioSDK.startFoodDetection(
       config,

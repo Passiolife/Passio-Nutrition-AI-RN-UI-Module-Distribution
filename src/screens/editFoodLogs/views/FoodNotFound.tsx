@@ -4,7 +4,7 @@ import { StyleSheet, View } from 'react-native';
 import { BasicButton, Card, Text } from '../../../components';
 import Modal from 'react-native-modal';
 interface Props {
-  onCreatePress?: (isUpdateUponCreating?: boolean) => void;
+  onCreatePress?: (isUpdateUponCreating: boolean) => void;
 }
 
 export interface FoodNotFoundRef {
@@ -27,6 +27,10 @@ export const FoodNotFound = React.forwardRef<FoodNotFoundRef, Props>(
       }),
       []
     );
+
+    if (!isVisible) {
+      return <></>;
+    }
 
     return (
       <Modal
@@ -54,7 +58,7 @@ export const FoodNotFound = React.forwardRef<FoodNotFoundRef, Props>(
             />
             <BasicButton
               onPress={() => {
-                onCreatePress?.();
+                onCreatePress?.(false);
                 setVisibility(false);
               }}
               style={styles.button}

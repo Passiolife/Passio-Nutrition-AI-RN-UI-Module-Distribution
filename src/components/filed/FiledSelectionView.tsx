@@ -95,7 +95,7 @@ export const FiledSelectionView = React.forwardRef<
         <View style={[styles.formRow, isColum && styles.formColum]}>
           <Text
             weight="400"
-            size="_12px"
+            size="secondlyTitle"
             color="gray500"
             style={[styles.label, styles.labelMargin]}
           >

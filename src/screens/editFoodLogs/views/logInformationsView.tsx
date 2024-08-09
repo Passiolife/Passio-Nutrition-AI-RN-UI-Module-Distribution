@@ -66,7 +66,7 @@ const LogInformationView = ({
           {longName && (
             <Text
               weight="400"
-              size="_14px"
+              size="secondlyTitle"
               color="secondaryText"
               style={styles.logSize}
             >
@@ -98,7 +98,7 @@ const LogInformationView = ({
               },
             ]}
             size={100}
-            gap={10}
+            gap={12}
           />
           <View style={styles.calorieItem}>
             <Text
@@ -112,7 +112,7 @@ const LogInformationView = ({
             </Text>
             <Text
               weight="500"
-              size="_14px"
+              size="secondlyTitle"
               color="text"
               style={styles.calorieItemTitle}
             >
@@ -124,7 +124,7 @@ const LogInformationView = ({
           <View style={styles.otherNutrientItem}>
             <Text
               weight="500"
-              size="_14px"
+              size="secondlyTitle"
               color="text"
               style={styles.otherNutrientTitle}
             >
@@ -132,7 +132,7 @@ const LogInformationView = ({
             </Text>
             <Text
               weight="700"
-              size="_14px"
+              size="secondlyTitle"
               color="carbs"
               testID="testNutrientCarbs"
               style={styles.otherNutrientTValue}
@@ -141,7 +141,7 @@ const LogInformationView = ({
             </Text>
             <Text
               weight="400"
-              size="_14px"
+              size="secondlyTitle"
               color="secondaryText"
               style={styles.percentage}
             >
@@ -151,7 +151,7 @@ const LogInformationView = ({
           <View style={styles.otherNutrientItem}>
             <Text
               weight="500"
-              size="_14px"
+              size="secondlyTitle"
               color="text"
               style={styles.otherNutrientTitle}
             >
@@ -159,7 +159,7 @@ const LogInformationView = ({
             </Text>
             <Text
               weight="700"
-              size="_14px"
+              size="secondlyTitle"
               color="proteins"
               testID="testNutrientProtein"
               style={styles.otherNutrientTValue}
@@ -168,7 +168,7 @@ const LogInformationView = ({
             </Text>
             <Text
               weight="400"
-              size="_14px"
+              size="secondlyTitle"
               color="secondaryText"
               style={styles.percentage}
             >
@@ -178,7 +178,7 @@ const LogInformationView = ({
           <View style={styles.otherNutrientItem}>
             <Text
               weight="500"
-              size="_14px"
+              size="secondlyTitle"
               color="text"
               style={styles.otherNutrientTitle}
             >
@@ -187,7 +187,7 @@ const LogInformationView = ({
 
             <Text
               weight="700"
-              size="_14px"
+              size="secondlyTitle"
               color="fat"
               testID="testNutrientFat"
               style={styles.otherNutrientTValue}
@@ -196,7 +196,7 @@ const LogInformationView = ({
             </Text>
             <Text
               weight="400"
-              size="_14px"
+              size="secondlyTitle"
               color="secondaryText"
               style={styles.percentage}
             >

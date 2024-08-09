@@ -7,7 +7,6 @@ import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import type { ImagePickerType, ParamList } from '../../navigaitons';
 import {
-  convertPassioFoodItemToCustomFood,
   createFoodLogUsingFoodCreator,
   CUSTOM_USER_FOOD,
   generateCustomID,
@@ -17,7 +16,6 @@ import { convertPassioFoodItemToFoodLog } from '../../utils/V3Utils';
 import RNFS from 'react-native-fs';
 import { Platform } from 'react-native';
 import { ShowToast } from '../../utils';
-import uuid4 from 'react-native-uuid';
 
 export type ScanningScreenNavigationProps = StackNavigationProp<
   ParamList,
@@ -31,6 +29,9 @@ export const useFoodCreator = () => {
   const { params } = useRoute<RouteProp<ParamList, 'FoodCreatorScreen'>>();
   const [foodLog, setCustomFood] = useState<CustomFood | undefined>(
     params.foodLog
+  );
+  const [barcode, setBarcode] = useState<string | undefined>(
+    params.foodLog?.barcode
   );
 
   const [image, setImage] = useState<Image | undefined>(
@@ -97,39 +98,44 @@ export const useFoodCreator = () => {
         navigation.goBack();
         if (item?.customFood) {
           //If they click on "Create Custom Food Without Barcode", the barcode value is left as empty in the Food Creator screen.
-          setCustomFood({
-            ...item?.customFood,
-            barcode: undefined,
-            uuid: uuid4.v4() as string,
-          });
+
+          setBarcode('');
+
+          // setCustomFood({
+          //   ...item?.customFood,
+          //   barcode: undefined,
+          //   uuid: uuid4.v4() as string,
+          // });
         } else {
           // custom food doesn't exist
           // If they click on "Create Custom Food Anyway", the barcode value is imported into the Food Creator screen.
-          if (item?.passioIDAttributes) {
-            const customFood = convertPassioFoodItemToCustomFood(
-              item.passioIDAttributes,
-              item?.barcode
-            );
-            setCustomFood(customFood);
-          }
+          setBarcode(item?.barcode);
+          // if (item?.passioIDAttributes) {
+          //   const customFood = convertPassioFoodItemToCustomFood(
+          //     item.passioIDAttributes,
+          //     item?.barcode
+          //   );
+          //   setCustomFood(customFood);
+          // }
         }
       },
     });
   };
-  const onSavePress = async () => {
+
+  const getCurrentFood = (): CustomFood | undefined => {
     const info = foodCreatorFoodDetailRef.current?.getValue();
     const requireNutritionFact = requireNutritionFactsRef.current?.getValue();
     const otherNutritionFact = otherNutritionFactsRef.current?.getValue();
 
     if (info?.isNotValid) {
-      return;
+      return undefined;
     }
 
     if (requireNutritionFact?.isNotValid) {
-      return;
+      return undefined;
     }
     if (otherNutritionFact?.isNotValid) {
-      return;
+      return undefined;
     }
 
     if (
@@ -150,19 +156,34 @@ export const useFoodCreator = () => {
           ...modifiedFoodLog,
           uuid: foodLog?.uuid ?? modifiedFoodLog.uuid,
         };
-        await services.dataService.saveCustomFood(updateCustomFood);
+        return updateCustomFood;
+      } catch (error) {
+        return undefined;
+      }
+    } else {
+      return undefined;
+    }
+  };
 
-        if (params.from === 'Search') {
-          ShowToast('Food added successfully into my food');
-        } else if (modifiedFoodLog) {
-          ShowToast('Food update successfully customized to my food');
-        } else {
-          ShowToast('Food added successfully into my food');
-        }
-
-        params.onSave?.(updateCustomFood);
-        navigation.goBack();
-      } catch (error) {}
+  const onNutritionFactSave = async () => {
+    const customFood = getCurrentFood();
+    if (customFood) {
+      params.onSave?.(customFood);
+    }
+  };
+  const onSavePress = async () => {
+    const food = getCurrentFood();
+    if (food) {
+      await services.dataService.saveCustomFood(food);
+      if (params.from === 'Search') {
+        ShowToast('Food added successfully into my food');
+      } else if (food) {
+        ShowToast('Food update successfully customized to my food');
+      } else {
+        ShowToast('Food added successfully into my food');
+      }
+      params.onSave?.(food);
+      navigation.goBack();
     }
   };
 
@@ -202,17 +223,22 @@ export const useFoodCreator = () => {
 
   return {
     branding,
+    barcode,
     foodLog,
     image,
     otherNutritionFactsRef,
     requireNutritionFactsRef,
     foodCreatorFoodDetailRef,
     isImagePickerVisible,
+    from: params.from,
+    title:
+      params.from === 'NutritionFact' ? 'Edit Nutrition Facts' : 'Food Creator',
     onSelectImagePress,
     openImagePickerModal,
     closeImagePickerModal,
     onSavePress,
     onBarcodePress,
+    onNutritionFactSave,
     onCancelPress,
     onEditImagePress,
   };

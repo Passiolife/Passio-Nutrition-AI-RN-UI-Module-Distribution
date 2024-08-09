@@ -2,6 +2,7 @@ import type { Water } from 'src/models/Water';
 import type {
   CustomFood,
   CustomImageID,
+  CustomRecipe,
   Image,
   NutritionProfile,
   Recipe,
@@ -17,8 +18,11 @@ export interface NutritionDataService {
   deleteFoodLog(uuID: string): Promise<void>;
   getFoodLogs(): Promise<FoodLog[]>;
   saveCustomFood(food: CustomFood): Promise<void>;
+  saveCustomRecipe(food: CustomRecipe): Promise<void>;
   deleteCustomFood(uuID: string): Promise<void>;
+  deleteCustomRecipe(uuID: string): Promise<void>;
   getCustomFoodLogs(): Promise<CustomFood[]>;
+  getCustomRecipes(): Promise<CustomRecipe[]>;
   getCustomFoodLog(uuID: string): Promise<CustomFood | undefined | null>;
   saveFavoriteFoodItem(favoriteFoodItem: FavoriteFoodItem): Promise<void>;
   getFavoriteFoodItems(): Promise<FavoriteFoodItem[]>;

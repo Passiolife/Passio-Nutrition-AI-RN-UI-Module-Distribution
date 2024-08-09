@@ -24,11 +24,15 @@ import {
   getImage,
   saveImage,
   getCustomFood,
+  saveCustomRecipe,
+  getCustomRecipe,
+  deleteCustomRecipe,
 } from '../../../db';
 import {
   ActivityLevelType,
   CustomFood,
   CustomImageID,
+  CustomRecipe,
   Image,
   UnitSystem,
   type FavoriteFoodItem,
@@ -49,6 +53,9 @@ const dataService: NutritionDataService = {
   async saveCustomFood(foodLog: CustomFood): Promise<void> {
     return saveCustomFood(await DBHandler.getInstance(), foodLog);
   },
+  async saveCustomRecipe(foodLog: CustomFood): Promise<void> {
+    return saveCustomRecipe(await DBHandler.getInstance(), foodLog);
+  },
   async saveWater(water: Water): Promise<void> {
     return saveWater(await DBHandler.getInstance(), water);
   },
@@ -62,11 +69,17 @@ const dataService: NutritionDataService = {
   getCustomFoodLogs: function (): Promise<CustomFood[]> {
     return getCustomFoods();
   },
+  getCustomRecipes: function (): Promise<CustomRecipe[]> {
+    return getCustomRecipe();
+  },
   async deleteFoodLog(uuid: string): Promise<void> {
     return deleteFoodLog(await DBHandler.getInstance(), uuid);
   },
   async deleteCustomFood(uuid: string): Promise<void> {
     return deleteCustomFood(await DBHandler.getInstance(), uuid);
+  },
+  async deleteCustomRecipe(uuid: string): Promise<void> {
+    return deleteCustomRecipe(await DBHandler.getInstance(), uuid);
   },
   async deleteRecipe(uuid: string): Promise<void> {
     return deleteRecipe(await DBHandler.getInstance(), uuid);

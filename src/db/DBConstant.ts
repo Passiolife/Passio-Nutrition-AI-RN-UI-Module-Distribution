@@ -3,6 +3,7 @@
 export const TABLE_FOOD_LOGS = 'food_logsss_2';
 export const TABLE_IMAGES = 'images_table';
 export const TABLE_CUSTOM_FOOD_LOGS = 'custom_food_logs';
+export const TABLE_CUSTOM_RECIPE_LOGS = 'custom_recipe_logs';
 export const TABLE_WATER = 'water';
 export const TABLE_WEIGHT = 'weight';
 export const TABLE_FAVOURITE_FOOD_LOGS = 'favourite_food_table_2';
