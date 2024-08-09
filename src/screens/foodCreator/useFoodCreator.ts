@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { useBranding, useServices } from '../../contexts';
 import type { OtherNutritionFactsRef } from './views/OtherNutritionFacts';
 import type { RequireNutritionFactsRef } from './views/RequireNutritionFacts';
@@ -14,7 +14,7 @@ import {
 import type { CustomFood, Image } from '../../models';
 import { convertPassioFoodItemToFoodLog } from '../../utils/V3Utils';
 import RNFS from 'react-native-fs';
-import { Platform } from 'react-native';
+import { Alert, Platform } from 'react-native';
 import { ShowToast } from '../../utils';
 
 export type ScanningScreenNavigationProps = StackNavigationProp<
@@ -43,10 +43,19 @@ export const useFoodCreator = () => {
       : undefined
   );
   const [isImagePickerVisible, setImagePickerModalVisible] = useState(false);
+  const [isDeleteButtonVisible, setDeleteButtonVisible] = useState(false);
 
   const otherNutritionFactsRef = useRef<OtherNutritionFactsRef>(null);
   const requireNutritionFactsRef = useRef<RequireNutritionFactsRef>(null);
   const foodCreatorFoodDetailRef = useRef<FoodCreatorFoodDetailRef>(null);
+
+  useEffect(() => {
+    if (foodLog?.uuid) {
+      services.dataService.getCustomFoodLog(foodLog?.uuid).then((data) => {
+        setDeleteButtonVisible(data !== undefined && data !== null);
+      });
+    }
+  }, [foodLog?.uuid, services.dataService]);
 
   const openImagePickerModal = () => {
     setImagePickerModalVisible(true);
@@ -221,10 +230,31 @@ export const useFoodCreator = () => {
     navigation.goBack();
   };
 
+  const onDeletePress = () => {
+    if (foodLog?.uuid) {
+      Alert.alert('Are you sure want to delete this from my food?', undefined, [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Delete',
+          onPress: () => {
+            services.dataService.deleteCustomFood(foodLog?.uuid).then(() => {
+              navigation.goBack();
+            });
+          },
+          style: 'destructive',
+        },
+      ]);
+    }
+  };
+
   return {
     branding,
     barcode,
     foodLog,
+    isDeleteButtonVisible,
     image,
     otherNutritionFactsRef,
     requireNutritionFactsRef,
@@ -233,13 +263,14 @@ export const useFoodCreator = () => {
     from: params.from,
     title:
       params.from === 'NutritionFact' ? 'Edit Nutrition Facts' : 'Food Creator',
+    closeImagePickerModal,
+    onBarcodePress,
+    onCancelPress,
+    onDeletePress,
+    onEditImagePress,
+    onNutritionFactSave,
+    onSavePress,
     onSelectImagePress,
     openImagePickerModal,
-    closeImagePickerModal,
-    onSavePress,
-    onBarcodePress,
-    onNutritionFactSave,
-    onCancelPress,
-    onEditImagePress,
   };
 };

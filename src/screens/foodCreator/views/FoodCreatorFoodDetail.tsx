@@ -200,7 +200,7 @@ const requireNutritionFactStyle = ({}: Branding) =>
       alignItems: 'center',
       alignSelf: 'center',
       justifyContent: 'center',
-      borderRadius: 100,
+      borderRadius: 50,
       overflow: 'hidden',
       alignContent: 'center',
     },

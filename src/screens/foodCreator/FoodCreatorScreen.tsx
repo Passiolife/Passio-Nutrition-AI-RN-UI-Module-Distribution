@@ -24,6 +24,8 @@ export const FoodCreatorScreen = () => {
     isImagePickerVisible,
     onSavePress,
     onNutritionFactSave,
+    onDeletePress,
+    isDeleteButtonVisible,
     onCancelPress,
     onBarcodePress,
     onEditImagePress,
@@ -76,6 +78,20 @@ export const FoodCreatorScreen = () => {
             height: 40,
           }}
         />
+        {isDeleteButtonVisible && (
+          <BasicButton
+            text={'Delete'}
+            onPress={onDeletePress}
+            style={{
+              flexDirection: 'row',
+              flex: 1,
+              backgroundColor: branding.error,
+              borderColor: branding.error,
+              marginHorizontal: 8,
+              height: 40,
+            }}
+          />
+        )}
         {from === 'NutritionFact' ? (
           <BasicButton
             text={'Done'}
