@@ -47,7 +47,7 @@ export const LogOptions = ({
     <View style={styles.main}>
       {type === 'All' ? (
         <>
-          {renderItem(ICONS.logOptionFavorite, 'My Foods', onMyFoods)}
+          {renderItem(ICONS.apple, 'My Foods', onMyFoods)}
           {renderItem(ICONS.logOptionFavorite, 'Favorites', onFavorite)}
           {renderItem(ICONS.Mic, 'Voice Logging', onVoiceLogging)}
           {renderItem(ICONS.AIAdvisor, 'AI Advisor', onAiAdvisor)}
