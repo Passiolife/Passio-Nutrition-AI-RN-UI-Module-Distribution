@@ -53,7 +53,9 @@ export const AlertCustomFood = React.forwardRef<AlertCustomFoodRef, Props>(
               Create User Food?
             </Text>
             <Text color="gray500" weight="400" style={styles.description}>
-              You are about to create a user food from this food
+              {refCustomFoodID
+                ? 'Do you want to create a new user food based off this one, or edit the existing user food?'
+                : 'You are about to create a user food from this food'}
             </Text>
           </View>
           <View style={styles.buttonContainers}>

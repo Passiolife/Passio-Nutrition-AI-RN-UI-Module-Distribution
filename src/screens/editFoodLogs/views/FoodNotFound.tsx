@@ -8,17 +8,19 @@ interface Props {
 }
 
 export interface FoodNotFoundRef {
-  onShow: (refCustomFoodID?: string) => void;
+  onShow: (isUpdateUponCreating?: boolean) => void;
   onHide: () => void;
 }
 export const FoodNotFound = React.forwardRef<FoodNotFoundRef, Props>(
   ({ onCreatePress }: Props, ref: React.Ref<FoodNotFoundRef>) => {
     const [isVisible, setVisibility] = useState(false);
+    const [isUpdateUponCreating, setUpdateUponCreating] = useState(true);
 
     useImperativeHandle(
       ref,
       () => ({
-        onShow: () => {
+        onShow: (isUpdate) => {
+          setUpdateUponCreating(isUpdate ?? false);
           setVisibility(true);
         },
         onHide: () => {
@@ -50,7 +52,7 @@ export const FoodNotFound = React.forwardRef<FoodNotFoundRef, Props>(
           </View>
           <View style={styles.buttonContainers}>
             <BasicButton
-              onPress={() => setVisibility(false)}
+              onPress={() => setVisibility(isUpdateUponCreating)}
               style={styles.button}
               small
               text={'Cancel'}

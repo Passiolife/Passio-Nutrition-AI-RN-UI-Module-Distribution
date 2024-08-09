@@ -191,9 +191,8 @@ export function useEditFoodLog() {
       if (customFood) {
         navigateToFoodCreatorScreen(customFood, isUpdateUponCreating);
       } else {
-        alertCustomFoodRef?.current?.onHide();
         setTimeout(() => {
-          foodNotFoundRef?.current?.onShow(foodLog.refCustomFoodID);
+          foodNotFoundRef?.current?.onShow(isUpdateUponCreating);
         }, 200);
       }
     }
