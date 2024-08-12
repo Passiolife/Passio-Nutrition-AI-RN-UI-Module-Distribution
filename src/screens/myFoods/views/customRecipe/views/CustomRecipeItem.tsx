@@ -15,7 +15,8 @@ interface Props {
   iconID: string;
   name: string;
   brandName?: string;
-  onPressEditor: () => void;
+  onFoodDetailPress: () => void;
+  onEditCustomRecipePress: () => void;
   onPressDelete: () => void;
   onPressLog: () => void;
   entityType: PassioIDEntityType;
@@ -23,7 +24,8 @@ interface Props {
 
 const CustomRecipeItem = ({
   name,
-  onPressEditor,
+  onFoodDetailPress,
+  onEditCustomRecipePress,
   onPressLog,
   onPressDelete,
   entityType,
@@ -34,9 +36,12 @@ const CustomRecipeItem = ({
       <SwipeToDelete
         onPressDelete={onPressDelete}
         marginVertical={0}
-        onPressEdit={onPressEditor}
+        onPressEdit={onEditCustomRecipePress}
       >
-        <TouchableOpacity style={styles.mealContainer} onPress={onPressEditor}>
+        <TouchableOpacity
+          style={styles.mealContainer}
+          onPress={onFoodDetailPress}
+        >
           <View style={styles.mealImgLayout}>
             <PassioFoodIcon
               iconID={iconID}

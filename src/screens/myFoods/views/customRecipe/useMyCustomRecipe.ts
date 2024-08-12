@@ -28,13 +28,6 @@ export const useMyCustomRecipe = () => {
     init();
   }, [services.dataService, isFocused]);
 
-  const onEditorPress = (food: CustomFood) => {
-    navigation.navigate('EditRecipeScreen', {
-      recipe: food,
-      prevRouteName: 'MyFood',
-    });
-  };
-
   const onDeletePress = (food: CustomFood) => {
     Alert.alert('Are you sure want to delete this from my recipe?', undefined, [
       {
@@ -53,7 +46,7 @@ export const useMyCustomRecipe = () => {
     ]);
   };
 
-  const onLogPress = async (food: CustomFood) => {
+  const getFoodLog = (food: CustomFood) => {
     const date = new Date();
     const meal = getMealLog(date, undefined);
     const uuid: string = uuid4.v4() as string;
@@ -64,8 +57,40 @@ export const useMyCustomRecipe = () => {
       meal: meal,
       uuid: uuid,
     };
-    await services.dataService.saveFoodLog(foodLog);
-    ShowToast('Added your food into ' + meal);
+
+    return foodLog;
+  };
+
+  const onLogPress = async (food: CustomFood) => {
+    const log = getFoodLog(food);
+    await services.dataService.saveFoodLog(log);
+    ShowToast('Added your food into ' + log.meal);
+  };
+
+  const onEditCustomRecipePress = (
+    food: CustomFood,
+    isRequirePop?: boolean
+  ) => {
+    navigation.navigate('EditRecipeScreen', {
+      recipe: food,
+      prevRouteName: 'MyFood',
+      onSaveLogPress: () => {
+        if (isRequirePop) {
+          navigation.pop();
+        }
+      },
+    });
+  };
+
+  const onFoodDetailPress = (food: CustomFood) => {
+    const log = getFoodLog(food);
+    navigation.navigate('EditFoodLogScreen', {
+      foodLog: log,
+      prevRouteName: 'MyFood',
+      onEditRecipeFood: () => {
+        onEditCustomRecipePress(food, true);
+      },
+    });
   };
 
   const onFoodSearch = () => {
@@ -100,7 +125,8 @@ export const useMyCustomRecipe = () => {
     branding,
     customRecipes,
     recipeOptionsRef,
-    onEditorPress,
+    onFoodDetailPress,
+    onEditCustomRecipePress,
     onCreateNewRecipePress,
     onFoodSearch,
     onDeletePress,

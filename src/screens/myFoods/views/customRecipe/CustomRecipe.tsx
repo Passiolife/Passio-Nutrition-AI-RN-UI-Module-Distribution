@@ -14,7 +14,8 @@ const CustomRecipe = () => {
     recipeOptionsRef,
     onCreateNewRecipePress,
     onFoodSearch,
-    onEditorPress,
+    onFoodDetailPress,
+    onEditCustomRecipePress,
     onDeletePress,
     onLogPress,
   } = useMyCustomRecipe();
@@ -27,7 +28,8 @@ const CustomRecipe = () => {
         brandName={item.brandName}
         iconID={item.iconID ?? ''}
         onPressLog={() => onLogPress?.(item)}
-        onPressEditor={() => onEditorPress?.(item)}
+        onFoodDetailPress={() => onFoodDetailPress?.(item)}
+        onEditCustomRecipePress={() => onEditCustomRecipePress?.(item)}
         onPressDelete={() => onDeletePress?.(item)}
         entityType={PassioIDEntityType.item}
       />

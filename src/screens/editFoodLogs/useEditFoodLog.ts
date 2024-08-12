@@ -76,16 +76,16 @@ export function useEditFoodLog() {
     return updatedFoodLog;
   }, []);
 
-  const addIngredient = useCallback(
-    (foodItem: FoodItem) => {
-      const updatedFoodLog = { ...foodLog };
-      updatedFoodLog.foodItems.push(foodItem);
-      setFoodLog(recalculateFoodLogServing(updatedFoodLog));
-      ShowToast('Ingredient added successfully');
-      navigation.goBack();
-    },
-    [foodLog, navigation, recalculateFoodLogServing]
-  );
+  // const addIngredient = useCallback(
+  //   (foodItem: FoodItem) => {
+  //     const updatedFoodLog = { ...foodLog };
+  //     updatedFoodLog.foodItems.push(foodItem);
+  //     setFoodLog(recalculateFoodLogServing(updatedFoodLog));
+  //     ShowToast('Ingredient added successfully');
+  //     navigation.goBack();
+  //   },
+  //   [foodLog, navigation, recalculateFoodLogServing]
+  // );
 
   const deleteIngredient = useCallback(
     (foodItem: FoodItem) => {
@@ -305,19 +305,11 @@ export function useEditFoodLog() {
   };
 
   const onAddIngredientPress = () => {
-    navigation.push('FoodSearchScreen', {
-      onSaveData: (item) => {
-        const foodItem = convertPassioFoodItemToFoodLog(
-          item,
-          new Date(),
-          undefined
-        ).foodItems[0];
-        if (foodItem) {
-          addIngredient(foodItem);
-        }
-      },
-      from: 'Ingredient',
-    });
+    if (params.prevRouteName === 'MyFood') {
+      params?.onEditRecipeFood?.(foodLog);
+    } else {
+      // alertCustomFoodRef.current?.onShow(foodLog.refCustomFoodID);
+    }
   };
 
   const onEditIngredientPress = useCallback(
