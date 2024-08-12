@@ -1,0 +1,100 @@
+import { useState, useEffect } from 'react';
+import { useBranding, useServices } from '../../../../contexts';
+import type { CustomFood, CustomRecipe, FoodLog } from '../../../../models';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
+import uuid4 from 'react-native-uuid';
+import { getMealLog, ShowToast } from '../../../../utils';
+import { convertDateToDBFormat } from '../../../../utils/DateFormatter';
+import type { ScreenNavigationProps } from '../../useMyFoodScreen';
+import { convertPassioFoodItemToFoodLog } from '../../../../utils/V3Utils';
+import { Alert } from 'react-native';
+
+export const useMyCustomRecipe = () => {
+  const branding = useBranding();
+  const services = useServices();
+  const navigation = useNavigation<ScreenNavigationProps>();
+
+  const [customRecipes, setCustomRecipe] = useState<CustomRecipe[]>();
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    function init() {
+      services.dataService.getCustomRecipes().then((data) => {
+        setCustomRecipe(data);
+      });
+    }
+    init();
+  }, [services.dataService, isFocused]);
+
+  const onEditorPress = (food: CustomFood) => {
+    navigation.navigate('EditRecipeScreen', {
+      recipe: food,
+      prevRouteName: 'MyFood',
+    });
+  };
+
+  const onDeletePress = (food: CustomFood) => {
+    Alert.alert('Are you sure want to delete this from my recipe?', undefined, [
+      {
+        text: 'Cancel',
+        style: 'cancel',
+      },
+      {
+        text: 'Delete',
+        onPress: () => {
+          services.dataService.deleteCustomRecipe(food.uuid).then(() => {
+            setCustomRecipe((i) => i?.filter((c) => c.uuid !== food.uuid));
+          });
+        },
+        style: 'destructive',
+      },
+    ]);
+  };
+
+  const onLogPress = async (food: CustomFood) => {
+    const date = new Date();
+    const meal = getMealLog(date, undefined);
+    const uuid: string = uuid4.v4() as string;
+
+    const foodLog: FoodLog = {
+      ...food,
+      eventTimestamp: convertDateToDBFormat(date),
+      meal: meal,
+      uuid: uuid,
+    };
+    await services.dataService.saveFoodLog(foodLog);
+    ShowToast('Added your food into ' + meal);
+  };
+
+  const onCreateNewRecipe = () => {
+    navigation.navigate('FoodSearchScreen', {
+      from: 'Recipe',
+      onSaveData: (item) => {
+        const foodLog = convertPassioFoodItemToFoodLog(
+          item,
+          undefined,
+          undefined
+        );
+        navigation.navigate('EditIngredientScreen', {
+          foodItem: foodLog.foodItems[0],
+          updateIngredient: (_item) => {
+            navigation.pop(1);
+            navigation.replace('EditRecipeScreen', {
+              recipe: foodLog,
+              prevRouteName: 'Recipe',
+            });
+          },
+        });
+      },
+    });
+  };
+
+  return {
+    branding,
+    customRecipes,
+    onEditorPress,
+    onCreateNewRecipe,
+    onDeletePress,
+    onLogPress,
+  };
+};

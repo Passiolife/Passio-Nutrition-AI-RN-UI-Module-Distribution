@@ -7,23 +7,12 @@ import {
   MYFoodScreensType,
   useMyFoodScreen,
 } from './useMyFoodScreen';
-import { BackNavigation, BasicButton, TabBar } from '../../components';
+import { BackNavigation, TabBar } from '../../components';
 import CustomFoods from './views/customFoods/CustomFoods';
 import CustomRecipe from './views/customRecipe/CustomRecipe';
-import { EmptyView } from '../../components/empty';
 
 export const MyFoodsScreen = () => {
-  const {
-    branding,
-    tab,
-    setTab,
-    customFoods,
-    onCreateFoodPress,
-    onEditorPress,
-    onDeletePress,
-    onCreateNewRecipe,
-    onLogPress,
-  } = useMyFoodScreen();
+  const { branding, tab, setTab } = useMyFoodScreen();
 
   const styles = myFoodScreenStyle(branding);
 
@@ -42,39 +31,8 @@ export const MyFoodsScreen = () => {
     <View style={styles.body}>
       <BackNavigation title="My Foods" bottomView={renderTab()} />
       <View style={styles.container}>
-        {tab === 'Custom Foods' ? (
-          <>
-            {customFoods && customFoods?.length > 0 && (
-              <CustomFoods
-                customFoods={customFoods ?? []}
-                onPressEditor={onEditorPress}
-                onPressLog={onLogPress}
-                onPressDelete={onDeletePress}
-              />
-            )}
-            {customFoods === undefined ||
-              (customFoods?.length === 0 && (
-                <EmptyView title={''} description={'There is no custom food'} />
-              ))}
-          </>
-        ) : (
-          <CustomRecipe />
-        )}
+        {tab === 'Custom Foods' ? <CustomFoods /> : <CustomRecipe />}
       </View>
-      {tab === 'Custom Foods' && (
-        <BasicButton
-          text="Create New Food"
-          style={styles.button}
-          onPress={onCreateFoodPress}
-        />
-      )}
-      {tab !== 'Custom Foods' && (
-        <BasicButton
-          text="Create New Recipe"
-          style={styles.button}
-          onPress={onCreateNewRecipe}
-        />
-      )}
     </View>
   );
 };

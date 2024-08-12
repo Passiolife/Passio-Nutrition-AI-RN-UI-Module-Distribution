@@ -69,7 +69,7 @@ const sizeMap = {
   normal: 12,
   small: 8,
   title: 17,
-  secondlyTitle: 15,
+  secondlyTitle: 14,
 };
 
 const weights = {

@@ -7,19 +7,26 @@ import { content } from '../../constants/Content';
 import type { Branding } from '../../contexts';
 import { scaleWidth, scaled, scaledSize } from '../../utils';
 import NewEditServingAmountView from '../editFoodLogs/views/newEditServingsAmountView';
-import { useEditRecipe } from './useEditFoodLog';
+import { useEditRecipe } from './useEditRecipe';
 import { EditRecipeName } from './views/EditRecipeName';
+import type { FoodLog } from '../../models';
+import ImagePickerOptions from '../../components/imagePickerOptions/ImagePickerOptions';
 
 export const EditRecipeScreen = () => {
   const {
-    image,
     branding,
-    foodLog,
+    closeImagePickerModal,
     deleteIngredient,
+    editRecipeNameRef,
+    foodLog,
+    image,
+    isImagePickerVisible,
     onAddIngredientPress,
-    onEditIngredientPress,
     onCancelPress,
+    onEditImagePress,
+    onEditIngredientPress,
     onSavePress,
+    onSelectImagePress,
     onUpdateFoodLog,
   } = useEditRecipe();
   const styles = editFoodLogStyle(branding);
@@ -31,9 +38,14 @@ export const EditRecipeScreen = () => {
       <BackNavigation title={'Edit Recipe'} rightIcon={icon} />
       <ScrollView>
         <View style={styles.body}>
-          <EditRecipeName foodLog={foodLog} image={image} />
-          <NewEditServingAmountView
+          <EditRecipeName
             foodLog={foodLog}
+            image={image}
+            ref={editRecipeNameRef}
+            onEditImagePress={onEditImagePress}
+          />
+          <NewEditServingAmountView
+            foodLog={foodLog as FoodLog}
             onUpdateFoodLog={onUpdateFoodLog}
           />
           <IngredientsView
@@ -59,13 +71,20 @@ export const EditRecipeScreen = () => {
         />
         <BasicButton
           style={bottomActionStyle.bottomActionButton}
-          text={content.log}
+          text={content.save}
           testId="testButtonSave"
           small
           secondary={false}
           onPress={() => onSavePress()}
         />
       </View>
+      {isImagePickerVisible && (
+        <ImagePickerOptions
+          onCloseModel={closeImagePickerModal}
+          onSelectGallery={async () => onSelectImagePress('gallery')}
+          onSelectCamera={async () => onSelectImagePress('camera')}
+        />
+      )}
     </View>
   );
 };
@@ -147,7 +166,7 @@ const bottomActionStyle = StyleSheet.create({
   },
   bottomActionButton: {
     flex: 1,
-    marginHorizontal: 8,
+    marginHorizontal: 4,
     borderRadius: scaledSize(4),
     justifyContent: 'center',
   },

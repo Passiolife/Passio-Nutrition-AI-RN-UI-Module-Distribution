@@ -74,7 +74,7 @@ export const FoodCreatorScreen = () => {
           style={{
             flexDirection: 'row',
             flex: 1,
-            marginHorizontal: 8,
+            marginHorizontal: 4,
             height: 40,
           }}
         />
@@ -87,7 +87,6 @@ export const FoodCreatorScreen = () => {
               flex: 1,
               backgroundColor: branding.error,
               borderColor: branding.error,
-              marginHorizontal: 8,
               height: 40,
             }}
           />
@@ -99,7 +98,7 @@ export const FoodCreatorScreen = () => {
             style={{
               flexDirection: 'row',
               flex: 1,
-              marginHorizontal: 8,
+              marginHorizontal: 4,
               height: 40,
             }}
           />
@@ -110,7 +109,7 @@ export const FoodCreatorScreen = () => {
             style={{
               flexDirection: 'row',
               flex: 1,
-              marginHorizontal: 8,
+              marginHorizontal: 4,
               height: 40,
             }}
           />

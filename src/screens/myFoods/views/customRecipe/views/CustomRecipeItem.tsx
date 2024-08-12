@@ -21,14 +21,13 @@ interface Props {
   entityType: PassioIDEntityType;
 }
 
-const CustomFoodsItem = ({
+const CustomRecipeItem = ({
   name,
   onPressEditor,
   onPressLog,
   onPressDelete,
   entityType,
   iconID,
-  brandName,
 }: Props) => {
   return (
     <Card style={styles.shadowContainer}>
@@ -54,16 +53,6 @@ const CustomFoodsItem = ({
             >
               {name}
             </Text>
-            {brandName && (
-              <Text
-                weight="400"
-                size="_14px"
-                color="secondaryText"
-                style={styles.brand}
-              >
-                {brandName}
-              </Text>
-            )}
           </View>
           <TouchableOpacity onPress={onPressLog} style={styles.addFoodIconView}>
             <Image source={ICONS.newAddPlus} style={styles.addFoodIcon} />
@@ -126,4 +115,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
-export default React.memo(CustomFoodsItem);
+export default React.memo(CustomRecipeItem);

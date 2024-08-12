@@ -124,7 +124,7 @@ export const FoodCreatorFoodDetail = React.forwardRef<
                   extra={image?.base64}
                 />
                 <Text
-                  size="_12px"
+                  size="secondlyTitle"
                   color="primaryColor"
                   isLink
                   onPress={onEditImagePress}
@@ -191,8 +191,7 @@ const requireNutritionFactStyle = ({}: Branding) =>
       flex: 1.5,
     },
     editImage: {
-      marginVertical: 4,
-      fontSize: 10,
+      marginVertical: 6,
     },
     icon: {
       height: 100,

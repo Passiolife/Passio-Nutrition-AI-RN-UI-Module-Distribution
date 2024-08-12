@@ -44,7 +44,7 @@ export const IngredientsView = ({
   return (
     <View>
       <Card style={styles.container}>
-        <TouchableOpacity style={styles.plusTouchOpacity}>
+        <View style={styles.plusTouchOpacity}>
           <Text
             weight="600"
             size="title"
@@ -54,13 +54,15 @@ export const IngredientsView = ({
             {content.addIngredients}
           </Text>
           {type === 'EditRecipe' ? (
-            <Image
-              source={ICONS.newAddPlus}
-              style={{
-                height: 24,
-                width: 24,
-              }}
-            />
+            <TouchableOpacity onPress={onAddIngredients}>
+              <Image
+                source={ICONS.newAddPlus}
+                style={{
+                  height: 24,
+                  width: 24,
+                }}
+              />
+            </TouchableOpacity>
           ) : (
             <>
               {foodItems.length > 1 ? (
@@ -78,7 +80,7 @@ export const IngredientsView = ({
               )}
             </>
           )}
-        </TouchableOpacity>
+        </View>
 
         <>
           {isShowAll || foodItems.length > 1 ? (

@@ -28,14 +28,14 @@ interface Value {
   isNotValid?: boolean;
 }
 
-export interface FoodCreatorFoodDetailRef {
+export interface EditRecipeNameRef {
   getValue: () => Value;
 }
 
-export const EditRecipeName = React.forwardRef<FoodCreatorFoodDetailRef, Props>(
+export const EditRecipeName = React.forwardRef<EditRecipeNameRef, Props>(
   (
     { foodLog: defaultFoodLog, onEditImagePress, image }: Props,
-    ref: React.Ref<FoodCreatorFoodDetailRef>
+    ref: React.Ref<EditRecipeNameRef>
   ) => {
     const branding = useBranding();
 
@@ -111,7 +111,7 @@ export const EditRecipeName = React.forwardRef<FoodCreatorFoodDetailRef, Props>(
                   defaultImage={ICONS.recipe}
                 />
                 <Text
-                  size="_12px"
+                  size="secondlyTitle"
                   color="primaryColor"
                   isLink
                   style={styles.editImage}
@@ -164,7 +164,6 @@ const requireNutritionFactStyle = ({}: Branding) =>
     },
     editImage: {
       marginVertical: 4,
-      fontSize: 10,
     },
     icon: {
       height: 100,
@@ -172,7 +171,7 @@ const requireNutritionFactStyle = ({}: Branding) =>
       alignItems: 'center',
       alignSelf: 'center',
       justifyContent: 'center',
-      borderRadius: 40,
+      borderRadius: 50,
       overflow: 'hidden',
       alignContent: 'center',
     },
