@@ -259,7 +259,7 @@ export const deleteCustomRecipe = async (
   uuId: string
 ): Promise<void> => {
   return new Promise((resolve, reject) => {
-    const deleteQuery = `DELETE from ${TABLE_CUSTOM_FOOD_LOGS} where ${ROW_UUID} = "${uuId}"`;
+    const deleteQuery = `DELETE from ${TABLE_CUSTOM_RECIPE_LOGS} where ${ROW_UUID} = "${uuId}"`;
     db.transaction((tx) => {
       tx.executeSql(
         deleteQuery,

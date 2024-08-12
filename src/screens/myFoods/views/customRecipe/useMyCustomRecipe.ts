@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useBranding, useServices } from '../../../../contexts';
 import type { CustomFood, CustomRecipe, FoodLog } from '../../../../models';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
@@ -8,11 +8,13 @@ import { convertDateToDBFormat } from '../../../../utils/DateFormatter';
 import type { ScreenNavigationProps } from '../../useMyFoodScreen';
 import { convertPassioFoodItemToFoodLog } from '../../../../utils/V3Utils';
 import { Alert } from 'react-native';
+import type { RecipeOptionsRef } from 'src/components';
 
 export const useMyCustomRecipe = () => {
   const branding = useBranding();
   const services = useServices();
   const navigation = useNavigation<ScreenNavigationProps>();
+  const recipeOptionsRef = useRef<RecipeOptionsRef>(null);
 
   const [customRecipes, setCustomRecipe] = useState<CustomRecipe[]>();
   const isFocused = useIsFocused();
@@ -66,14 +68,15 @@ export const useMyCustomRecipe = () => {
     ShowToast('Added your food into ' + meal);
   };
 
-  const onCreateNewRecipe = () => {
+  const onFoodSearch = () => {
     navigation.navigate('FoodSearchScreen', {
       from: 'Recipe',
       onSaveData: (item) => {
         const foodLog = convertPassioFoodItemToFoodLog(
           item,
           undefined,
-          undefined
+          undefined,
+          true
         );
         navigation.navigate('EditIngredientScreen', {
           foodItem: foodLog.foodItems[0],
@@ -89,11 +92,17 @@ export const useMyCustomRecipe = () => {
     });
   };
 
+  const onCreateNewRecipePress = () => {
+    recipeOptionsRef.current?.onOpen();
+  };
+
   return {
     branding,
     customRecipes,
+    recipeOptionsRef,
     onEditorPress,
-    onCreateNewRecipe,
+    onCreateNewRecipePress,
+    onFoodSearch,
     onDeletePress,
     onLogPress,
   };

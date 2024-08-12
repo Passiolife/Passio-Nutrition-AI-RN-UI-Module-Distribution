@@ -1,17 +1,17 @@
 import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import type { ParamList } from '../../navigaitons';
-import type { FoodItem } from '../../models';
+import type { FoodItem, FoodLog } from '../../models';
 import {
   calculateComputedWeightAmount,
   DeleteIngredientAlert,
 } from '../editFoodLogs';
-import { BasicButton, DeleteButton, BackNavigation } from '../../components';
+import { BasicButton, BackNavigation } from '../../components';
 import { COLORS } from '../../constants';
 import LogInformationView from '../editFoodLogs/views/logInformationsView';
 import { type RouteProp, useRoute } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
-import EditServingAmountView from '../editFoodLogs/views/EditServingAmountView';
+import NewEditServingAmountView from '../editFoodLogs/views/newEditServingsAmountView';
 import { useEditIngredient } from './useEditIngredient';
 
 export type EditIngredientNavigationProps = StackNavigationProp<
@@ -55,9 +55,22 @@ export const EditIngredient = (props?: EditIngredientsScreenProps) => {
     });
   };
 
+  if (foodItem === undefined) {
+    return <></>;
+  }
+
+  const foodLog: FoodLog = {
+    foodItems: [foodItem],
+    computedWeight: foodItem.computedWeight,
+    selectedQuantity: foodItem.selectedQuantity,
+    selectedUnit: foodItem.selectedUnit,
+    servingSizes: foodItem.servingSizes,
+    servingUnits: foodItem.servingUnits,
+  } as FoodLog;
+
   return (
     <View style={styles.container}>
-      <BackNavigation title="Edit Ingridient" />
+      <BackNavigation title="Edit Ingredient" />
 
       {foodItem ? (
         <ScrollView>
@@ -75,16 +88,14 @@ export const EditIngredient = (props?: EditIngredientsScreenProps) => {
                 foodItem.selectedUnit
               )}
             />
-            <EditServingAmountView
-              servingInfo={foodItem}
-              foodItems={[foodItem]}
-              onUpdateServingInfo={(servingInfo, foodItems) => {
-                if (foodItems[0]) {
+            <NewEditServingAmountView
+              foodLog={foodLog}
+              onUpdateFoodLog={(updateFoodLog) => {
+                if (updateFoodLog.foodItems?.[0]) {
                   let copyOfFavFoodItem: FoodItem = {
-                    ...foodItems[0],
-                    selectedUnit: servingInfo.selectedUnit,
-                    selectedQuantity: servingInfo.selectedQuantity,
-                  };
+                    ...updateFoodLog.foodItems?.[0],
+                    ...updateFoodLog,
+                  } as FoodItem;
                   updateFoodItem(copyOfFavFoodItem);
                 }
               }}
@@ -103,16 +114,23 @@ export const EditIngredient = (props?: EditIngredientsScreenProps) => {
           onPress={() => onSavePress()}
         />
         {params.deleteIngredient !== undefined && (
-          <DeleteButton
-            style={bottomActionStyle.bottomActionButton}
-            small
-            onPress={onDeleteIngredient}
-          />
+          <>
+            <View style={bottomActionStyle.space} />
+            <BasicButton
+              isDelete
+              small
+              text="Delete"
+              onPress={onDeleteIngredient}
+            />
+          </>
         )}
 
+        <View style={bottomActionStyle.space} />
         <BasicButton
           style={bottomActionStyle.bottomActionButton}
-          text="Add Ingredient"
+          text={
+            params.deleteIngredient !== undefined ? 'Save' : 'Add Ingredient'
+          }
           testId="testButtonSave"
           small
           secondary={false}
@@ -188,7 +206,9 @@ const bottomActionStyle = StyleSheet.create({
   },
   bottomActionButton: {
     flex: 1,
-    marginHorizontal: 5,
     justifyContent: 'center',
+  },
+  space: {
+    width: 8,
   },
 });

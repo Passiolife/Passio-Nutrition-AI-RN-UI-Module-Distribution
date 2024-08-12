@@ -1,6 +1,6 @@
 import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
-import { BasicButton, BackNavigation } from '../../components';
+import { BasicButton, BackNavigation, RecipeOptions } from '../../components';
 import { COLORS } from '../../constants';
 import { IngredientsView } from '../editFoodLogs/views/ingredients/IngredientsView';
 import { content } from '../../constants/Content';
@@ -24,6 +24,8 @@ export const EditRecipeScreen = () => {
     isDeleteButtonVisible,
     onDeletePress,
     onAddIngredientPress,
+    recipeOptionsRef,
+    onFindSearchPress,
     onCancelPress,
     onEditImagePress,
     onEditIngredientPress,
@@ -75,6 +77,7 @@ export const EditRecipeScreen = () => {
           <BasicButton
             text={'Delete'}
             onPress={onDeletePress}
+            isDelete={true}
             small
             style={{
               flexDirection: 'row',
@@ -89,6 +92,7 @@ export const EditRecipeScreen = () => {
           style={bottomActionStyle.bottomActionButton}
           text={content.save}
           testId="testButtonSave"
+          enable={foodLog.foodItems.length > 1}
           small
           secondary={false}
           onPress={() => onSavePress()}
@@ -101,6 +105,7 @@ export const EditRecipeScreen = () => {
           onSelectCamera={async () => onSelectImagePress('camera')}
         />
       )}
+      <RecipeOptions onTextSearch={onFindSearchPress} ref={recipeOptionsRef} />
     </View>
   );
 };

@@ -5,13 +5,15 @@ import type { CustomRecipe } from '../../../../models';
 import CustomRecipeItem from './views/CustomRecipeItem';
 import { PassioIDEntityType } from '@passiolife/nutritionai-react-native-sdk-v3';
 import { useMyCustomRecipe } from './useMyCustomRecipe';
-import { BasicButton } from '../../../../components';
+import { BasicButton, RecipeOptions } from '../../../../components';
 import { EmptyView } from '../../../../components/empty';
 
 const CustomRecipe = () => {
   const {
     customRecipes,
-    onCreateNewRecipe,
+    recipeOptionsRef,
+    onCreateNewRecipePress,
+    onFoodSearch,
     onEditorPress,
     onDeletePress,
     onLogPress,
@@ -45,8 +47,9 @@ const CustomRecipe = () => {
           marginVertical: 24,
           marginHorizontal: 16,
         }}
-        onPress={onCreateNewRecipe}
+        onPress={onCreateNewRecipePress}
       />
+      <RecipeOptions ref={recipeOptionsRef} onTextSearch={onFoodSearch} />
     </>
   );
 };

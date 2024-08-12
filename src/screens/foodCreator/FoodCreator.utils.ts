@@ -16,10 +16,15 @@ import type {
 import { convertPassioFoodItemToFoodLog } from '../../utils/V3Utils';
 
 export const CUSTOM_USER_FOOD = 'user-food-';
+export const CUSTOM_USER_RECIPE = 'user-recipe-';
 
 export const generateCustomID = () => {
   const uuid: string = uuid4.v4() as string;
   return CUSTOM_USER_FOOD + uuid;
+};
+export const generateCustomRecipeID = () => {
+  const uuid: string = uuid4.v4() as string;
+  return CUSTOM_USER_RECIPE + uuid;
 };
 
 export interface createFoodLogUsingFoodCreator {

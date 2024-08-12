@@ -20,11 +20,13 @@ import { getMealLog } from '../utils';
 import type { PassioIngredient } from '@passiolife/nutritionai-react-native-sdk-v3/src';
 import type { QuickSuggestion } from 'src/models/QuickSuggestion';
 import type { DefaultNutrients } from '../screens/foodCreator/views/OtherNutritionFacts';
+import { CUSTOM_USER_RECIPE } from '../screens/foodCreator/FoodCreator.utils';
 
 export const convertPassioFoodItemToFoodLog = (
   item: PassioFoodItem,
   logDate: Date | undefined,
-  logMeal: MealLabel | undefined
+  logMeal: MealLabel | undefined,
+  isRecipe?: boolean
 ): FoodLog => {
   const uuid: string = `${uuid4.v4() as string}`;
   const date = logDate ?? new Date();
@@ -66,7 +68,7 @@ export const convertPassioFoodItemToFoodLog = (
     eventTimestamp: dateFormat,
     isOpenFood: foodItem.isOpenFood,
     meal: meal,
-    iconID: foodItem.iconId,
+    iconID: isRecipe ? CUSTOM_USER_RECIPE : foodItem.iconId,
     entityType: PassioIDEntityType.item,
     foodItems: newFoodIngredient,
     computedWeight: {

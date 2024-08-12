@@ -12,11 +12,15 @@ import {
   useRoute,
   type RouteProp,
 } from '@react-navigation/native';
-import type { ImagePickerType, ParamList } from '../../navigaitons';
+import type {
+  ImagePickerType,
+  ParamList,
+  RecipeOptionsRef,
+} from '../../navigaitons';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import {
-  CUSTOM_USER_FOOD,
-  generateCustomID,
+  CUSTOM_USER_RECIPE,
+  generateCustomRecipeID,
 } from '../foodCreator/FoodCreator.utils';
 import { Alert, Platform } from 'react-native';
 import type { EditRecipeNameRef } from './views/EditRecipeName';
@@ -36,6 +40,7 @@ export function useEditRecipe() {
   const [customRecipe, setCustomRecipe] = useState<CustomRecipe>(params.recipe);
   const [isImagePickerVisible, setImagePickerModalVisible] = useState(false);
   const editRecipeNameRef = useRef<EditRecipeNameRef>(null);
+  const recipeOptionsRef = useRef<RecipeOptionsRef>(null);
   const [isDeleteButtonVisible, setDeleteButtonVisible] = useState(false);
 
   const [image, setImage] = useState<Image | undefined>(
@@ -101,8 +106,11 @@ export function useEditRecipe() {
         if (uris) {
           const uri = Platform.OS === 'android' ? `file://${uris[0]}` : uris[0];
           const response = await RNFS.readFile(uri, 'base64');
-          let id = generateCustomID();
-          if (image?.id.includes(CUSTOM_USER_FOOD)) {
+          let id = generateCustomRecipeID();
+          if (
+            image?.id.includes(CUSTOM_USER_RECIPE) &&
+            image?.id.length > CUSTOM_USER_RECIPE.length
+          ) {
             id = image?.id;
           }
           let customFoodImageID = await services.dataService.saveImage({
@@ -194,19 +202,21 @@ export function useEditRecipe() {
   }, []);
 
   const onSavePress = async () => {
-    const name = editRecipeNameRef?.current?.getValue()?.records?.name;
-    if (name) {
-      try {
-        const updatedRecipe: CustomRecipe = {
-          ...customRecipe,
-          iconID: image?.id,
-          name: name,
-        };
-        services?.dataService?.saveCustomRecipe(updatedRecipe);
-        params?.onSaveLogPress?.({ ...updatedRecipe });
-        navigation.goBack();
-      } catch (e) {}
-    } else {
+    if (customRecipe.foodItems.length > 0) {
+      const name = editRecipeNameRef?.current?.getValue()?.records?.name;
+      if (name) {
+        try {
+          const updatedRecipe: CustomRecipe = {
+            ...customRecipe,
+            iconID: image?.id,
+            name: name,
+          };
+          services?.dataService?.saveCustomRecipe(updatedRecipe);
+          params?.onSaveLogPress?.({ ...updatedRecipe });
+          navigation.goBack();
+        } catch (e) {}
+      } else {
+      }
     }
   };
 
@@ -215,7 +225,7 @@ export function useEditRecipe() {
     params?.onCancelPress?.();
   };
 
-  const onAddIngredientPress = () => {
+  const onFindSearchPress = () => {
     navigation.navigate('FoodSearchScreen', {
       onSaveData: (item) => {
         const foodItem = convertPassioFoodItemToFoodLog(
@@ -229,6 +239,10 @@ export function useEditRecipe() {
       },
       from: 'Ingredient',
     });
+  };
+
+  const onAddIngredientPress = () => {
+    recipeOptionsRef?.current?.onOpen();
   };
 
   const onEditIngredientPress = useCallback(
@@ -250,16 +264,18 @@ export function useEditRecipe() {
     closeImagePickerModal,
     deleteIngredient,
     editRecipeNameRef,
+    recipeOptionsRef,
     foodLog: customRecipe,
     from: params.prevRouteName,
     image,
-    isImagePickerVisible,
     isDeleteButtonVisible,
-    onDeletePress,
+    isImagePickerVisible,
     onAddIngredientPress,
     onCancelPress,
+    onDeletePress,
     onEditImagePress,
     onEditIngredientPress,
+    onFindSearchPress,
     onSavePress,
     onSelectImagePress,
     onUpdateFoodLog,
