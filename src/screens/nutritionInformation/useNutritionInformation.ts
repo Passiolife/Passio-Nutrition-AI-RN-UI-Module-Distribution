@@ -13,7 +13,7 @@ export const useNutritionInformation = () => {
   }, []);
 
   return {
-    nutrients: params.nutrient,
+    nutrients: params.nutrient.filter((i) => i.id !== 'weight'),
     onInfoPress,
     isInfo,
   };

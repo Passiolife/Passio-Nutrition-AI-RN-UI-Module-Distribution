@@ -163,12 +163,15 @@ function nutrientV3(food: PassioNutrients): Nutrient[] {
   let key: keyof typeof food;
   let nutrients: Nutrient[] = [];
   for (key in food) {
-    const amount = food[key] as unknown as UnitMass;
-    nutrients.push({
-      id: key as NutrientType,
-      amount: amount.value,
-      unit: amount.unit,
-    });
+    if (key === 'weight') {
+    } else {
+      const amount = food[key] as unknown as UnitMass;
+      nutrients.push({
+        id: key as NutrientType,
+        amount: amount.value,
+        unit: amount.unit,
+      });
+    }
   }
 
   return nutrients;
