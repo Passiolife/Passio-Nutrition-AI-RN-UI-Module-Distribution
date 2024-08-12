@@ -38,6 +38,7 @@ export interface EditFoodLogScreenProps {
   onSaveLogPress?: (foodLog: FoodLog) => void;
   onDeleteLogPress?: (foodLog: FoodLog) => void;
   onCancelPress?: () => void;
+  onEditCustomFood?: (foodLog: FoodLog) => void;
 }
 
 export const EditFoodLogScreen = () => {

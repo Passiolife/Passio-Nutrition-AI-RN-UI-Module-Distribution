@@ -27,6 +27,7 @@ import {
   saveCustomRecipe,
   getCustomRecipe,
   deleteCustomRecipe,
+  getCustomRecipes,
 } from '../../../db';
 import {
   ActivityLevelType,
@@ -70,7 +71,7 @@ const dataService: NutritionDataService = {
     return getCustomFoods();
   },
   getCustomRecipes: function (): Promise<CustomRecipe[]> {
-    return getCustomRecipe();
+    return getCustomRecipes();
   },
   async deleteFoodLog(uuid: string): Promise<void> {
     return deleteFoodLog(await DBHandler.getInstance(), uuid);
@@ -165,6 +166,11 @@ const dataService: NutritionDataService = {
     uuID: string
   ): Promise<CustomFood | undefined | null> {
     return getCustomFood(uuID);
+  },
+  getCustomRecipe: function (
+    uuID: string
+  ): Promise<CustomFood | undefined | null> {
+    return getCustomRecipe(uuID);
   },
 };
 export default dataService;

@@ -12,7 +12,8 @@ const CustomFoods = () => {
   const {
     customFoods,
     onCreateFoodPress,
-    onEditorPress,
+    onEditFoodCreatorPress,
+    onFoodDetailPress,
     onDeletePress,
     onLogPress,
   } = useMyCustomFoods();
@@ -25,7 +26,8 @@ const CustomFoods = () => {
         brandName={item.brandName}
         iconID={item.iconID ?? ''}
         onPressLog={() => onLogPress?.(item)}
-        onPressEditor={() => onEditorPress?.(item)}
+        onFoodDetailPress={() => onFoodDetailPress?.(item)}
+        onEditFoodCreatorPress={() => onEditFoodCreatorPress?.(item)}
         onPressDelete={() => onDeletePress?.(item)}
         entityType={PassioIDEntityType.barcode}
       />

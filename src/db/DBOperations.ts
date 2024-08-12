@@ -366,7 +366,7 @@ export const getCustomFoods = async (): Promise<CustomFood[]> => {
   }
 };
 // Get Food Logs List from local storage
-export const getCustomRecipe = async (): Promise<CustomRecipe[]> => {
+export const getCustomRecipes = async (): Promise<CustomRecipe[]> => {
   try {
     const db = await DBHandler.getInstance();
     const results = await db.executeSql(
@@ -735,6 +735,28 @@ export const getCustomFood = async (
       const db = await DBHandler.getInstance();
       const results = await db.executeSql(
         `SELECT * FROM ${TABLE_CUSTOM_FOOD_LOGS} where ${ROW_UUID} >= "${uuid}";`
+      );
+      resolve(convertResultToFoodLog(results)?.[0]);
+    } catch (error) {
+      console.error(
+        `Failed to get custom food logs ${error} ========= ${uuid}-${uuid}`
+      );
+      reject(
+        `Failed to get custom food logs ${error} ========= ${uuid}-${uuid}`
+      );
+      throw error;
+    }
+  });
+};
+
+export const getCustomRecipe = async (
+  uuid: string
+): Promise<CustomRecipe | null | undefined> => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const db = await DBHandler.getInstance();
+      const results = await db.executeSql(
+        `SELECT * FROM ${TABLE_CUSTOM_RECIPE_LOGS} where ${ROW_UUID} >= "${uuid}";`
       );
       resolve(convertResultToFoodLog(results)?.[0]);
     } catch (error) {

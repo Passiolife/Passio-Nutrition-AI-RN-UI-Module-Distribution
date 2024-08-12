@@ -206,9 +206,16 @@ export function useEditFoodLog() {
       foodLog: customFood,
       onSave: async (item) => {
         if (item && isUpdateUponCreating) {
-          setFoodLog((food) => {
-            return combineCustomFoodAndFoodLog(item, food);
+          services.dataService.saveFoodLog(
+            combineCustomFoodAndFoodLog(item, foodLog)
+          );
+          navigation.pop();
+          navigation.replace('BottomNavigation', {
+            screen: 'MealLogScreen',
           });
+        } else {
+          navigation.pop();
+          navigation.replace('MyFoodsScreen', {});
         }
       },
       from: 'Search',
@@ -216,7 +223,11 @@ export function useEditFoodLog() {
   };
 
   const onEditCustomFoodPress = async () => {
-    alertCustomFoodRef.current?.onShow(foodLog.refCustomFoodID);
+    if (params.prevRouteName === 'MyFood') {
+      params?.onEditCustomFood?.(foodLog);
+    } else {
+      alertCustomFoodRef.current?.onShow(foodLog.refCustomFoodID);
+    }
   };
 
   const onSwitchAlternativePress = () => {

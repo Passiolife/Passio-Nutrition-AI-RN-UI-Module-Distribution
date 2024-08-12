@@ -21,6 +21,8 @@ export const EditRecipeScreen = () => {
     foodLog,
     image,
     isImagePickerVisible,
+    isDeleteButtonVisible,
+    onDeletePress,
     onAddIngredientPress,
     onCancelPress,
     onEditImagePress,
@@ -69,6 +71,20 @@ export const EditRecipeScreen = () => {
           secondary={true}
           onPress={() => onCancelPress()}
         />
+        {isDeleteButtonVisible && (
+          <BasicButton
+            text={'Delete'}
+            onPress={onDeletePress}
+            small
+            style={{
+              flexDirection: 'row',
+              flex: 1,
+              justifyContent: 'center',
+              backgroundColor: branding.error,
+              borderColor: branding.error,
+            }}
+          />
+        )}
         <BasicButton
           style={bottomActionStyle.bottomActionButton}
           text={content.save}

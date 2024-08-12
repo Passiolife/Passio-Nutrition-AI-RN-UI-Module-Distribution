@@ -29,9 +29,12 @@ export const useMyCustomFoods = () => {
     navigation.navigate('FoodCreatorScreen', {});
   };
 
-  const onEditorPress = (food: CustomFood) => {
+  const onEditFoodCreatorPress = (food: CustomFood) => {
     navigation.navigate('FoodCreatorScreen', {
       foodLog: food,
+      onSave: () => {
+        navigation.pop();
+      },
     });
   };
 
@@ -53,7 +56,7 @@ export const useMyCustomFoods = () => {
     ]);
   };
 
-  const onLogPress = async (food: CustomFood) => {
+  const getFoodLog = (food: CustomFood) => {
     const date = new Date();
     const meal = getMealLog(date, undefined);
     const uuid: string = uuid4.v4() as string;
@@ -64,14 +67,31 @@ export const useMyCustomFoods = () => {
       meal: meal,
       uuid: uuid,
     };
-    await services.dataService.saveFoodLog(foodLog);
-    ShowToast('Added your food into ' + meal);
+    return foodLog;
   };
+
+  const onLogPress = async (food: CustomFood) => {
+    const log: FoodLog = getFoodLog(food);
+    await services.dataService.saveFoodLog(log);
+    ShowToast('Added your food into ' + log.meal);
+  };
+
+  const onFoodDetailPress = (customFood: CustomFood) => {
+    navigation.navigate('EditFoodLogScreen', {
+      foodLog: getFoodLog(customFood),
+      prevRouteName: 'MyFood',
+      onEditCustomFood: (_food) => {
+        onEditFoodCreatorPress(customFood);
+      },
+    });
+  };
+
   return {
     branding,
     customFoods,
     onCreateFoodPress,
-    onEditorPress,
+    onEditFoodCreatorPress,
+    onFoodDetailPress,
     onDeletePress,
     onLogPress,
   };

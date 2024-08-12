@@ -1,6 +1,6 @@
 import { convertPassioFoodItemToFoodLog } from '../../utils/V3Utils';
 import type { CustomRecipe, FoodItem, FoodLog, Image } from '../../models';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import RNFS from 'react-native-fs';
 
 import { content } from '../../constants/Content';
@@ -18,7 +18,7 @@ import {
   CUSTOM_USER_FOOD,
   generateCustomID,
 } from '../foodCreator/FoodCreator.utils';
-import { Platform } from 'react-native';
+import { Alert, Platform } from 'react-native';
 import type { EditRecipeNameRef } from './views/EditRecipeName';
 
 export type EditRecipeScreenNavigationProps = StackNavigationProp<
@@ -36,6 +36,7 @@ export function useEditRecipe() {
   const [customRecipe, setCustomRecipe] = useState<CustomRecipe>(params.recipe);
   const [isImagePickerVisible, setImagePickerModalVisible] = useState(false);
   const editRecipeNameRef = useRef<EditRecipeNameRef>(null);
+  const [isDeleteButtonVisible, setDeleteButtonVisible] = useState(false);
 
   const [image, setImage] = useState<Image | undefined>(
     customRecipe?.iconID
@@ -45,6 +46,40 @@ export function useEditRecipe() {
         }
       : undefined
   );
+
+  useEffect(() => {
+    if (customRecipe?.uuid) {
+      services.dataService.getCustomRecipe(customRecipe?.uuid).then((data) => {
+        setDeleteButtonVisible(data !== undefined && data !== null);
+      });
+    }
+  }, [customRecipe?.uuid, services.dataService]);
+
+  const onDeletePress = () => {
+    if (customRecipe?.uuid) {
+      Alert.alert(
+        'Are you sure want to delete this from my recipe?',
+        undefined,
+        [
+          {
+            text: 'Cancel',
+            style: 'cancel',
+          },
+          {
+            text: 'Delete',
+            onPress: () => {
+              services.dataService
+                .deleteCustomFood(customRecipe?.uuid)
+                .then(() => {
+                  navigation.goBack();
+                });
+            },
+            style: 'destructive',
+          },
+        ]
+      );
+    }
+  };
 
   const openImagePickerModal = () => {
     setImagePickerModalVisible(true);
@@ -219,6 +254,8 @@ export function useEditRecipe() {
     from: params.prevRouteName,
     image,
     isImagePickerVisible,
+    isDeleteButtonVisible,
+    onDeletePress,
     onAddIngredientPress,
     onCancelPress,
     onEditImagePress,
