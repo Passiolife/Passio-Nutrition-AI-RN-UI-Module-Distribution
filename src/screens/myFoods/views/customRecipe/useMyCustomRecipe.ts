@@ -56,6 +56,7 @@ export const useMyCustomRecipe = () => {
       eventTimestamp: convertDateToDBFormat(date),
       meal: meal,
       uuid: uuid,
+      refCode: food.uuid,
     };
 
     return foodLog;

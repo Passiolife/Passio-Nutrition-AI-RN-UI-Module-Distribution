@@ -88,7 +88,8 @@ export const useFoodCreator = () => {
             );
             navigation.push('EditFoodLogScreen', {
               foodLog: barcodeFoodLog,
-              prevRouteName: 'MyFood',
+              prevRouteName: 'QuickScan',
+              onSaveLogPress: () => {},
             });
           }
         }
