@@ -20,11 +20,13 @@ import { getMealLog } from '../utils';
 import type { PassioIngredient } from '@passiolife/nutritionai-react-native-sdk-v3/src';
 import type { QuickSuggestion } from 'src/models/QuickSuggestion';
 import type { DefaultNutrients } from '../screens/foodCreator/views/OtherNutritionFacts';
+import { CUSTOM_USER_RECIPE__PREFIX } from '../screens/foodCreator/FoodCreator.utils';
 
 export const convertPassioFoodItemToFoodLog = (
   item: PassioFoodItem,
   logDate: Date | undefined,
-  logMeal: MealLabel | undefined
+  logMeal: MealLabel | undefined,
+  isRecipe?: boolean
 ): FoodLog => {
   const uuid: string = `${uuid4.v4() as string}`;
   const date = logDate ?? new Date();
@@ -34,8 +36,13 @@ export const convertPassioFoodItemToFoodLog = (
 
   const foodItem = item;
 
-  let newFoodIngredient = (foodItem.ingredients ?? []).map(
-    convertPassioIngredientToFoodItem
+  let newFoodIngredient = (foodItem.ingredients ?? []).map((i) =>
+    convertPassioIngredientToFoodItem(
+      i,
+      foodItem.ingredients && foodItem.ingredients?.length === 1
+        ? foodItem.iconId
+        : i.iconId
+    )
   );
 
   const selectedUnit = foodItem.amount.servingSizes?.find(
@@ -61,7 +68,7 @@ export const convertPassioFoodItemToFoodLog = (
     eventTimestamp: dateFormat,
     isOpenFood: foodItem.isOpenFood,
     meal: meal,
-    iconID: foodItem.iconId,
+    iconID: isRecipe ? CUSTOM_USER_RECIPE__PREFIX : foodItem.iconId,
     entityType: PassioIDEntityType.item,
     foodItems: newFoodIngredient,
     computedWeight: {
@@ -88,7 +95,10 @@ export const convertPassioFoodItemToFoodLog = (
   return log;
 };
 
-function convertPassioIngredientToFoodItem(item: PassioIngredient): FoodItem {
+function convertPassioIngredientToFoodItem(
+  item: PassioIngredient,
+  iconID?: string
+): FoodItem {
   let passioIngredient = item;
   const selectedUnit = passioIngredient.amount.servingSizes?.find(
     (i) => i.unitName === passioIngredient?.amount.selectedUnit
@@ -103,7 +113,10 @@ function convertPassioIngredientToFoodItem(item: PassioIngredient): FoodItem {
     {
       ingredients: [passioIngredient],
       name: passioIngredient.name,
-      iconId: passioIngredient.iconId,
+      iconId:
+        passioIngredient.iconId?.length > 0
+          ? passioIngredient.iconId
+          : (iconID ?? ''),
       amount: passioIngredient.amount,
       ingredientWeight: passioIngredient.weight,
       id: passioIngredient.id,
@@ -113,7 +126,10 @@ function convertPassioIngredientToFoodItem(item: PassioIngredient): FoodItem {
   const foodItem: FoodItem = {
     name: passioIngredient.name,
     refCode: passioIngredient.refCode ?? '',
-    iconId: passioIngredient.iconId,
+    iconId:
+      passioIngredient.iconId?.length > 0
+        ? passioIngredient.iconId
+        : (iconID ?? ''),
     entityType: PassioIDEntityType.item,
     barcode: passioIngredient?.metadata?.barcode,
     ingredientsDescription: passioIngredient?.metadata?.ingredientsDescription,
@@ -149,12 +165,15 @@ function nutrientV3(food: PassioNutrients): Nutrient[] {
   let key: keyof typeof food;
   let nutrients: Nutrient[] = [];
   for (key in food) {
-    const amount = food[key] as unknown as UnitMass;
-    nutrients.push({
-      id: key as NutrientType,
-      amount: amount.value,
-      unit: amount.unit,
-    });
+    if (key === 'weight') {
+    } else {
+      const amount = food[key] as unknown as UnitMass;
+      nutrients.push({
+        id: key as NutrientType,
+        amount: amount.value,
+        unit: amount.unit,
+      });
+    }
   }
 
   return nutrients;

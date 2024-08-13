@@ -49,7 +49,7 @@ export const WidgetsCard = ({
                 />
               </TouchableOpacity>
             ) : undefined}
-            <Text weight="600" size="_18px" color="text" style={styles.title}>
+            <Text weight="600" size="title" color="text" style={styles.title}>
               {widgetTitle}
             </Text>
           </View>

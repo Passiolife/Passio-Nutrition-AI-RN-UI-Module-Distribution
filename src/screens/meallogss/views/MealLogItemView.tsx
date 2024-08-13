@@ -42,7 +42,7 @@ const MealLogItemView = (props: Props) => {
         <View style={styles.mealDetail}>
           <Text
             weight="600"
-            size="_14px"
+            size="secondlyTitle"
             color="text"
             numberOfLines={2}
             ellipsizeMode="tail"
@@ -52,7 +52,7 @@ const MealLogItemView = (props: Props) => {
           </Text>
           <Text
             weight="400"
-            size="_14px"
+            size="secondlyTitle"
             color="secondaryText"
             style={styles.mealSize}
           >
@@ -66,7 +66,7 @@ const MealLogItemView = (props: Props) => {
         </View>
         <View style={styles.mealContainer}>
           <TouchableOpacity>
-            <Text weight="400" size="_14px" style={styles.plus}>
+            <Text weight="400" size="secondlyTitle" style={styles.plus}>
               {caloriesText(foodLog.foodItems, 'cal')}
             </Text>
           </TouchableOpacity>
@@ -93,6 +93,7 @@ const styles = StyleSheet.create({
   },
   mealDetail: {
     marginHorizontal: 10,
+    alignSelf: 'center',
     flex: 1,
   },
   mealContainer: {

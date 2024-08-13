@@ -44,6 +44,7 @@ export type NutrientType =
   | 'chromium'
   | 'fibers'
   | 'sugarsAdded'
+  | 'weight'
   | 'iodine';
 
 export const unitForNutrient = (id: NutrientType) => nutrientUnits[id];
@@ -87,6 +88,7 @@ export const nutrientUnits: Record<NutrientType, NutrientUnit> = {
   fibers: 'g',
   chromium: 'g',
   sugarsAdded: 'g',
+  weight: 'g',
 };
 
 export const nutrientName: Record<NutrientType, String> = {
@@ -128,6 +130,7 @@ export const nutrientName: Record<NutrientType, String> = {
   chromium: 'Chromium',
   fibers: 'Fibers',
   sugarsAdded: 'Sugars Added',
+  weight: 'weight',
 };
 
 export const recommendedNutrient: Record<NutrientType, number> = {
@@ -165,6 +168,7 @@ export const recommendedNutrient: Record<NutrientType, number> = {
   zinc: 0,
   selenium: 0,
   folicAcid: 0,
+  weight: 0,
   vitaminKPhylloquinone: 0,
   vitaminKMenaquinone4: 0,
   vitaminKDihydrophylloquinone: 0,

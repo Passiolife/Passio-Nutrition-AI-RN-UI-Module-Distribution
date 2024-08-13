@@ -19,6 +19,7 @@ interface Props {
   style?: StyleProp<ViewStyle>;
   small?: boolean;
   secondary?: boolean;
+  isDelete?: boolean;
   isLoading?: boolean;
   enable?: boolean;
   boarderColor?: string;
@@ -39,7 +40,9 @@ export const BasicButton: React.FC<Props> = (props) => {
     isLoading = false,
     secondary = false,
     enable = true,
-    boarderColor = brandingContext.primaryColor,
+    boarderColor = props.isDelete
+      ? brandingContext.error
+      : brandingContext.primaryColor,
     testId,
     rightIcon,
     backgroundColor,
@@ -62,6 +65,8 @@ export const BasicButton: React.FC<Props> = (props) => {
     let bgColor;
     if (!enable) {
       bgColor = COLORS.grey3;
+    } else if (props.isDelete) {
+      bgColor = brandingContext.error;
     } else if (secondary) {
       bgColor = boarderColor;
     } else {
@@ -74,6 +79,8 @@ export const BasicButton: React.FC<Props> = (props) => {
     let colorOfBorder;
     if (!enable) {
       colorOfBorder = COLORS.grey3;
+    } else if (props.isDelete) {
+      colorOfBorder = brandingContext.error;
     } else if (secondary) {
       colorOfBorder = COLORS.transparent;
     } else {

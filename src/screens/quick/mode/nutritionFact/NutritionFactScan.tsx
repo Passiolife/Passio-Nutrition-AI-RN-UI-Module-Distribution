@@ -8,12 +8,16 @@ import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 import { scaleHeight } from '../../../../utils';
 import { useBranding } from '../../../../contexts';
 import { useNutritionFactScan } from './useNutritionFactScan';
+import QuickScanItemAddedToDiaryView from '../../views/QuickSacnItemAddedToDiaryView';
 
 export const NutritionFactScan = () => {
   const {
+    isLodgedFood,
     nutritionFacts,
+    onContinueScanningPress,
     onSaveFoodLogUsingNutrientFact,
     onUpdatingNutritionFacFlag,
+    onViewDiaryPress,
     resetScanning,
   } = useNutritionFactScan();
 
@@ -29,7 +33,7 @@ export const NutritionFactScan = () => {
       <BottomSheet
         enablePanDownToClose={false}
         onClose={() => {}}
-        index={0}
+        index={isLodgedFood ? -1 : 0}
         enableDynamicSizing
         snapPoints={snapPoints}
         handleIndicatorStyle={{
@@ -54,6 +58,13 @@ export const NutritionFactScan = () => {
           />
         )}
       </BottomSheet>
+
+      {isLodgedFood && (
+        <QuickScanItemAddedToDiaryView
+          onContinueScanningPress={onContinueScanningPress}
+          onViewDiaryPress={onViewDiaryPress}
+        />
+      )}
     </>
   );
 };

@@ -23,7 +23,7 @@ export const TimeStampView = React.forwardRef(
   ) => {
     const styles = timeStampViewStyle(useBranding());
 
-    const f = format ?? mode === 'time' ? 'hh:mm a' : 'MMM dd, yyyy';
+    const f = (format ?? mode === 'time') ? 'hh:mm a' : 'MMM dd, yyyy';
 
     useImperativeHandle(ref, () => {
       return {

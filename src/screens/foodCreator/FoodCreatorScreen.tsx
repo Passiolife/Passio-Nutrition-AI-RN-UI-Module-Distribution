@@ -12,14 +12,20 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 
 export const FoodCreatorScreen = () => {
   const {
+    title,
     branding,
+    from,
     otherNutritionFactsRef,
     requireNutritionFactsRef,
     foodCreatorFoodDetailRef,
+    barcode,
     foodLog,
     image,
     isImagePickerVisible,
     onSavePress,
+    onNutritionFactSave,
+    onDeletePress,
+    isDeleteButtonVisible,
     onCancelPress,
     onBarcodePress,
     onEditImagePress,
@@ -31,7 +37,7 @@ export const FoodCreatorScreen = () => {
 
   return (
     <View style={styles.body}>
-      <BackNavigation title="Food Creator" />
+      <BackNavigation title={title} />
       <KeyboardAwareScrollView
         style={{ flex: 1 }}
         automaticallyAdjustKeyboardInsets
@@ -39,10 +45,12 @@ export const FoodCreatorScreen = () => {
         <View>
           <FoodCreatorFoodDetail
             foodLog={foodLog}
+            barcode={barcode}
             ref={foodCreatorFoodDetailRef}
             onBarcodePress={onBarcodePress}
             onEditImagePress={onEditImagePress}
             image={image}
+            isNutritionFact={from === 'NutritionFact'}
           />
           <RequireNutritionFacts
             foodLog={foodLog}
@@ -67,20 +75,46 @@ export const FoodCreatorScreen = () => {
           style={{
             flexDirection: 'row',
             flex: 1,
-            marginHorizontal: 8,
+            marginHorizontal: 4,
             height: 40,
           }}
         />
-        <BasicButton
-          text={'Save'}
-          onPress={onSavePress}
-          style={{
-            flexDirection: 'row',
-            flex: 1,
-            marginHorizontal: 8,
-            height: 40,
-          }}
-        />
+        {isDeleteButtonVisible && (
+          <BasicButton
+            text={'Delete'}
+            onPress={onDeletePress}
+            style={{
+              flexDirection: 'row',
+              flex: 1,
+              backgroundColor: branding.error,
+              borderColor: branding.error,
+              height: 40,
+            }}
+          />
+        )}
+        {from === 'NutritionFact' ? (
+          <BasicButton
+            text={'Done'}
+            onPress={onNutritionFactSave}
+            style={{
+              flexDirection: 'row',
+              flex: 1,
+              marginHorizontal: 4,
+              height: 40,
+            }}
+          />
+        ) : (
+          <BasicButton
+            text={'Save'}
+            onPress={onSavePress}
+            style={{
+              flexDirection: 'row',
+              flex: 1,
+              marginHorizontal: 4,
+              height: 40,
+            }}
+          />
+        )}
       </View>
       {isImagePickerVisible && (
         <ImagePickerOptions

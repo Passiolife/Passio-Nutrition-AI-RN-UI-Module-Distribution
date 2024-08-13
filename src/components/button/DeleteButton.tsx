@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
   },
   // normal sized button styles
   normalContainer: {
-    borderRadius: 20,
+    borderRadius: 4,
   },
   normalText: {
     fontSize: 15,
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
 
   // small sized button styles
   smallContainer: {
-    borderRadius: 20,
+    borderRadius: 4,
   },
   smallText: {
     fontSize: 15,

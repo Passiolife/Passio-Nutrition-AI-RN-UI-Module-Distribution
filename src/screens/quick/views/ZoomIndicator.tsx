@@ -39,11 +39,11 @@ const ZoomIndicator: React.FC<ZoomIndicatorProps> = ({ level, mode }) => {
         sliderValue={mode === 'Barcode' ? 2 : 1}
         minimumValue={level?.minZoomLevel ?? 0}
         sliderMaxValue={level?.maxZoomLevel ?? 1}
-        step={0.1}
+        step={0.5}
         minimumTrackTintColor={branding.primaryColor}
         sliderStyle={{ flex: 1, marginHorizontal: 16 }}
-        maximumTrackTintColor={'white'}
-        thumbTintColor={branding.primaryColor}
+        maximumTrackTintColor={'rgba(255, 255, 255, 0.3)'}
+        thumbTintColor={branding.white}
         onChangeSliderValue={(val) => PassioSDK.setCameraZoomLevel(val)}
       />
       <TouchableOpacity

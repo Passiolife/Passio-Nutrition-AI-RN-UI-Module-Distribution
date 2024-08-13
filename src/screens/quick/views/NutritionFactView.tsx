@@ -63,9 +63,11 @@ const NutritionFactView = (props: Props) => {
 
   const NutritionUnitAmountView = ({
     title,
+    unit,
     amount,
   }: {
     title: string;
+    unit?: string;
     amount: number | undefined | string;
     alertType: EditNutritionUnitAlertType;
     keyboardTypeOptions?: KeyboardTypeOptions;
@@ -78,7 +80,17 @@ const NutritionFactView = (props: Props) => {
           size="_16px"
           style={styles.nutritionItemUnitText}
         >
-          {amount ?? '?'}
+          {amount ?? '?'}{' '}
+          {unit && (
+            <Text
+              weight="400"
+              size="_14px"
+              color="secondaryText"
+              style={styles.nutritionItemUnitText}
+            >
+              {unit}
+            </Text>
+          )}
         </Text>
         <Text weight="400" size="_14px" style={styles.nutritionItemUnitText}>
           {title}
@@ -106,14 +118,10 @@ const NutritionFactView = (props: Props) => {
             amount={copyOfNutritionFact.calories}
             keyboardTypeOptions="numeric"
           />
-          <NutritionUnitAmountView
-            title={'Fat'}
-            alertType={'editFatAlert'}
-            amount={copyOfNutritionFact.fat}
-            keyboardTypeOptions="numeric"
-          />
+
           <NutritionUnitAmountView
             title={'Carb'}
+            unit={'g'}
             alertType={'editCarbAlert'}
             amount={copyOfNutritionFact.carbs}
             keyboardTypeOptions="numeric"
@@ -121,7 +129,15 @@ const NutritionFactView = (props: Props) => {
           <NutritionUnitAmountView
             title={'Protein'}
             alertType={'editProteinAlert'}
+            unit={'g'}
             amount={copyOfNutritionFact.protein}
+            keyboardTypeOptions="numeric"
+          />
+          <NutritionUnitAmountView
+            title={'Fat'}
+            unit={'g'}
+            alertType={'editFatAlert'}
+            amount={copyOfNutritionFact.fat}
             keyboardTypeOptions="numeric"
           />
         </View>
@@ -181,7 +197,6 @@ const bottomActionStyle = StyleSheet.create({
   bottomActionButton: {
     flex: 1,
     marginHorizontal: 8,
-    borderRadius: 8,
     justifyContent: 'center',
   },
 });

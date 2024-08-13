@@ -74,7 +74,11 @@ export const NutritionNavigator = () => {
       <AdvisorSessionProvider>
         <NavigationContainer independent={true}>
           <Stack.Navigator
-            screenOptions={{ gestureEnabled: false }}
+            screenOptions={{
+              animationTypeForReplace: 'push',
+              gestureEnabled: true,
+              gestureDirection: 'horizontal',
+            }}
             initialRouteName={BottomNavigation}
           >
             <Stack.Screen

@@ -66,7 +66,7 @@ export const BarChart = ({
   return (
     <View style={barChartContainerStyle}>
       <Card style={styles.roundedAndShadowView}>
-        <Text size="_18px" weight="600" color="text">
+        <Text size="title" weight="600" color="text">
           {title}
         </Text>
 

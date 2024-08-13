@@ -209,7 +209,7 @@ const WeeklyAdherence = ({ headerDate }: Props) => {
 
     if (calendarViewMode === 'month') {
       return (
-        <Text weight="600" size="_14px" style={styles.dateContainer}>
+        <Text weight="600" size="secondlyTitle" style={styles.dateContainer}>
           {currentMonth.toFormat('MMMM yyyy')}
         </Text>
       );
@@ -290,7 +290,7 @@ const WeeklyAdherence = ({ headerDate }: Props) => {
     <Card style={styles.macroContainer}>
       <View style={styles.macroTitleContainer}>
         <Image source={ICONS.weeklyAdherence} style={styles.headerBodyIcon} />
-        <Text weight="600" size="_18px" style={styles.macroTitle}>
+        <Text weight="600" size="title" style={styles.macroTitle}>
           {'Weekly Adherence'}
         </Text>
         <TouchableOpacity onPress={toggleCalendarView}>

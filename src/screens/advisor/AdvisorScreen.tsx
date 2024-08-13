@@ -51,8 +51,8 @@ export const AdvisorScreen = () => {
           <MessageSendTextView
             msg={
               item.type === 'text'
-                ? item.message ?? ''
-                : item.response?.markupContent ?? ''
+                ? (item.message ?? '')
+                : (item.response?.markupContent ?? '')
             }
           />
         );

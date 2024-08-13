@@ -84,7 +84,7 @@ export const FiledView = React.forwardRef<FiledViewRef, Props>(
         <View style={[!isColum && styles.formRow, isColum && styles.formColum]}>
           <Text
             weight="400"
-            size="_12px"
+            size="secondlyTitle"
             color="gray500"
             style={[styles.label, styles.labelMargin]}
           >
@@ -137,6 +137,7 @@ const requireNutritionFactStyle = ({ white, gray300 }: Branding) =>
     },
     labelMargin: {
       marginTop: 10,
+      marginBottom: 4,
     },
     delete: {
       height: 24,

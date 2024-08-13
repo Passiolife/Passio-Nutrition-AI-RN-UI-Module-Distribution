@@ -47,19 +47,15 @@ export const LogOptions = ({
     <View style={styles.main}>
       {type === 'All' ? (
         <>
-          {renderItem(ICONS.logOptionFavorite, 'My Foods', onMyFoods)}
-          {renderItem(ICONS.logOptionFavorite, 'Favorites', onFavorite)}
-          {renderItem(ICONS.Mic, 'Voice Logging', onVoiceLogging)}
-          {renderItem(ICONS.AIAdvisor, 'AI Advisor', onAiAdvisor)}
-          {renderItem(ICONS.logOptionSearch, 'Text Search', onTextSearch)}
-          {renderItem(
-            ICONS.logOptionFoodScanner,
-            'Food Scanner',
-            onFoodScanner
-          )}
-          {renderItem(ICONS.logOptionFoodScanner, 'Use Image', () => {
+          {renderItem(ICONS.menuMyFoods, 'My Foods', onMyFoods)}
+          {renderItem(ICONS.menuFav, 'Favorites', onFavorite)}
+          {renderItem(ICONS.menuVoiceLogging, 'Voice Logging', onVoiceLogging)}
+          {renderItem(ICONS.menuAIAdviosr, 'AI Advisor', onAiAdvisor)}
+          {renderItem(ICONS.menuUseImage, 'Use Image', () => {
             setType('UseImage');
           })}
+          {renderItem(ICONS.menuSearch, 'Text Search', onTextSearch)}
+          {renderItem(ICONS.menuFoodScanner, 'Food Scanner', onFoodScanner)}
         </>
       ) : (
         <>

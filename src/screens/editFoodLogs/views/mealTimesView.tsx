@@ -22,7 +22,7 @@ export const MealTimeView = ({ defaultLabel, onPress }: Props) => {
   return (
     <TouchableOpacity activeOpacity={1} onPress={() => onPress(selectedLabel)}>
       <Card style={styles.container}>
-        <Text weight="600" size="_16px" color="text" style={styles.headerText}>
+        <Text weight="600" size="title" color="text" style={styles.headerText}>
           Meal Time
         </Text>
         <View style={styles.mealsContainer}>

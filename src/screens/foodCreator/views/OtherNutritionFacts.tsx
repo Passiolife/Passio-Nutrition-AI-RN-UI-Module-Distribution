@@ -104,7 +104,9 @@ export const OtherNutritionFacts = React.forwardRef<
     <Card style={styles.card}>
       {
         <View>
-          <Text style={styles.title}>{'Other Nutrition Facts'}</Text>
+          <Text size="title" weight="600" style={styles.title}>
+            {'Other Nutrition Facts'}
+          </Text>
           <FlatList
             data={list}
             extraData={list}

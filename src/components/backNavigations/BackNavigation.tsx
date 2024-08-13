@@ -83,7 +83,7 @@ export const BackNavigation: React.FC<Props> = (props) => {
           </View>
           <Text
             weight="700"
-            size="_20px"
+            size="_24px"
             color="text"
             adjustsFontSizeToFit
             numberOfLines={2}

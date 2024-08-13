@@ -1,6 +1,7 @@
 import type {
   CustomFood,
   CustomImageID,
+  CustomRecipe,
   FavoriteFoodItem,
   FoodLog,
   Image,
@@ -36,6 +37,7 @@ import {
   ROW_UUID,
   ROW_WEIGHT,
   TABLE_CUSTOM_FOOD_LOGS,
+  TABLE_CUSTOM_RECIPE_LOGS,
   TABLE_FAVOURITE_FOOD_LOGS,
   TABLE_FOOD_LOGS,
   TABLE_IMAGES,
@@ -98,6 +100,43 @@ export const saveCustomFood = async (
 ): Promise<void> => {
   return new Promise((resolve, reject) => {
     const insertQuery = `INSERT or REPLACE INTO  ${TABLE_CUSTOM_FOOD_LOGS} (${ROW_UUID}, ${ROW_NAME}, ${ROW_IMAGE_NAME}, ${ROW_ENTITY_TYPE}, ${ROW_BARCODE}, ${ROW_BRAND_NAME}, ${ROW_USER_FOOD_IMAGE}, ${ROW_ICON_ID}, ${ROW_COMPUTED_WEIGHT}, ${ROW_FOOD_ITEMS},${ROW_SERVING_SIZES},${ROW_SERVING_UNITS},${ROW_SELECTED_UNIT},${ROW_SELECTED_QUANTITY}) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
+    db.transaction((tx) => {
+      tx.executeSql(
+        insertQuery,
+        [
+          foodLog.uuid,
+          foodLog.name,
+          undefined,
+          foodLog.entityType,
+          foodLog.barcode,
+          foodLog.brandName,
+          foodLog.userFoodImage,
+          foodLog.iconID,
+          JSON.stringify(foodLog.computedWeight),
+          JSON.stringify(foodLog.foodItems),
+          JSON.stringify(foodLog.servingSizes),
+          JSON.stringify(foodLog.servingUnits),
+          foodLog.selectedUnit,
+          foodLog.selectedQuantity,
+        ],
+        () => {
+          resolve();
+        },
+        (_, error) => {
+          console.error(`Failed to save food logs ${error}`);
+          reject(error);
+        }
+      );
+    });
+  });
+};
+
+export const saveCustomRecipe = async (
+  db: SQLiteDatabase,
+  foodLog: CustomRecipe
+): Promise<void> => {
+  return new Promise((resolve, reject) => {
+    const insertQuery = `INSERT or REPLACE INTO  ${TABLE_CUSTOM_RECIPE_LOGS} (${ROW_UUID}, ${ROW_NAME}, ${ROW_IMAGE_NAME}, ${ROW_ENTITY_TYPE}, ${ROW_BARCODE}, ${ROW_BRAND_NAME}, ${ROW_USER_FOOD_IMAGE}, ${ROW_ICON_ID}, ${ROW_COMPUTED_WEIGHT}, ${ROW_FOOD_ITEMS},${ROW_SERVING_SIZES},${ROW_SERVING_UNITS},${ROW_SELECTED_UNIT},${ROW_SELECTED_QUANTITY}) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
     db.transaction((tx) => {
       tx.executeSql(
         insertQuery,
@@ -214,6 +253,28 @@ export const deleteCustomFood = async (
   });
 };
 
+// Delete Food logs into local storage
+export const deleteCustomRecipe = async (
+  db: SQLiteDatabase,
+  uuId: string
+): Promise<void> => {
+  return new Promise((resolve, reject) => {
+    const deleteQuery = `DELETE from ${TABLE_CUSTOM_RECIPE_LOGS} where ${ROW_UUID} = "${uuId}"`;
+    db.transaction((tx) => {
+      tx.executeSql(
+        deleteQuery,
+        [],
+        () => {
+          resolve();
+        },
+        (_, error) => {
+          reject(error);
+        }
+      );
+    });
+  });
+};
+
 // Delete Favorite Food logs into local storage
 export const deleteFavoriteFoodLog = async (
   db: SQLiteDatabase,
@@ -297,6 +358,19 @@ export const getCustomFoods = async (): Promise<CustomFood[]> => {
     const db = await DBHandler.getInstance();
     const results = await db.executeSql(
       `SELECT * FROM ${TABLE_CUSTOM_FOOD_LOGS}`
+    );
+    return convertResultToFoodLog(results);
+  } catch (error) {
+    console.error(`Failed to get food logs ${error}`);
+    throw error;
+  }
+};
+// Get Food Logs List from local storage
+export const getCustomRecipes = async (): Promise<CustomRecipe[]> => {
+  try {
+    const db = await DBHandler.getInstance();
+    const results = await db.executeSql(
+      `SELECT * FROM ${TABLE_CUSTOM_RECIPE_LOGS}`
     );
     return convertResultToFoodLog(results);
   } catch (error) {
@@ -652,16 +726,35 @@ export const getWaters = async (): Promise<Water[]> => {
     throw error;
   }
 };
-
 export const getCustomFood = async (
   uuid: string
 ): Promise<CustomFood | null | undefined> => {
+  try {
+    const db = await DBHandler.getInstance();
+    const results = await db.executeSql(
+      `SELECT * FROM ${TABLE_CUSTOM_FOOD_LOGS} WHERE ${ROW_UUID} = ?`,
+      [uuid]
+    );
+
+    return convertResultToFoodLog(results)?.[0] ?? null;
+  } catch (error) {
+    const errorMessage = `Failed to get custom food logs: ${error} - UUID: ${uuid}`;
+    console.error(errorMessage);
+    return null;
+  }
+};
+
+export const getCustomRecipe = async (
+  uuid: string
+): Promise<CustomRecipe | null | undefined> => {
   return new Promise(async (resolve, reject) => {
     try {
       const db = await DBHandler.getInstance();
       const results = await db.executeSql(
-        `SELECT * FROM ${TABLE_CUSTOM_FOOD_LOGS} where ${ROW_UUID} >= "${uuid}";`
+        `SELECT * FROM ${TABLE_CUSTOM_RECIPE_LOGS} WHERE ${ROW_UUID} = ?`,
+        [uuid]
       );
+
       resolve(convertResultToFoodLog(results)?.[0]);
     } catch (error) {
       console.error(

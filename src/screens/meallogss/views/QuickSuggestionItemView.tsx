@@ -42,8 +42,10 @@ export const QuickSuggestionItemView = (props: Props) => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    alignItems: 'flex-start',
+    alignItems: 'center',
     alignContent: 'center',
+    alignSelf: 'center',
+    justifyContent: 'center',
     backgroundColor: 'rgba(238, 242, 255, 1)',
     height: 45,
     flex: 1,
