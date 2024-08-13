@@ -44,6 +44,7 @@ export * from './tab';
 export * from './filed';
 export * from './imagePickerOptions';
 export * from './recipeOptions';
+export * from './usages';
 
 import ActionSheet from './actionSheets/ActionSheet';
 export { ActionSheet };
