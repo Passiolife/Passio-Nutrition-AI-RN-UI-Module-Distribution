@@ -4,24 +4,27 @@ import { StyleSheet, View } from 'react-native';
 import { BasicButton, Card, Text } from '../../../components';
 import Modal from 'react-native-modal';
 interface Props {
-  onCreatePress?: (isUpdateUponCreating: boolean) => void;
+  onCreatePress?: (isUpdateUponCreating: boolean, isRecipe?: boolean) => void;
 }
 
 export interface FoodNotFoundRef {
-  onShow: (isUpdateUponCreating?: boolean) => void;
+  onShow: (isUpdateUponCreating?: boolean, isRecipe?: boolean) => void;
   onHide: () => void;
 }
 export const FoodNotFound = React.forwardRef<FoodNotFoundRef, Props>(
   ({ onCreatePress }: Props, ref: React.Ref<FoodNotFoundRef>) => {
     const [isVisible, setVisibility] = useState(false);
+    const [isRecipe, setRecipe] = useState(false);
+
     const [isUpdateUponCreating, setUpdateUponCreating] = useState(true);
 
     useImperativeHandle(
       ref,
       () => ({
-        onShow: (isUpdate) => {
+        onShow: (isUpdate, isRecipeFound) => {
           setUpdateUponCreating(isUpdate ?? false);
           setVisibility(true);
+          setRecipe(isRecipeFound ?? false);
         },
         onHide: () => {
           setVisibility(false);
@@ -43,16 +46,17 @@ export const FoodNotFound = React.forwardRef<FoodNotFoundRef, Props>(
         <Card style={styles.card}>
           <View style={styles.contentContainer}>
             <Text weight="700" size="_20px" style={styles.title}>
-              Food Not Found
+              {isRecipe ? 'Recipe Not Found' : 'Food Not Found'}
             </Text>
             <Text color="gray500" weight="400" style={styles.description}>
-              The custom food you are trying to edit no longer exists. You can
-              continue to create a new one.
+              {isRecipe
+                ? 'The custom recipe you are trying to edit no longer exists. You can continue to create a new one.'
+                : 'The custom food you are trying to edit no longer exists. You can continue to create a new one.'}
             </Text>
           </View>
           <View style={styles.buttonContainers}>
             <BasicButton
-              onPress={() => setVisibility(isUpdateUponCreating)}
+              onPress={() => setVisibility(false)}
               style={styles.button}
               small
               text={'Cancel'}
@@ -60,7 +64,7 @@ export const FoodNotFound = React.forwardRef<FoodNotFoundRef, Props>(
             />
             <BasicButton
               onPress={() => {
-                onCreatePress?.(false);
+                onCreatePress?.(isUpdateUponCreating, isRecipe);
                 setVisibility(false);
               }}
               style={styles.button}

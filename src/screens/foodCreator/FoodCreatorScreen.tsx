@@ -50,6 +50,7 @@ export const FoodCreatorScreen = () => {
             onBarcodePress={onBarcodePress}
             onEditImagePress={onEditImagePress}
             image={image}
+            isNutritionFact={from === 'NutritionFact'}
           />
           <RequireNutritionFacts
             foodLog={foodLog}

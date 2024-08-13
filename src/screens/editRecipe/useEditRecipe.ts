@@ -19,7 +19,7 @@ import type {
 } from '../../navigaitons';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import {
-  CUSTOM_USER_RECIPE,
+  CUSTOM_USER_RECIPE__PREFIX,
   generateCustomRecipeID,
 } from '../foodCreator/FoodCreator.utils';
 import { Alert, Platform } from 'react-native';
@@ -74,7 +74,7 @@ export function useEditRecipe() {
             text: 'Delete',
             onPress: () => {
               services.dataService
-                .deleteCustomFood(customRecipe?.uuid)
+                .deleteCustomRecipe(customRecipe?.uuid)
                 .then(() => {
                   navigation.goBack();
                 });
@@ -107,12 +107,14 @@ export function useEditRecipe() {
           const uri = Platform.OS === 'android' ? `file://${uris[0]}` : uris[0];
           const response = await RNFS.readFile(uri, 'base64');
           let id = generateCustomRecipeID();
+
           if (
-            image?.id.includes(CUSTOM_USER_RECIPE) &&
-            image?.id.length > CUSTOM_USER_RECIPE.length
+            image?.id.includes(CUSTOM_USER_RECIPE__PREFIX) &&
+            image?.id.length > CUSTOM_USER_RECIPE__PREFIX.length
           ) {
             id = image?.id;
           }
+
           let customFoodImageID = await services.dataService.saveImage({
             id: id,
             base64: response,
@@ -159,9 +161,11 @@ export function useEditRecipe() {
   );
 
   const addIngredient = useCallback(
-    (foodItem: FoodItem) => {
+    (foodItem: FoodItem[]) => {
       const updatedFoodLog = { ...customRecipe };
-      updatedFoodLog.foodItems.push(foodItem);
+      foodItem.forEach((i) => {
+        updatedFoodLog.foodItems.push(i);
+      });
       setCustomRecipe(recalculateFoodLogServing(updatedFoodLog));
       ShowToast('Ingredient added successfully');
       navigation.goBack();
@@ -232,7 +236,7 @@ export function useEditRecipe() {
           item,
           new Date(),
           undefined
-        ).foodItems[0];
+        ).foodItems;
         if (foodItem) {
           addIngredient(foodItem);
         }
@@ -268,7 +272,8 @@ export function useEditRecipe() {
     foodLog: customRecipe,
     from: params.prevRouteName,
     image,
-    isDeleteButtonVisible,
+    isDeleteButtonVisible:
+      isDeleteButtonVisible && params.prevRouteName === 'MyFood',
     isImagePickerVisible,
     onAddIngredientPress,
     onCancelPress,

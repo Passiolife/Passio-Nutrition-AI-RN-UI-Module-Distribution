@@ -35,6 +35,7 @@ export type Module =
   | 'MyFood'
   | 'Recipe'
   | 'NutritionFact'
+  | 'FoodDetail'
   | 'Ingredient';
 
 export interface HomeBottom {

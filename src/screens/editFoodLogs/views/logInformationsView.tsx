@@ -42,6 +42,11 @@ const LogInformationView = ({
   const branding = useBranding();
   const { carbsPercentage, fatPercentage, proteinPercentage } =
     macroNutrientPercentages(carbs, fat, protein);
+
+  const carbsRounded = Math.round(carbsPercentage);
+  const proteinRounded = Math.round(proteinPercentage);
+  const fatRounded = 100 - carbsRounded - proteinRounded;
+
   return (
     <Card style={styles.informationContainer}>
       <View style={styles.informationRow}>
@@ -85,20 +90,20 @@ const LogInformationView = ({
           <DoughnutChart
             data={[
               {
-                progress: carbsPercentage,
+                progress: carbsRounded,
                 color: branding.carbs,
               },
               {
-                progress: proteinPercentage,
+                progress: proteinRounded,
                 color: branding.proteins,
               },
               {
-                progress: fatPercentage,
+                progress: fatRounded,
                 color: branding.fat,
               },
             ]}
             size={100}
-            gap={12}
+            gap={10}
           />
           <View style={styles.calorieItem}>
             <Text

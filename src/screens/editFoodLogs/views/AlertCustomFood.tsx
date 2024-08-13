@@ -5,12 +5,12 @@ import { BasicButton, Card, Text } from '../../../components';
 import Modal from 'react-native-modal';
 import { useBranding } from '../../../contexts';
 interface Props {
-  onCreatePress?: (isUpdateUponCreating: boolean) => void;
-  onEditPress?: (isUpdateUponCreating: boolean) => void;
+  onCreatePress?: (isUpdateUponCreating: boolean, isRecipe?: boolean) => void;
+  onEditPress?: (isUpdateUponCreating: boolean, isRecipe?: boolean) => void;
 }
 
 export interface AlertCustomFoodRef {
-  onShow: (refCustomFoodID?: string) => void;
+  onShow: (refCustomFoodID?: string, isRecipe?: boolean) => void;
   onHide: () => void;
 }
 export const AlertCustomFood = React.forwardRef<AlertCustomFoodRef, Props>(
@@ -19,6 +19,7 @@ export const AlertCustomFood = React.forwardRef<AlertCustomFoodRef, Props>(
     ref: React.Ref<AlertCustomFoodRef>
   ) => {
     const [isVisible, setVisibility] = useState(false);
+    const [isRecipe, setRecipe] = useState(false);
     const [isUpdateUponCreating, setUpdateUponCreating] = useState(true);
     const [refCustomFoodID, setRefCustomFoodID] = useState<string | undefined>(
       undefined
@@ -28,9 +29,10 @@ export const AlertCustomFood = React.forwardRef<AlertCustomFoodRef, Props>(
     useImperativeHandle(
       ref,
       () => ({
-        onShow: (code) => {
+        onShow: (code, isRecipes) => {
           setVisibility(true);
           setRefCustomFoodID(code);
+          setRecipe(isRecipes ?? false);
         },
         onHide: () => {
           setVisibility(false);
@@ -50,12 +52,16 @@ export const AlertCustomFood = React.forwardRef<AlertCustomFoodRef, Props>(
         <Card style={styles.card}>
           <View style={styles.contentContainer}>
             <Text weight="700" size="_20px" style={styles.title}>
-              Create User Food?
+              {isRecipe ? 'Create User Recipe' : 'Create User Food?'}
             </Text>
             <Text color="gray500" weight="400" style={styles.description}>
               {refCustomFoodID
-                ? 'Do you want to create a new user food based off this one, or edit the existing user food?'
-                : 'You are about to create a user food from this food'}
+                ? isRecipe
+                  ? 'Do you want to create a new user recipe based off this one, or edit the existing recipe?'
+                  : 'Do you want to create a new user food based off this one, or edit the existing user food?'
+                : isRecipe
+                  ? 'You are about to create a user recipe from this food'
+                  : 'You are about to create a user food from this food'}
             </Text>
           </View>
           <View style={styles.buttonContainers}>
@@ -69,7 +75,7 @@ export const AlertCustomFood = React.forwardRef<AlertCustomFoodRef, Props>(
             {refCustomFoodID && (
               <BasicButton
                 onPress={() => {
-                  onEditPress?.(isUpdateUponCreating);
+                  onEditPress?.(isUpdateUponCreating, isRecipe);
                   setVisibility(false);
                 }}
                 style={styles.button}
@@ -79,7 +85,7 @@ export const AlertCustomFood = React.forwardRef<AlertCustomFoodRef, Props>(
             )}
             <BasicButton
               onPress={() => {
-                onCreatePress?.(isUpdateUponCreating);
+                onCreatePress?.(isUpdateUponCreating, isRecipe);
                 setVisibility(false);
               }}
               style={styles.button}

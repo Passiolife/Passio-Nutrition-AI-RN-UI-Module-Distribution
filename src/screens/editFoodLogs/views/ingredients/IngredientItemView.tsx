@@ -23,6 +23,7 @@ interface Props {
   foodItem: FoodItem;
   onPress: (foodItem: FoodItem) => void;
   deleteIngredientsItem: (foodItem: FoodItem) => void;
+  enabled?: boolean;
 }
 
 const IngredientView = (props: Props) => {
@@ -81,6 +82,7 @@ const IngredientView = (props: Props) => {
     <GestureHandlerRootView>
       <Swipeable
         ref={swipeableRef}
+        enabled={props.enabled ?? true}
         containerStyle={styles.swipeableContainer}
         childrenContainerStyle={styles.swipeableShadowContainer}
         overshootLeft={true}

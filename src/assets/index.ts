@@ -51,7 +51,11 @@ export const ICONS = {
   barcode: require('./icons/barocde.png'),
   barcodeNotFound: require('./icons/scan_barcode_not_fouind.png'),
 
+  foodCreator: require('./icons/food_creator.png'),
+  foodNutritionFact: require('./icons/food_nutrition_fact.png'),
+
   foodScannerBarcode: require('./icons/food_scanner_barcode.png'),
+
   foodScannerBeverage: require('./icons/food_scanner_beverage.png'),
   foodScannerFoods: require('./icons/food_scanner_foods.png'),
   foodScannerFacts: require('./icons/food_scanner_nutrition_facts.png'),

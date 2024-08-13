@@ -8,8 +8,10 @@ import type { StackNavigationProp } from '@react-navigation/stack';
 import type { ImagePickerType, ParamList } from '../../navigaitons';
 import {
   createFoodLogUsingFoodCreator,
-  CUSTOM_USER_FOOD,
+  CUSTOM_USER_FOOD_PREFIX,
+  CUSTOM_USER_NUTRITION_FACT__PREFIX,
   generateCustomID,
+  generateCustomNutritionFactID,
 } from './FoodCreator.utils';
 import type { CustomFood, Image } from '../../models';
 import { convertPassioFoodItemToFoodLog } from '../../utils/V3Utils';
@@ -193,7 +195,11 @@ export const useFoodCreator = () => {
         ShowToast('Food added successfully into my food');
       }
       params.onSave?.(food);
-      navigation.goBack();
+      if (params.from === 'FoodDetail') {
+        // Prevent to go back
+      } else {
+        navigation.goBack();
+      }
     }
   };
 
@@ -209,10 +215,21 @@ export const useFoodCreator = () => {
         if (uris) {
           const uri = Platform.OS === 'android' ? `file://${uris[0]}` : uris[0];
           const response = await RNFS.readFile(uri, 'base64');
-          let id = generateCustomID();
-          if (image?.id.includes(CUSTOM_USER_FOOD)) {
-            id = image?.id;
+          let id =
+            params.from === 'NutritionFact'
+              ? generateCustomNutritionFactID()
+              : generateCustomID();
+
+          if (params.from === 'NutritionFact') {
+            if (image?.id.includes(CUSTOM_USER_NUTRITION_FACT__PREFIX)) {
+              id = image?.id;
+            }
+          } else {
+            if (image?.id.includes(CUSTOM_USER_FOOD_PREFIX)) {
+              id = image?.id;
+            }
           }
+
           let customFoodImageID = await services.dataService.saveImage({
             id: id,
             base64: response,

@@ -14,7 +14,6 @@ import { COLORS } from '../../constants';
 import LogInformationView from './views/logInformationsView';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import { TimeStampView } from './views/timeStampsView';
-import { SaveFavoriteFoodItem, UpdateFoodLogAlertPrompt } from './alerts';
 import { MealTimeView } from './views/mealTimesView';
 import { IngredientsView } from './views/ingredients/IngredientsView';
 import { calculateComputedWeightAmount } from './utils';
@@ -45,41 +44,32 @@ export interface EditFoodLogScreenProps {
 export const EditFoodLogScreen = () => {
   const {
     alertCustomFoodRef,
-    foodNotFoundRef,
     branding,
+    closeDatePicker,
     eventTimeStamp,
     foodLog,
+    foodNotFoundRef,
     from,
     isFavorite,
     isHideFavorite,
     isHideMealTime,
     isHideTimeStamp,
     isOpenDatePicker,
-    isOpenFavoriteFoodAlert,
-    isOpenFoodNameAlert,
-    closeDatePicker,
-    onCreateCustomFood,
-    onEditCustomFood,
-    closeFavoriteFoodLogAlert,
-    onSwitchAlternativePress,
-    closeSaveFoodNameAlert,
-    deleteIngredient,
-    onDateChangePress,
-    onAddIngredientPress,
-    onEditIngredientPress,
+    onEditCustomRecipePress,
     onCancelPress,
-    onDeleteFoodLogPress,
-    onEditCustomFoodPress,
-    onSaveFavoriteFoodLog,
-    onSaveFoodLogName,
-    onSavePress,
-    onUpdateFoodLog,
-    onUpdateFavoritePress,
-    onMealLabelPress,
-    openDatePicker,
-    setOpenFoodNameAlert,
+    onCreateCustomFood,
+    onDateChangePress,
     onDeleteFavoritePress,
+    onDeleteFoodLogPress,
+    onEditCustomFood,
+    onEditCustomFoodPress,
+    onMealLabelPress,
     onMoreDetailPress,
+    onSaveFavoriteFoodLog,
+    onSavePress,
+    onUpdateFavoritePress,
+    onUpdateFoodLog,
+    openDatePicker,
   } = useEditFoodLog();
   const styles = editFoodLogStyle(branding);
 
@@ -89,17 +79,6 @@ export const EditFoodLogScreen = () => {
         title={'Food Details'}
         rightSide={
           <View style={{ flexDirection: 'row', marginHorizontal: 16 }}>
-            {from === 'QuickScan' && (
-              <Pressable onPress={onSwitchAlternativePress} style={{}}>
-                <Image
-                  source={ICONS.swap}
-                  style={{
-                    width: scaleWidth(20),
-                    height: scaleHeight(20),
-                  }}
-                />
-              </Pressable>
-            )}
             {foodLog.foodItems.length === 1 && (
               <Pressable
                 onPress={onEditCustomFoodPress}
@@ -120,50 +99,43 @@ export const EditFoodLogScreen = () => {
       />
       <ScrollView>
         <View style={styles.body}>
-          <TouchableOpacity
-            onPress={() => {
-              setOpenFoodNameAlert(false);
-            }}
-            activeOpacity={1}
-          >
-            <LogInformationView
-              iconID={foodLog.iconID}
-              foodItems={foodLog.foodItems}
-              longName={foodLog.longName}
-              isOpenFood={foodLog.isOpenFood}
-              onMoreDetailPress={onMoreDetailPress}
-              name={foodLog.name}
-              qty={foodLog.selectedQuantity}
-              entityType={foodLog.entityType}
-              servingUnit={foodLog.selectedUnit}
-              weight={calculateComputedWeightAmount(
-                foodLog.selectedQuantity,
-                foodLog.servingUnits,
-                foodLog.selectedUnit
-              )}
-              rightIconForHeader={
-                !isHideFavorite ? (
-                  <TouchableOpacity
-                    onPress={() => {
-                      onSaveFavoriteFoodLog();
-                    }}
-                  >
-                    <Image
-                      source={
-                        isFavorite ? ICONS.filledHeartBlue : ICONS.heartBlue
-                      }
-                      style={
-                        isFavorite
-                          ? styles.filledHeartIconStyle
-                          : styles.heartIconStyle
-                      }
-                      resizeMode="contain"
-                    />
-                  </TouchableOpacity>
-                ) : undefined
-              }
-            />
-          </TouchableOpacity>
+          <LogInformationView
+            iconID={foodLog.iconID}
+            foodItems={foodLog.foodItems}
+            longName={foodLog.longName}
+            isOpenFood={foodLog.isOpenFood}
+            onMoreDetailPress={onMoreDetailPress}
+            name={foodLog.name}
+            qty={foodLog.selectedQuantity}
+            entityType={foodLog.entityType}
+            servingUnit={foodLog.selectedUnit}
+            weight={calculateComputedWeightAmount(
+              foodLog.selectedQuantity,
+              foodLog.servingUnits,
+              foodLog.selectedUnit
+            )}
+            rightIconForHeader={
+              !isHideFavorite ? (
+                <TouchableOpacity
+                  onPress={() => {
+                    onSaveFavoriteFoodLog();
+                  }}
+                >
+                  <Image
+                    source={
+                      isFavorite ? ICONS.filledHeartBlue : ICONS.heartBlue
+                    }
+                    style={
+                      isFavorite
+                        ? styles.filledHeartIconStyle
+                        : styles.heartIconStyle
+                    }
+                    resizeMode="contain"
+                  />
+                </TouchableOpacity>
+              ) : undefined
+            }
+          />
           <NewEditServingAmountView
             foodLog={foodLog}
             onUpdateFoodLog={onUpdateFoodLog}
@@ -181,10 +153,9 @@ export const EditFoodLogScreen = () => {
             />
           )}
           <IngredientsView
+            onAddIngredients={onEditCustomRecipePress}
             foodItems={foodLog.foodItems}
-            onAddIngredients={onAddIngredientPress}
-            deleteIngredientsItem={deleteIngredient}
-            navigateToEditIngredientsScreen={onEditIngredientPress}
+            enable={false}
           />
           <View style={styles.lastContainer} />
         </View>
@@ -245,18 +216,6 @@ export const EditFoodLogScreen = () => {
         isDatePickerVisible={isOpenDatePicker}
         handleConfirm={(date) => onDateChangePress(date)}
         hideDatePicker={() => closeDatePicker()}
-      />
-      <SaveFavoriteFoodItem
-        text={''}
-        onSave={() => onSaveFavoriteFoodLog()}
-        onClose={async () => closeFavoriteFoodLogAlert()}
-        isVisible={isOpenFavoriteFoodAlert}
-      />
-      <UpdateFoodLogAlertPrompt
-        defaultValue={foodLog.name}
-        onSave={async (input) => onSaveFoodLogName(input)}
-        onClose={() => closeSaveFoodNameAlert()}
-        isVisible={isOpenFoodNameAlert}
       />
       <AlertCustomFood
         ref={alertCustomFoodRef}

@@ -12,7 +12,6 @@ export * from './texts';
 export * from './textInputs';
 export * from './progressSliders';
 export * from './macrosProgressViews';
-export * from './alternativeFoodLogsViews';
 export * from './searchInputs';
 export * from './alert';
 export * from './swippableViews';

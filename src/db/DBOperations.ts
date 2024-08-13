@@ -726,27 +726,22 @@ export const getWaters = async (): Promise<Water[]> => {
     throw error;
   }
 };
-
 export const getCustomFood = async (
   uuid: string
 ): Promise<CustomFood | null | undefined> => {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const db = await DBHandler.getInstance();
-      const results = await db.executeSql(
-        `SELECT * FROM ${TABLE_CUSTOM_FOOD_LOGS} where ${ROW_UUID} >= "${uuid}";`
-      );
-      resolve(convertResultToFoodLog(results)?.[0]);
-    } catch (error) {
-      console.error(
-        `Failed to get custom food logs ${error} ========= ${uuid}-${uuid}`
-      );
-      reject(
-        `Failed to get custom food logs ${error} ========= ${uuid}-${uuid}`
-      );
-      throw error;
-    }
-  });
+  try {
+    const db = await DBHandler.getInstance();
+    const results = await db.executeSql(
+      `SELECT * FROM ${TABLE_CUSTOM_FOOD_LOGS} WHERE ${ROW_UUID} = ?`,
+      [uuid]
+    );
+
+    return convertResultToFoodLog(results)?.[0] ?? null;
+  } catch (error) {
+    const errorMessage = `Failed to get custom food logs: ${error} - UUID: ${uuid}`;
+    console.error(errorMessage);
+    return null;
+  }
 };
 
 export const getCustomRecipe = async (
@@ -756,8 +751,10 @@ export const getCustomRecipe = async (
     try {
       const db = await DBHandler.getInstance();
       const results = await db.executeSql(
-        `SELECT * FROM ${TABLE_CUSTOM_RECIPE_LOGS} where ${ROW_UUID} >= "${uuid}";`
+        `SELECT * FROM ${TABLE_CUSTOM_RECIPE_LOGS} WHERE ${ROW_UUID} = ?`,
+        [uuid]
       );
+
       resolve(convertResultToFoodLog(results)?.[0]);
     } catch (error) {
       console.error(

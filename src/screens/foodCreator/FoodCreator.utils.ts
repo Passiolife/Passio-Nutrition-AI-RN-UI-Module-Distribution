@@ -15,16 +15,21 @@ import type {
 } from '@passiolife/nutritionai-react-native-sdk-v3';
 import { convertPassioFoodItemToFoodLog } from '../../utils/V3Utils';
 
-export const CUSTOM_USER_FOOD = 'user-food-';
-export const CUSTOM_USER_RECIPE = 'user-recipe-';
+export const CUSTOM_USER_FOOD_PREFIX = 'user-food-';
+export const CUSTOM_USER_RECIPE__PREFIX = 'user-recipe-';
+export const CUSTOM_USER_NUTRITION_FACT__PREFIX = 'user-nutrition-fact-';
 
 export const generateCustomID = () => {
   const uuid: string = uuid4.v4() as string;
-  return CUSTOM_USER_FOOD + uuid;
+  return CUSTOM_USER_FOOD_PREFIX + uuid;
+};
+export const generateCustomNutritionFactID = () => {
+  const uuid: string = uuid4.v4() as string;
+  return CUSTOM_USER_NUTRITION_FACT__PREFIX + uuid;
 };
 export const generateCustomRecipeID = () => {
   const uuid: string = uuid4.v4() as string;
-  return CUSTOM_USER_RECIPE + uuid;
+  return CUSTOM_USER_RECIPE__PREFIX + uuid;
 };
 
 export interface createFoodLogUsingFoodCreator {
@@ -47,6 +52,13 @@ export const isGramOrML = (unit: string) => {
   return isUnitGramOrML;
 };
 
+export const getCustomFoodUUID = () => {
+  return (CUSTOM_USER_FOOD_PREFIX + uuid4.v4()) as string;
+};
+export const getCustomRecipeUUID = () => {
+  return (CUSTOM_USER_RECIPE__PREFIX + uuid4.v4()) as string;
+};
+
 export const createFoodLogUsingFoodCreator = ({
   info,
   requireNutritionFact,
@@ -54,7 +66,7 @@ export const createFoodLogUsingFoodCreator = ({
   oldRecord,
   image,
 }: createFoodLogUsingFoodCreator) => {
-  const uuid: string = oldRecord?.uuid ?? (uuid4.v4() as string);
+  const uuid: string = oldRecord?.uuid ?? getCustomFoodUUID();
 
   const [weight, unit] = (requireNutritionFact?.Weight as string).split(
     WEIGHT_UNIT_SPLIT_IDENTIFIER
@@ -286,6 +298,7 @@ export const createCustomFoodUsingNutritionFact = (
       unit: facts.servingSizeUnit ?? 'g',
       value: facts.servingSizeGram ?? 0,
     },
+    iconId: CUSTOM_USER_NUTRITION_FACT__PREFIX,
     selectedUnit: facts.servingSizeUnitName ?? '',
     selectedQuantity: facts.servingSizeQuantity ?? 0,
     refCode: '',
@@ -297,6 +310,7 @@ export const createCustomFoodUsingNutritionFact = (
     uuid: '',
     foodItems: [foodItems],
     ...foodItems,
+    iconID: CUSTOM_USER_NUTRITION_FACT__PREFIX,
   };
   return customFood;
 };

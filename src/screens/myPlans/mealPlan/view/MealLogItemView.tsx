@@ -31,6 +31,7 @@ const MealLogItemView = (props: Props) => {
             imageName={meal.iconID}
             style={styles.mealImg}
             passioID={meal.iconID}
+            iconID={meal.iconID}
             entityType={'user-recipe'}
           />
         </View>

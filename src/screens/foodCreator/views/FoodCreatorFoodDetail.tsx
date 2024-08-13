@@ -13,6 +13,7 @@ import type { FiledSelectionViewRef } from '../../../components/filed/FiledSelec
 import { FiledViewClick } from '../../../components/filed/FiledViewClick';
 import type { CustomFood, Image } from '../../../models';
 import { PassioFoodIcon } from '../../../components/passio/PassioFoodIcon';
+import { ICONS } from '../../../assets';
 
 interface Props {
   foodLog?: CustomFood;
@@ -20,6 +21,7 @@ interface Props {
   onBarcodePress?: () => void;
   onEditImagePress?: () => void;
   image?: Image;
+  isNutritionFact?: boolean;
 }
 
 export type FoodCreatorFoodDetailType = 'name' | 'brand' | 'barcode';
@@ -44,6 +46,7 @@ export const FoodCreatorFoodDetail = React.forwardRef<
       onBarcodePress,
       onEditImagePress,
       image,
+      isNutritionFact,
     }: Props,
     ref: React.Ref<FoodCreatorFoodDetailRef>
   ) => {
@@ -122,6 +125,11 @@ export const FoodCreatorFoodDetail = React.forwardRef<
                   style={styles.icon}
                   iconID={image?.id}
                   extra={image?.base64}
+                  defaultImage={
+                    isNutritionFact
+                      ? ICONS.foodNutritionFact
+                      : ICONS.foodCreator
+                  }
                 />
                 <Text
                   size="secondlyTitle"

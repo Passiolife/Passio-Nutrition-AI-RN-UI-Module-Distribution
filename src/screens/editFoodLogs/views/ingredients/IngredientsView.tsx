@@ -17,9 +17,10 @@ import { ICONS } from '../../../../assets';
 interface Props {
   foodItems: FoodItem[];
   isShowAll?: boolean;
-  onAddIngredients: () => void;
-  deleteIngredientsItem: (foodItem: FoodItem) => void;
-  navigateToEditIngredientsScreen: (
+  enable?: boolean;
+  onAddIngredients?: () => void;
+  deleteIngredientsItem?: (foodItem: FoodItem) => void;
+  navigateToEditIngredientsScreen?: (
     foodItem: FoodItem,
     deleteIngredientsItem: (foodItem: FoodItem) => void
   ) => void;
@@ -32,13 +33,16 @@ export const IngredientsView = ({
   deleteIngredientsItem,
   navigateToEditIngredientsScreen,
   isShowAll = false,
+  enable = true,
   type = 'Other',
 }: Props) => {
   const branding = useBranding();
   const styles = ingredientViewStyle(branding);
 
   const onIngredientClickPress = async (item: FoodItem) => {
-    navigateToEditIngredientsScreen(item, deleteIngredientsItem);
+    if (deleteIngredientsItem) {
+      navigateToEditIngredientsScreen?.(item, deleteIngredientsItem);
+    }
   };
 
   return (
@@ -92,8 +96,9 @@ export const IngredientsView = ({
                   return (
                     <IngredientItemView
                       deleteIngredientsItem={(foodItem: FoodItem) =>
-                        deleteIngredientsItem(foodItem)
+                        deleteIngredientsItem?.(foodItem)
                       }
+                      enabled={enable}
                       foodItem={item}
                       onPress={onIngredientClickPress}
                     />
