@@ -33,12 +33,15 @@ const ZoomIndicator: React.FC<ZoomIndicatorProps> = ({ level, mode }) => {
     }, 400);
   }, [mode]);
 
+  const max =
+    level?.maxZoomLevel && level.maxZoomLevel > 10 ? 10 : level.maxZoomLevel;
+
   return (
     <View style={styles.container}>
       <ProgressSlider
         sliderValue={mode === 'Barcode' ? 2 : 1}
         minimumValue={level?.minZoomLevel ?? 0}
-        sliderMaxValue={level?.maxZoomLevel ?? 1}
+        sliderMaxValue={max ?? 1}
         step={0.5}
         minimumTrackTintColor={branding.primaryColor}
         sliderStyle={{ flex: 1, marginHorizontal: 16 }}
@@ -68,7 +71,6 @@ const styles = StyleSheet.create({
   container: {
     marginHorizontal: 16,
     justifyContent: 'center',
-    bottom: 4,
     alignItems: 'center',
     flexDirection: 'row',
   },
