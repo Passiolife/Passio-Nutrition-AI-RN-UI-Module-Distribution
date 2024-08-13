@@ -5,7 +5,7 @@ import { Path, Svg } from 'react-native-svg';
 
 const ScanSVG = ({ margin = 40 }: { margin?: number }) => {
   return (
-    <View style={{ alignItems: 'center', marginVertical: 16 }}>
+    <View style={{ alignItems: 'center', marginTop: 0 }}>
       <Svg
         width={Dimensions.get('window').width - margin}
         height="360"
