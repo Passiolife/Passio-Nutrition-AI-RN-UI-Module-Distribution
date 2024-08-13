@@ -75,7 +75,7 @@ export const ICONS = {
   floatingClose: require('./icons/floating_close.png'),
   hamburger: require('./icons/hemberger.png'),
   logOptionSearch: require('./icons/log_option_searc.png'),
-  logOptionFoodScanner: require('./icons/log_option_food_scanner.png'),
+  logOptionFoodScanner: require('./icons/food_scanner.png'),
   logOptionFavorite: require('./icons/log_option_favorite.png'),
   heartBlue: require('./ic_favorites_blue.png'),
   filledHeartBlue: require('./icons/ic_filled_heart_blue.png'),
@@ -94,6 +94,14 @@ export const ICONS = {
   CaptureIcon: require('./icons/capture.png'),
   flash: require('./icons/flash.png'),
   recipe: require('./icons/recipe.png'),
+
+  menuFav: require('./icons/meni_favorites.png'),
+  menuAIAdviosr: require('./icons/menu_ai_adviosr.png'),
+  menuMyFoods: require('./icons/menu_my_foods.png'),
+  menuUseImage: require('./icons/menu_use_image.png'),
+  menuVoiceLogging: require('./icons/menu_voice_logging.png'),
+  menuSearch: require('./icons/menu_search.png'),
+  menuFoodScanner: require('./icons/menu_food_scanner.png'),
 };
 export const onBoardingAssets = {
   onBoardingStep1: require('./images/onboarding_01.png'),
