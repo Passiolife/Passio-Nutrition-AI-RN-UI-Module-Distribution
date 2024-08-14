@@ -2,6 +2,7 @@ import {
   CustomFood,
   FoodItem,
   FoodLog,
+  MealLabel,
   Nutrient,
   NutrientType,
   nutrientUnits,
@@ -14,6 +15,8 @@ import type {
   PassioFoodItem,
 } from '@passiolife/nutritionai-react-native-sdk-v3';
 import { convertPassioFoodItemToFoodLog } from '../../utils/V3Utils';
+import { convertDateToDBFormat } from '../../utils/DateFormatter';
+import { getMealLog } from '../../utils';
 
 export const CUSTOM_USER_FOOD_PREFIX = 'user-food-';
 export const CUSTOM_USER_RECIPE__PREFIX = 'user-recipe-';
@@ -55,6 +58,7 @@ export const isGramOrML = (unit: string) => {
 export const getCustomFoodUUID = () => {
   return (CUSTOM_USER_FOOD_PREFIX + uuid4.v4()) as string;
 };
+
 export const getCustomRecipeUUID = () => {
   return (CUSTOM_USER_RECIPE__PREFIX + uuid4.v4()) as string;
 };
@@ -307,10 +311,10 @@ export const createCustomFoodUsingNutritionFact = (
   };
   const customFood: CustomFood = {
     barcode: barcode,
-    uuid: '',
     foodItems: [foodItems],
     ...foodItems,
     iconID: CUSTOM_USER_NUTRITION_FACT__PREFIX,
+    uuid: getCustomFoodUUID(),
   };
   return customFood;
 };
@@ -358,4 +362,22 @@ export const combineCustomFoodAndFoodLog = (
     isOpenFood: foodLog.isOpenFood,
     longName: foodLog.longName,
   };
+};
+
+export const createFoodLogByCustomFood = (
+  food: CustomFood,
+  date?: Date,
+  meal?: MealLabel
+) => {
+  const uuid: string = uuid4.v4() as string;
+  const updateDate = date ?? new Date();
+  const updateMeal = meal ?? getMealLog(updateDate, undefined);
+  const foodLog: FoodLog = {
+    ...food,
+    eventTimestamp: convertDateToDBFormat(updateDate),
+    meal: updateMeal,
+    uuid: uuid,
+    refCode: food.uuid,
+  };
+  return foodLog;
 };

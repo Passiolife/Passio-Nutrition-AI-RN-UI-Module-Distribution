@@ -43,6 +43,8 @@ export const useBarcodeScan = () => {
     []
   );
 
+  const actionTaken = useRef(false);
+
   useEffect(() => {
     const detection = foodDetectEvents;
     async function init() {
@@ -77,7 +79,11 @@ export const useBarcodeScan = () => {
             if (existingCustomFood) {
               setPassioQuickResults(result);
             } else {
-              params?.onBarcodePress?.(result);
+              if (actionTaken.current) {
+              } else {
+                params?.onBarcodePress?.(result);
+                actionTaken.current = true;
+              }
             }
           } else {
             const result: BarcodeCustomResult = {

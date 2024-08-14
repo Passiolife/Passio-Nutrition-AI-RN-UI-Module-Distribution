@@ -8,7 +8,7 @@ import {
   View,
 } from 'react-native';
 import type { Module, ParamList } from '../../navigaitons';
-import type { FoodLog } from '../../models';
+import type { CustomFood, FoodLog } from '../../models';
 import { BasicButton, DatePicker, BackNavigation } from '../../components';
 import { COLORS } from '../../constants';
 import LogInformationView from './views/logInformationsView';
@@ -33,6 +33,7 @@ export type EditFoodLogScreenNavigationProps = StackNavigationProp<
 
 export interface EditFoodLogScreenProps {
   foodLog: FoodLog;
+  customFood?: CustomFood;
   prevRouteName: String | Module;
   onSaveLogPress?: (foodLog: FoodLog) => void;
   onDeleteLogPress?: (foodLog: FoodLog) => void;

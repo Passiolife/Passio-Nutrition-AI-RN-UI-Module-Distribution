@@ -85,10 +85,11 @@ export const PassioFoodIcon = (props: Props) => {
           style={[props.style]}
           source={{ uri: `data:image/png;base64,${base64}` }}
         />
-      ) : icon &&
-        !icon.includes(CUSTOM_USER_RECIPE__PREFIX) &&
-        !icon.includes(CUSTOM_USER_FOOD_PREFIX) &&
-        !icon.includes(CUSTOM_USER_NUTRITION_FACT__PREFIX) ? (
+      ) : icon?.length === 0 ||
+        (icon &&
+          !icon.includes(CUSTOM_USER_RECIPE__PREFIX) &&
+          !icon.includes(CUSTOM_USER_FOOD_PREFIX) &&
+          !icon.includes(CUSTOM_USER_NUTRITION_FACT__PREFIX)) ? (
         <PassioIconView
           testID="testPassioFoodIconImage"
           style={[props.style]}

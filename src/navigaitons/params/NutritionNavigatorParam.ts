@@ -36,6 +36,8 @@ export type Module =
   | 'Recipe'
   | 'NutritionFact'
   | 'FoodDetail'
+  | 'Barcode'
+  | 'ExistedBarcode'
   | 'Ingredient';
 
 export interface HomeBottom {
