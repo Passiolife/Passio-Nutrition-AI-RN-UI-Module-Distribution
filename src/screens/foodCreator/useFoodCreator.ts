@@ -3,17 +3,23 @@ import { useBranding, useServices } from '../../contexts';
 import type { OtherNutritionFactsRef } from './views/OtherNutritionFacts';
 import type { RequireNutritionFactsRef } from './views/RequireNutritionFacts';
 import type { FoodCreatorFoodDetailRef } from './views/FoodCreatorFoodDetail';
-import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
+import {
+  CommonActions,
+  RouteProp,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import type { ImagePickerType, ParamList } from '../../navigaitons';
 import {
+  createFoodLogByCustomFood,
   createFoodLogUsingFoodCreator,
   CUSTOM_USER_FOOD_PREFIX,
   CUSTOM_USER_NUTRITION_FACT__PREFIX,
   generateCustomID,
   generateCustomNutritionFactID,
 } from './FoodCreator.utils';
-import type { CustomFood, Image } from '../../models';
+import type { BarcodeCustomResult, CustomFood, Image } from '../../models';
 import { convertPassioFoodItemToFoodLog } from '../../utils/V3Utils';
 import RNFS from 'react-native-fs';
 import { Alert, Platform } from 'react-native';
@@ -29,7 +35,7 @@ export const useFoodCreator = () => {
   const services = useServices();
   const navigation = useNavigation<ScanningScreenNavigationProps>();
   const { params } = useRoute<RouteProp<ParamList, 'FoodCreatorScreen'>>();
-  const [foodLog, setCustomFood] = useState<CustomFood | undefined>(
+  const [foodLog, _setCustomFood] = useState<CustomFood | undefined>(
     params.foodLog
   );
   const [barcode, setBarcode] = useState<string | undefined>(
@@ -67,68 +73,65 @@ export const useFoodCreator = () => {
     setImagePickerModalVisible(false);
   };
 
+  const onNavigateToEditFoodScreen = (item?: BarcodeCustomResult) => {
+    if (item?.customFood) {
+      navigation.push('EditFoodLogScreen', {
+        foodLog: createFoodLogByCustomFood(
+          item.customFood,
+          params.logToDate,
+          params.logToMeal
+        ),
+        customFood: item.customFood,
+        prevRouteName: 'ExistedBarcode',
+        onSaveLogPress: () => {},
+      });
+    } else {
+      if (item?.passioIDAttributes) {
+        const barcodeFoodLog = convertPassioFoodItemToFoodLog(
+          item.passioIDAttributes,
+          undefined,
+          undefined
+        );
+        navigation.push('EditFoodLogScreen', {
+          foodLog: barcodeFoodLog,
+          prevRouteName: 'Barcode',
+          onSaveLogPress: () => {},
+        });
+      }
+    }
+  };
+
   const onBarcodePress = async () => {
     navigation.navigate('BarcodeScanScreen', {
       onViewExistingItem: (item) => {
         if (item?.customFood) {
           // If the user clicks on the "View Food Item", they're navigated to the food details screen of that custom food.
           // Might be in this case they navigate to the new create food detail screen.
-          navigation.push('FoodCreatorScreen', {
-            from: 'MyFood',
-            foodLog: item.customFood,
-          });
-          // setCustomFood(item?.customFood);
+          onNavigateToEditFoodScreen(item);
         } else {
           navigation.goBack();
           // custom food doesn't exist
           // . If the user clicks on the "View Food Item", they're navigated to the food details screen of that food item
-          if (item?.passioIDAttributes) {
-            const barcodeFoodLog = convertPassioFoodItemToFoodLog(
-              item.passioIDAttributes,
-              undefined,
-              undefined
-            );
-            navigation.push('EditFoodLogScreen', {
-              foodLog: barcodeFoodLog,
-              prevRouteName: 'QuickScan',
-              onSaveLogPress: () => {},
-            });
-          }
+          onNavigateToEditFoodScreen(item);
         }
       },
       onBarcodePress: (item) => {
-        navigation.goBack();
+        navigation.pop();
         if (item?.customFood) {
-          setCustomFood(item?.customFood);
+          setBarcode('');
         } else {
-          setCustomFood({
-            barcode: item?.barcode ?? '',
-          } as CustomFood);
+          setBarcode(item?.barcode);
         }
       },
       onCreateFoodAnyWay: (item) => {
         navigation.goBack();
         if (item?.customFood) {
           //If they click on "Create Custom Food Without Barcode", the barcode value is left as empty in the Food Creator screen.
-
           setBarcode('');
-
-          // setCustomFood({
-          //   ...item?.customFood,
-          //   barcode: undefined,
-          //   uuid: uuid4.v4() as string,
-          // });
         } else {
           // custom food doesn't exist
           // If they click on "Create Custom Food Anyway", the barcode value is imported into the Food Creator screen.
           setBarcode(item?.barcode);
-          // if (item?.passioIDAttributes) {
-          //   const customFood = convertPassioFoodItemToCustomFood(
-          //     item.passioIDAttributes,
-          //     item?.barcode
-          //   );
-          //   setCustomFood(customFood);
-          // }
         }
       },
     });
@@ -180,6 +183,7 @@ export const useFoodCreator = () => {
   const onNutritionFactSave = async () => {
     const customFood = getCurrentFood();
     if (customFood) {
+      await services.dataService.saveCustomFood(customFood);
       params.onSave?.(customFood);
     }
   };
@@ -194,9 +198,28 @@ export const useFoodCreator = () => {
       } else {
         ShowToast('Food added successfully into my food');
       }
+
       params.onSave?.(food);
       if (params.from === 'FoodDetail') {
         // Prevent to go back
+      } else if (params.from === 'Barcode') {
+        navigation.dispatch(
+          CommonActions.reset({
+            index: 0,
+            routes: [
+              {
+                name: 'BottomNavigation',
+                params: {
+                  screen: 'MealLogScreen',
+                },
+              },
+            ],
+          })
+        );
+        navigation.navigate('MyFoodsScreen', {
+          logToDate: new Date(),
+          logToMeal: undefined,
+        });
       } else {
         navigation.goBack();
       }
@@ -221,11 +244,17 @@ export const useFoodCreator = () => {
               : generateCustomID();
 
           if (params.from === 'NutritionFact') {
-            if (image?.id.includes(CUSTOM_USER_NUTRITION_FACT__PREFIX)) {
+            if (
+              image?.id.startsWith(CUSTOM_USER_NUTRITION_FACT__PREFIX) &&
+              image?.id.length > CUSTOM_USER_NUTRITION_FACT__PREFIX.length
+            ) {
               id = image?.id;
             }
           } else {
-            if (image?.id.includes(CUSTOM_USER_FOOD_PREFIX)) {
+            if (
+              image?.id.startsWith(CUSTOM_USER_FOOD_PREFIX) &&
+              image?.id.length > CUSTOM_USER_FOOD_PREFIX.length
+            ) {
               id = image?.id;
             }
           }
@@ -234,6 +263,7 @@ export const useFoodCreator = () => {
             id: id,
             base64: response,
           });
+
           setImage({
             id: customFoodImageID,
             base64: response,

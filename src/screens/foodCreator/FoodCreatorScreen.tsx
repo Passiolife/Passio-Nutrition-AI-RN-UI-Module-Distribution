@@ -58,64 +58,66 @@ export const FoodCreatorScreen = () => {
           />
 
           <OtherNutritionFacts foodLog={foodLog} ref={otherNutritionFactsRef} />
+
+          <View
+            style={{
+              flexDirection: 'row',
+              marginVertical: 22,
+              marginHorizontal: 16,
+            }}
+          >
+            <BasicButton
+              text={'Cancel'}
+              onPress={onCancelPress}
+              secondary
+              style={{
+                flexDirection: 'row',
+                flex: 1,
+                marginHorizontal: 4,
+                height: 50,
+              }}
+            />
+            {isDeleteButtonVisible && (
+              <BasicButton
+                text={'Delete'}
+                onPress={onDeletePress}
+                style={{
+                  flexDirection: 'row',
+                  flex: 1,
+                  backgroundColor: branding.error,
+                  borderColor: branding.error,
+                  height: 50,
+                }}
+              />
+            )}
+            {from === 'NutritionFact' ? (
+              <BasicButton
+                text={'Done'}
+                onPress={onNutritionFactSave}
+                style={{
+                  flexDirection: 'row',
+                  flex: 1,
+                  marginHorizontal: 4,
+                  height: 50,
+                }}
+              />
+            ) : (
+              <BasicButton
+                text={'Save'}
+                onPress={onSavePress}
+                style={{
+                  flexDirection: 'row',
+                  flex: 1,
+                  marginHorizontal: 4,
+                  height: 50,
+                }}
+              />
+            )}
+          </View>
           <View style={{ height: 100 }} />
         </View>
       </KeyboardAwareScrollView>
-      <View
-        style={{
-          flexDirection: 'row',
-          marginVertical: 22,
-          marginHorizontal: 16,
-        }}
-      >
-        <BasicButton
-          text={'Cancel'}
-          onPress={onCancelPress}
-          secondary
-          style={{
-            flexDirection: 'row',
-            flex: 1,
-            marginHorizontal: 4,
-            height: 40,
-          }}
-        />
-        {isDeleteButtonVisible && (
-          <BasicButton
-            text={'Delete'}
-            onPress={onDeletePress}
-            style={{
-              flexDirection: 'row',
-              flex: 1,
-              backgroundColor: branding.error,
-              borderColor: branding.error,
-              height: 40,
-            }}
-          />
-        )}
-        {from === 'NutritionFact' ? (
-          <BasicButton
-            text={'Done'}
-            onPress={onNutritionFactSave}
-            style={{
-              flexDirection: 'row',
-              flex: 1,
-              marginHorizontal: 4,
-              height: 40,
-            }}
-          />
-        ) : (
-          <BasicButton
-            text={'Save'}
-            onPress={onSavePress}
-            style={{
-              flexDirection: 'row',
-              flex: 1,
-              marginHorizontal: 4,
-              height: 40,
-            }}
-          />
-        )}
-      </View>
+
       {isImagePickerVisible && (
         <ImagePickerOptions
           onCloseModel={closeImagePickerModal}

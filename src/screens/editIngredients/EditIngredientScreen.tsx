@@ -9,10 +9,15 @@ import {
 import { BasicButton, BackNavigation } from '../../components';
 import { COLORS } from '../../constants';
 import LogInformationView from '../editFoodLogs/views/logInformationsView';
-import { type RouteProp, useRoute } from '@react-navigation/native';
+import {
+  type RouteProp,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import NewEditServingAmountView from '../editFoodLogs/views/newEditServingsAmountView';
 import { useEditIngredient } from './useEditIngredient';
+import { mergeNutrients } from '../../utils/NutritentsUtils';
 
 export type EditIngredientNavigationProps = StackNavigationProp<
   ParamList,
@@ -31,6 +36,8 @@ export const EditIngredientScreen = () => {
 
 export const EditIngredient = (props?: EditIngredientsScreenProps) => {
   const { params } = useRoute<RouteProp<ParamList, 'EditIngredientScreen'>>();
+
+  const navigation = useNavigation<EditIngredientNavigationProps>();
 
   const { foodItem, updateFoodItem } = useEditIngredient(params ?? props);
 
@@ -52,6 +59,12 @@ export const EditIngredient = (props?: EditIngredientsScreenProps) => {
           params.deleteIngredient(foodItem);
         }
       },
+    });
+  };
+
+  const onMoreDetailPress = () => {
+    navigation.navigate('NutritionInformationScreen', {
+      nutrient: mergeNutrients(foodLog.foodItems.flatMap((i) => i.nutrients)),
     });
   };
 
@@ -82,6 +95,7 @@ export const EditIngredient = (props?: EditIngredientsScreenProps) => {
               qty={foodItem.selectedQuantity}
               servingUnit={foodItem.selectedUnit}
               entityType={foodItem.entityType}
+              onMoreDetailPress={onMoreDetailPress}
               weight={calculateComputedWeightAmount(
                 foodItem.selectedQuantity,
                 foodItem.servingUnits,

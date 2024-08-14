@@ -122,7 +122,7 @@ export const PictureLoggingResult = ({
 
           return (
             <PictureLoggingResultItemView
-              foodName={item?.recognisedName}
+              foodName={item?.foodDataInfo?.foodName ?? item?.recognisedName}
               imageName={foodDataInfo?.iconID}
               bottom={`${item?.weightGrams} g | ${Math.round(calories)} cal`}
               onFoodLogSelect={() => {

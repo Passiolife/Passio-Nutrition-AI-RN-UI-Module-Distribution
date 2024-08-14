@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useState } from 'react';
-import uuid4 from 'react-native-uuid';
 import type { FoodLog } from '../../../../models';
 import {
   NutritionDetectionEvent,
@@ -10,6 +9,7 @@ import { getLogToDate, getMealLog, ShowToast } from '../../../../utils';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import type { ScanningScreenNavigationProps } from '../../QuickScanningScreen';
 import { createCustomFoodUsingNutritionFact } from '../../../../screens/foodCreator/FoodCreator.utils';
+import uuid4 from 'react-native-uuid';
 import type { ParamList } from '../../../../navigaitons';
 import { convertDateToDBFormat } from '../../../../utils/DateFormatter';
 
@@ -49,6 +49,8 @@ export const useNutritionFactScan = () => {
                 eventTimestamp: convertDateToDBFormat(date),
                 meal: meal,
                 uuid: uuid,
+                refCode: updatedCustomFood.uuid,
+                refCustomFoodID: updatedCustomFood.uuid,
               };
               navigation.replace('EditFoodLogScreen', {
                 foodLog: foodLog,
@@ -56,6 +58,7 @@ export const useNutritionFactScan = () => {
                 onCancelPress: () => {},
                 onSaveLogPress: () => {
                   setLoggedFood(true);
+                  setNutritionFacts(null);
                 },
               });
             }

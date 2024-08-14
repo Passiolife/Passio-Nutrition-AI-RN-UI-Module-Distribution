@@ -8,7 +8,7 @@ import {
   View,
 } from 'react-native';
 import type { Module, ParamList } from '../../navigaitons';
-import type { FoodLog } from '../../models';
+import type { CustomFood, FoodLog } from '../../models';
 import { BasicButton, DatePicker, BackNavigation } from '../../components';
 import { COLORS } from '../../constants';
 import LogInformationView from './views/logInformationsView';
@@ -33,6 +33,7 @@ export type EditFoodLogScreenNavigationProps = StackNavigationProp<
 
 export interface EditFoodLogScreenProps {
   foodLog: FoodLog;
+  customFood?: CustomFood;
   prevRouteName: String | Module;
   onSaveLogPress?: (foodLog: FoodLog) => void;
   onDeleteLogPress?: (foodLog: FoodLog) => void;
@@ -78,7 +79,12 @@ export const EditFoodLogScreen = () => {
       <BackNavigation
         title={'Food Details'}
         rightSide={
-          <View style={{ flexDirection: 'row', marginHorizontal: 16 }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              end: 0,
+            }}
+          >
             {foodLog.foodItems.length === 1 && (
               <Pressable
                 onPress={onEditCustomFoodPress}
@@ -87,9 +93,9 @@ export const EditFoodLogScreen = () => {
                 <Image
                   source={ICONS.editGreyIc}
                   style={{
-                    width: scaleWidth(18),
-                    height: scaleHeight(18),
-                    marginEnd: 8,
+                    width: scaleWidth(20),
+                    height: scaleHeight(20),
+                    marginEnd: 32,
                   }}
                 />
               </Pressable>
@@ -227,11 +233,7 @@ export const EditFoodLogScreen = () => {
   );
 };
 
-const editFoodLogStyle = ({
-  backgroundColor,
-  gray300,
-  primaryColor,
-}: Branding) =>
+const editFoodLogStyle = ({ backgroundColor }: Branding) =>
   StyleSheet.create({
     container: {
       backgroundColor: backgroundColor,
@@ -286,11 +288,9 @@ const editFoodLogStyle = ({
     },
     heartIconStyle: {
       ...scaled(24),
-      tintColor: gray300,
     },
     filledHeartIconStyle: {
-      ...scaled(20),
-      tintColor: primaryColor,
+      ...scaled(24),
     },
   });
 

@@ -85,18 +85,35 @@ export function useEditFoodLog() {
     await services.dataService.saveFoodLog({ ...foodLog });
   };
 
-  const onCreateCustomFood = (
+  const onCreateCustomFood = async (
     isUpdateUponCreating: boolean,
     isRecipe?: boolean
   ) => {
     const uuid: string = isRecipe ? getCustomRecipeUUID() : getCustomFoodUUID();
+
+    let barcode = foodLog?.foodItems?.[0].barcode;
+
+    try {
+      if (
+        (barcode && barcode.length > 0) ||
+        params.prevRouteName !== 'ExistedBarcode'
+      ) {
+        const storedCustomFood = await services.dataService.getCustomFoodLogs();
+        const existingCustomFood = storedCustomFood?.find(
+          (i) => i.barcode === barcode
+        );
+        if (existingCustomFood) {
+          barcode = undefined;
+        }
+      }
+    } catch (error) {}
 
     if (isRecipe) {
       navigateToCustomRecipeScreen(
         {
           ...foodLog,
           uuid: uuid,
-          barcode: foodLog?.foodItems?.[0].barcode,
+          barcode: barcode,
           iconID: CUSTOM_USER_RECIPE__PREFIX,
         },
         isUpdateUponCreating
@@ -106,7 +123,7 @@ export function useEditFoodLog() {
         {
           ...foodLog,
           uuid: uuid,
-          barcode: foodLog?.foodItems?.[0].barcode,
+          barcode: barcode,
         },
         isUpdateUponCreating
       );
@@ -225,16 +242,14 @@ export function useEditFoodLog() {
       alertCustomFoodRef.current?.onShow(
         foodLog.refCustomFoodID?.startsWith(CUSTOM_USER_FOOD_PREFIX)
           ? foodLog.refCustomFoodID
-          : undefined
+          : undefined,
+        false,
+        false
       );
+    } else if (params.prevRouteName === 'ExistedBarcode' && params.customFood) {
+      navigateToFoodCreatorScreen(params.customFood, false);
     } else {
-      // TODO:
-      alertCustomFoodRef.current?.onShow(
-        foodLog.refCustomFoodID?.startsWith(CUSTOM_USER_FOOD_PREFIX)
-          ? foodLog.refCustomFoodID
-          : undefined
-      );
-      // onCreateCustomFood(false);
+      alertCustomFoodRef.current?.onShow(undefined, false, true);
     }
   };
   const onEditCustomRecipePress = async () => {
@@ -245,16 +260,12 @@ export function useEditFoodLog() {
         foodLog.refCustomFoodID?.startsWith(CUSTOM_USER_RECIPE__PREFIX)
           ? foodLog.refCustomFoodID
           : undefined,
-        true
+        true,
+        false
       );
     } else {
-      alertCustomFoodRef.current?.onShow(
-        foodLog.refCustomFoodID?.startsWith(CUSTOM_USER_RECIPE__PREFIX)
-          ? foodLog.refCustomFoodID
-          : undefined,
-        true
-      );
-      // onCreateCustomFood(false, true);
+      // Other
+      alertCustomFoodRef.current?.onShow(undefined, true, true);
     }
   };
 
@@ -273,6 +284,22 @@ export function useEditFoodLog() {
     onConfirmDateSelection(date);
   };
 
+  const jumpToDiary = () => {
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [
+          {
+            name: 'BottomNavigation',
+            params: {
+              screen: 'MealLogScreen',
+            },
+          },
+        ],
+      })
+    );
+  };
+
   const onSavePress = async () => {
     try {
       await saveFoodLog();
@@ -283,8 +310,13 @@ export function useEditFoodLog() {
         navigation.dispatch(StackActions.pop(3));
       } else if (params.prevRouteName === 'QuickScan') {
         navigation.dispatch(StackActions.pop(1));
+      } else if (
+        params.prevRouteName === 'Barcode' ||
+        params.prevRouteName === 'ExistedBarcode'
+      ) {
+        jumpToDiary();
       } else {
-        navigation.dispatch(StackActions.pop(2));
+        jumpToDiary();
       }
       params?.onSaveLogPress?.({ ...foodLog });
     } catch (e) {}

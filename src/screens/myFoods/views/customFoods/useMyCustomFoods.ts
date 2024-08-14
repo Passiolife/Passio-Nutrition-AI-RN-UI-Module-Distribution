@@ -2,11 +2,10 @@ import { useState, useEffect } from 'react';
 import { useBranding, useServices } from '../../../../contexts';
 import type { CustomFood, FoodLog } from '../../../../models';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
-import uuid4 from 'react-native-uuid';
 import { getMealLog, ShowToast } from '../../../../utils';
-import { convertDateToDBFormat } from '../../../../utils/DateFormatter';
 import type { ScreenNavigationProps } from '../../useMyFoodScreen';
 import { Alert } from 'react-native';
+import { createFoodLogByCustomFood } from '../../../../screens/foodCreator/FoodCreator.utils';
 
 export const useMyCustomFoods = () => {
   const branding = useBranding();
@@ -59,15 +58,7 @@ export const useMyCustomFoods = () => {
   const getFoodLog = (food: CustomFood) => {
     const date = new Date();
     const meal = getMealLog(date, undefined);
-    const uuid: string = uuid4.v4() as string;
-
-    const foodLog: FoodLog = {
-      ...food,
-      eventTimestamp: convertDateToDBFormat(date),
-      meal: meal,
-      uuid: uuid,
-      refCode: food.uuid,
-    };
+    const foodLog = createFoodLogByCustomFood(food, date, meal);
     return foodLog;
   };
 

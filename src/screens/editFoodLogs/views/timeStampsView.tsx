@@ -21,7 +21,7 @@ export const TimeStampView = ({ date, onPress }: Props) => {
           {content.date}
         </Text>
         <View style={styles.timeStampContainer}>
-          <Text weight="400" size="_14px" color="text" style={styles.dateText}>
+          <Text weight="400" size="_16px" color="text" style={styles.dateText}>
             {dateFormatter(d)}
           </Text>
         </View>

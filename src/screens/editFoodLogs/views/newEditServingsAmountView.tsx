@@ -13,7 +13,7 @@ import { maxSliderValue, steps } from '../utils';
 import { useBranding } from '../../../contexts';
 import { content } from '../../../constants/Content';
 import { scaleHeight, scaleWidth } from '../../../utils';
-import { round, updateQuantityOfFoodLog } from '../../../utils/V3Utils';
+import { updateQuantityOfFoodLog } from '../../../utils/V3Utils';
 
 interface Props {
   foodLog: FoodLog;
@@ -50,14 +50,26 @@ const NewEditServingAmountView = ({ foodLog, onUpdateFoodLog }: Props) => {
   const servingUnit = computedWeight?.unit ?? foodItems[0]?.computedWeight.unit;
 
   const onTapServingSize = async ({ mass, unit }: ServingUnit) => {
+    if (unit.toLowerCase() === selectedUnit.toLowerCase()) {
+      return;
+    }
     const defaultWeight = servingWeight ?? 0;
     const newQuantity = Number(defaultWeight / mass);
     foodLog.selectedQuantity = Number(
-      newQuantity < 10 ? newQuantity.toFixed(2) : Math.round(newQuantity)
+      newQuantity < 10 ? newQuantity : newQuantity
     );
     foodLog.selectedUnit = unit;
     onUpdateFoodLog({ ...foodLog });
-    setMaximumSlider(maxSliderValue(newQuantity));
+
+    if (
+      unit.toLowerCase() === 'gram' ||
+      unit.toLowerCase() === 'g' ||
+      unit.toLowerCase() === 'ml'
+    ) {
+      onQuantityUpdate(100);
+      return;
+    }
+    onQuantityUpdate(1);
   };
   const { primaryColor, searchBody } = useBranding();
 
@@ -72,7 +84,7 @@ const NewEditServingAmountView = ({ foodLog, onUpdateFoodLog }: Props) => {
             color="text"
             style={styles.servingAmountTxt}
           >
-            {` (${round(servingWeight ?? 0)} ${servingUnit})`}
+            {` (${servingWeight.toFixed(1).replaceAll('.0', '')} ${servingUnit})`}
           </Text>
         </Text>
       </View>
