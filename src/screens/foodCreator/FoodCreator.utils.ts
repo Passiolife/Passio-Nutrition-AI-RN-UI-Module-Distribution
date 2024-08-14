@@ -377,6 +377,7 @@ export const createFoodLogByCustomFood = (
     eventTimestamp: convertDateToDBFormat(updateDate),
     meal: updateMeal,
     uuid: uuid,
+    longName: food?.brandName ?? food.barcode,
     refCode: food.uuid,
   };
   return foodLog;

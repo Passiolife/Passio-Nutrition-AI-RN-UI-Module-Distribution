@@ -79,7 +79,12 @@ export const EditFoodLogScreen = () => {
       <BackNavigation
         title={'Food Details'}
         rightSide={
-          <View style={{ flexDirection: 'row', marginHorizontal: 16 }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              end: 0,
+            }}
+          >
             {foodLog.foodItems.length === 1 && (
               <Pressable
                 onPress={onEditCustomFoodPress}
@@ -88,9 +93,9 @@ export const EditFoodLogScreen = () => {
                 <Image
                   source={ICONS.editGreyIc}
                   style={{
-                    width: scaleWidth(18),
-                    height: scaleHeight(18),
-                    marginEnd: 8,
+                    width: scaleWidth(20),
+                    height: scaleHeight(20),
+                    marginEnd: 32,
                   }}
                 />
               </Pressable>
@@ -228,11 +233,7 @@ export const EditFoodLogScreen = () => {
   );
 };
 
-const editFoodLogStyle = ({
-  backgroundColor,
-  gray300,
-  primaryColor,
-}: Branding) =>
+const editFoodLogStyle = ({ backgroundColor }: Branding) =>
   StyleSheet.create({
     container: {
       backgroundColor: backgroundColor,
@@ -287,11 +288,9 @@ const editFoodLogStyle = ({
     },
     heartIconStyle: {
       ...scaled(24),
-      tintColor: gray300,
     },
     filledHeartIconStyle: {
-      ...scaled(20),
-      tintColor: primaryColor,
+      ...scaled(24),
     },
   });
 

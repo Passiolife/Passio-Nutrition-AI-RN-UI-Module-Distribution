@@ -9,7 +9,6 @@ import {
 import { useBranding, type Branding } from '../../../../contexts';
 import type { FoodItem } from '../../../../models';
 import IngredientItemView from './IngredientItemView';
-import { content } from '../../../../constants/Content';
 import { BasicButton, Card, Text } from '../../../../components';
 import { scaleHeight, scaleWidth } from '../../../../utils';
 import { ICONS } from '../../../../assets';
@@ -55,7 +54,7 @@ export const IngredientsView = ({
             color="text"
             style={[styles.ingredientText]}
           >
-            {content.addIngredients}
+            {type === 'EditRecipe' ? 'Add Ingredient' : 'Ingredients'}
           </Text>
           {type === 'EditRecipe' ? (
             <TouchableOpacity onPress={onAddIngredients}>
