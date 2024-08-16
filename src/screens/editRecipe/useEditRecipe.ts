@@ -208,12 +208,12 @@ export function useEditRecipe() {
   const onSavePress = async () => {
     if (customRecipe.foodItems.length > 0) {
       const name = editRecipeNameRef?.current?.getValue()?.records?.name;
-      if (name) {
+      if (name && name?.trim().length > 0) {
         try {
           const updatedRecipe: CustomRecipe = {
             ...customRecipe,
             iconID: image?.id,
-            name: name,
+            name: name.trim(),
           };
           services?.dataService?.saveCustomRecipe(updatedRecipe);
           params?.onSaveLogPress?.({ ...updatedRecipe });

@@ -94,7 +94,7 @@ export const FoodCreatorFoodDetail = React.forwardRef<
 
             if (key !== 'barcode' && key !== 'brand') {
               currentRef?.errorCheck();
-              if (value === undefined || value.length === 0) {
+              if (value === undefined || value.trim().length === 0) {
                 isNotValid = true;
               }
             } else {
