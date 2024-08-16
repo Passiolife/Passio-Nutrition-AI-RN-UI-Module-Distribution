@@ -122,7 +122,7 @@ export const createFoodLogUsingFoodCreator = ({
       unit: unit,
       value: factWeight,
     },
-    name: info?.name!,
+    name: info?.name!.trim(),
     barcode: info?.barcode,
     iconId: image,
     entityType: 'user-food',
@@ -156,7 +156,7 @@ export const createFoodLogUsingFoodCreator = ({
     ...oldRecord,
     foodItems: [foodItem],
     ...foodItem,
-    barcode: info.barcode,
+    barcode: info.barcode.trim(),
     brandName: info.brand,
     userFoodImage: image,
     iconID: image,
@@ -192,9 +192,9 @@ export const isValidDecimalNumber = (text?: string, isCharacter?: boolean) => {
     if (text.length === 0) {
       return false;
     } else if (isCharacter) {
-      return text.length > 0;
+      return text.trim().length > 0;
     } else {
-      return /^\d+(\.\d+)?$/.test(text);
+      return /^\d+(\.\d+)?$/.test(text.trim());
     }
   } else {
     return false;

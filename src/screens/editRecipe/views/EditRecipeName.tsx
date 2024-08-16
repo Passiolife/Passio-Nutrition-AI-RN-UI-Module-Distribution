@@ -76,7 +76,7 @@ export const EditRecipeName = React.forwardRef<EditRecipeNameRef, Props>(
 
             if (key !== 'barcode' && key !== 'brand') {
               currentRef?.errorCheck();
-              if (value === undefined || value.length === 0) {
+              if (value === undefined || value.trim().length === 0) {
                 isNotValid = true;
               }
             } else {
