@@ -94,8 +94,8 @@ export const TabBar = React.memo((props: TabBarProps) => {
           >
             {renderTabBarIcons(menu.icon, isFocused, branding)}
             <Text
-              weight="400"
-              size="_12px"
+              weight="500"
+              size="_15px"
               style={styles.tabItemText}
               color={isFocused ? 'primaryColor' : 'gray300'}
             >

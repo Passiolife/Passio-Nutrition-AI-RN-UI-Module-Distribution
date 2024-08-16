@@ -123,6 +123,7 @@ export const EditRecipeName = React.forwardRef<EditRecipeNameRef, Props>(
                 <FiledView
                   value={foodLog?.name}
                   ref={nameRef}
+                  multiLine
                   label="RecipeName"
                   isColum
                   isCharacter
@@ -154,13 +155,13 @@ const requireNutritionFactStyle = ({}: Branding) =>
       justifyContent: 'space-between',
     },
     left: {
-      flex: 1,
       alignContent: 'center',
       alignItems: 'center',
       alignSelf: 'center',
     },
     right: {
-      flex: 1.5,
+      flex: 1,
+      marginStart: 16,
     },
     editImage: {
       marginVertical: 4,

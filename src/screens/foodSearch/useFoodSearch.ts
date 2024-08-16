@@ -97,7 +97,11 @@ export function useFoodSearch() {
       }
       route.params.onSaveData?.(item);
     } else if (route.params.from === 'Ingredient') {
-      route.params.onSaveData?.(item);
+      if (isOpenEditor) {
+        route.params.onEditFoodData?.(item);
+      } else {
+        route.params.onSaveData?.(item);
+      }
     } else {
       route.params.onSaveData?.(item);
     }

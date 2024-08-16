@@ -31,6 +31,17 @@ export const toastConfig = {
       </View>
     </View>
   ),
+  center: ({ text1 }: { text1: string }) => (
+    <View style={styles.quickSCanMode}>
+      <View style={styles.messageContainer}>
+        <View style={styles.innerContainer}>
+          <Text style={styles.text1Style} color="white">
+            {text1}
+          </Text>
+        </View>
+      </View>
+    </View>
+  ),
 };
 
 export const styles = StyleSheet.create({
@@ -53,6 +64,17 @@ export const styles = StyleSheet.create({
     borderColor: 'rgba(0, 0, 0, 0.6)',
     borderRadius: scaledSize(7),
     borderWidth: 0.2,
+    marginBottom: 16,
+    flexDirection: 'row',
+    height: scaledSize(50),
+    overflow: 'hidden',
+    marginHorizontal: scaleWidth(16),
+  },
+  quickSCanMode: {
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    borderColor: 'rgba(0, 0, 0, 0.6)',
+    borderRadius: scaledSize(7),
+    borderWidth: 0.2,
     marginBottom: screenHeight / 3,
     flexDirection: 'row',
     height: scaledSize(50),
@@ -67,7 +89,6 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     height: scaledSize(50),
-    marginBottom: 120,
     overflow: 'hidden',
     marginHorizontal: scaleWidth(16),
     width: screenWidth - 32,

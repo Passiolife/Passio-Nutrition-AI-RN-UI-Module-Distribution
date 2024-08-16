@@ -79,13 +79,8 @@ export const EditFoodLogScreen = () => {
       <BackNavigation
         title={'Food Details'}
         rightSide={
-          <View
-            style={{
-              flexDirection: 'row',
-              end: 0,
-            }}
-          >
-            {foodLog.foodItems.length === 1 && (
+          <View>
+            {foodLog.foodItems.length === 1 ? (
               <Pressable
                 onPress={onEditCustomFoodPress}
                 style={{ marginStart: 16 }}
@@ -99,6 +94,8 @@ export const EditFoodLogScreen = () => {
                   }}
                 />
               </Pressable>
+            ) : (
+              <View style={{ marginStart: 46 }} />
             )}
           </View>
         }

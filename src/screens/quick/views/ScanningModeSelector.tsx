@@ -27,7 +27,7 @@ const ScanningModeSelector: React.FC<ScanningModeSelectorProps> = ({
           ]}
           onPress={() => {
             setMode(item as ScanningMode);
-            ShowToast(`${item} Mode`);
+            ShowToast(`${item} Mode`, 'center');
           }}
         >
           <Image

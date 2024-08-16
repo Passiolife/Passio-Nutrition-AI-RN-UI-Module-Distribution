@@ -190,13 +190,13 @@ const requireNutritionFactStyle = ({}: Branding) =>
       flexDirection: 'row',
     },
     left: {
-      marginHorizontal: 16,
       alignContent: 'center',
       alignItems: 'center',
       alignSelf: 'center',
     },
     right: {
-      flex: 1.5,
+      marginStart: 16,
+      flex: 1,
     },
     editImage: {
       marginVertical: 6,
