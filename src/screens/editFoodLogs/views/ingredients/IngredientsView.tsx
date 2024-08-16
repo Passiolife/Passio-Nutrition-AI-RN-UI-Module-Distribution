@@ -118,11 +118,10 @@ const ingredientViewStyle = ({ border }: Branding) =>
   StyleSheet.create({
     container: {
       marginTop: scaleHeight(16),
-      paddingVertical: scaleHeight(16),
+      paddingVertical: scaleHeight(8),
       flex: 1,
     },
     line: {
-      height: 1,
       marginVertical: scaleHeight(14),
       backgroundColor: border,
     },
