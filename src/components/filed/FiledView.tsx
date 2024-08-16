@@ -25,6 +25,7 @@ interface Props {
   isColum?: boolean;
   onDelete?: () => void;
   isCharacter?: boolean;
+  multiLine?: boolean;
 }
 
 export interface FiledViewRef {
@@ -42,6 +43,7 @@ export const FiledView = React.forwardRef<FiledViewRef, Props>(
       label = 'value',
       isColum = false,
       isCharacter = false,
+      multiLine = false,
       onDelete,
     }: Props,
     ref: React.Ref<FiledViewRef>
@@ -93,12 +95,19 @@ export const FiledView = React.forwardRef<FiledViewRef, Props>(
           <View style={{ flex: 1 }}>
             <TextInput
               ref={inputRef}
-              style={styles.textInput}
+              style={[
+                styles.textInput,
+                multiLine && {
+                  paddingTop: 8,
+                },
+              ]}
+              multiline={multiLine}
+              maxLength={180}
               onChangeText={(text) => {
                 value.current = cleanedDecimalNumber(text);
                 setError(undefined);
               }}
-              returnKeyType="done"
+              returnKeyType={multiLine ? 'default' : 'done'}
               defaultValue={defaultValue}
               placeholder={label}
               keyboardType={keyboardType}

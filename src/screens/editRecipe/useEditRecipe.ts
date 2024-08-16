@@ -241,6 +241,22 @@ export function useEditRecipe() {
           addIngredient(foodItem);
         }
       },
+      onEditFoodData: (item) => {
+        const foodItem = convertPassioFoodItemToFoodLog(
+          item,
+          new Date(),
+          undefined
+        ).foodItems[0];
+        if (foodItem) {
+          navigation.navigate('EditIngredientScreen', {
+            foodItem: foodItem,
+            updateIngredient: (updatedIngredient) => {
+              navigation.pop();
+              addIngredient([updatedIngredient]);
+            },
+          });
+        }
+      },
       from: 'Ingredient',
     });
   };

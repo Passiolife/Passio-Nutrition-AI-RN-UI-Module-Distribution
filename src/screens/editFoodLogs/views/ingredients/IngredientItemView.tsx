@@ -1,7 +1,6 @@
 import React, { useRef } from 'react';
 import {
   StyleSheet,
-  Text,
   View,
   Platform,
   TouchableOpacity,
@@ -18,6 +17,7 @@ import { DeleteIngredientAlert } from '../../alerts/DeleteIngredientAlert';
 import { content } from '../../../../constants/Content';
 import { PassioFoodIcon } from '../../../../components/passio/PassioFoodIcon';
 import { round, round2Digit } from '../../../../utils/V3Utils';
+import { Text } from '../../../../components';
 
 interface Props {
   foodItem: FoodItem;
@@ -105,16 +105,29 @@ const IngredientView = (props: Props) => {
             />
           </View>
           <View style={styles.mealDetail}>
-            <Text style={styles.mealName} numberOfLines={2}>
+            <Text
+              size="secondlyTitle"
+              color="text"
+              weight="600"
+              style={styles.mealName}
+            >
               {foodItem.name}
             </Text>
             {/* <Text style={styles.mealSize}>{servingLabel(foodItem)}</Text> */}
 
             <Text
+              size="secondlyTitle"
+              color="gray500"
+              weight="400"
               style={styles.mealSize}
             >{`${round2Digit(foodItem.selectedQuantity)} ${foodItem.selectedUnit} (${round(foodItem.computedWeight.value)} ${foodItem.computedWeight.unit})`}</Text>
           </View>
-          <Text style={styles.rightArrowIcon}>
+          <Text
+            size="secondlyTitle"
+            color="text"
+            weight="400"
+            style={styles.rightArrowIcon}
+          >
             {caloriesTextForFoodItem(foodItem, content.calories)}
           </Text>
         </TouchableOpacity>
@@ -143,10 +156,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   rightArrowIcon: {
-    flexShrink: 0,
-    height: 24,
     alignSelf: 'center',
-    tintColor: COLORS.grey8,
   },
 
   mealImg: {
@@ -154,16 +164,9 @@ const styles = StyleSheet.create({
     width: 50,
   },
   mealName: {
-    fontWeight: '600',
-    fontSize: 15,
     textTransform: 'capitalize',
-    color: COLORS.grey7,
   },
-  mealSize: {
-    color: COLORS.grey7,
-    fontSize: 14,
-    fontWeight: '400',
-  },
+  mealSize: {},
   detailView: {
     justifyContent: 'space-between',
   },
