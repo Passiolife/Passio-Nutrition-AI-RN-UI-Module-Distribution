@@ -75,7 +75,7 @@ const NewEditServingAmountView = ({ foodLog, onUpdateFoodLog }: Props) => {
   const { primaryColor, searchBody } = useBranding();
 
   const onChangeText = (text: string) => {
-    if (text.length > 0) {
+    if (text && text.length > 0) {
       onChangeTextInput(parseFloat(text));
     } else {
       onChangeTextInput(0);
