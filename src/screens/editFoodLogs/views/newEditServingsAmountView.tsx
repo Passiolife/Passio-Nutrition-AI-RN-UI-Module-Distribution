@@ -37,6 +37,7 @@ const NewEditServingAmountView = ({ foodLog, onUpdateFoodLog }: Props) => {
     onQuantityUpdate(qty);
     setMaximumSlider(maxSliderValue(qty));
   };
+
   const onSlideProgress = (qty: number) => {
     onQuantityUpdate(qty);
   };
@@ -73,6 +74,14 @@ const NewEditServingAmountView = ({ foodLog, onUpdateFoodLog }: Props) => {
   };
   const { primaryColor, searchBody } = useBranding();
 
+  const onChangeText = (text: string) => {
+    if (text.length > 0) {
+      onChangeTextInput(parseFloat(text));
+    } else {
+      onChangeTextInput(0);
+    }
+  };
+
   return (
     <Card style={styles.container}>
       <View style={styles.cardHeader}>
@@ -92,14 +101,17 @@ const NewEditServingAmountView = ({ foodLog, onUpdateFoodLog }: Props) => {
       <View style={styles.content}>
         <TextInput
           keyboardType="numeric"
+          returnKeyLabel="Update"
+          returnKeyType="done"
           testID="testTextInputOfSelectedQuantity"
-          value={selectedQuantity.toString()}
-          onChangeText={(text) => {
-            if (text.length > 0) {
-              onChangeTextInput(parseFloat(text));
-            } else {
-              onChangeTextInput(0);
-            }
+          defaultValue={selectedQuantity.toString()}
+          onEndEditing={(event) => {
+            const text = event.nativeEvent.text;
+            onChangeText(text);
+          }}
+          onBlur={(event) => {
+            const text = event.nativeEvent.text;
+            onChangeText(text);
           }}
           containerStyle={styles.containerInputStyle}
           style={styles.inputStyle}
