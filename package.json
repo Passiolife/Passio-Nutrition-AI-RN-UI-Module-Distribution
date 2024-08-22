@@ -144,7 +144,8 @@
   "resolutions": {
     "@types/react": "^18.2.0",
     "react-native": "0.73.2",
-    "ws": "^7.5.1"
+    "ws": "^7.5.1",
+    "ip": "^2.0.1"
   },
   "peerDependencies": {
     "react": "*",
