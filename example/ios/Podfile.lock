@@ -902,7 +902,7 @@ PODS:
     - React-Core
   - react-native-pdf (6.7.5):
     - React-Core
-  - react-native-safe-area-context (4.10.8):
+  - react-native-safe-area-context (4.10.9):
     - React-Core
   - react-native-slider (4.5.2):
     - glog
@@ -1120,14 +1120,14 @@ PODS:
     - RCT-Folly (= 2022.05.16.00)
     - React-Core
     - React-RCTImage
-  - RNSVG (15.5.0):
+  - RNSVG (15.6.0):
     - React-Core
   - SocketRocket (0.6.1)
-  - VisionCamera (4.5.1):
-    - VisionCamera/Core (= 4.5.1)
-    - VisionCamera/React (= 4.5.1)
-  - VisionCamera/Core (4.5.1)
-  - VisionCamera/React (4.5.1):
+  - VisionCamera (4.5.2):
+    - VisionCamera/Core (= 4.5.2)
+    - VisionCamera/React (= 4.5.2)
+  - VisionCamera/Core (4.5.2)
+  - VisionCamera/React (4.5.2):
     - React-Core
   - Yoga (1.14.0)
 
@@ -1392,7 +1392,7 @@ SPEC CHECKSUMS:
   react-native-image-picker: 994a97b28e7f2c2197e21801569bb19f6e494e38
   react-native-nutrition-ux: 1612195e1617a41eb1f6dc0a18590e178306fe33
   react-native-pdf: 103940c90d62adfd259f63cca99c7c0c306b514c
-  react-native-safe-area-context: b7daa1a8df36095a032dff095a1ea8963cb48371
+  react-native-safe-area-context: ab8f4a3d8180913bd78ae75dd599c94cce3d5e9a
   react-native-slider: 07df44a6b615c6bf8584a5ee88288024b3cbf498
   react-native-sqlite-storage: f6d515e1c446d1e6d026aa5352908a25d4de3261
   react-native-voice: f5e8eec2278451d0017eb6a30a6ccc726aca34e0
@@ -1425,11 +1425,11 @@ SPEC CHECKSUMS:
   RNNotifee: 8e2d3df3f0e9ce8f5d1fe4c967431138190b6175
   RNReanimated: 98ed8b33f88a749dc2fd2433a03ca4f4a9d2b690
   RNScreens: 79f5606e7eb08dc81336f83a223fb6d6e74f32d1
-  RNSVG: b986585e367f4a49d8aa43065066cc9c290b3d9b
+  RNSVG: 5da7a24f31968ec74f0b091e3440080f347e279b
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
-  VisionCamera: 104de00dce2e04dec51bfb6027eff0312fa3174e
-  Yoga: e64aa65de36c0832d04e8c7bd614396c77a80047
+  VisionCamera: b69c637dc7388008c717b9566a006e5f9266fafe
+  Yoga: 13c8ef87792450193e117976337b8527b49e8c03
 
 PODFILE CHECKSUM: a2947df3ae3fe759cfd0e850554bc385583bc722
 
-COCOAPODS: 1.14.3
+COCOAPODS: 1.15.2
