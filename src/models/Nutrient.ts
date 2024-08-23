@@ -3,7 +3,15 @@ export interface Nutrient {
   amount: number;
   unit: string;
 }
-export type NutrientUnit = 'cal' | 'kcal' | 'g' | 'mg' | 'ug' | 'IU' | 'ml';
+export type NutrientUnit =
+  | 'cal'
+  | 'kcal'
+  | 'g'
+  | 'mg'
+  | 'ug'
+  | 'IU'
+  | 'ml'
+  | 'mcg';
 
 export type NutrientType =
   | 'calories'
@@ -80,13 +88,13 @@ export const nutrientUnits: Record<NutrientType, NutrientUnit> = {
   phosphorus: 'mg',
   iodine: 'ug',
   zinc: 'mg',
-  selenium: 'g',
-  folicAcid: 'g',
-  vitaminKPhylloquinone: 'g',
-  vitaminKMenaquinone4: 'g',
-  vitaminKDihydrophylloquinone: 'g',
+  selenium: 'mcg',
+  folicAcid: 'mcg',
+  vitaminKPhylloquinone: 'mcg',
+  vitaminKMenaquinone4: 'mcg',
+  vitaminKDihydrophylloquinone: 'mcg',
   fibers: 'g',
-  chromium: 'g',
+  chromium: 'mcg',
   sugarsAdded: 'g',
   weight: 'g',
 };

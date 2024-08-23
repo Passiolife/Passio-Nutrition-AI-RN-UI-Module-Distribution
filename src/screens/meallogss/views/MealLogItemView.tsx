@@ -58,9 +58,11 @@ const MealLogItemView = (props: Props) => {
           >
             {`${foodLog.selectedQuantity} ${foodLog.selectedUnit}`}
             {' ('}
-            {Math.round(foodLog.foodItems.at(0)?.computedWeight.value ?? 0) +
+            {(foodLog.computedWeight?.value ??
+              Math.round(foodLog.foodItems.at(0)?.computedWeight.value ?? 0)) +
               ' ' +
-              foodLog.foodItems.at(0)?.computedWeight.unit}
+              (foodLog.computedWeight?.unit ??
+                foodLog.foodItems.at(0)?.computedWeight.unit)}
             {') '}
           </Text>
         </View>

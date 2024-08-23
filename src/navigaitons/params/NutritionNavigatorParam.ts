@@ -85,6 +85,7 @@ export interface FoodCreatorNavProps {
 export interface MyFoodsScreenNavProps {
   logToDate?: Date | undefined;
   logToMeal?: MealLabel | undefined;
+  tab?: 'CustomFood' | 'Recipe';
 }
 export interface BarcodeScanScreenNavProps {
   onCreateFoodAnyWay?: (result?: BarcodeCustomResult) => void;
@@ -93,7 +94,7 @@ export interface BarcodeScanScreenNavProps {
 }
 export interface EditRecipeScreenProps {
   recipe: CustomRecipe;
-  prevRouteName: String | Module;
+  from: String | Module;
   onSaveLogPress?: (recipe: CustomRecipe) => void;
   onDeleteLogPress?: (recipe: CustomRecipe) => void;
   onCancelPress?: () => void;

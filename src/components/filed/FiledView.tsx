@@ -108,7 +108,7 @@ export const FiledView = React.forwardRef<FiledViewRef, Props>(
                 setError(undefined);
               }}
               returnKeyType={multiLine ? 'default' : 'done'}
-              defaultValue={defaultValue}
+              defaultValue={defaultValue?.toString()}
               placeholder={label}
               keyboardType={keyboardType}
             />

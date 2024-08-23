@@ -349,18 +349,18 @@ export const combineCustomFoodAndFoodLog = (
   return {
     ...foodLog,
     ...customFood,
-    refCustomFoodID: customFood?.uuid,
     uuid: foodLog.uuid,
+    refCode: foodLog.refCode,
+    meal: foodLog.meal,
+    eventTimestamp: foodLog.eventTimestamp,
+    isOpenFood: foodLog.isOpenFood,
+    refCustomFoodID: customFood?.uuid,
     servingUnits: uniqueServingUnits,
     servingSizes: uniqueServingSizes,
-    refCode: foodLog.refCode,
-    eventTimestamp: foodLog.eventTimestamp,
-    meal: foodLog.meal,
     selectedQuantity: customFood.selectedQuantity,
     selectedUnit: customFood.selectedUnit,
     computedWeight: customFood.computedWeight,
-    isOpenFood: foodLog.isOpenFood,
-    longName: foodLog.longName,
+    longName: customFood.brandName ?? foodLog.longName,
   };
 };
 

@@ -215,9 +215,14 @@ export function useEditRecipe() {
             iconID: image?.id,
             name: name.trim(),
           };
+
           services?.dataService?.saveCustomRecipe(updatedRecipe);
-          params?.onSaveLogPress?.({ ...updatedRecipe });
-          navigation.goBack();
+          params?.onSaveLogPress?.(updatedRecipe);
+          if (params.from === 'FoodDetail') {
+            // Prevent to go back
+          } else {
+            navigation.goBack();
+          }
         } catch (e) {}
       } else {
       }
@@ -230,7 +235,7 @@ export function useEditRecipe() {
   };
 
   const onFindSearchPress = () => {
-    navigation.navigate('FoodSearchScreen', {
+    navigation.push('FoodSearchScreen', {
       onSaveData: (item) => {
         const foodItem = convertPassioFoodItemToFoodLog(
           item,
@@ -286,10 +291,9 @@ export function useEditRecipe() {
     editRecipeNameRef,
     recipeOptionsRef,
     foodLog: customRecipe,
-    from: params.prevRouteName,
+    from: params.from,
     image,
-    isDeleteButtonVisible:
-      isDeleteButtonVisible && params.prevRouteName === 'MyFood',
+    isDeleteButtonVisible: isDeleteButtonVisible && params.from === 'MyFood',
     isImagePickerVisible,
     onAddIngredientPress,
     onCancelPress,
