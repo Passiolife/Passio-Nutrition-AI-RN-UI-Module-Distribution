@@ -302,6 +302,7 @@ export function useEditFoodLog() {
   const onMoreDetailPress = () => {
     navigation.navigate('NutritionInformationScreen', {
       nutrient: mergeNutrients(foodLog.foodItems.flatMap((i) => i.nutrients)),
+      foodLog: foodLog,
     });
   };
 

@@ -14,6 +14,7 @@ import type {
   BarcodeCustomResult,
   CustomFood,
   CustomRecipe,
+  FoodLog,
   MealLabel,
   Nutrient,
   Water,
@@ -63,6 +64,7 @@ interface SettingScreenProps {
 
 interface NutritionScreenProps {
   nutrient: Nutrient[];
+  foodLog: FoodLog;
 }
 
 export type ImagePickerType = 'camera' | 'gallery';

@@ -62,12 +62,6 @@ export const EditIngredient = (props?: EditIngredientsScreenProps) => {
     });
   };
 
-  const onMoreDetailPress = () => {
-    navigation.navigate('NutritionInformationScreen', {
-      nutrient: mergeNutrients(foodLog.foodItems.flatMap((i) => i.nutrients)),
-    });
-  };
-
   if (foodItem === undefined) {
     return <></>;
   }
@@ -79,7 +73,16 @@ export const EditIngredient = (props?: EditIngredientsScreenProps) => {
     selectedUnit: foodItem.selectedUnit,
     servingSizes: foodItem.servingSizes,
     servingUnits: foodItem.servingUnits,
+    iconID: foodItem.iconId,
+    name: foodItem.name,
   } as FoodLog;
+
+  const onMoreDetailPress = () => {
+    navigation.navigate('NutritionInformationScreen', {
+      nutrient: mergeNutrients(foodLog.foodItems.flatMap((i) => i.nutrients)),
+      foodLog: foodLog,
+    });
+  };
 
   return (
     <View style={styles.container}>

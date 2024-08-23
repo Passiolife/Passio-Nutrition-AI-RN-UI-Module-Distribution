@@ -16,5 +16,6 @@ export const useNutritionInformation = () => {
     nutrients: params.nutrient.filter((i) => i.id !== 'weight'),
     onInfoPress,
     isInfo,
+    foodLog: params.foodLog,
   };
 };
