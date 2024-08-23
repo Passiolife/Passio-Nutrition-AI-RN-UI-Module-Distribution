@@ -1,6 +1,7 @@
 // nutrition tables
 
-export const TABLE_FOOD_LOGS = 'food_logsss_3';
+export const version = 4;
+export const TABLE_FOOD_LOGS = `food_logs${version}`;
 export const TABLE_IMAGES = 'images_table';
 export const TABLE_CUSTOM_FOOD_LOGS = 'custom_food_logs_1';
 export const TABLE_CUSTOM_RECIPE_LOGS = 'custom_recipe_logs_1';

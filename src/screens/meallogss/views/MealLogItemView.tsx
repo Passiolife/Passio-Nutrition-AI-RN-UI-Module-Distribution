@@ -1,11 +1,14 @@
 import React, { useCallback } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import type { FoodLog } from '../../../models';
-import { DeleteFoodLogAlert } from '../../editFoodLogs';
-import { caloriesText } from '../../../utils/StringUtils';
+import {
+  DeleteFoodLogAlert,
+  totalAmountOfNutrientWithoutRound,
+} from '../../editFoodLogs';
 import { SwipeToDelete, Text } from '../../../components';
 import { COLORS } from '../../../constants';
 import { PassioFoodIcon } from '../../../components/passio/PassioFoodIcon';
+import { NumberRound } from '../../../utils/NumberUtils';
 
 interface Props {
   foodLog: FoodLog;
@@ -58,16 +61,20 @@ const MealLogItemView = (props: Props) => {
           >
             {`${foodLog.selectedQuantity} ${foodLog.selectedUnit}`}
             {' ('}
-            {Math.round(foodLog.foodItems.at(0)?.computedWeight.value ?? 0) +
+            {(foodLog.computedWeight?.value ??
+              Math.round(foodLog.foodItems.at(0)?.computedWeight.value ?? 0)) +
               ' ' +
-              foodLog.foodItems.at(0)?.computedWeight.unit}
+              (foodLog.computedWeight?.unit ??
+                foodLog.foodItems.at(0)?.computedWeight.unit)}
             {') '}
           </Text>
         </View>
         <View style={styles.mealContainer}>
           <TouchableOpacity>
             <Text weight="400" size="secondlyTitle" style={styles.plus}>
-              {caloriesText(foodLog.foodItems, 'cal')}
+              {NumberRound(
+                totalAmountOfNutrientWithoutRound(foodLog.foodItems, 'calories')
+              ) + ' kcal'}
             </Text>
           </TouchableOpacity>
         </View>

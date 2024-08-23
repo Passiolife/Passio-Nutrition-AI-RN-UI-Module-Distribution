@@ -124,6 +124,7 @@ export function useEditFoodLog() {
           ...foodLog,
           uuid: uuid,
           barcode: barcode,
+          brandName: foodLog.longName,
         },
         isUpdateUponCreating
       );
@@ -219,19 +220,48 @@ export function useEditFoodLog() {
       recipe: customFood,
       onSaveLogPress: async (item) => {
         if (item && isUpdateUponCreating) {
-          services.dataService.saveFoodLog(
-            combineCustomFoodAndFoodLog(item, foodLog)
+          const updatedFoodLog = combineCustomFoodAndFoodLog(item, foodLog);
+          //  For recipe long name should be empty
+          updatedFoodLog.longName = '';
+          await services.dataService.saveFoodLog(updatedFoodLog);
+          navigation.dispatch(
+            CommonActions.reset({
+              index: 0,
+
+              routes: [
+                {
+                  name: 'BottomNavigation',
+                  params: {
+                    screen: 'MealLogScreen',
+                  },
+                },
+              ],
+            })
           );
-          navigation.pop();
-          navigation.replace('BottomNavigation', {
-            screen: 'MealLogScreen',
-          });
         } else {
-          navigation.pop();
-          navigation.navigate('MyFoodsScreen', {});
+          navigation.dispatch(
+            CommonActions.reset({
+              index: 0,
+              routes: [
+                {
+                  name: 'BottomNavigation',
+                  params: {
+                    screen: 'MealLogScreen',
+                  },
+                },
+              ],
+            })
+          );
+          setTimeout(() => {
+            navigation.navigate('MyFoodsScreen', {
+              logToDate: new Date(),
+              logToMeal: undefined,
+              tab: 'Recipe',
+            });
+          }, 50);
         }
       },
-      prevRouteName: 'Search',
+      from: 'FoodDetail',
     });
   };
 
@@ -272,6 +302,7 @@ export function useEditFoodLog() {
   const onMoreDetailPress = () => {
     navigation.navigate('NutritionInformationScreen', {
       nutrient: mergeNutrients(foodLog.foodItems.flatMap((i) => i.nutrients)),
+      foodLog: foodLog,
     });
   };
 

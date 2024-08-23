@@ -122,12 +122,12 @@ const ingredientViewStyle = ({ border }: Branding) =>
       flex: 1,
     },
     line: {
-      marginVertical: scaleHeight(14),
       backgroundColor: border,
     },
     ingredientText: {},
     plusTouchOpacity: {
       flexDirection: 'row',
+      paddingVertical: 8,
       alignItems: 'center',
       paddingHorizontal: scaleWidth(13),
       alignContent: 'space-between',

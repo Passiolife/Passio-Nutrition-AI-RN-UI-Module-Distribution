@@ -118,7 +118,11 @@ export const OtherNutritionFacts = React.forwardRef<
                   label={nutrientName[item.label].toString()}
                   name={nutrientName[item.label].toString()}
                   // name={item}
-                  value={item.value ? item.value.toString() : undefined}
+                  value={
+                    item.value && Number.isFinite(item.value)
+                      ? item.value.toString()
+                      : undefined
+                  }
                   onDelete={() => {
                     setList((i) => [...i.filter((o) => item !== o)]);
                     setDefaultList((i) => [...i, item.label]);

@@ -12,7 +12,7 @@ import CustomFoods from './views/customFoods/CustomFoods';
 import CustomRecipe from './views/customRecipe/CustomRecipe';
 
 export const MyFoodsScreen = () => {
-  const { branding, tab, setTab } = useMyFoodScreen();
+  const { branding, tab, setTab, selectedTab } = useMyFoodScreen();
 
   const styles = myFoodScreenStyle(branding);
 
@@ -20,6 +20,7 @@ export const MyFoodsScreen = () => {
     return (
       <TabBar
         list={MYFoodScreens}
+        selectedTab={selectedTab}
         onTabSelect={(value) => {
           setTab(value as MYFoodScreensType);
         }}

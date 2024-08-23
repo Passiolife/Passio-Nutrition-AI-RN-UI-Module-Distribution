@@ -93,7 +93,7 @@ const NewEditServingAmountView = ({ foodLog, onUpdateFoodLog }: Props) => {
             color="text"
             style={styles.servingAmountTxt}
           >
-            {` (${servingWeight.toFixed(1).replaceAll('.0', '')} ${servingUnit})`}
+            {` (${servingWeight?.toFixed(1).replaceAll('.0', '')} ${servingUnit})`}
           </Text>
         </Text>
       </View>

@@ -59,11 +59,13 @@ export const useMyCustomFoods = () => {
     const date = new Date();
     const meal = getMealLog(date, undefined);
     const foodLog = createFoodLogByCustomFood(food, date, meal);
+    foodLog.refCustomFoodID = food.uuid;
     return foodLog;
   };
 
   const onLogPress = async (food: CustomFood) => {
     const log: FoodLog = getFoodLog(food);
+    log.refCustomFoodID = food.uuid;
     await services.dataService.saveFoodLog(log);
     ShowToast('Added your food into ' + log.meal);
   };

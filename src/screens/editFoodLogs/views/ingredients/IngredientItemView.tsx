@@ -7,7 +7,6 @@ import {
   Animated,
 } from 'react-native';
 import type { FoodItem } from '../../../../models/FoodItem';
-import { caloriesTextForFoodItem } from '../../../../utils/StringUtils';
 import { COLORS } from '../../../../constants';
 import {
   GestureHandlerRootView,
@@ -18,6 +17,8 @@ import { content } from '../../../../constants/Content';
 import { PassioFoodIcon } from '../../../../components/passio/PassioFoodIcon';
 import { round, round2Digit } from '../../../../utils/V3Utils';
 import { Text } from '../../../../components';
+import { totalAmountOfNutrientWithoutRound } from '../../utils';
+import { NumberRound } from '../../../../utils/NumberUtils';
 
 interface Props {
   foodItem: FoodItem;
@@ -128,7 +129,9 @@ const IngredientView = (props: Props) => {
             weight="400"
             style={styles.rightArrowIcon}
           >
-            {caloriesTextForFoodItem(foodItem, content.calories)}
+            {NumberRound(
+              totalAmountOfNutrientWithoutRound([foodItem], 'calories')
+            ) + ' kcal'}
           </Text>
         </TouchableOpacity>
       </Swipeable>

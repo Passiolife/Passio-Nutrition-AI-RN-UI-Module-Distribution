@@ -8,7 +8,8 @@ import { convertDateToDBFormat } from '../../../../utils/DateFormatter';
 import type { ScreenNavigationProps } from '../../useMyFoodScreen';
 import { convertPassioFoodItemToFoodLog } from '../../../../utils/V3Utils';
 import { Alert } from 'react-native';
-import type { RecipeOptionsRef } from 'src/components';
+import type { RecipeOptionsRef } from '../../../../components';
+import { CUSTOM_USER_RECIPE__PREFIX } from '../../../../screens/foodCreator/FoodCreator.utils';
 
 export const useMyCustomRecipe = () => {
   const branding = useBranding();
@@ -57,6 +58,7 @@ export const useMyCustomRecipe = () => {
       meal: meal,
       uuid: uuid,
       refCode: food.uuid,
+      refCustomFoodID: food.uuid,
     };
 
     return foodLog;
@@ -74,7 +76,7 @@ export const useMyCustomRecipe = () => {
   ) => {
     navigation.navigate('EditRecipeScreen', {
       recipe: food,
-      prevRouteName: 'MyFood',
+      from: 'MyFood',
       onSaveLogPress: () => {
         if (isRequirePop) {
           navigation.pop();
@@ -95,7 +97,7 @@ export const useMyCustomRecipe = () => {
   };
 
   const onFoodSearch = () => {
-    navigation.navigate('FoodSearchScreen', {
+    navigation.push('FoodSearchScreen', {
       from: 'Recipe',
       onSaveData: (item) => {
         const foodLog = convertPassioFoodItemToFoodLog(
@@ -110,7 +112,7 @@ export const useMyCustomRecipe = () => {
             navigation.pop(1);
             navigation.replace('EditRecipeScreen', {
               recipe: foodLog,
-              prevRouteName: 'Recipe',
+              from: 'Recipe',
             });
           },
         });
@@ -119,7 +121,25 @@ export const useMyCustomRecipe = () => {
   };
 
   const onCreateNewRecipePress = () => {
-    recipeOptionsRef.current?.onOpen();
+    navigation.push('EditRecipeScreen', {
+      recipe: {
+        name: '',
+        uuid: '',
+        iconID: CUSTOM_USER_RECIPE__PREFIX,
+        foodItems: [],
+        selectedUnit: 'g',
+        selectedQuantity: 100,
+        computedWeight: {
+          unit: 'g',
+          value: 100,
+        },
+        servingSizes: [{ unit: 'g', quantity: 100 }],
+        servingUnits: [{ unit: 'g', mass: 1 }],
+      },
+      from: 'Recipe',
+    });
+
+    // recipeOptionsRef.current?.onOpen();
   };
 
   return {

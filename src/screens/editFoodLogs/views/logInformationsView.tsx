@@ -10,6 +10,7 @@ import { scaleHeight, scaleWidth } from '../../../utils';
 import DoughnutChart from '../../../components/doughnutChart/DoughnutChart';
 import { useBranding } from '../../../contexts';
 import { macroNutrientPercentages } from '../../../utils/V3Utils';
+import { NumberRound } from '../../../utils/NumberUtils';
 
 interface Props {
   foodItems: FoodItem[];
@@ -113,7 +114,7 @@ const LogInformationView = ({
               testID="testNutrientCalories"
               style={styles.calorieItemValue}
             >
-              {Math.round(calories)}
+              {NumberRound(calories)}
             </Text>
             <Text
               weight="500"
