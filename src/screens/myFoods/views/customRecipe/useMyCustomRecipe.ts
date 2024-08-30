@@ -7,7 +7,6 @@ import { getMealLog, ShowToast } from '../../../../utils';
 import { convertDateToDBFormat } from '../../../../utils/DateFormatter';
 import type { ScreenNavigationProps } from '../../useMyFoodScreen';
 import { convertPassioFoodItemToFoodLog } from '../../../../utils/V3Utils';
-import { Alert } from 'react-native';
 import type { RecipeOptionsRef } from '../../../../components';
 import { CUSTOM_USER_RECIPE__PREFIX } from '../../../../screens/foodCreator/FoodCreator.utils';
 
@@ -30,21 +29,9 @@ export const useMyCustomRecipe = () => {
   }, [services.dataService, isFocused]);
 
   const onDeletePress = (food: CustomFood) => {
-    Alert.alert('Are you sure want to delete this from my recipe?', undefined, [
-      {
-        text: 'Cancel',
-        style: 'cancel',
-      },
-      {
-        text: 'Delete',
-        onPress: () => {
-          services.dataService.deleteCustomRecipe(food.uuid).then(() => {
-            setCustomRecipe((i) => i?.filter((c) => c.uuid !== food.uuid));
-          });
-        },
-        style: 'destructive',
-      },
-    ]);
+    services.dataService.deleteCustomRecipe(food.uuid).then(() => {
+      setCustomRecipe((i) => i?.filter((c) => c.uuid !== food.uuid));
+    });
   };
 
   const getFoodLog = (food: CustomFood) => {

@@ -1,12 +1,16 @@
-import { TouchableOpacity, View, Image, StyleSheet } from 'react-native';
+import { TouchableOpacity, View, Image, StyleSheet, Alert } from 'react-native';
 
 import type { PassioID } from '@passiolife/nutritionai-react-native-sdk-v3';
 import type { PassioIDEntityType } from '@passiolife/nutritionai-react-native-sdk-v3';
-import React from 'react';
+import React, { useRef } from 'react';
 import { ICONS } from '../../../../../assets';
 import { PassioFoodIcon } from '../../../../../components/passio/PassioFoodIcon';
 import { Text } from '../../../../../components/texts/Text';
-import { Card, SwipeToDelete } from '../../../../../components';
+import {
+  Card,
+  SwipeToDelete,
+  SwipeToDeleteRef,
+} from '../../../../../components';
 import { COLORS } from '../../../../../constants';
 import { scaled } from '../../../../../utils';
 
@@ -22,62 +26,93 @@ interface Props {
   entityType: PassioIDEntityType;
 }
 
-const CustomFoodsItem = ({
-  name,
-  onEditFoodCreatorPress,
-  onFoodDetailPress,
-  onPressLog,
-  onPressDelete,
-  entityType,
-  iconID,
-  brandName,
-}: Props) => {
-  return (
-    <Card style={styles.shadowContainer}>
-      <SwipeToDelete
-        onPressDelete={onPressDelete}
-        marginVertical={0}
-        onPressEdit={onEditFoodCreatorPress}
-      >
-        <TouchableOpacity
-          style={styles.mealContainer}
-          onPress={onFoodDetailPress}
+export const CustomFoodsItem = React.forwardRef<SwipeToDeleteRef, Props>(
+  (
+    {
+      name,
+      onEditFoodCreatorPress,
+      onFoodDetailPress,
+      onPressLog,
+      onPressDelete,
+      entityType,
+      iconID,
+      brandName,
+    }: Props,
+    _ref: React.Ref<SwipeToDeleteRef>
+  ) => {
+    const swipeReg = useRef<SwipeToDeleteRef | null>(null);
+
+    const onDeleteAlert = () => {
+      Alert.alert('Are you sure want to delete this from my food?', undefined, [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Delete',
+          onPress: () => {
+            onPressDelete();
+            swipeReg?.current?.closeSwipe();
+          },
+          style: 'destructive',
+        },
+      ]);
+    };
+
+    return (
+      <Card style={styles.shadowContainer}>
+        <SwipeToDelete
+          onPressDelete={onDeleteAlert}
+          marginVertical={0}
+          ref={swipeReg}
+          onPressEdit={() => {
+            onEditFoodCreatorPress?.();
+            swipeReg?.current?.closeSwipe();
+          }}
         >
-          <View style={styles.mealImgLayout}>
-            <PassioFoodIcon
-              iconID={iconID}
-              style={styles.mealImg}
-              entityType={entityType}
-            />
-          </View>
-          <View style={styles.mealDetail}>
-            <Text
-              weight="600"
-              size="_14px"
-              color="text"
-              style={styles.mealName}
-            >
-              {name}
-            </Text>
-            {brandName && (
+          <TouchableOpacity
+            style={styles.mealContainer}
+            onPress={onFoodDetailPress}
+          >
+            <View style={styles.mealImgLayout}>
+              <PassioFoodIcon
+                iconID={iconID}
+                style={styles.mealImg}
+                entityType={entityType}
+              />
+            </View>
+            <View style={styles.mealDetail}>
               <Text
-                weight="400"
+                weight="600"
                 size="_14px"
-                color="secondaryText"
-                style={styles.brand}
+                color="text"
+                style={styles.mealName}
               >
-                {brandName}
+                {name}
               </Text>
-            )}
-          </View>
-          <TouchableOpacity onPress={onPressLog} style={styles.addFoodIconView}>
-            <Image source={ICONS.newAddPlus} style={styles.addFoodIcon} />
+              {brandName && (
+                <Text
+                  weight="400"
+                  size="_14px"
+                  color="secondaryText"
+                  style={styles.brand}
+                >
+                  {brandName}
+                </Text>
+              )}
+            </View>
+            <TouchableOpacity
+              onPress={onPressLog}
+              style={styles.addFoodIconView}
+            >
+              <Image source={ICONS.newAddPlus} style={styles.addFoodIcon} />
+            </TouchableOpacity>
           </TouchableOpacity>
-        </TouchableOpacity>
-      </SwipeToDelete>
-    </Card>
-  );
-};
+        </SwipeToDelete>
+      </Card>
+    );
+  }
+);
 const styles = StyleSheet.create({
   shadowContainer: {
     borderRadius: 8,

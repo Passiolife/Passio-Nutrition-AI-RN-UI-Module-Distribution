@@ -139,10 +139,18 @@ export const RequireNutritionFacts = React.forwardRef<
     let carbs;
     let proteins;
 
-    calories = totalAmountOfNutrient(foodLog?.foodItems ?? [], 'calories');
-    carbs = totalAmountOfNutrient(foodLog?.foodItems ?? [], 'carbs');
-    proteins = totalAmountOfNutrient(foodLog?.foodItems ?? [], 'protein');
-    fat = totalAmountOfNutrient(foodLog?.foodItems ?? [], 'fat');
+    calories = foodLog?.foodItems
+      ? totalAmountOfNutrient(foodLog?.foodItems ?? [], 'calories')
+      : undefined;
+    carbs = foodLog?.foodItems
+      ? totalAmountOfNutrient(foodLog?.foodItems ?? [], 'carbs')
+      : undefined;
+    proteins = foodLog?.foodItems
+      ? totalAmountOfNutrient(foodLog?.foodItems ?? [], 'protein')
+      : undefined;
+    fat = foodLog?.foodItems
+      ? totalAmountOfNutrient(foodLog?.foodItems ?? [], 'fat')
+      : undefined;
 
     return (
       <Card style={styles.card}>
@@ -172,7 +180,8 @@ export const RequireNutritionFacts = React.forwardRef<
               ref={weightRef}
               value={
                 foodLog?.computedWeight?.unit ??
-                foodLog?.foodItems?.[0]?.computedWeight?.unit
+                foodLog?.foodItems?.[0]?.computedWeight?.unit ??
+                'g'
               }
               input={(
                 foodLog?.computedWeight?.value ??
@@ -186,24 +195,24 @@ export const RequireNutritionFacts = React.forwardRef<
           <FiledView
             ref={caloriesRef}
             name="Calories"
-            value={Number.isFinite(calories) ? calories.toString() : ''}
+            value={Number.isFinite(calories) ? calories?.toString() : ''}
             keyboardType="decimal-pad"
           />
           <FiledView
             ref={fatRef}
-            value={Number.isFinite(fat) ? fat.toString() : ''}
+            value={Number.isFinite(fat) ? fat?.toString() : ''}
             name="Fat"
             keyboardType="decimal-pad"
           />
           <FiledView
             ref={carbsRef}
-            value={Number.isFinite(carbs) ? carbs.toString() : ''}
+            value={Number.isFinite(carbs) ? carbs?.toString() : ''}
             name="Carbs"
             keyboardType="decimal-pad"
           />
           <FiledView
             ref={proteinRef}
-            value={Number.isFinite(proteins) ? proteins.toString() : ''}
+            value={Number.isFinite(proteins) ? proteins?.toString() : ''}
             name="Protein"
             keyboardType="decimal-pad"
           />

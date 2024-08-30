@@ -3,15 +3,7 @@ export interface Nutrient {
   amount: number;
   unit: string;
 }
-export type NutrientUnit =
-  | 'cal'
-  | 'kcal'
-  | 'g'
-  | 'mg'
-  | 'ug'
-  | 'IU'
-  | 'ml'
-  | 'mcg';
+export type NutrientUnit = 'cal' | 'kcal' | 'g' | 'mg' | 'μg' | 'IU' | 'ml';
 
 export type NutrientType =
   | 'calories'
@@ -79,22 +71,22 @@ export const nutrientUnits: Record<NutrientType, NutrientUnit> = {
   vitaminC: 'mg',
   alcohol: 'g',
   sugarAlcohol: 'g',
-  vitaminB12: 'ug',
-  vitaminB12Added: 'ug',
+  vitaminB12: 'μg',
+  vitaminB12Added: 'μg',
   vitaminB6: 'mg',
   vitaminE: 'mg',
   vitaminEAdded: 'mg',
   magnesium: 'mg',
   phosphorus: 'mg',
-  iodine: 'ug',
+  iodine: 'μg',
   zinc: 'mg',
-  selenium: 'mcg',
-  folicAcid: 'mcg',
-  vitaminKPhylloquinone: 'mcg',
-  vitaminKMenaquinone4: 'mcg',
-  vitaminKDihydrophylloquinone: 'mcg',
+  selenium: 'μg',
+  folicAcid: 'μg',
+  vitaminKPhylloquinone: 'μg',
+  vitaminKMenaquinone4: 'μg',
+  vitaminKDihydrophylloquinone: 'μg',
   fibers: 'g',
-  chromium: 'mcg',
+  chromium: 'μg',
   sugarsAdded: 'g',
   weight: 'g',
 };
