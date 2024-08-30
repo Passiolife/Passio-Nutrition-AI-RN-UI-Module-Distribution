@@ -34,10 +34,12 @@ export const FoodSearchScreen = () => {
     loading,
     results,
     searchQuery,
+    myFoodResult,
     cancelPress,
     cleanSearch,
     onSearchFood,
     onSearchItemPress,
+    onSearchMyFoodItemPress,
   } = useFoodSearch();
 
   const styles = searchStyle(branding);
@@ -68,9 +70,16 @@ export const FoodSearchScreen = () => {
               <View style={styles.gap} />
               <SearchResultView
                 searchResult={results}
+                myFoodResult={myFoodResult}
                 handleLoadMore={() => {}}
                 onPressLog={(item) => onSearchItemPress(item, false)}
+                onPressMyFoodLog={(item) =>
+                  onSearchMyFoodItemPress(item, false)
+                }
                 onPressEditor={(item) => onSearchItemPress(item, true)}
+                onPressMyFoodLogEditor={(item) =>
+                  onSearchMyFoodItemPress(item, true)
+                }
               />
             </>
           ) : null}
