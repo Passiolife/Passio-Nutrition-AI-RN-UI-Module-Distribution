@@ -49,6 +49,7 @@ const SearchResultView = (props: SearchResultViewProps) => {
         passioID={item.iconID ?? ''}
         imageName={item.iconID ?? ''}
         name={item.foodName}
+        isRecipe={item.type?.toLocaleLowerCase() === 'recipe'}
         brandName={item.brandName}
         entityType={PassioIDEntityType.group}
       />
