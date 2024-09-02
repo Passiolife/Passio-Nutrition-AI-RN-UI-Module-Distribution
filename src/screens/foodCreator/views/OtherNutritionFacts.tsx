@@ -119,8 +119,8 @@ export const OtherNutritionFacts = React.forwardRef<
                   name={nutrientName[item.label].toString()}
                   // name={item}
                   value={
-                    item.value && Number.isFinite(item.value)
-                      ? item.value.toString()
+                    Number.isFinite(item.value)
+                      ? item?.value?.toString()
                       : undefined
                   }
                   onDelete={() => {

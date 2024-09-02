@@ -1,12 +1,16 @@
-import { TouchableOpacity, View, Image, StyleSheet } from 'react-native';
+import { TouchableOpacity, View, Image, StyleSheet, Alert } from 'react-native';
 
 import type { PassioID } from '@passiolife/nutritionai-react-native-sdk-v3';
 import type { PassioIDEntityType } from '@passiolife/nutritionai-react-native-sdk-v3';
-import React from 'react';
+import React, { useRef } from 'react';
 import { ICONS } from '../../../../../assets';
 import { PassioFoodIcon } from '../../../../../components/passio/PassioFoodIcon';
 import { Text } from '../../../../../components/texts/Text';
-import { Card, SwipeToDelete } from '../../../../../components';
+import {
+  Card,
+  SwipeToDelete,
+  SwipeToDeleteRef,
+} from '../../../../../components';
 import { COLORS } from '../../../../../constants';
 import { scaled } from '../../../../../utils';
 
@@ -31,12 +35,35 @@ const CustomRecipeItem = ({
   entityType,
   iconID,
 }: Props) => {
+  const swipeReg = useRef<SwipeToDeleteRef | null>(null);
+
+  const onDeletePress = () => {
+    Alert.alert('Are you sure want to delete this from my recipe?', undefined, [
+      {
+        text: 'Cancel',
+        style: 'cancel',
+      },
+      {
+        text: 'Delete',
+        onPress: () => {
+          onPressDelete?.();
+          swipeReg?.current?.closeSwipe();
+        },
+        style: 'destructive',
+      },
+    ]);
+  };
+
   return (
     <Card style={styles.shadowContainer}>
       <SwipeToDelete
-        onPressDelete={onPressDelete}
+        onPressDelete={onDeletePress}
         marginVertical={0}
-        onPressEdit={onEditCustomRecipePress}
+        ref={swipeReg}
+        onPressEdit={() => {
+          swipeReg?.current?.closeSwipe();
+          onEditCustomRecipePress?.();
+        }}
       >
         <TouchableOpacity
           style={styles.mealContainer}

@@ -1,5 +1,6 @@
 import {
   CustomFood,
+  CustomRecipe,
   FoodItem,
   FoodLog,
   MealLabel,
@@ -379,6 +380,25 @@ export const createFoodLogByCustomFood = (
     uuid: uuid,
     longName: food?.brandName ?? food.barcode,
     refCode: food.uuid,
+  };
+  return foodLog;
+};
+export const createFoodLogByCustomRecipe = (
+  food: CustomRecipe,
+  date?: Date,
+  meal?: MealLabel
+) => {
+  const updateDate = date ?? new Date();
+  const updateMeal = meal ?? getMealLog(updateDate, undefined);
+  const uuid: string = uuid4.v4() as string;
+
+  const foodLog: FoodLog = {
+    ...food,
+    eventTimestamp: convertDateToDBFormat(updateDate),
+    meal: updateMeal,
+    uuid: uuid,
+    refCode: food.uuid,
+    refCustomFoodID: food.uuid,
   };
   return foodLog;
 };

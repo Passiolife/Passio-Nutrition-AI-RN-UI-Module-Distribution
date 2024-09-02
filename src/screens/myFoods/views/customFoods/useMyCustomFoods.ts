@@ -4,7 +4,6 @@ import type { CustomFood, FoodLog } from '../../../../models';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { getMealLog, ShowToast } from '../../../../utils';
 import type { ScreenNavigationProps } from '../../useMyFoodScreen';
-import { Alert } from 'react-native';
 import { createFoodLogByCustomFood } from '../../../../screens/foodCreator/FoodCreator.utils';
 
 export const useMyCustomFoods = () => {
@@ -38,21 +37,9 @@ export const useMyCustomFoods = () => {
   };
 
   const onDeletePress = (food: CustomFood) => {
-    Alert.alert('Are you sure want to delete this from my food?', undefined, [
-      {
-        text: 'Cancel',
-        style: 'cancel',
-      },
-      {
-        text: 'Delete',
-        onPress: () => {
-          services.dataService.deleteCustomFood(food.uuid).then(() => {
-            setCustomFood((i) => i?.filter((c) => c.uuid !== food.uuid));
-          });
-        },
-        style: 'destructive',
-      },
-    ]);
+    services.dataService.deleteCustomFood(food.uuid).then(() => {
+      setCustomFood((i) => i?.filter((c) => c.uuid !== food.uuid));
+    });
   };
 
   const getFoodLog = (food: CustomFood) => {

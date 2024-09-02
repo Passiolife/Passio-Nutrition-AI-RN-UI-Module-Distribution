@@ -41,7 +41,6 @@ import {
   ROUTES,
 } from '../../../navigaitons/Route';
 import type { MealLabel } from '../../../models';
-import { convertPassioFoodItemToFoodLog } from '../../../utils/V3Utils';
 
 let { width } = Dimensions.get('window');
 
@@ -86,11 +85,7 @@ const RecipeEditorScreen = () => {
   function redirectToSearchIngredientScreen() {
     navigation.navigate('FoodSearchScreen', {
       onSaveData: (item) => {
-        const foodItem = convertPassioFoodItemToFoodLog(
-          item,
-          new Date(),
-          undefined
-        ).foodItems[0];
+        const foodItem = item.foodItems[0];
         if (foodItem) {
           updateIngredientsItem(foodItem);
         }
