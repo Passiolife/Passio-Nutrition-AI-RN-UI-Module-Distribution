@@ -14,6 +14,7 @@ interface Props {
   imageName: string;
   name: string;
   brandName?: string;
+  isRecipe?: boolean;
   onPressEditor: () => void;
   onPressLog: () => void;
   entityType: PassioIDEntityType;
@@ -27,17 +28,33 @@ const SearchResultItemView = ({
   entityType,
   brandName,
   imageName,
+  isRecipe,
 }: Props) => {
   return (
     <Card style={styles.shadowContainer}>
       <TouchableOpacity style={styles.mealContainer} onPress={onPressEditor}>
-        <View style={styles.mealImgLayout}>
-          <PassioFoodIcon
-            passioID={passioID}
-            imageName={imageName}
-            style={styles.mealImg}
-            entityType={entityType}
-          />
+        <View>
+          <View style={styles.mealImgLayout}>
+            <PassioFoodIcon
+              passioID={passioID}
+              iconID={passioID}
+              imageName={imageName}
+              style={styles.mealImg}
+              entityType={entityType}
+            />
+          </View>
+          {isRecipe && (
+            <Image
+              source={ICONS.recipe}
+              style={{
+                position: 'absolute',
+                right: 0,
+                bottom: 0,
+                height: 16,
+                width: 16,
+              }}
+            />
+          )}
         </View>
         <View style={styles.mealDetail}>
           <Text weight="600" size="_14px" color="text" style={styles.mealName}>

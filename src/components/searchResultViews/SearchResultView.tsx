@@ -71,6 +71,7 @@ const SearchResultView = (props: SearchResultViewProps) => {
           item.customFood?.brandName ?? item.customRecipe?.brandName ?? ''
         }
         entityType={PassioIDEntityType.group}
+        isRecipe={item.customRecipe !== undefined}
       />
     );
   };
