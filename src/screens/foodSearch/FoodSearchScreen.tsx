@@ -5,14 +5,13 @@ import {
   SearchResultView,
 } from '../../components';
 
-import type { MealLabel } from '../../models';
+import type { FoodLog, MealLabel } from '../../models';
 import type { Module, ParamList } from '../../navigaitons';
 import { ProgressLoadingView } from '../../components/loader';
 import React from 'react';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import { searchStyle } from './FoodSearch.styles';
 import { useFoodSearch } from './useFoodSearch';
-import type { PassioFoodItem } from '@passiolife/nutritionai-react-native-sdk-v3';
 
 export type FoodSearchScreenNavigationProps = StackNavigationProp<
   ParamList,
@@ -22,8 +21,8 @@ export type FoodSearchScreenNavigationProps = StackNavigationProp<
 export interface FoodSearchScreenProp {
   logToDate?: Date | undefined;
   logToMeal?: MealLabel | undefined;
-  onSaveData?: (item: PassioFoodItem) => void;
-  onEditFoodData?: (item: PassioFoodItem) => void;
+  onSaveData?: (item: FoodLog) => void;
+  onEditFoodData?: (item: FoodLog) => void;
   from: Module;
 }
 

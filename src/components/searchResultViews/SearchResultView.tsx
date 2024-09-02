@@ -9,12 +9,6 @@ import {
   type PassioFoodItem,
 } from '@passiolife/nutritionai-react-native-sdk-v3';
 import type { SearchMyFood } from '../../screens/foodSearch/useFoodSearch';
-import type { FoodLog } from '../../models';
-import {
-  createFoodLogByCustomFood,
-  createFoodLogByCustomRecipe,
-} from '../../screens/foodCreator/FoodCreator.utils';
-import { getMealLog } from '../../utils';
 
 interface SearchResultViewProps {
   searchResult: Array<PassioFoodDataInfo>;
@@ -22,8 +16,8 @@ interface SearchResultViewProps {
   handleLoadMore: () => void;
   onPressLog: (item: PassioFoodItem) => void;
   onPressEditor: (item: PassioFoodItem) => void;
-  onPressMyFoodLog: (item: FoodLog) => void;
-  onPressMyFoodLogEditor: (item: FoodLog) => void;
+  onPressMyFoodLog: (item: SearchMyFood) => void;
+  onPressMyFoodLogEditor: (item: SearchMyFood) => void;
 }
 
 const SearchResultView = (props: SearchResultViewProps) => {
@@ -61,40 +55,14 @@ const SearchResultView = (props: SearchResultViewProps) => {
     );
   };
 
-  const getFoodLog = (item: SearchMyFood) => {
-    if (item.customFood) {
-      const date = new Date();
-      const meal = getMealLog(date, undefined);
-      const foodLog = createFoodLogByCustomFood(item.customFood, date, meal);
-      return foodLog;
-    } else if (item.customRecipe) {
-      const date = new Date();
-      const meal = getMealLog(date, undefined);
-      const foodLog = createFoodLogByCustomRecipe(
-        item.customRecipe,
-        date,
-        meal
-      );
-      return foodLog;
-    } else {
-      return undefined;
-    }
-  };
-
   const renderMyFoodItem = ({ item }: { item: SearchMyFood }) => {
     return (
       <SearchResultItemView
-        onPressEditor={async () => {
-          const foodLog = getFoodLog(item);
-          if (foodLog) {
-            onPressMyFoodLogEditor(foodLog);
-          }
+        onPressEditor={() => {
+          onPressMyFoodLogEditor(item);
         }}
-        onPressLog={async () => {
-          const foodLog = getFoodLog(item);
-          if (foodLog) {
-            onPressMyFoodLog(foodLog);
-          }
+        onPressLog={() => {
+          onPressMyFoodLog(item);
         }}
         passioID={item.customFood?.iconID ?? item.customRecipe?.iconID ?? ''}
         imageName={item.customFood?.iconID ?? item.customRecipe?.iconID ?? ''}
@@ -113,7 +81,7 @@ const SearchResultView = (props: SearchResultViewProps) => {
         {myFoodResult.length > 0 && (
           <>
             <Text weight="600" size="title" style={{ marginStart: 16 }}>
-              My Food
+              My Foods
             </Text>
             <FlatList
               data={myFoodResult}

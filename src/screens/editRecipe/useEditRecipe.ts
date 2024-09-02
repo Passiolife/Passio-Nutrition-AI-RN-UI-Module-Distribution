@@ -1,4 +1,3 @@
-import { convertPassioFoodItemToFoodLog } from '../../utils/V3Utils';
 import type { CustomRecipe, FoodItem, FoodLog, Image } from '../../models';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import RNFS from 'react-native-fs';
@@ -237,21 +236,13 @@ export function useEditRecipe() {
   const onFindSearchPress = () => {
     navigation.push('FoodSearchScreen', {
       onSaveData: (item) => {
-        const foodItem = convertPassioFoodItemToFoodLog(
-          item,
-          new Date(),
-          undefined
-        ).foodItems;
+        const foodItem = item.foodItems;
         if (foodItem) {
           addIngredient(foodItem);
         }
       },
       onEditFoodData: (item) => {
-        const foodItem = convertPassioFoodItemToFoodLog(
-          item,
-          new Date(),
-          undefined
-        ).foodItems[0];
+        const foodItem = item.foodItems[0];
         if (foodItem) {
           navigation.navigate('EditIngredientScreen', {
             foodItem: foodItem,

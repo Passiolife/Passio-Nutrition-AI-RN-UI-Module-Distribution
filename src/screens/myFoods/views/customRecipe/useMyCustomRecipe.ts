@@ -6,7 +6,6 @@ import uuid4 from 'react-native-uuid';
 import { getMealLog, ShowToast } from '../../../../utils';
 import { convertDateToDBFormat } from '../../../../utils/DateFormatter';
 import type { ScreenNavigationProps } from '../../useMyFoodScreen';
-import { convertPassioFoodItemToFoodLog } from '../../../../utils/V3Utils';
 import type { RecipeOptionsRef } from '../../../../components';
 import { CUSTOM_USER_RECIPE__PREFIX } from '../../../../screens/foodCreator/FoodCreator.utils';
 
@@ -86,13 +85,7 @@ export const useMyCustomRecipe = () => {
   const onFoodSearch = () => {
     navigation.push('FoodSearchScreen', {
       from: 'Recipe',
-      onSaveData: (item) => {
-        const foodLog = convertPassioFoodItemToFoodLog(
-          item,
-          undefined,
-          undefined,
-          true
-        );
+      onSaveData: (foodLog) => {
         navigation.navigate('EditIngredientScreen', {
           foodItem: foodLog.foodItems[0],
           updateIngredient: (_item) => {
