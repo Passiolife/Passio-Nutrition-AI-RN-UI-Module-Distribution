@@ -188,7 +188,7 @@ export function useFoodSearch() {
         logToMeal: undefined,
         tab: isCustomFood ? 'CustomFood' : 'Recipe',
       });
-    }, 50);
+    }, 100);
   };
 
   const onEditFoodCreatorPress = (food: CustomFood) => {
