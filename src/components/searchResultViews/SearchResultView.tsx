@@ -112,7 +112,7 @@ const SearchResultView = (props: SearchResultViewProps) => {
   };
 
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <FlatList
         data={searchResult}
         keyExtractor={(_item: PassioFoodDataInfo, index: number) =>
@@ -121,7 +121,7 @@ const SearchResultView = (props: SearchResultViewProps) => {
         renderItem={renderSearchResult}
         ListHeaderComponent={renderMyFoods}
         onEndReached={handleLoadMore}
-        contentContainerStyle={styles.contentContainerStyle}
+        contentContainerStyle={[styles.contentContainerStyle]}
         keyboardShouldPersistTaps="handled"
       />
     </View>
