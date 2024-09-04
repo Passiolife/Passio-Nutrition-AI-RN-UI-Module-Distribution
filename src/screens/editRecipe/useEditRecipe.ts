@@ -243,25 +243,30 @@ export function useEditRecipe() {
         }
       },
       onEditFoodData: (item) => {
-        const foodItem = item;
-        if (foodItem) {
-          navigation.navigate('EditIngredientScreen', {
-            foodItem: {
-              ...foodItem,
-              nutrients: mergeNutrients(
-                item.foodItems?.flatMap((i) => i.nutrients)
-              ),
-              refCode: foodItem.refCode ?? '',
-              iconId: foodItem?.iconID ?? foodItem.foodItems[0].iconId,
-              computedWeight:
-                foodItem.computedWeight ?? foodItem.foodItems[0].computedWeight,
-              entityType: 'user-food',
-            },
-            updateIngredient: (updatedIngredient) => {
-              navigation.pop();
-              addIngredient([updatedIngredient]);
-            },
-          });
+        if (item.foodItems.length > 1) {
+          addIngredient(item.foodItems);
+        } else {
+          const foodItem = item;
+          if (foodItem) {
+            navigation.navigate('EditIngredientScreen', {
+              foodItem: {
+                ...foodItem,
+                nutrients: mergeNutrients(
+                  item.foodItems?.flatMap((i) => i.nutrients)
+                ),
+                refCode: foodItem.refCode ?? '',
+                iconId: foodItem?.iconID ?? foodItem.foodItems[0].iconId,
+                computedWeight:
+                  foodItem.computedWeight ??
+                  foodItem.foodItems[0].computedWeight,
+                entityType: 'user-food',
+              },
+              updateIngredient: (updatedIngredient) => {
+                navigation.pop();
+                addIngredient([updatedIngredient]);
+              },
+            });
+          }
         }
       },
       from: 'Ingredient',
