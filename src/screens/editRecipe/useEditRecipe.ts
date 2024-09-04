@@ -23,6 +23,7 @@ import {
 } from '../foodCreator/FoodCreator.utils';
 import { Alert, Platform } from 'react-native';
 import type { EditRecipeNameRef } from './views/EditRecipeName';
+import { mergeNutrients } from '../../utils/NutritentsUtils';
 
 export type EditRecipeScreenNavigationProps = StackNavigationProp<
   ParamList,
@@ -242,10 +243,20 @@ export function useEditRecipe() {
         }
       },
       onEditFoodData: (item) => {
-        const foodItem = item.foodItems[0];
+        const foodItem = item;
         if (foodItem) {
           navigation.navigate('EditIngredientScreen', {
-            foodItem: foodItem,
+            foodItem: {
+              ...foodItem,
+              nutrients: mergeNutrients(
+                item.foodItems?.flatMap((i) => i.nutrients)
+              ),
+              refCode: foodItem.refCode ?? '',
+              iconId: foodItem?.iconID ?? foodItem.foodItems[0].iconId,
+              computedWeight:
+                foodItem.computedWeight ?? foodItem.foodItems[0].computedWeight,
+              entityType: 'user-food',
+            },
             updateIngredient: (updatedIngredient) => {
               navigation.pop();
               addIngredient([updatedIngredient]);
