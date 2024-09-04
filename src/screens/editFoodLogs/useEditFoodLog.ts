@@ -109,12 +109,34 @@ export function useEditFoodLog() {
     } catch (error) {}
 
     if (isRecipe) {
+      const sum = foodLog.foodItems.reduce(
+        (acc, item) => acc + item.computedWeight.value,
+        0
+      );
+
       navigateToCustomRecipeScreen(
         {
           ...foodLog,
           uuid: uuid,
           barcode: barcode,
           iconID: CUSTOM_USER_RECIPE__PREFIX,
+          name: '',
+          selectedUnit: 'serving',
+          selectedQuantity: 1,
+          servingUnits: [
+            {
+              unit: 'serving',
+              mass: sum,
+            },
+            {
+              unit: 'gram',
+              mass: 1,
+            },
+          ],
+          computedWeight: {
+            value: sum,
+            unit: 'g',
+          },
         },
         isUpdateUponCreating
       );

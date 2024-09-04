@@ -2,7 +2,6 @@ import type { CustomRecipe, FoodItem, FoodLog, Image } from '../../models';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import RNFS from 'react-native-fs';
 
-import { content } from '../../constants/Content';
 import { useBranding, useServices } from '../../contexts';
 import { ShowToast } from '../../utils';
 import {
@@ -153,7 +152,7 @@ export function useEditRecipe() {
         },
       ];
       if (updatedFoodLog.foodItems.length === 1) {
-        updatedFoodLog.name = `${content.recipeWith} ${updatedFoodLog.name}`;
+        // updatedFoodLog.name = `${updatedFoodLog.name}`;
       }
       return updatedFoodLog;
     },
