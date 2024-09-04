@@ -89,6 +89,11 @@ export const IngredientsView = ({
           {isShowAll || foodItems.length > 1 ? (
             <View>
               <View style={styles.line} />
+              <View
+                style={{
+                  height: 10,
+                }}
+              />
               <FlatList
                 data={foodItems}
                 renderItem={({ item }: { item: FoodItem }) => {

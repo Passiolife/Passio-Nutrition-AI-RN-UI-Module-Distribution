@@ -194,6 +194,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   swipeableContainer: {
+    marginVertical: 8,
     ...Platform.select({
       ios: {
         marginTop: 0,
@@ -211,13 +212,11 @@ const styles = StyleSheet.create({
       ios: {
         backgroundColor: 'white',
         paddingHorizontal: 10,
-        marginVertical: 5,
         marginHorizontal: 4,
         flex: 1,
       },
       android: {
         backgroundColor: COLORS.white,
-        marginVertical: 5,
         paddingHorizontal: 10,
         marginHorizontal: 4,
       },
