@@ -39,9 +39,13 @@ target 'NutritionUxExample' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
-  pod 'react-native-nutrition-ux', :path => '../..'
   pod 'React-Core', :path => '../node_modules/react-native/', :modular_headers => true
+  pod 'react-native-nutrition-ux', :path => '../node_modules/@passiolife/nutrition-ai-ui-ux'
   pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
+  pod 'react-native-slider', :podspec => '../node_modules/@react-native-community/slider/react-native-slider.podspec'
+  pod 'ReactNativePassioSDK', :podspec => '../node_modules/@passiolife/nutritionai-react-native-sdk-v3/ReactNativePassioSDK.podspec'
+  pod 'RNDateTimePicker', :podspec => '../node_modules/@react-native-community/datetimepicker/RNDateTimePicker.podspec'
+  pod 'RNReanimated', :podspec => '../node_modules/react-native-reanimated/RNReanimated.podspec'
 
   target 'NutritionUxExampleTests' do
     inherit! :complete

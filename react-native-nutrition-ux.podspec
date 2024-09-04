@@ -20,7 +20,24 @@ Pod::Spec.new do |s|
   s.swift_version = "5"
 
   s.dependency "React-Core"
-
+  s.dependency "lottie-ios"
+  s.dependency "react-native-slider"
+  s.dependency "ReactNativePassioSDK"
+  s.dependency "RNDateTimePicker"
+  s.dependency "RNReanimated"
+  s.dependency "RNGestureHandler"
+  s.dependency "react-native-safe-area-context"
+  s.dependency "RNLinearGradient"
+  s.dependency "RNSVG"
+  s.dependency "react-native-sqlite-storage"
+  s.dependency "react-native-voice"
+  s.dependency "NotifeeCore"
+  s.dependency "RNAsyncStorage"
+  s.dependency "RNScreens"
+  s.dependency "VisionCamera"
+  s.dependency "react-native-image-picker"
+  s.dependency "RNFS"
+  
   # Don't install the dependencies when we run `pod install` in the old architecture.
   if ENV['RCT_NEW_ARCH_ENABLED'] == '1' then
     s.compiler_flags = folly_compiler_flags + " -DRCT_NEW_ARCH_ENABLED=1"
