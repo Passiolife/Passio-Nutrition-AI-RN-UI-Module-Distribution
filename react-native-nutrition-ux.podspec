@@ -14,10 +14,14 @@ Pod::Spec.new do |s|
   s.platforms    = { :ios => "13.0" }
   s.ios.deployment_target = '13.0'
   s.source       = { :git => "https://github.com/Passiolife/Passio-Nutrition-AI-RN-UI-Module-Distribution.git", :tag => "#{s.version}" }
-
+  s.preserve_paths  = "**/*.js"
   s.source_files = "ios/**/*.{h,m,mm,swift}"
   s.public_header_files = 'ios/*.h'
   s.swift_version = "5"
+
+  if respond_to?(:install_modules_dependencies, true)
+    install_modules_dependencies(s)
+  else
 
   s.dependency "React-Core"
   s.dependency "lottie-ios"
@@ -51,5 +55,6 @@ Pod::Spec.new do |s|
     s.dependency "RCTRequired"
     s.dependency "RCTTypeSafety"
     s.dependency "ReactCommon/turbomodule/core"
+     end
    end
 end
