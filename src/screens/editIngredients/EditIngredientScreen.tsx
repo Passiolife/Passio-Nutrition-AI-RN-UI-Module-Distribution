@@ -34,12 +34,12 @@ export const EditIngredientScreen = () => {
   return <EditIngredient />;
 };
 
-export const EditIngredient = (props?: EditIngredientsScreenProps) => {
+export const EditIngredient = () => {
   const { params } = useRoute<RouteProp<ParamList, 'EditIngredientScreen'>>();
 
   const navigation = useNavigation<EditIngredientNavigationProps>();
 
-  const { foodItem, updateFoodItem } = useEditIngredient(params ?? props);
+  const { foodItem, updateFoodItem } = useEditIngredient(params);
 
   const onSavePress = async () => {
     await saveIngredient().then(() => {});

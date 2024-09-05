@@ -139,21 +139,6 @@ export function useEditRecipe() {
         value: sum,
         unit: 'g',
       };
-      updatedFoodLog.selectedUnit = 'serving';
-      updatedFoodLog.selectedQuantity = 1;
-      updatedFoodLog.servingUnits = [
-        {
-          unit: 'serving',
-          mass: sum,
-        },
-        {
-          unit: 'gram',
-          mass: 1,
-        },
-      ];
-      if (updatedFoodLog.foodItems.length === 1) {
-        // updatedFoodLog.name = `${updatedFoodLog.name}`;
-      }
       return updatedFoodLog;
     },
     []
@@ -247,7 +232,7 @@ export function useEditRecipe() {
         } else {
           const foodItem = item;
           if (foodItem) {
-            navigation.navigate('EditIngredientScreen', {
+            navigation.push('EditIngredientScreen', {
               foodItem: {
                 ...foodItem,
                 nutrients: mergeNutrients(
@@ -278,8 +263,8 @@ export function useEditRecipe() {
 
   const onEditIngredientPress = useCallback(
     (foodItem: FoodItem) => {
-      navigation.navigate('EditIngredientScreen', {
-        foodItem: foodItem,
+      navigation.push('EditIngredientScreen', {
+        foodItem: { ...foodItem },
         deleteIngredient: (food) => {
           deleteIngredient(food);
           navigation.goBack();
