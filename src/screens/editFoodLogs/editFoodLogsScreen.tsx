@@ -158,6 +158,7 @@ export const EditFoodLogScreen = () => {
           <IngredientsView
             onAddIngredients={onEditCustomRecipePress}
             foodItems={foodLog.foodItems}
+            referenceCode={foodLog.refCustomFoodID}
             enable={false}
           />
           <View style={styles.lastContainer} />

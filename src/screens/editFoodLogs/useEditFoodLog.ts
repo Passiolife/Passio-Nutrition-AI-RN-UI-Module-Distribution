@@ -119,8 +119,11 @@ export function useEditFoodLog() {
           ...foodLog,
           uuid: uuid,
           barcode: barcode,
-          iconID: CUSTOM_USER_RECIPE__PREFIX,
-          name: '',
+          iconID:
+            foodLog.foodItems.length > 1
+              ? foodLog.iconID
+              : CUSTOM_USER_RECIPE__PREFIX,
+          name: foodLog.foodItems.length > 1 ? foodLog.name : '',
           selectedUnit: 'serving',
           selectedQuantity: 1,
           servingUnits: [
@@ -306,7 +309,17 @@ export function useEditFoodLog() {
   };
   const onEditCustomRecipePress = async () => {
     if (params.prevRouteName === 'MyFood') {
-      params?.onEditRecipeFood?.(foodLog);
+      if (params.onEditRecipeFood) {
+        params.onEditRecipeFood(foodLog);
+      } else {
+        alertCustomFoodRef.current?.onShow(
+          foodLog.refCustomFoodID?.startsWith(CUSTOM_USER_RECIPE__PREFIX)
+            ? foodLog.refCustomFoodID
+            : undefined,
+          true,
+          true
+        );
+      }
     } else if (params.prevRouteName === 'MealLog') {
       alertCustomFoodRef.current?.onShow(
         foodLog.refCustomFoodID?.startsWith(CUSTOM_USER_RECIPE__PREFIX)

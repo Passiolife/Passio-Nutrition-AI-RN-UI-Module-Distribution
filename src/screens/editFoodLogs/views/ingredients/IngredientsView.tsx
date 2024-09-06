@@ -17,6 +17,7 @@ interface Props {
   foodItems: FoodItem[];
   isShowAll?: boolean;
   enable?: boolean;
+  referenceCode?: string;
   onAddIngredients?: () => void;
   deleteIngredientsItem?: (foodItem: FoodItem) => void;
   navigateToEditIngredientsScreen?: (
