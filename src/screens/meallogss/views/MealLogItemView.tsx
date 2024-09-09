@@ -28,6 +28,10 @@ const MealLogItemView = (props: Props) => {
     });
   }, [foodLog, props]);
 
+  const computedWeight =
+    foodLog.computedWeight?.value ??
+    foodLog.foodItems.at(0)?.computedWeight.value;
+
   return (
     <SwipeToDelete
       onPressDelete={onDeleteFoodLog}
@@ -61,7 +65,7 @@ const MealLogItemView = (props: Props) => {
           >
             {`${foodLog.selectedQuantity} ${foodLog.selectedUnit}`}
             {' ('}
-            {(foodLog.computedWeight?.value ??
+            {(computedWeight?.toFixed(1) ??
               Math.round(foodLog.foodItems.at(0)?.computedWeight.value ?? 0)) +
               ' ' +
               (foodLog.computedWeight?.unit ??
