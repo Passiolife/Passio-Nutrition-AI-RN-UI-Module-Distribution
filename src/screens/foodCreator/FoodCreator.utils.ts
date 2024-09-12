@@ -324,15 +324,9 @@ export const combineCustomFoodAndFoodLog = (
   customFood: CustomFood,
   foodLog: FoodLog
 ): FoodLog => {
-  const mergedServingUnits = [
-    ...customFood.servingUnits,
-    ...(foodLog?.servingUnits ?? []),
-  ];
+  const mergedServingUnits = [...customFood.servingUnits];
 
-  const mergedServingSizes = [
-    ...customFood.servingSizes,
-    ...(foodLog?.servingSizes ?? []),
-  ];
+  const mergedServingSizes = [...customFood.servingSizes];
 
   const uniqueServingUnits = mergedServingUnits.filter(
     (unit, index, self) =>
