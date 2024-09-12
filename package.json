@@ -6,8 +6,11 @@
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
   "types": "lib/typescript/index.d.ts",
-  "react-native": "src/index",
   "source": "src/index",
+  "react-native": {
+    "android": "./android",
+    "ios": "./ios"
+  },
   "files": [
     "src",
     "lib",
