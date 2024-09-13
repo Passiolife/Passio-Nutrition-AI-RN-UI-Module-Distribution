@@ -1,6 +1,6 @@
 {
   "name": "@passiolife/nutrition-ai-ui-ux",
-  "version": "3.1.0-alpha-3",
+  "version": "3.1.4",
   "description": "A white-labeled nutrition tracking module implemented in React Native",
   "license": "MIT",
   "main": "lib/commonjs/index",
