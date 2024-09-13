@@ -21,6 +21,7 @@ interface Props {
 }
 
 const NewEditServingAmountView = ({ foodLog, onUpdateFoodLog }: Props) => {
+  const styles = stylesObj();
   const {
     servingUnits,
     selectedUnit,
@@ -138,90 +139,91 @@ const NewEditServingAmountView = ({ foodLog, onUpdateFoodLog }: Props) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    marginTop: scaleHeight(12),
-    paddingVertical: scaleHeight(12),
-    paddingHorizontal: scaleHeight(13),
-    flexDirection: 'column',
-  },
-  headerText: {},
-  cardHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: scaleHeight(6),
-    justifyContent: 'space-between',
-  },
-  chevDownTouchStyle: {
-    width: 22,
-    marginHorizontal: 16,
-    height: 22,
-    backgroundColor: COLORS.blue,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 50,
-  },
-  chevDown: {
-    width: 10,
-    height: 10,
-  },
-  content: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    flexWrap: 'nowrap',
-    alignItems: 'center',
-    marginTop: scaleHeight(16),
-  },
-  containerInputStyle: {
-    minWidth: 50,
-    textAlign: 'right',
-  },
-  inputStyle: {
-    paddingVertical: scaleHeight(12),
-    backgroundColor: 'transparent',
-    textAlign: 'center',
-    minWidth: scaleWidth(50),
-  },
-  servingSizeBtn: {
-    marginStart: 16,
-    paddingVertical: 8,
-    maxWidth: 150,
-    justifyContent: 'center',
-    backgroundColor: COLORS.blue,
-    borderRadius: 25,
-  },
-  servingSizeBtnTxt: {
-    color: COLORS.white,
-    fontSize: 14,
-    textTransform: 'capitalize',
-  },
-  servingAmountTxt: {
-    fontSize: 15,
-    marginStart: 16,
-    color: COLORS.grey7,
-  },
-  sliderLayout: {
-    marginTop: 10,
-  },
-  contentContainerStyle: {
-    flexDirection: 'row',
-  },
-  nutrientCards: {
-    marginTop: 8,
-    marginLeft: 8,
-    marginBottom: 8,
-    flexDirection: 'column',
-  },
-  altBtnTxt: {
-    fontSize: 14,
-    paddingVertical: 7,
-  },
-  cardFooter: {
-    marginTop: 10,
-  },
-  onPressTouch: {
-    overflow: 'hidden',
-  },
-});
+const stylesObj = () =>
+  StyleSheet.create({
+    container: {
+      marginTop: scaleHeight(12),
+      paddingVertical: scaleHeight(12),
+      paddingHorizontal: scaleHeight(13),
+      flexDirection: 'column',
+    },
+    headerText: {},
+    cardHeader: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginTop: scaleHeight(6),
+      justifyContent: 'space-between',
+    },
+    chevDownTouchStyle: {
+      width: 22,
+      marginHorizontal: 16,
+      height: 22,
+      backgroundColor: COLORS.blue,
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: 50,
+    },
+    chevDown: {
+      width: 10,
+      height: 10,
+    },
+    content: {
+      flexDirection: 'row',
+      justifyContent: 'flex-start',
+      flexWrap: 'nowrap',
+      alignItems: 'center',
+      marginTop: scaleHeight(16),
+    },
+    containerInputStyle: {
+      minWidth: 50,
+      textAlign: 'right',
+    },
+    inputStyle: {
+      paddingVertical: scaleHeight(12),
+      backgroundColor: 'transparent',
+      textAlign: 'center',
+      minWidth: scaleWidth(50),
+    },
+    servingSizeBtn: {
+      marginStart: 16,
+      paddingVertical: 8,
+      maxWidth: 150,
+      justifyContent: 'center',
+      backgroundColor: COLORS.blue,
+      borderRadius: 25,
+    },
+    servingSizeBtnTxt: {
+      color: COLORS.white,
+      fontSize: 14,
+      textTransform: 'capitalize',
+    },
+    servingAmountTxt: {
+      fontSize: 15,
+      marginStart: 16,
+      color: COLORS.grey7,
+    },
+    sliderLayout: {
+      marginTop: 10,
+    },
+    contentContainerStyle: {
+      flexDirection: 'row',
+    },
+    nutrientCards: {
+      marginTop: 8,
+      marginLeft: 8,
+      marginBottom: 8,
+      flexDirection: 'column',
+    },
+    altBtnTxt: {
+      fontSize: 14,
+      paddingVertical: 7,
+    },
+    cardFooter: {
+      marginTop: 10,
+    },
+    onPressTouch: {
+      overflow: 'hidden',
+    },
+  });
 
 export default React.memo(NewEditServingAmountView);

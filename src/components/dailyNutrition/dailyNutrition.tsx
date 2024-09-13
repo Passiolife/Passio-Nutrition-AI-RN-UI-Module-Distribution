@@ -2,9 +2,9 @@ import React from 'react';
 import { Image, TouchableOpacity } from 'react-native';
 import type { FoodLog } from '../../models';
 import { Card, MacrosProgressView, Text } from '..';
-import styles from './styles';
 import { ICONS } from '../../assets';
 import { useDailyMacroNutrition } from '../../hooks/useDailyMacroNutrition';
+import { stylesObj } from './styles';
 
 export interface DailyNutritionProps {
   foodLogs?: FoodLog[];
@@ -14,6 +14,7 @@ export const DailyNutrition = ({ foodLogs }: DailyNutritionProps) => {
   const { dailyMacroNutrientAndCalories, nutritionTarget, onReportPress } =
     useDailyMacroNutrition(foodLogs ?? []);
 
+  const styles = stylesObj();
   return (
     <Card style={styles.macroContainer}>
       <TouchableOpacity onPress={onReportPress}>

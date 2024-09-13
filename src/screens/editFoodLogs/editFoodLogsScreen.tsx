@@ -20,7 +20,7 @@ import { calculateComputedWeightAmount } from './utils';
 import { useEditFoodLog } from './useEditFoodLog';
 import { content } from '../../constants/Content';
 import type { Branding } from '../../contexts';
-import { scaleHeight, scaleWidth, scaled, scaledSize } from '../../utils';
+import { scaleHeight, scaleWidth } from '../../utils';
 import { ICONS } from '../../assets';
 import NewEditServingAmountView from './views/newEditServingsAmountView';
 import AlertCustomFood from './views/AlertCustomFood';
@@ -285,10 +285,12 @@ const editFoodLogStyle = ({ backgroundColor }: Branding) =>
       height: 50,
     },
     heartIconStyle: {
-      ...scaled(24),
+      height: 24,
+      width: 24,
     },
     filledHeartIconStyle: {
-      ...scaled(24),
+      height: 24,
+      width: 24,
     },
   });
 
@@ -298,12 +300,12 @@ const bottomActionStyle = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-evenly',
     marginBottom: 32,
-    marginHorizontal: scaleWidth(16),
+    marginHorizontal: 16,
   },
   bottomActionButton: {
     flex: 1,
     marginHorizontal: 8,
-    borderRadius: scaledSize(4),
+    borderRadius: 4,
     justifyContent: 'center',
   },
   deleteActionButton: {

@@ -1,6 +1,5 @@
 import { StyleSheet } from 'react-native';
 import { COLORS } from '../../constants';
-import { scaled } from '../../utils/';
 
 const styles = StyleSheet.create({
   shadowContainer: {
@@ -50,7 +49,8 @@ const styles = StyleSheet.create({
     width: 40,
   },
   addFoodIcon: {
-    ...scaled(24),
+    height: 24,
+    width: 24,
   },
   addFoodIconView: {
     justifyContent: 'center',

@@ -48,6 +48,8 @@ const LogInformationView = ({
   const proteinRounded = Math.round(proteinPercentage);
   const fatRounded = 100 - carbsRounded - proteinRounded;
 
+  const styles = stylesObj();
+
   return (
     <Card style={styles.informationContainer}>
       <View style={styles.informationRow}>
@@ -221,106 +223,107 @@ const LogInformationView = ({
   );
 };
 
-const styles = StyleSheet.create({
-  informationContainer: {
-    paddingVertical: scaleHeight(12),
-    paddingHorizontal: scaleHeight(13),
-    marginTop: scaleHeight(16),
-    paddingBottom: 20,
-  },
-  informationRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  imageContainer: {
-    width: 50,
-    borderRadius: 24,
-    overflow: 'hidden',
-    alignSelf: 'center',
-  },
-  image: {
-    width: 50,
-    height: 50,
-  },
-  informationContent: {
-    flex: 1,
-    marginLeft: 10,
-  },
-  logName: {
-    lineHeight: 24,
-    textTransform: 'capitalize',
-  },
-  logSize: {
-    lineHeight: 16,
-    textTransform: 'capitalize',
-    marginTop: 2,
-  },
-  calorieContainer: {
-    flexDirection: 'column',
-    marginTop: 15,
-    justifyContent: 'center',
-  },
-  otherNutrientContainer: {
-    flexDirection: 'column',
-    alignItems: 'flex-end',
-    marginTop: 15,
-  },
-  nutrients: {
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-  },
-  calorieItem: {
-    alignItems: 'center',
-    position: 'absolute',
-    alignSelf: 'center',
-    flexDirection: 'column',
-  },
-  otherNutrientItem: {
-    alignItems: 'center',
-    flexDirection: 'row',
-  },
-  calorieItemTitle: {
-    lineHeight: 16,
-    marginVertical: scaleHeight(4),
-    textTransform: 'capitalize',
-  },
-  otherNutrientTitle: {
-    lineHeight: 16,
-    textTransform: 'capitalize',
-  },
-  calorieItemValue: {
-    lineHeight: 29,
-  },
-  otherNutrientTValue: {
-    lineHeight: 29,
-  },
-  percentage: {
-    lineHeight: 29,
-    marginStart: scaleWidth(4),
-  },
-  chevDownTouchStyle: {
-    width: 22,
-    marginHorizontal: 16,
-    height: 22,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 50,
-  },
-  chevDown: {
-    width: 24,
-    height: 24,
-  },
-  rightIconView: {
-    justifyContent: 'flex-start',
-    height: '100%',
-    marginLeft: scaleWidth(2),
-  },
-  cardFooterView: {
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    flexDirection: 'row',
-    marginTop: scaleHeight(15),
-  },
-});
+const stylesObj = () =>
+  StyleSheet.create({
+    informationContainer: {
+      paddingVertical: scaleHeight(12),
+      paddingHorizontal: scaleHeight(13),
+      marginTop: scaleHeight(16),
+      paddingBottom: 20,
+    },
+    informationRow: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    imageContainer: {
+      width: 50,
+      borderRadius: 24,
+      overflow: 'hidden',
+      alignSelf: 'center',
+    },
+    image: {
+      width: 50,
+      height: 50,
+    },
+    informationContent: {
+      flex: 1,
+      marginLeft: 10,
+    },
+    logName: {
+      lineHeight: 24,
+      textTransform: 'capitalize',
+    },
+    logSize: {
+      lineHeight: 16,
+      textTransform: 'capitalize',
+      marginTop: 2,
+    },
+    calorieContainer: {
+      flexDirection: 'column',
+      marginTop: 15,
+      justifyContent: 'center',
+    },
+    otherNutrientContainer: {
+      flexDirection: 'column',
+      alignItems: 'flex-end',
+      marginTop: 15,
+    },
+    nutrients: {
+      flexDirection: 'row',
+      justifyContent: 'space-evenly',
+    },
+    calorieItem: {
+      alignItems: 'center',
+      position: 'absolute',
+      alignSelf: 'center',
+      flexDirection: 'column',
+    },
+    otherNutrientItem: {
+      alignItems: 'center',
+      flexDirection: 'row',
+    },
+    calorieItemTitle: {
+      lineHeight: 16,
+      marginVertical: scaleHeight(4),
+      textTransform: 'capitalize',
+    },
+    otherNutrientTitle: {
+      lineHeight: 16,
+      textTransform: 'capitalize',
+    },
+    calorieItemValue: {
+      lineHeight: 29,
+    },
+    otherNutrientTValue: {
+      lineHeight: 29,
+    },
+    percentage: {
+      lineHeight: 29,
+      marginStart: scaleWidth(4),
+    },
+    chevDownTouchStyle: {
+      width: 22,
+      marginHorizontal: 16,
+      height: 22,
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: 50,
+    },
+    chevDown: {
+      width: 24,
+      height: 24,
+    },
+    rightIconView: {
+      justifyContent: 'flex-start',
+      height: '100%',
+      marginLeft: scaleWidth(2),
+    },
+    cardFooterView: {
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      flexDirection: 'row',
+      marginTop: scaleHeight(15),
+    },
+  });
 
 export default React.memo(LogInformationView);

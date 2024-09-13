@@ -19,6 +19,8 @@ export const MealTimeView = ({ defaultLabel, onPress }: Props) => {
     onPress(mealLabel);
   };
 
+  const styles = stylesObj();
+
   return (
     <TouchableOpacity activeOpacity={1} onPress={() => onPress(selectedLabel)}>
       <Card style={styles.container}>
@@ -48,25 +50,26 @@ export const MealTimeView = ({ defaultLabel, onPress }: Props) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    marginTop: scaleHeight(12),
-    paddingHorizontal: scaleWidth(13),
-    paddingVertical: scaleHeight(12),
-    flexDirection: 'column',
-  },
-  headerText: {
-    marginTop: scaleHeight(8),
-  },
-  mealsContainer: {
-    paddingTop: scaleHeight(12),
-    marginVertical: scaleHeight(8),
-    flex: 1,
-  },
-  dateText: {
-    color: COLORS.blue,
-    fontSize: 15,
-    fontWeight: '700',
-    alignSelf: 'center',
-  },
-});
+const stylesObj = () =>
+  StyleSheet.create({
+    container: {
+      marginTop: scaleHeight(12),
+      paddingHorizontal: scaleWidth(13),
+      paddingVertical: scaleHeight(12),
+      flexDirection: 'column',
+    },
+    headerText: {
+      marginTop: scaleHeight(8),
+    },
+    mealsContainer: {
+      paddingTop: scaleHeight(12),
+      marginVertical: scaleHeight(8),
+      flex: 1,
+    },
+    dateText: {
+      color: COLORS.blue,
+      fontSize: 15,
+      fontWeight: '700',
+      alignSelf: 'center',
+    },
+  });

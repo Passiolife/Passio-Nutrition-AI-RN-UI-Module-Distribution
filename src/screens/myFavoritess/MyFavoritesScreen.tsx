@@ -8,7 +8,7 @@ import { COLORS } from '../../constants';
 import { FavoriteEmptyView } from './index';
 import type { FavoriteFoodItem } from '../../models';
 import FavoriteFoodLogView from './views/FavoriteFoodLogView';
-import { withLoading } from '../../utils';
+import withLoading from '../../utils/withLoading';
 import { ProgressLoadingView, BackNavigation } from '../../components';
 import { content } from '../../constants/Content';
 import type { Branding } from '../../contexts';
