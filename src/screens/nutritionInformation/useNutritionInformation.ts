@@ -13,7 +13,16 @@ export const useNutritionInformation = () => {
   }, []);
 
   return {
-    nutrients: params.nutrient.filter((i) => i.id !== 'weight'),
+    nutrients: params.nutrient.filter(
+      (i) =>
+        i.id !== 'weight' &&
+        i.id !== 'calories' &&
+        i.id !== 'carbs' &&
+        i.id !== 'fat' &&
+        i.id !== 'protein' &&
+        i.amount !== undefined &&
+        i.amount !== null
+    ),
     onInfoPress,
     isInfo,
     foodLog: params.foodLog,

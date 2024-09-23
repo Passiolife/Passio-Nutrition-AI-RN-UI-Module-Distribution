@@ -45,7 +45,8 @@ export type NutrientType =
   | 'fibers'
   | 'sugarsAdded'
   | 'weight'
-  | 'iodine';
+  | 'iodine'
+  | 'vitaminARAE';
 
 export const unitForNutrient = (id: NutrientType) => nutrientUnits[id];
 
@@ -87,6 +88,7 @@ export const nutrientUnits: Record<NutrientType, NutrientUnit> = {
   vitaminKDihydrophylloquinone: 'μg',
   fibers: 'g',
   chromium: 'μg',
+  vitaminARAE: 'μg',
   sugarsAdded: 'g',
   weight: 'g',
 };
@@ -103,8 +105,8 @@ export const nutrientName: Record<NutrientType, String> = {
   cholesterol: 'Cholesterol',
   sodium: 'Sodium',
   fiber: 'Dietary Fiber',
-  sugars: 'Sugar',
-  sugarAdded: 'SugarAdded',
+  sugars: 'Total Sugar',
+  sugarAdded: 'Added Sugar',
   vitaminD: 'Vitamin D',
   calcium: 'Calcium',
   iron: 'Iron',
@@ -117,7 +119,7 @@ export const nutrientName: Record<NutrientType, String> = {
   vitaminB12Added: 'Vitamin B12 Added',
   vitaminB6: 'Vitamin B6',
   vitaminE: 'Vitamin E',
-  vitaminEAdded: 'Vitamin E Added',
+  vitaminEAdded: 'Vitamin E',
   magnesium: 'Magnesium',
   phosphorus: 'Phosphorus',
   iodine: 'Iodine',
@@ -128,9 +130,10 @@ export const nutrientName: Record<NutrientType, String> = {
   vitaminKMenaquinone4: 'Vitamin K Menaquinone',
   vitaminKDihydrophylloquinone: 'Vitamin K Dihydrophylloquinone',
   chromium: 'Chromium',
-  fibers: 'Fibers',
-  sugarsAdded: 'Sugars Added',
+  fibers: 'Dietary Fibers',
+  sugarsAdded: 'Added Sugar',
   weight: 'weight',
+  vitaminARAE: 'Vitamin A RAE',
 };
 
 export const recommendedNutrient: Record<NutrientType, number> = {
@@ -172,6 +175,7 @@ export const recommendedNutrient: Record<NutrientType, number> = {
   vitaminKPhylloquinone: 0,
   vitaminKMenaquinone4: 0,
   vitaminKDihydrophylloquinone: 0,
+  vitaminARAE: 0,
   chromium: 0,
 };
 
@@ -182,6 +186,7 @@ export const sortByNutrientType: NutrientType[] = [
   'sodium',
   'fibers',
   'sugars',
+  'sugarsAdded',
   'vitaminD',
   'calcium',
   'iron',
@@ -194,11 +199,11 @@ export const sortByNutrientType: NutrientType[] = [
   'vitaminB12',
   'vitaminE',
   'vitaminA',
+  'vitaminARAE',
   'vitaminC',
   'zinc',
   'selenium',
   'folicAcid',
   'chromium',
   'fibers',
-  'sugarsAdded',
 ];

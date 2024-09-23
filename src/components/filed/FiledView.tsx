@@ -21,6 +21,7 @@ interface Props {
   name: string;
   value?: string;
   label?: string;
+  display?: string;
   keyboardType?: KeyboardTypeOptions;
   isColum?: boolean;
   onDelete?: () => void;
@@ -45,6 +46,7 @@ export const FiledView = React.forwardRef<FiledViewRef, Props>(
       isCharacter = false,
       multiLine = false,
       onDelete,
+      display,
     }: Props,
     ref: React.Ref<FiledViewRef>
   ) => {
@@ -108,7 +110,7 @@ export const FiledView = React.forwardRef<FiledViewRef, Props>(
                 setError(undefined);
               }}
               returnKeyType={multiLine ? 'default' : 'done'}
-              defaultValue={defaultValue?.toString()}
+              defaultValue={display ?? defaultValue}
               placeholder={label}
               keyboardType={keyboardType}
             />

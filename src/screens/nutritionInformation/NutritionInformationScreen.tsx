@@ -29,7 +29,11 @@ const NutritionInformationScreen = () => {
             size={'_24px'}
             style={styles.itemText}
           >
-            {Math.round(item.amount)}
+            {item.amount === 0
+              ? item.amount.toFixed(0)
+              : item.amount.toFixed(2) === '0'
+                ? 0
+                : item.amount.toFixed(2)}
             <Text
               weight="400"
               color="secondaryText"
@@ -154,7 +158,6 @@ const styles = StyleSheet.create({
   itemTextTitle: {
     flex: 2,
     fontWeight: '700',
-    textTransform: 'capitalize',
   },
   info: {
     textTransform: 'capitalize',

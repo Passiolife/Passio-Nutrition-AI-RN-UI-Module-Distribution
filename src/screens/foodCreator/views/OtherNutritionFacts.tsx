@@ -42,11 +42,16 @@ export const OtherNutritionFacts = React.forwardRef<
     // Generate default nutrients where come from `foodLog
     const allNutrients: DefaultNutrients[] | undefined = foodLog?.foodItems
       ?.flatMap((o) => o.nutrients)
-      .filter((i) => i.amount > 0 && OtherNutrients.includes(i.id))
+      .filter(
+        (i) =>
+          i.amount !== undefined &&
+          i.amount !== null &&
+          OtherNutrients.includes(i.id)
+      )
       .map((i) => {
         const data: DefaultNutrients = {
           label: i.id as NutrientType,
-          value: Number(i.amount.toFixed(2)),
+          value: Number(i.amount),
         };
         return data;
       });
@@ -121,6 +126,13 @@ export const OtherNutritionFacts = React.forwardRef<
                   value={
                     Number.isFinite(item.value)
                       ? item?.value?.toString()
+                      : undefined
+                  }
+                  display={
+                    Number.isFinite(item.value)
+                      ? Number(item?.value?.toFixed(2)) === 0
+                        ? '0'
+                        : item?.value?.toFixed(2)
                       : undefined
                   }
                   onDelete={() => {
