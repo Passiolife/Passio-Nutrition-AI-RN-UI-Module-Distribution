@@ -120,6 +120,7 @@ function convertPassioIngredientToFoodItem(
       amount: passioIngredient.amount,
       ingredientWeight: passioIngredient.weight,
       id: passioIngredient.id,
+      refCode: '',
     },
     passioIngredient.amount.weight
   );

@@ -898,7 +898,7 @@ PODS:
     - glog
     - RCT-Folly (= 2022.05.16.00)
     - React-Core
-  - react-native-nutrition-ux (3.1.0-alpha-3):
+  - react-native-nutrition-ux (3.1.4):
     - lottie-ios
     - lottie-react-native
     - React-Core
@@ -1081,7 +1081,7 @@ PODS:
     - React-jsi (= 0.73.2)
     - React-logger (= 0.73.2)
     - React-perflogger (= 0.73.2)
-  - ReactNativePassioSDK (3.1.4-1):
+  - ReactNativePassioSDK (3.2.0):
     - React-Core
   - RNCAsyncStorage (1.24.0):
     - React-Core
@@ -1392,7 +1392,7 @@ SPEC CHECKSUMS:
   React-Mapbuffer: 9ee041e1d7be96da6d76a251f92e72b711c651d6
   react-native-blob-util: 39a20f2ef11556d958dc4beb0aa07d1ef2690745
   react-native-image-picker: 994a97b28e7f2c2197e21801569bb19f6e494e38
-  react-native-nutrition-ux: 69594de32eaaec4dac77bb683c2239258d498600
+  react-native-nutrition-ux: 6fa856e4bb49490400e480d2435a378d13ce1474
   react-native-pdf: 103940c90d62adfd259f63cca99c7c0c306b514c
   react-native-safe-area-context: b7daa1a8df36095a032dff095a1ea8963cb48371
   react-native-slider: 07df44a6b615c6bf8584a5ee88288024b3cbf498
@@ -1418,7 +1418,7 @@ SPEC CHECKSUMS:
   React-runtimescheduler: df8945a656356ff10f58f65a70820478bfcf33ad
   React-utils: f5bc61e7ea3325c0732ae2d755f4441940163b85
   ReactCommon: 45b5d4f784e869c44a6f5a8fad5b114ca8f78c53
-  ReactNativePassioSDK: b331a59f9031f1ced6edeba4a00865a35d8ddb82
+  ReactNativePassioSDK: 23892daaf6b21297f8e631197d1adf251ead7f55
   RNCAsyncStorage: ec53e44dc3e75b44aa2a9f37618a49c3bc080a7a
   RNCPicker: b7873ba797dc586bfaf3307d737cbdc620a9ff3e
   RNDateTimePicker: 4f3c4dbd4f908be32ec8c93f086e8924bd4a2e07
