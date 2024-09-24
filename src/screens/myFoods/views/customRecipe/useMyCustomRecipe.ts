@@ -103,10 +103,11 @@ export const useMyCustomRecipe = () => {
   const onFavorite = () => {};
 
   const onCreateNewRecipePress = () => {
+    const uuid: string = uuid4.v4() as string;
     navigation.push('EditRecipeScreen', {
       recipe: {
         name: '',
-        uuid: '',
+        uuid: uuid,
         iconID: CUSTOM_USER_RECIPE__PREFIX,
         foodItems: [],
         selectedUnit: 'g',
