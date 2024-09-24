@@ -85,7 +85,7 @@ export const OtherNutritionFacts = React.forwardRef<
               isNotValid = true;
             }
             record[item.label as NutrientType] =
-              sleetedRef.current.value() ?? '';
+              sleetedRef.current.value()?.replaceAll(',', '.') ?? '';
           }
         });
 
@@ -130,9 +130,7 @@ export const OtherNutritionFacts = React.forwardRef<
                   }
                   display={
                     Number.isFinite(item.value)
-                      ? Number(item?.value?.toFixed(2)) === 0
-                        ? '0'
-                        : item?.value?.toFixed(2)
+                      ? (item?.value ?? '').toString()
                       : undefined
                   }
                   onDelete={() => {

@@ -20,7 +20,7 @@ import {
   WEIGHT_UNIT_SPLIT_IDENTIFIER,
 } from '../FoodCreator.utils';
 import type { CustomFood } from '../../../models';
-import { totalAmountOfNutrient } from '../../../screens/editFoodLogs';
+import { totalAmountOfNutrientForCustomFood } from '../../../screens/editFoodLogs';
 
 interface Props {
   foodLog?: CustomFood;
@@ -117,11 +117,20 @@ export const RequireNutritionFacts = React.forwardRef<
                 record[key] =
                   input + WEIGHT_UNIT_SPLIT_IDENTIFIER + value ?? '';
               }
-            } else {
+            } else if (key === 'Units') {
               if (value === undefined || value.length === 0) {
                 isNotValid = true;
               }
               record[key] = value ?? '';
+            } else {
+              if (
+                value === undefined ||
+                value.length === 0 ||
+                !isValidDecimalNumber(value)
+              ) {
+                isNotValid = true;
+              }
+              record[key] = value?.replaceAll(',', '.') ?? '';
             }
           });
 
@@ -140,16 +149,16 @@ export const RequireNutritionFacts = React.forwardRef<
     let proteins;
 
     calories = foodLog?.foodItems
-      ? totalAmountOfNutrient(foodLog?.foodItems ?? [], 'calories')
+      ? totalAmountOfNutrientForCustomFood(foodLog?.foodItems ?? [], 'calories')
       : undefined;
     carbs = foodLog?.foodItems
-      ? totalAmountOfNutrient(foodLog?.foodItems ?? [], 'carbs')
+      ? totalAmountOfNutrientForCustomFood(foodLog?.foodItems ?? [], 'carbs')
       : undefined;
     proteins = foodLog?.foodItems
-      ? totalAmountOfNutrient(foodLog?.foodItems ?? [], 'protein')
+      ? totalAmountOfNutrientForCustomFood(foodLog?.foodItems ?? [], 'protein')
       : undefined;
     fat = foodLog?.foodItems
-      ? totalAmountOfNutrient(foodLog?.foodItems ?? [], 'fat')
+      ? totalAmountOfNutrientForCustomFood(foodLog?.foodItems ?? [], 'fat')
       : undefined;
 
     return (

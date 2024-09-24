@@ -195,7 +195,7 @@ export const isValidDecimalNumber = (text?: string, isCharacter?: boolean) => {
     } else if (isCharacter) {
       return text.trim().length > 0;
     } else {
-      return /^\d+(\.\d+)?$/.test(text.trim());
+      return /^\d+(\.\d+)?$/.test(text.replaceAll(',', '.').trim());
     }
   } else {
     return false;

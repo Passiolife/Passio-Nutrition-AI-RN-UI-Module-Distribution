@@ -40,7 +40,17 @@ export function totalAmountOfNutrient(
   );
   return totalAmount > 1
     ? Math.floor(totalAmount)
-    : parseFloat(totalAmount.toFixed(1));
+    : parseFloat(totalAmount.toFixed(2));
+}
+export function totalAmountOfNutrientForCustomFood(
+  foodItems: FoodItem[],
+  nutrientType: NutrientType
+): number {
+  const totalAmount = totalAmountOfNutrientWithoutRound(
+    foodItems,
+    nutrientType
+  );
+  return totalAmount > 1 ? Number(totalAmount.toFixed(2)) : totalAmount;
 }
 export function totalAmountOfNutrientWithoutRound(
   foodItems: FoodItem[],
