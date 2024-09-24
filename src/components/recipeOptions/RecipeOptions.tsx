@@ -14,6 +14,7 @@ import Modal from 'react-native-modal';
 
 interface Props {
   onTextSearch: () => void;
+  onFavorite: () => void;
 }
 
 export interface RecipeOptionsRef {
@@ -22,7 +23,10 @@ export interface RecipeOptionsRef {
 }
 
 export const RecipeOptions = React.forwardRef(
-  ({ onTextSearch }: Props, ref: React.Ref<RecipeOptionsRef> | any) => {
+  (
+    { onTextSearch, onFavorite }: Props,
+    ref: React.Ref<RecipeOptionsRef> | any
+  ) => {
     const branding = useBranding();
     const styles = recipeOptionsStyle(branding);
     const [isOpen, setOpen] = useState(false);
@@ -54,6 +58,7 @@ export const RecipeOptions = React.forwardRef(
         <View style={styles.container}>
           <View style={styles.optionWrapper}>
             {renderItem(ICONS.logOptionSearch, 'Text Search', onTextSearch)}
+            {renderItem(ICONS.logOptionFavorite, 'Favorite', onFavorite)}
           </View>
           <TouchableOpacity
             onPress={() => setOpen(false)}

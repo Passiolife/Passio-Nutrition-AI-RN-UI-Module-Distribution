@@ -26,6 +26,7 @@ export const EditRecipeScreen = () => {
     onAddIngredientPress,
     recipeOptionsRef,
     onFindSearchPress,
+    onAddFavoritePress,
     onCancelPress,
     onEditImagePress,
     onEditIngredientPress,
@@ -105,7 +106,11 @@ export const EditRecipeScreen = () => {
           onSelectCamera={async () => onSelectImagePress('camera')}
         />
       )}
-      <RecipeOptions onTextSearch={onFindSearchPress} ref={recipeOptionsRef} />
+      <RecipeOptions
+        onTextSearch={onFindSearchPress}
+        onFavorite={onAddFavoritePress}
+        ref={recipeOptionsRef}
+      />
     </View>
   );
 };

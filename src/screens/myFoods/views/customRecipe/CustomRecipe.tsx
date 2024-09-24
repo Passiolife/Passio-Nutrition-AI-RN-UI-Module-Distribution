@@ -14,6 +14,7 @@ const CustomRecipe = () => {
     recipeOptionsRef,
     onCreateNewRecipePress,
     onFoodSearch,
+    onFavorite,
     onFoodDetailPress,
     onEditCustomRecipePress,
     onDeletePress,
@@ -51,7 +52,11 @@ const CustomRecipe = () => {
         }}
         onPress={onCreateNewRecipePress}
       />
-      <RecipeOptions ref={recipeOptionsRef} onTextSearch={onFoodSearch} />
+      <RecipeOptions
+        ref={recipeOptionsRef}
+        onTextSearch={onFoodSearch}
+        onFavorite={onFavorite}
+      />
     </>
   );
 };

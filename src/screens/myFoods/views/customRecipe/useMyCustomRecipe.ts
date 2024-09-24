@@ -61,7 +61,7 @@ export const useMyCustomRecipe = () => {
     isRequirePop?: boolean
   ) => {
     navigation.navigate('EditRecipeScreen', {
-      recipe: food,
+      recipe: JSON.parse(JSON.stringify(food)),
       from: 'MyFood',
       onSaveLogPress: () => {
         if (isRequirePop) {
@@ -100,6 +100,8 @@ export const useMyCustomRecipe = () => {
     });
   };
 
+  const onFavorite = () => {};
+
   const onCreateNewRecipePress = () => {
     navigation.push('EditRecipeScreen', {
       recipe: {
@@ -130,6 +132,7 @@ export const useMyCustomRecipe = () => {
     onEditCustomRecipePress,
     onCreateNewRecipePress,
     onFoodSearch,
+    onFavorite,
     onDeletePress,
     onLogPress,
   };

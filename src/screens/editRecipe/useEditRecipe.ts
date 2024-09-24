@@ -246,7 +246,6 @@ export function useEditRecipe() {
                 entityType: 'user-food',
               },
               updateIngredient: (updatedIngredient) => {
-                navigation.pop();
                 addIngredient([updatedIngredient]);
               },
             });
@@ -254,6 +253,15 @@ export function useEditRecipe() {
         }
       },
       from: 'Ingredient',
+    });
+  };
+
+  const onAddFavoritePress = () => {
+    navigation.push('FavoritesScreen', {
+      from: 'Recipe',
+      addIngredient: (updatedIngredient) => {
+        addIngredient([updatedIngredient]);
+      },
     });
   };
 
@@ -294,6 +302,7 @@ export function useEditRecipe() {
     onFindSearchPress,
     onSavePress,
     onSelectImagePress,
+    onAddFavoritePress,
     onUpdateFoodLog,
     openImagePickerModal,
   };

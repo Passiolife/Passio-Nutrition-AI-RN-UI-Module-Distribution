@@ -1,5 +1,5 @@
 import React from 'react';
-import type { MealLabel } from '../../models';
+import type { FoodItem, MealLabel } from '../../models';
 import type { ParamList } from '../../navigaitons';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import { useFavorites } from './useFavorites';
@@ -20,6 +20,8 @@ export type FavoritesScreenNavigationProps = StackNavigationProp<
 export interface FavoritesScreenProps {
   logToDate?: Date;
   logToMeal?: MealLabel;
+  from?: 'Recipe' | 'Other';
+  addIngredient?: (foodItem: FoodItem) => void;
 }
 
 const MyFavoritesScreen = () => {

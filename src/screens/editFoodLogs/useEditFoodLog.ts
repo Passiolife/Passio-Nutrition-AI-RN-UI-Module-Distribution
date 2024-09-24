@@ -242,7 +242,7 @@ export function useEditFoodLog() {
     isUpdateUponCreating: boolean
   ) => {
     navigation.push('EditRecipeScreen', {
-      recipe: customFood,
+      recipe: JSON.parse(JSON.stringify(customFood)),
       onSaveLogPress: async (item) => {
         if (item && isUpdateUponCreating) {
           const updatedFoodLog = combineCustomFoodAndFoodLog(item, foodLog);

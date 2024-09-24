@@ -1,6 +1,7 @@
 import {
   CustomFood,
   CustomRecipe,
+  FavoriteFoodItem,
   FoodItem,
   FoodLog,
   MealLabel,
@@ -18,6 +19,7 @@ import type {
 import { convertPassioFoodItemToFoodLog } from '../../utils/V3Utils';
 import { convertDateToDBFormat } from '../../utils/DateFormatter';
 import { getMealLog } from '../../utils';
+import { mergeNutrients } from '../../utils/NutritentsUtils';
 
 export const CUSTOM_USER_FOOD_PREFIX = 'user-food-';
 export const CUSTOM_USER_RECIPE__PREFIX = 'user-recipe-';
@@ -395,4 +397,21 @@ export const createFoodLogByCustomRecipe = (
     refCustomFoodID: food.uuid,
   };
   return foodLog;
+};
+export const createFoodItemByFavorite = (food: FavoriteFoodItem) => {
+  const foodItem: FoodItem = {
+    ...food,
+    nutrients: mergeNutrients(food.foodItems?.flatMap((i) => i.nutrients)),
+    refCode: food.refCode ?? '',
+    iconId: food?.iconID ?? food.foodItems[0].iconId,
+    computedWeight: {
+      value:
+        food.computedWeight?.value ?? food.foodItems[0]?.computedWeight?.value,
+      unit:
+        food.computedWeight?.unit ?? food.foodItems[0]?.computedWeight?.unit,
+    },
+    entityType: 'user-food',
+  };
+
+  return foodItem;
 };
