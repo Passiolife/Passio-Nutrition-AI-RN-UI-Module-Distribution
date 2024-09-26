@@ -1081,7 +1081,7 @@ PODS:
     - React-jsi (= 0.73.2)
     - React-logger (= 0.73.2)
     - React-perflogger (= 0.73.2)
-  - ReactNativePassioSDK (3.2.0):
+  - ReactNativePassioSDK (3.2.0-1):
     - React-Core
   - RNCAsyncStorage (1.24.0):
     - React-Core
@@ -1418,7 +1418,7 @@ SPEC CHECKSUMS:
   React-runtimescheduler: df8945a656356ff10f58f65a70820478bfcf33ad
   React-utils: f5bc61e7ea3325c0732ae2d755f4441940163b85
   ReactCommon: 45b5d4f784e869c44a6f5a8fad5b114ca8f78c53
-  ReactNativePassioSDK: 23892daaf6b21297f8e631197d1adf251ead7f55
+  ReactNativePassioSDK: 7890b9358c4500e0811affd0c2313d9a8c2859a4
   RNCAsyncStorage: ec53e44dc3e75b44aa2a9f37618a49c3bc080a7a
   RNCPicker: b7873ba797dc586bfaf3307d737cbdc620a9ff3e
   RNDateTimePicker: 4f3c4dbd4f908be32ec8c93f086e8924bd4a2e07
