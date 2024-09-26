@@ -252,6 +252,17 @@ export const useNutritionAdvisor = ({ key }: { key: string }) => {
           'searchTool'
         );
       } else {
+        setMessage((item) => {
+          const chatResponse: AdvisorResponse = {
+            type: 'response',
+            response: null,
+            message: '',
+            error: responseOfIngredients?.message,
+            uuID: uuid4.v4() as string,
+          };
+          return [...item.filter((it) => it.type !== 'typing'), chatResponse];
+        });
+        jumpToLast();
       }
       makeResponseLoadingState(response.uuID, false);
       setSending(false);
