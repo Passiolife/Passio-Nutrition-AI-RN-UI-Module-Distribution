@@ -27,6 +27,8 @@ npmScopes:
 
 ```sh
 yarn add @passiolife/nutrition-ai-ui-ux
+
+yarn add @passiolife/nutritionai-react-native-sdk-v3
 ```
 
 #### Step 3: add react-native.config.js at root

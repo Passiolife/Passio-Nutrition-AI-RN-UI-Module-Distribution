@@ -898,7 +898,7 @@ PODS:
     - glog
     - RCT-Folly (= 2022.05.16.00)
     - React-Core
-  - react-native-nutrition-ux (3.1.4):
+  - react-native-nutrition-ux (3.2.0):
     - lottie-ios
     - lottie-react-native
     - React-Core
@@ -1392,7 +1392,7 @@ SPEC CHECKSUMS:
   React-Mapbuffer: 9ee041e1d7be96da6d76a251f92e72b711c651d6
   react-native-blob-util: 39a20f2ef11556d958dc4beb0aa07d1ef2690745
   react-native-image-picker: 994a97b28e7f2c2197e21801569bb19f6e494e38
-  react-native-nutrition-ux: 6fa856e4bb49490400e480d2435a378d13ce1474
+  react-native-nutrition-ux: 39b9f3f23fad607bac411b97b8283a527dc2dd63
   react-native-pdf: 103940c90d62adfd259f63cca99c7c0c306b514c
   react-native-safe-area-context: b7daa1a8df36095a032dff095a1ea8963cb48371
   react-native-slider: 07df44a6b615c6bf8584a5ee88288024b3cbf498
