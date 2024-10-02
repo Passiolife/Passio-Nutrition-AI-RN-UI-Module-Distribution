@@ -14,6 +14,7 @@ import { scaleHeight } from '../../utils';
 
 interface TutorialViewProps extends React.PropsWithChildren {
   options?: React.JSX.Element;
+  isActive?: boolean;
 }
 
 interface FloatingMatrix {
@@ -30,7 +31,7 @@ export interface FloatingOptionRef {
 
 export const FloatingOption = React.forwardRef(
   (props: TutorialViewProps, ref: React.Ref<FloatingOptionRef> | any) => {
-    const [isActive, setActive] = useState(false);
+    const [isActive, setActive] = useState(props.isActive);
     const styles = tutorialStyle(useBranding());
     const squareRef = useRef<any>(null);
     const measureRef = useRef<FloatingMatrix>({});

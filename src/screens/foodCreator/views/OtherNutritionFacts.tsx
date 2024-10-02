@@ -42,11 +42,16 @@ export const OtherNutritionFacts = React.forwardRef<
     // Generate default nutrients where come from `foodLog
     const allNutrients: DefaultNutrients[] | undefined = foodLog?.foodItems
       ?.flatMap((o) => o.nutrients)
-      .filter((i) => i.amount > 0 && OtherNutrients.includes(i.id))
+      .filter(
+        (i) =>
+          i.amount !== undefined &&
+          i.amount !== null &&
+          OtherNutrients.includes(i.id)
+      )
       .map((i) => {
         const data: DefaultNutrients = {
           label: i.id as NutrientType,
-          value: Number(i.amount.toFixed(2)),
+          value: Number(i.amount),
         };
         return data;
       });
@@ -80,7 +85,7 @@ export const OtherNutritionFacts = React.forwardRef<
               isNotValid = true;
             }
             record[item.label as NutrientType] =
-              sleetedRef.current.value() ?? '';
+              sleetedRef.current.value()?.replaceAll(',', '.') ?? '';
           }
         });
 
@@ -104,7 +109,9 @@ export const OtherNutritionFacts = React.forwardRef<
     <Card style={styles.card}>
       {
         <View>
-          <Text style={styles.title}>{'Other Nutrition Facts'}</Text>
+          <Text size="title" weight="600" style={styles.title}>
+            {'Other Nutrition Facts'}
+          </Text>
           <FlatList
             data={list}
             extraData={list}
@@ -116,7 +123,16 @@ export const OtherNutritionFacts = React.forwardRef<
                   label={nutrientName[item.label].toString()}
                   name={nutrientName[item.label].toString()}
                   // name={item}
-                  value={item.value ? item.value.toString() : undefined}
+                  value={
+                    Number.isFinite(item.value)
+                      ? item?.value?.toString()
+                      : undefined
+                  }
+                  display={
+                    Number.isFinite(item.value)
+                      ? (item?.value ?? '').toString()
+                      : undefined
+                  }
                   onDelete={() => {
                     setList((i) => [...i.filter((o) => item !== o)]);
                     setDefaultList((i) => [...i, item.label]);

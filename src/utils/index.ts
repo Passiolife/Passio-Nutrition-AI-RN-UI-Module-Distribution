@@ -9,7 +9,6 @@ import {
   getDateWeekNumber,
   getWeekDatesUsingWeekNumber,
 } from './DateUtils';
-export * from './withLoading';
 export * from './Dimensions';
 export * from './Font';
 export * from './toast';

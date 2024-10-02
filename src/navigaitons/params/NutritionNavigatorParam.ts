@@ -13,6 +13,7 @@ import type { IngredientQuickScanScreenProps } from '../../screens/recipeEditor/
 import type {
   BarcodeCustomResult,
   CustomFood,
+  CustomRecipe,
   FoodLog,
   MealLabel,
   Nutrient,
@@ -34,6 +35,10 @@ export type Module =
   | 'VoiceLogging'
   | 'MyFood'
   | 'Recipe'
+  | 'NutritionFact'
+  | 'FoodDetail'
+  | 'Barcode'
+  | 'ExistedBarcode'
   | 'Ingredient';
 
 export interface HomeBottom {
@@ -59,6 +64,7 @@ interface SettingScreenProps {
 
 interface NutritionScreenProps {
   nutrient: Nutrient[];
+  foodLog: FoodLog;
 }
 
 export type ImagePickerType = 'camera' | 'gallery';
@@ -81,6 +87,7 @@ export interface FoodCreatorNavProps {
 export interface MyFoodsScreenNavProps {
   logToDate?: Date | undefined;
   logToMeal?: MealLabel | undefined;
+  tab?: 'CustomFood' | 'Recipe';
 }
 export interface BarcodeScanScreenNavProps {
   onCreateFoodAnyWay?: (result?: BarcodeCustomResult) => void;
@@ -88,10 +95,10 @@ export interface BarcodeScanScreenNavProps {
   onBarcodePress?: (result?: BarcodeCustomResult) => void;
 }
 export interface EditRecipeScreenProps {
-  foodLog: FoodLog;
-  prevRouteName: String | Module;
-  onSaveLogPress?: (foodLog: FoodLog) => void;
-  onDeleteLogPress?: (foodLog: FoodLog) => void;
+  recipe: CustomRecipe;
+  from: String | Module;
+  onSaveLogPress?: (recipe: CustomRecipe) => void;
+  onDeleteLogPress?: (recipe: CustomRecipe) => void;
   onCancelPress?: () => void;
 }
 

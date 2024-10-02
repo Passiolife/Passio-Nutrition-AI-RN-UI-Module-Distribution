@@ -19,7 +19,6 @@ import {
   type BarcodeCandidate,
   type FoodDetectionConfig,
   type FoodDetectionEvent,
-  type PassioFoodItem,
 } from '@passiolife/nutritionai-react-native-sdk-v3';
 import {
   getBarcodeResult,
@@ -28,6 +27,7 @@ import {
 } from '../../../../utils/QuickResultUtils';
 import { convertPassioFoodItemToFoodLog } from '../../../../utils/V3Utils';
 import type { ScanningScreenNavigationProps } from '../../QuickScanningScreen';
+import { convertDateToDBFormat } from '../../../../utils/DateFormatter';
 
 export const useBarcodeFoodScan = () => {
   const services = useServices();
@@ -102,11 +102,14 @@ export const useBarcodeFoodScan = () => {
   );
 
   const onEditFoodLogPress = useCallback(
-    async (attribute: PassioFoodItem) => {
-      if (attribute) {
+    async (foodLog?: FoodLog) => {
+      if (foodLog) {
+        foodLog.meal = meal;
+        foodLog.eventTimestamp = convertDateToDBFormat(date);
+
         setStopScan(true);
         navigation.navigate('EditFoodLogScreen', {
-          foodLog: convertPassioFoodItemToFoodLog(attribute, date, meal),
+          foodLog: foodLog,
           prevRouteName: 'QuickScan',
           onCancelPress: () => {
             setStopScan(false);
@@ -146,8 +149,8 @@ export const useBarcodeFoodScan = () => {
   const onFoodSearchManuallyPress = useCallback(async () => {
     navigation.navigate('FoodSearchScreen', {
       from: 'Other',
-      onSaveData: (attribute: PassioFoodItem) => {
-        onEditFoodLogPress(attribute);
+      onSaveData: (logItem: FoodLog) => {
+        onEditFoodLogPress(logItem);
       },
     });
   }, [onEditFoodLogPress, navigation]);
@@ -171,6 +174,7 @@ export const useBarcodeFoodScan = () => {
       detectBarcodes: true,
       detectPackagedFood: false,
       detectVisual: false,
+      volumeDetectionMode: 'none',
     };
     let subscription = PassioSDK.startFoodDetection(
       config,

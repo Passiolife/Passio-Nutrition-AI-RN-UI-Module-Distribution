@@ -2,7 +2,6 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { ProgressLoadingView } from '../../../components/loader';
 import { Card, Text } from '../../../components';
-import { scaleHeight, scaleWidth } from '../../../utils';
 
 interface Props {
   text?: string;
@@ -30,12 +29,12 @@ export const QuickScanningLoadingView = ({
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    marginTop: scaleHeight(16),
+    marginTop: 16,
     paddingVertical: 16,
     marginHorizontal: 24,
   },
   loader: {
-    marginStart: scaleWidth(24),
-    marginEnd: scaleWidth(16),
+    marginStart: 24,
+    marginEnd: 16,
   },
 });

@@ -26,12 +26,13 @@ export const OtherNutrients: NutrientType[] = [
   'transFat',
   'cholesterol',
   'sodium',
-  'fiber',
+  'fibers',
   'sugars',
   'sugarAdded',
   'vitaminD',
   'calcium',
   'iron',
   'potassium',
+  'transFat',
 ];
 export const Weights = ['g', 'ml'];

@@ -64,7 +64,7 @@ export const FiledViewClick = React.forwardRef<FiledViewClickRef, Props>(
         <View style={[!isColum && styles.formRow, isColum && styles.formColum]}>
           <Text
             weight="400"
-            size="_12px"
+            size="secondlyTitle"
             color="gray500"
             style={[styles.label, styles.labelMargin]}
           >
@@ -110,6 +110,7 @@ const requireNutritionFactStyle = ({ white, gray300 }: Branding) =>
     },
     labelMargin: {
       marginTop: 10,
+      marginBottom: 6,
     },
     delete: {
       height: 24,

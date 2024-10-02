@@ -1,23 +1,37 @@
 import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
-import { BasicButton, BackNavigation } from '../../components';
+import { BasicButton, BackNavigation, RecipeOptions } from '../../components';
 import { COLORS } from '../../constants';
 import { IngredientsView } from '../editFoodLogs/views/ingredients/IngredientsView';
 import { content } from '../../constants/Content';
 import type { Branding } from '../../contexts';
 import { scaleWidth, scaled, scaledSize } from '../../utils';
 import NewEditServingAmountView from '../editFoodLogs/views/newEditServingsAmountView';
-import { useEditRecipe } from './useEditFoodLog';
+import { useEditRecipe } from './useEditRecipe';
+import { EditRecipeName } from './views/EditRecipeName';
+import type { FoodLog } from '../../models';
+import ImagePickerOptions from '../../components/imagePickerOptions/ImagePickerOptions';
 
 export const EditRecipeScreen = () => {
   const {
     branding,
-    foodLog,
+    closeImagePickerModal,
     deleteIngredient,
+    editRecipeNameRef,
+    foodLog,
+    image,
+    isImagePickerVisible,
+    isDeleteButtonVisible,
+    onDeletePress,
     onAddIngredientPress,
-    onEditIngredientPress,
+    recipeOptionsRef,
+    onFindSearchPress,
+    onAddFavoritePress,
     onCancelPress,
+    onEditImagePress,
+    onEditIngredientPress,
     onSavePress,
+    onSelectImagePress,
     onUpdateFoodLog,
   } = useEditRecipe();
   const styles = editFoodLogStyle(branding);
@@ -29,13 +43,20 @@ export const EditRecipeScreen = () => {
       <BackNavigation title={'Edit Recipe'} rightIcon={icon} />
       <ScrollView>
         <View style={styles.body}>
-          <NewEditServingAmountView
+          <EditRecipeName
             foodLog={foodLog}
+            image={image}
+            ref={editRecipeNameRef}
+            onEditImagePress={onEditImagePress}
+          />
+          <NewEditServingAmountView
+            foodLog={foodLog as FoodLog}
             onUpdateFoodLog={onUpdateFoodLog}
           />
           <IngredientsView
             foodItems={foodLog.foodItems}
             isShowAll
+            type="EditRecipe"
             onAddIngredients={onAddIngredientPress}
             deleteIngredientsItem={deleteIngredient}
             navigateToEditIngredientsScreen={onEditIngredientPress}
@@ -53,15 +74,43 @@ export const EditRecipeScreen = () => {
           secondary={true}
           onPress={() => onCancelPress()}
         />
+        {isDeleteButtonVisible && (
+          <BasicButton
+            text={'Delete'}
+            onPress={onDeletePress}
+            isDelete={true}
+            small
+            style={{
+              flexDirection: 'row',
+              flex: 1,
+              justifyContent: 'center',
+              backgroundColor: branding.error,
+              borderColor: branding.error,
+            }}
+          />
+        )}
         <BasicButton
           style={bottomActionStyle.bottomActionButton}
-          text={content.log}
+          text={content.save}
           testId="testButtonSave"
+          enable={foodLog.foodItems.length > 1}
           small
           secondary={false}
           onPress={() => onSavePress()}
         />
       </View>
+      {isImagePickerVisible && (
+        <ImagePickerOptions
+          onCloseModel={closeImagePickerModal}
+          onSelectGallery={async () => onSelectImagePress('gallery')}
+          onSelectCamera={async () => onSelectImagePress('camera')}
+        />
+      )}
+      <RecipeOptions
+        onTextSearch={onFindSearchPress}
+        onFavorite={onAddFavoritePress}
+        ref={recipeOptionsRef}
+      />
     </View>
   );
 };
@@ -143,7 +192,7 @@ const bottomActionStyle = StyleSheet.create({
   },
   bottomActionButton: {
     flex: 1,
-    marginHorizontal: 8,
+    marginHorizontal: 4,
     borderRadius: scaledSize(4),
     justifyContent: 'center',
   },

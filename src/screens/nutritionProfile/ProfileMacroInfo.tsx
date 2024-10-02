@@ -14,7 +14,6 @@ import { MacroView } from './MacroView';
 import DoughnutChart from '../../components/doughnutChart/DoughnutChart';
 import { useBranding } from '../../contexts';
 import { ICONS } from '../../assets';
-import { scaled } from '../../utils';
 
 interface Config {
   totalCalories: number;
@@ -242,6 +241,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   editIcon: {
-    ...scaled(16),
+    height: 16,
+    width: 16,
   },
 });

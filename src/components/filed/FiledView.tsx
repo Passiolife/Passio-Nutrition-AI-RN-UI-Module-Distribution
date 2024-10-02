@@ -21,10 +21,12 @@ interface Props {
   name: string;
   value?: string;
   label?: string;
+  display?: string;
   keyboardType?: KeyboardTypeOptions;
   isColum?: boolean;
   onDelete?: () => void;
   isCharacter?: boolean;
+  multiLine?: boolean;
 }
 
 export interface FiledViewRef {
@@ -42,7 +44,9 @@ export const FiledView = React.forwardRef<FiledViewRef, Props>(
       label = 'value',
       isColum = false,
       isCharacter = false,
+      multiLine = false,
       onDelete,
+      display,
     }: Props,
     ref: React.Ref<FiledViewRef>
   ) => {
@@ -84,7 +88,7 @@ export const FiledView = React.forwardRef<FiledViewRef, Props>(
         <View style={[!isColum && styles.formRow, isColum && styles.formColum]}>
           <Text
             weight="400"
-            size="_12px"
+            size="secondlyTitle"
             color="gray500"
             style={[styles.label, styles.labelMargin]}
           >
@@ -93,13 +97,20 @@ export const FiledView = React.forwardRef<FiledViewRef, Props>(
           <View style={{ flex: 1 }}>
             <TextInput
               ref={inputRef}
-              style={styles.textInput}
+              style={[
+                styles.textInput,
+                multiLine && {
+                  paddingTop: 8,
+                },
+              ]}
+              multiline={multiLine}
+              maxLength={180}
               onChangeText={(text) => {
                 value.current = cleanedDecimalNumber(text);
                 setError(undefined);
               }}
-              returnKeyType="done"
-              defaultValue={defaultValue}
+              returnKeyType={multiLine ? 'default' : 'done'}
+              defaultValue={display ?? defaultValue}
               placeholder={label}
               keyboardType={keyboardType}
             />
@@ -137,6 +148,7 @@ const requireNutritionFactStyle = ({ white, gray300 }: Branding) =>
     },
     labelMargin: {
       marginTop: 10,
+      marginBottom: 4,
     },
     delete: {
       height: 24,

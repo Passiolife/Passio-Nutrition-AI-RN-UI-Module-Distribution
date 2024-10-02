@@ -17,7 +17,6 @@ const menuStyle = ({ white, border }: Branding) =>
     mainTitle: {
       flex: 1,
       marginStart: 12,
-      textTransform: 'capitalize',
     },
     icon: {
       marginEnd: 12,
@@ -33,7 +32,6 @@ const menuStyle = ({ white, border }: Branding) =>
     },
     optionTitle: {
       marginStart: scaleWidth(12),
-      textTransform: 'capitalize',
     },
     optionIcon: {
       height: scaleHeight(20),

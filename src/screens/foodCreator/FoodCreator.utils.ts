@@ -1,6 +1,10 @@
 import {
   CustomFood,
+  CustomRecipe,
+  FavoriteFoodItem,
   FoodItem,
+  FoodLog,
+  MealLabel,
   Nutrient,
   NutrientType,
   nutrientUnits,
@@ -13,12 +17,25 @@ import type {
   PassioFoodItem,
 } from '@passiolife/nutritionai-react-native-sdk-v3';
 import { convertPassioFoodItemToFoodLog } from '../../utils/V3Utils';
+import { convertDateToDBFormat } from '../../utils/DateFormatter';
+import { getMealLog } from '../../utils';
+import { mergeNutrients } from '../../utils/NutritentsUtils';
 
-export const CUSTOM_USER_FOOD = 'user-food-';
+export const CUSTOM_USER_FOOD_PREFIX = 'user-food-';
+export const CUSTOM_USER_RECIPE__PREFIX = 'user-recipe-';
+export const CUSTOM_USER_NUTRITION_FACT__PREFIX = 'user-nutrition-fact-';
 
 export const generateCustomID = () => {
   const uuid: string = uuid4.v4() as string;
-  return CUSTOM_USER_FOOD + uuid;
+  return CUSTOM_USER_FOOD_PREFIX + uuid;
+};
+export const generateCustomNutritionFactID = () => {
+  const uuid: string = uuid4.v4() as string;
+  return CUSTOM_USER_NUTRITION_FACT__PREFIX + uuid;
+};
+export const generateCustomRecipeID = () => {
+  const uuid: string = uuid4.v4() as string;
+  return CUSTOM_USER_RECIPE__PREFIX + uuid;
 };
 
 export interface createFoodLogUsingFoodCreator {
@@ -41,6 +58,14 @@ export const isGramOrML = (unit: string) => {
   return isUnitGramOrML;
 };
 
+export const getCustomFoodUUID = () => {
+  return (CUSTOM_USER_FOOD_PREFIX + uuid4.v4()) as string;
+};
+
+export const getCustomRecipeUUID = () => {
+  return (CUSTOM_USER_RECIPE__PREFIX + uuid4.v4()) as string;
+};
+
 export const createFoodLogUsingFoodCreator = ({
   info,
   requireNutritionFact,
@@ -48,7 +73,7 @@ export const createFoodLogUsingFoodCreator = ({
   oldRecord,
   image,
 }: createFoodLogUsingFoodCreator) => {
-  const uuid: string = oldRecord?.uuid ?? (uuid4.v4() as string);
+  const uuid: string = oldRecord?.uuid ?? getCustomFoodUUID();
 
   const [weight, unit] = (requireNutritionFact?.Weight as string).split(
     WEIGHT_UNIT_SPLIT_IDENTIFIER
@@ -100,7 +125,7 @@ export const createFoodLogUsingFoodCreator = ({
       unit: unit,
       value: factWeight,
     },
-    name: info?.name!,
+    name: info?.name!.trim(),
     barcode: info?.barcode,
     iconId: image,
     entityType: 'user-food',
@@ -134,7 +159,7 @@ export const createFoodLogUsingFoodCreator = ({
     ...oldRecord,
     foodItems: [foodItem],
     ...foodItem,
-    barcode: info.barcode,
+    barcode: info.barcode.trim(),
     brandName: info.brand,
     userFoodImage: image,
     iconID: image,
@@ -170,9 +195,9 @@ export const isValidDecimalNumber = (text?: string, isCharacter?: boolean) => {
     if (text.length === 0) {
       return false;
     } else if (isCharacter) {
-      return text.length > 0;
+      return text.trim().length > 0;
     } else {
-      return /^\d+(\.\d+)?$/.test(text);
+      return /^\d+(\.\d+)?$/.test(text.replaceAll(',', '.').trim());
     }
   } else {
     return false;
@@ -280,6 +305,7 @@ export const createCustomFoodUsingNutritionFact = (
       unit: facts.servingSizeUnit ?? 'g',
       value: facts.servingSizeGram ?? 0,
     },
+    iconId: CUSTOM_USER_NUTRITION_FACT__PREFIX,
     selectedUnit: facts.servingSizeUnitName ?? '',
     selectedQuantity: facts.servingSizeQuantity ?? 0,
     refCode: '',
@@ -288,9 +314,104 @@ export const createCustomFoodUsingNutritionFact = (
   };
   const customFood: CustomFood = {
     barcode: barcode,
-    uuid: '',
     foodItems: [foodItems],
     ...foodItems,
+    iconID: CUSTOM_USER_NUTRITION_FACT__PREFIX,
+    uuid: getCustomFoodUUID(),
   };
   return customFood;
+};
+
+export const combineCustomFoodAndFoodLog = (
+  customFood: CustomFood,
+  foodLog: FoodLog
+): FoodLog => {
+  const mergedServingUnits = [...customFood.servingUnits];
+
+  const mergedServingSizes = [...customFood.servingSizes];
+
+  const uniqueServingUnits = mergedServingUnits.filter(
+    (unit, index, self) =>
+      index ===
+      self.findIndex((t) => t.unit === unit.unit && t.mass === unit.mass)
+  );
+  const uniqueServingSizes = mergedServingSizes.filter(
+    (unit, index, self) =>
+      index ===
+      self.findIndex(
+        (t) => t.unit === unit.unit && t.quantity === unit.quantity
+      )
+  );
+
+  return {
+    ...foodLog,
+    ...customFood,
+    uuid: foodLog.uuid,
+    refCode: foodLog.refCode,
+    meal: foodLog.meal,
+    eventTimestamp: foodLog.eventTimestamp,
+    isOpenFood: foodLog.isOpenFood,
+    refCustomFoodID: customFood?.uuid,
+    servingUnits: uniqueServingUnits,
+    servingSizes: uniqueServingSizes,
+    selectedQuantity: customFood.selectedQuantity,
+    selectedUnit: customFood.selectedUnit,
+    computedWeight: customFood.computedWeight,
+    longName: customFood.brandName ?? foodLog.longName,
+  };
+};
+
+export const createFoodLogByCustomFood = (
+  food: CustomFood,
+  date?: Date,
+  meal?: MealLabel
+) => {
+  const uuid: string = uuid4.v4() as string;
+  const updateDate = date ?? new Date();
+  const updateMeal = meal ?? getMealLog(updateDate, undefined);
+  const foodLog: FoodLog = {
+    ...food,
+    eventTimestamp: convertDateToDBFormat(updateDate),
+    meal: updateMeal,
+    uuid: uuid,
+    longName: food?.brandName ?? food.barcode,
+    refCode: food.uuid,
+  };
+  return foodLog;
+};
+export const createFoodLogByCustomRecipe = (
+  food: CustomRecipe,
+  date?: Date,
+  meal?: MealLabel
+) => {
+  const updateDate = date ?? new Date();
+  const updateMeal = meal ?? getMealLog(updateDate, undefined);
+  const uuid: string = uuid4.v4() as string;
+
+  const foodLog: FoodLog = {
+    ...food,
+    eventTimestamp: convertDateToDBFormat(updateDate),
+    meal: updateMeal,
+    uuid: uuid,
+    refCode: food.uuid,
+    refCustomFoodID: food.uuid,
+  };
+  return foodLog;
+};
+export const createFoodItemByFavorite = (food: FavoriteFoodItem) => {
+  const foodItem: FoodItem = {
+    ...food,
+    nutrients: mergeNutrients(food.foodItems?.flatMap((i) => i.nutrients)),
+    refCode: food.refCode ?? '',
+    iconId: food?.iconID ?? food.foodItems[0].iconId,
+    computedWeight: {
+      value:
+        food.computedWeight?.value ?? food.foodItems[0]?.computedWeight?.value,
+      unit:
+        food.computedWeight?.unit ?? food.foodItems[0]?.computedWeight?.unit,
+    },
+    entityType: 'user-food',
+  };
+
+  return foodItem;
 };

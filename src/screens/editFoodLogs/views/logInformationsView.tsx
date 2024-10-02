@@ -10,6 +10,7 @@ import { scaleHeight, scaleWidth } from '../../../utils';
 import DoughnutChart from '../../../components/doughnutChart/DoughnutChart';
 import { useBranding } from '../../../contexts';
 import { macroNutrientPercentages } from '../../../utils/V3Utils';
+import { NumberRound } from '../../../utils/NumberUtils';
 
 interface Props {
   foodItems: FoodItem[];
@@ -42,6 +43,13 @@ const LogInformationView = ({
   const branding = useBranding();
   const { carbsPercentage, fatPercentage, proteinPercentage } =
     macroNutrientPercentages(carbs, fat, protein);
+
+  const carbsRounded = Math.round(carbsPercentage);
+  const proteinRounded = Math.round(proteinPercentage);
+  const fatRounded = 100 - carbsRounded - proteinRounded;
+
+  const styles = stylesObj();
+
   return (
     <Card style={styles.informationContainer}>
       <View style={styles.informationRow}>
@@ -56,6 +64,7 @@ const LogInformationView = ({
           <Text
             weight="600"
             color="text"
+            size="secondlyTitle"
             numberOfLines={2}
             ellipsizeMode="tail"
             style={styles.logName}
@@ -65,7 +74,7 @@ const LogInformationView = ({
           {longName && (
             <Text
               weight="400"
-              size="_14px"
+              size="secondlyTitle"
               color="secondaryText"
               style={styles.logSize}
             >
@@ -84,20 +93,20 @@ const LogInformationView = ({
           <DoughnutChart
             data={[
               {
-                progress: carbsPercentage,
+                progress: carbsRounded,
                 color: branding.carbs,
               },
               {
-                progress: proteinPercentage,
+                progress: proteinRounded,
                 color: branding.proteins,
               },
               {
-                progress: fatPercentage,
+                progress: fatRounded,
                 color: branding.fat,
               },
             ]}
             size={100}
-            gap={4}
+            gap={10}
           />
           <View style={styles.calorieItem}>
             <Text
@@ -107,11 +116,11 @@ const LogInformationView = ({
               testID="testNutrientCalories"
               style={styles.calorieItemValue}
             >
-              {Math.round(calories)}
+              {NumberRound(calories)}
             </Text>
             <Text
               weight="500"
-              size="_14px"
+              size="secondlyTitle"
               color="text"
               style={styles.calorieItemTitle}
             >
@@ -123,7 +132,7 @@ const LogInformationView = ({
           <View style={styles.otherNutrientItem}>
             <Text
               weight="500"
-              size="_14px"
+              size="secondlyTitle"
               color="text"
               style={styles.otherNutrientTitle}
             >
@@ -131,7 +140,7 @@ const LogInformationView = ({
             </Text>
             <Text
               weight="700"
-              size="_14px"
+              size="secondlyTitle"
               color="carbs"
               testID="testNutrientCarbs"
               style={styles.otherNutrientTValue}
@@ -140,7 +149,7 @@ const LogInformationView = ({
             </Text>
             <Text
               weight="400"
-              size="_14px"
+              size="secondlyTitle"
               color="secondaryText"
               style={styles.percentage}
             >
@@ -150,7 +159,7 @@ const LogInformationView = ({
           <View style={styles.otherNutrientItem}>
             <Text
               weight="500"
-              size="_14px"
+              size="secondlyTitle"
               color="text"
               style={styles.otherNutrientTitle}
             >
@@ -158,7 +167,7 @@ const LogInformationView = ({
             </Text>
             <Text
               weight="700"
-              size="_14px"
+              size="secondlyTitle"
               color="proteins"
               testID="testNutrientProtein"
               style={styles.otherNutrientTValue}
@@ -167,7 +176,7 @@ const LogInformationView = ({
             </Text>
             <Text
               weight="400"
-              size="_14px"
+              size="secondlyTitle"
               color="secondaryText"
               style={styles.percentage}
             >
@@ -177,7 +186,7 @@ const LogInformationView = ({
           <View style={styles.otherNutrientItem}>
             <Text
               weight="500"
-              size="_14px"
+              size="secondlyTitle"
               color="text"
               style={styles.otherNutrientTitle}
             >
@@ -186,7 +195,7 @@ const LogInformationView = ({
 
             <Text
               weight="700"
-              size="_14px"
+              size="secondlyTitle"
               color="fat"
               testID="testNutrientFat"
               style={styles.otherNutrientTValue}
@@ -195,7 +204,7 @@ const LogInformationView = ({
             </Text>
             <Text
               weight="400"
-              size="_14px"
+              size="secondlyTitle"
               color="secondaryText"
               style={styles.percentage}
             >
@@ -214,106 +223,107 @@ const LogInformationView = ({
   );
 };
 
-const styles = StyleSheet.create({
-  informationContainer: {
-    paddingVertical: scaleHeight(12),
-    paddingHorizontal: scaleHeight(13),
-    marginTop: scaleHeight(16),
-    paddingBottom: 20,
-  },
-  informationRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  imageContainer: {
-    width: 50,
-    borderRadius: 24,
-    overflow: 'hidden',
-    alignSelf: 'center',
-  },
-  image: {
-    width: 50,
-    height: 50,
-  },
-  informationContent: {
-    flex: 1,
-    marginLeft: 10,
-  },
-  logName: {
-    lineHeight: 24,
-    textTransform: 'capitalize',
-  },
-  logSize: {
-    lineHeight: 16,
-    textTransform: 'capitalize',
-    marginTop: 2,
-  },
-  calorieContainer: {
-    flexDirection: 'column',
-    marginTop: 15,
-    justifyContent: 'center',
-  },
-  otherNutrientContainer: {
-    flexDirection: 'column',
-    alignItems: 'flex-end',
-    marginTop: 15,
-  },
-  nutrients: {
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-  },
-  calorieItem: {
-    alignItems: 'center',
-    position: 'absolute',
-    alignSelf: 'center',
-    flexDirection: 'column',
-  },
-  otherNutrientItem: {
-    alignItems: 'center',
-    flexDirection: 'row',
-  },
-  calorieItemTitle: {
-    lineHeight: 16,
-    marginVertical: scaleHeight(4),
-    textTransform: 'capitalize',
-  },
-  otherNutrientTitle: {
-    lineHeight: 16,
-    textTransform: 'capitalize',
-  },
-  calorieItemValue: {
-    lineHeight: 29,
-  },
-  otherNutrientTValue: {
-    lineHeight: 29,
-  },
-  percentage: {
-    lineHeight: 29,
-    marginStart: scaleWidth(4),
-  },
-  chevDownTouchStyle: {
-    width: 22,
-    marginHorizontal: 16,
-    height: 22,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 50,
-  },
-  chevDown: {
-    width: 24,
-    height: 24,
-  },
-  rightIconView: {
-    justifyContent: 'flex-start',
-    height: '100%',
-    marginLeft: scaleWidth(2),
-  },
-  cardFooterView: {
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    flexDirection: 'row',
-    marginTop: scaleHeight(15),
-  },
-});
+const stylesObj = () =>
+  StyleSheet.create({
+    informationContainer: {
+      paddingVertical: scaleHeight(12),
+      paddingHorizontal: scaleHeight(13),
+      marginTop: scaleHeight(16),
+      paddingBottom: 20,
+    },
+    informationRow: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    imageContainer: {
+      width: 50,
+      borderRadius: 24,
+      overflow: 'hidden',
+      alignSelf: 'center',
+    },
+    image: {
+      width: 50,
+      height: 50,
+    },
+    informationContent: {
+      flex: 1,
+      marginLeft: 10,
+    },
+    logName: {
+      lineHeight: 24,
+      textTransform: 'capitalize',
+    },
+    logSize: {
+      lineHeight: 16,
+      textTransform: 'capitalize',
+      marginTop: 2,
+    },
+    calorieContainer: {
+      flexDirection: 'column',
+      marginTop: 15,
+      justifyContent: 'center',
+    },
+    otherNutrientContainer: {
+      flexDirection: 'column',
+      alignItems: 'flex-end',
+      marginTop: 15,
+    },
+    nutrients: {
+      flexDirection: 'row',
+      justifyContent: 'space-evenly',
+    },
+    calorieItem: {
+      alignItems: 'center',
+      position: 'absolute',
+      alignSelf: 'center',
+      flexDirection: 'column',
+    },
+    otherNutrientItem: {
+      alignItems: 'center',
+      flexDirection: 'row',
+    },
+    calorieItemTitle: {
+      lineHeight: 16,
+      marginVertical: scaleHeight(4),
+      textTransform: 'capitalize',
+    },
+    otherNutrientTitle: {
+      lineHeight: 16,
+      textTransform: 'capitalize',
+    },
+    calorieItemValue: {
+      lineHeight: 29,
+    },
+    otherNutrientTValue: {
+      lineHeight: 29,
+    },
+    percentage: {
+      lineHeight: 29,
+      marginStart: scaleWidth(4),
+    },
+    chevDownTouchStyle: {
+      width: 22,
+      marginHorizontal: 16,
+      height: 22,
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: 50,
+    },
+    chevDown: {
+      width: 24,
+      height: 24,
+    },
+    rightIconView: {
+      justifyContent: 'flex-start',
+      height: '100%',
+      marginLeft: scaleWidth(2),
+    },
+    cardFooterView: {
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      flexDirection: 'row',
+      marginTop: scaleHeight(15),
+    },
+  });
 
 export default React.memo(LogInformationView);

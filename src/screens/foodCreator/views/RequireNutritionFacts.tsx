@@ -20,7 +20,7 @@ import {
   WEIGHT_UNIT_SPLIT_IDENTIFIER,
 } from '../FoodCreator.utils';
 import type { CustomFood } from '../../../models';
-import { totalAmountOfNutrient } from '../../../screens/editFoodLogs';
+import { totalAmountOfNutrientForCustomFood } from '../../../screens/editFoodLogs';
 
 interface Props {
   foodLog?: CustomFood;
@@ -117,11 +117,20 @@ export const RequireNutritionFacts = React.forwardRef<
                 record[key] =
                   input + WEIGHT_UNIT_SPLIT_IDENTIFIER + value ?? '';
               }
-            } else {
+            } else if (key === 'Units') {
               if (value === undefined || value.length === 0) {
                 isNotValid = true;
               }
               record[key] = value ?? '';
+            } else {
+              if (
+                value === undefined ||
+                value.length === 0 ||
+                !isValidDecimalNumber(value)
+              ) {
+                isNotValid = true;
+              }
+              record[key] = value?.replaceAll(',', '.') ?? '';
             }
           });
 
@@ -139,15 +148,25 @@ export const RequireNutritionFacts = React.forwardRef<
     let carbs;
     let proteins;
 
-    calories = totalAmountOfNutrient(foodLog?.foodItems ?? [], 'calories');
-    carbs = totalAmountOfNutrient(foodLog?.foodItems ?? [], 'carbs');
-    proteins = totalAmountOfNutrient(foodLog?.foodItems ?? [], 'protein');
-    fat = totalAmountOfNutrient(foodLog?.foodItems ?? [], 'fat');
+    calories = foodLog?.foodItems
+      ? totalAmountOfNutrientForCustomFood(foodLog?.foodItems ?? [], 'calories')
+      : undefined;
+    carbs = foodLog?.foodItems
+      ? totalAmountOfNutrientForCustomFood(foodLog?.foodItems ?? [], 'carbs')
+      : undefined;
+    proteins = foodLog?.foodItems
+      ? totalAmountOfNutrientForCustomFood(foodLog?.foodItems ?? [], 'protein')
+      : undefined;
+    fat = foodLog?.foodItems
+      ? totalAmountOfNutrientForCustomFood(foodLog?.foodItems ?? [], 'fat')
+      : undefined;
 
     return (
       <Card style={styles.card}>
         <View>
-          <Text style={styles.title}>{'Required Nutrition Facts'}</Text>
+          <Text size="title" weight="600" style={styles.title}>
+            {'Required Nutrition Facts'}
+          </Text>
           <FiledView
             ref={servingSizeRef}
             name="Serving Size"
@@ -170,7 +189,8 @@ export const RequireNutritionFacts = React.forwardRef<
               ref={weightRef}
               value={
                 foodLog?.computedWeight?.unit ??
-                foodLog?.foodItems?.[0]?.computedWeight?.unit
+                foodLog?.foodItems?.[0]?.computedWeight?.unit ??
+                'g'
               }
               input={(
                 foodLog?.computedWeight?.value ??
@@ -184,24 +204,24 @@ export const RequireNutritionFacts = React.forwardRef<
           <FiledView
             ref={caloriesRef}
             name="Calories"
-            value={calories ? calories.toString() : ''}
+            value={Number.isFinite(calories) ? calories?.toString() : ''}
             keyboardType="decimal-pad"
           />
           <FiledView
             ref={fatRef}
-            value={fat ? fat.toString() : ''}
+            value={Number.isFinite(fat) ? fat?.toString() : ''}
             name="Fat"
             keyboardType="decimal-pad"
           />
           <FiledView
             ref={carbsRef}
-            value={carbs ? carbs.toString() : ''}
+            value={Number.isFinite(carbs) ? carbs?.toString() : ''}
             name="Carbs"
             keyboardType="decimal-pad"
           />
           <FiledView
             ref={proteinRef}
-            value={proteins ? proteins.toString() : ''}
+            value={Number.isFinite(proteins) ? proteins?.toString() : ''}
             name="Protein"
             keyboardType="decimal-pad"
           />

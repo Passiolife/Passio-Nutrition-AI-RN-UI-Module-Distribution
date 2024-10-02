@@ -42,7 +42,7 @@ const waterEntryStyle = ({ white, backgroundColor }: Branding) =>
       marginHorizontal: scaleWidth(16),
     },
     buttonSeparator: {
-      width: scaleWidth(22),
+      width: scaleWidth(8),
     },
     bottomActionButton: {
       flex: 1,

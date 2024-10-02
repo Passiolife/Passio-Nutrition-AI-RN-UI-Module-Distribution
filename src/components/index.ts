@@ -12,7 +12,6 @@ export * from './texts';
 export * from './textInputs';
 export * from './progressSliders';
 export * from './macrosProgressViews';
-export * from './alternativeFoodLogsViews';
 export * from './searchInputs';
 export * from './alert';
 export * from './swippableViews';
@@ -44,6 +43,8 @@ export * from './mealPlan';
 export * from './tab';
 export * from './filed';
 export * from './imagePickerOptions';
+export * from './recipeOptions';
+export * from './usages';
 
 import ActionSheet from './actionSheets/ActionSheet';
 export { ActionSheet };

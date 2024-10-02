@@ -53,7 +53,7 @@ const RenderItem = ({
         }}
         style={styles.heder}
       >
-        <Text weight={'600'} size="_16px" color="text" style={styles.title}>
+        <Text weight={'600'} size="title" color="text" style={styles.title}>
           {item.title}
         </Text>
         <Image

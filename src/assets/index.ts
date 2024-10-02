@@ -51,7 +51,11 @@ export const ICONS = {
   barcode: require('./icons/barocde.png'),
   barcodeNotFound: require('./icons/scan_barcode_not_fouind.png'),
 
+  foodCreator: require('./icons/food_creator.png'),
+  foodNutritionFact: require('./icons/food_nutrition_fact.png'),
+
   foodScannerBarcode: require('./icons/food_scanner_barcode.png'),
+
   foodScannerBeverage: require('./icons/food_scanner_beverage.png'),
   foodScannerFoods: require('./icons/food_scanner_foods.png'),
   foodScannerFacts: require('./icons/food_scanner_nutrition_facts.png'),
@@ -71,10 +75,10 @@ export const ICONS = {
   floatingClose: require('./icons/floating_close.png'),
   hamburger: require('./icons/hemberger.png'),
   logOptionSearch: require('./icons/log_option_searc.png'),
-  logOptionFoodScanner: require('./icons/log_option_food_scanner.png'),
+  logOptionFoodScanner: require('./icons/food_scanner.png'),
   logOptionFavorite: require('./icons/log_option_favorite.png'),
-  heartBlue: require('./ic_favorites_blue.png'),
-  filledHeartBlue: require('./icons/ic_filled_heart_blue.png'),
+  heartBlue: require('./icons/fav_unfilled.png'),
+  filledHeartBlue: require('./icons/fav_filled.png'),
   blueWaterDrop: require('./icons/blue_water_drop.png'),
   blueWeightMachine: require('./icons/blue_weight_machine.png'),
   blueGlassSmall: require('./icons/blue_glass_small.png'),
@@ -89,6 +93,15 @@ export const ICONS = {
   CloseRed: require('./icons/close_red.png'),
   CaptureIcon: require('./icons/capture.png'),
   flash: require('./icons/flash.png'),
+  recipe: require('./icons/recipe.png'),
+
+  menuFav: require('./icons/meni_favorites.png'),
+  menuAIAdviosr: require('./icons/menu_ai_adviosr.png'),
+  menuMyFoods: require('./icons/menu_my_foods.png'),
+  menuUseImage: require('./icons/menu_use_image.png'),
+  menuVoiceLogging: require('./icons/menu_voice_logging.png'),
+  menuSearch: require('./icons/menu_search.png'),
+  menuFoodScanner: require('./icons/menu_food_scanner.png'),
 };
 export const onBoardingAssets = {
   onBoardingStep1: require('./images/onboarding_01.png'),

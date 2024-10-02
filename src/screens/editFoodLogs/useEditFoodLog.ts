@@ -1,14 +1,21 @@
-import uuid4 from 'react-native-uuid';
-import { convertPassioFoodItemToFoodLog } from './../../utils/V3Utils';
-import type { FoodItem, FoodLog, MealLabel } from '../../models';
+import {
+  CUSTOM_USER_FOOD_PREFIX,
+  CUSTOM_USER_RECIPE__PREFIX,
+} from './../foodCreator/FoodCreator.utils';
+import type {
+  CustomFood,
+  CustomRecipe,
+  FoodLog,
+  MealLabel,
+} from '../../models';
 import { convertFoodLogsToFavoriteFoodLog } from './../../utils';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, useRef } from 'react';
 
 import type { EditFoodLogScreenNavigationProps } from './editFoodLogsScreen';
-import { content } from '../../constants/Content';
 import { useBranding, useServices } from '../../contexts';
 import { ShowToast } from '../../utils';
 import {
+  CommonActions,
   StackActions,
   useNavigation,
   useRoute,
@@ -17,10 +24,16 @@ import {
 import type { ParamList } from '../../navigaitons';
 import { ROUTES } from '../../navigaitons/Route';
 import { useDatePicker } from './useDatePicker';
+
 import { DeleteFoodLogAlert } from './alerts';
-import type { PassioFoodItem } from '@passiolife/nutritionai-react-native-sdk-v3';
 import { mergeNutrients } from '../../utils/NutritentsUtils';
-import dataService from '../../contexts/services/data/DataService';
+import type { AlertCustomFoodRef } from './views/AlertCustomFood';
+import {
+  combineCustomFoodAndFoodLog,
+  getCustomFoodUUID,
+  getCustomRecipeUUID,
+} from '../foodCreator/FoodCreator.utils';
+import type { FoodNotFoundRef } from './views/FoodNotFound';
 
 export function useEditFoodLog() {
   const services = useServices();
@@ -29,9 +42,6 @@ export function useEditFoodLog() {
   const navigation = useNavigation<EditFoodLogScreenNavigationProps>();
 
   const [foodLog, setFoodLog] = useState<FoodLog>(params.foodLog);
-  const [isOpenFavoriteFoodAlert, setOpenFavoriteAlert] =
-    useState<boolean>(false);
-  const [isOpenFoodNameAlert, setOpenFoodNameAlert] = useState<boolean>(false);
   const [isFavorite, setFavorite] = useState<boolean>(false);
 
   const {
@@ -42,69 +52,8 @@ export function useEditFoodLog() {
     updateEventTimeStamp,
   } = useDatePicker(params.foodLog.eventTimestamp);
 
-  const recalculateFoodLogServing = useCallback((value: FoodLog) => {
-    const updatedFoodLog = { ...value };
-    const sum = updatedFoodLog.foodItems.reduce(
-      (acc, item) => acc + item.computedWeight.value,
-      0
-    );
-    updatedFoodLog.computedWeight = {
-      value: sum,
-      unit: 'g',
-    };
-    updatedFoodLog.selectedUnit = 'serving';
-    updatedFoodLog.selectedQuantity = 1;
-    updatedFoodLog.servingUnits = [
-      {
-        unit: 'serving',
-        mass: sum,
-      },
-      {
-        unit: 'gram',
-        mass: 1,
-      },
-    ];
-    if (updatedFoodLog.foodItems.length === 1) {
-      updatedFoodLog.name = `${content.recipeWith} ${updatedFoodLog.name}`;
-    }
-    return updatedFoodLog;
-  }, []);
-
-  const addIngredient = useCallback(
-    (foodItem: FoodItem) => {
-      const updatedFoodLog = { ...foodLog };
-      updatedFoodLog.foodItems.push(foodItem);
-      setFoodLog(recalculateFoodLogServing(updatedFoodLog));
-      ShowToast('Ingredient added successfully');
-      navigation.goBack();
-    },
-    [foodLog, navigation, recalculateFoodLogServing]
-  );
-
-  const deleteIngredient = useCallback(
-    (foodItem: FoodItem) => {
-      const newFoodLog = {
-        ...foodLog,
-        foodItems: foodLog.foodItems.filter(
-          (value) => value.refCode !== foodItem.refCode
-        ),
-      };
-      setFoodLog(recalculateFoodLogServing(newFoodLog));
-    },
-    [foodLog, recalculateFoodLogServing]
-  );
-
-  const updateIngredient = useCallback(
-    (foodLogObj: FoodItem) => {
-      let updatedFoodItems = foodLog.foodItems.map((value) =>
-        value.refCode === foodLogObj.refCode ? foodLogObj : value
-      );
-      let foodLogData: FoodLog = { ...foodLog, foodItems: updatedFoodItems };
-      setFoodLog(recalculateFoodLogServing(foodLogData));
-      navigation.goBack();
-    },
-    [foodLog, navigation, recalculateFoodLogServing]
-  );
+  const alertCustomFoodRef = useRef<AlertCustomFoodRef>(null);
+  const foodNotFoundRef = useRef<FoodNotFoundRef>(null);
 
   const onUpdateFoodLog = useCallback((item: FoodLog) => {
     setFoodLog({ ...item });
@@ -127,95 +76,268 @@ export function useEditFoodLog() {
 
       ShowToast(isFavorite ? 'Removed from favorite' : 'Added to favorite');
       setFavorite(!isFavorite);
-      setOpenFavoriteAlert(false);
     } else {
-      ShowToast('refcode missing');
+      ShowToast('ref code missing');
     }
-  };
-
-  const closeFavoriteFoodLogAlert = () => {
-    setOpenFavoriteAlert(false);
-  };
-
-  const onSaveFoodLogName = async (input: string | undefined) => {
-    if (input != null) {
-      foodLog.name = input;
-      setFoodLog(foodLog);
-      await saveFoodLog();
-      setOpenFoodNameAlert(false);
-    } else {
-    }
-  };
-
-  const closeSaveFoodNameAlert = () => {
-    setOpenFoodNameAlert(false);
   };
 
   const saveFoodLog = async () => {
     await services.dataService.saveFoodLog({ ...foodLog });
   };
 
-  const onSwitchAlternative = async (attributes: PassioFoodItem) => {
-    const newFoodLog = convertPassioFoodItemToFoodLog(
-      attributes,
-      new Date(foodLog.eventTimestamp),
-      foodLog.meal
-    );
-    setFoodLog({ ...newFoodLog });
-  };
+  const onCreateCustomFood = async (
+    isUpdateUponCreating: boolean,
+    isRecipe?: boolean
+  ) => {
+    const uuid: string = isRecipe ? getCustomRecipeUUID() : getCustomFoodUUID();
 
-  const onEditCustomFoodPress = async () => {
-    if (foodLog.refCustomFoodID) {
-      const customFood = await services.dataService?.getCustomFoodLog(
-        foodLog.refCustomFoodID
-      );
-      if (customFood) {
-        navigation.push('FoodCreatorScreen', {
-          foodLog: customFood,
-          from: 'Search',
-        });
-      } else {
-        // Custom food not found in
+    let barcode = foodLog?.foodItems?.[0].barcode;
+
+    try {
+      if (
+        (barcode && barcode.length > 0) ||
+        params.prevRouteName !== 'ExistedBarcode'
+      ) {
+        const storedCustomFood = await services.dataService.getCustomFoodLogs();
+        const existingCustomFood = storedCustomFood?.find(
+          (i) => i.barcode === barcode
+        );
+        if (existingCustomFood) {
+          barcode = undefined;
+        }
       }
-    } else {
-      const uuid: string = uuid4.v4() as string;
+    } catch (error) {}
 
-      navigation.push('FoodCreatorScreen', {
-        foodLog: {
+    if (isRecipe) {
+      const sum = foodLog.foodItems.reduce(
+        (acc, item) => acc + item.computedWeight.value,
+        0
+      );
+
+      navigateToCustomRecipeScreen(
+        {
           ...foodLog,
           uuid: uuid,
-          barcode: foodLog?.foodItems?.[0].barcode,
+          barcode: barcode,
+          iconID:
+            foodLog.foodItems.length > 1
+              ? foodLog.iconID
+              : CUSTOM_USER_RECIPE__PREFIX,
+          name: foodLog.foodItems.length > 1 ? foodLog.name : '',
+          selectedUnit: 'serving',
+          selectedQuantity: 1,
+          servingUnits: [
+            {
+              unit: 'serving',
+              mass: sum,
+            },
+            {
+              unit: 'gram',
+              mass: 1,
+            },
+          ],
+          computedWeight: {
+            value: sum,
+            unit: 'g',
+          },
         },
-        onSave: async (customFood) => {
-          await dataService.saveFoodLog({
-            ...params.foodLog,
-            refCustomFoodID: customFood?.uuid,
-          });
-
-          setFoodLog((i) => {
-            return {
-              ...i,
-              refCustomFoodID: customFood?.uuid,
-            };
-          });
+        isUpdateUponCreating
+      );
+    } else {
+      navigateToFoodCreatorScreen(
+        {
+          ...foodLog,
+          uuid: uuid,
+          barcode: barcode,
+          brandName: foodLog.longName,
         },
-        from: 'Search',
-      });
+        isUpdateUponCreating
+      );
     }
   };
 
-  const onSwitchAlternativePress = () => {
-    navigation.navigate('FoodSearchScreen', {
-      from: 'Other',
-      onSaveData: (item: PassioFoodItem) => {
-        onSwitchAlternative(item);
+  const onEditCustomFood = async (
+    isUpdateUponCreating: boolean,
+    isRecipe?: boolean
+  ) => {
+    if (foodLog.refCustomFoodID) {
+      if (isRecipe) {
+        const customFood = await services.dataService?.getCustomRecipe(
+          foodLog.refCustomFoodID
+        );
+        if (customFood) {
+          navigateToCustomRecipeScreen(customFood, isUpdateUponCreating);
+        } else {
+          setTimeout(() => {
+            foodNotFoundRef?.current?.onShow(isUpdateUponCreating, isRecipe);
+          }, 200);
+        }
+      } else {
+        const customFood = await services.dataService?.getCustomFoodLog(
+          foodLog.refCustomFoodID
+        );
+        if (customFood) {
+          navigateToFoodCreatorScreen(customFood, isUpdateUponCreating);
+        } else {
+          setTimeout(() => {
+            foodNotFoundRef?.current?.onShow(isUpdateUponCreating, isRecipe);
+          }, 200);
+        }
+      }
+    }
+  };
+
+  // Navigate To Custom Food Editor
+  const navigateToFoodCreatorScreen = (
+    customFood: CustomFood,
+    isUpdateUponCreating: boolean
+  ) => {
+    navigation.push('FoodCreatorScreen', {
+      foodLog: customFood,
+      onSave: async (item) => {
+        if (item && isUpdateUponCreating) {
+          await services.dataService.saveFoodLog(
+            combineCustomFoodAndFoodLog(item, foodLog)
+          );
+          navigation.dispatch(
+            CommonActions.reset({
+              index: 0,
+              routes: [
+                {
+                  name: 'BottomNavigation',
+                  params: {
+                    screen: 'MealLogScreen',
+                  },
+                },
+              ],
+            })
+          );
+        } else {
+          navigation.dispatch(
+            CommonActions.reset({
+              index: 0,
+              routes: [
+                {
+                  name: 'BottomNavigation',
+                  params: {
+                    screen: 'MealLogScreen',
+                  },
+                },
+              ],
+            })
+          );
+          navigation.navigate('MyFoodsScreen', {
+            logToDate: new Date(),
+            logToMeal: undefined,
+          });
+        }
       },
+      from: 'FoodDetail',
     });
+  };
+
+  // Navigate To Custom Recipe Editor
+  const navigateToCustomRecipeScreen = (
+    customFood: CustomRecipe,
+    isUpdateUponCreating: boolean
+  ) => {
+    navigation.push('EditRecipeScreen', {
+      recipe: JSON.parse(JSON.stringify(customFood)),
+      onSaveLogPress: async (item) => {
+        if (item && isUpdateUponCreating) {
+          const updatedFoodLog = combineCustomFoodAndFoodLog(item, foodLog);
+          //  For recipe long name should be empty
+          updatedFoodLog.longName = '';
+          await services.dataService.saveFoodLog(updatedFoodLog);
+          navigation.dispatch(
+            CommonActions.reset({
+              index: 0,
+
+              routes: [
+                {
+                  name: 'BottomNavigation',
+                  params: {
+                    screen: 'MealLogScreen',
+                  },
+                },
+              ],
+            })
+          );
+        } else {
+          navigation.dispatch(
+            CommonActions.reset({
+              index: 0,
+              routes: [
+                {
+                  name: 'BottomNavigation',
+                  params: {
+                    screen: 'MealLogScreen',
+                  },
+                },
+              ],
+            })
+          );
+          setTimeout(() => {
+            navigation.navigate('MyFoodsScreen', {
+              logToDate: new Date(),
+              logToMeal: undefined,
+              tab: 'Recipe',
+            });
+          }, 50);
+        }
+      },
+      from: 'FoodDetail',
+    });
+  };
+
+  const onEditCustomFoodPress = async () => {
+    if (params.prevRouteName === 'MyFood') {
+      params?.onEditCustomFood?.(foodLog);
+    } else if (params.prevRouteName === 'MealLog') {
+      alertCustomFoodRef.current?.onShow(
+        foodLog.refCustomFoodID?.startsWith(CUSTOM_USER_FOOD_PREFIX)
+          ? foodLog.refCustomFoodID
+          : undefined,
+        false,
+        false
+      );
+    } else if (params.prevRouteName === 'ExistedBarcode' && params.customFood) {
+      navigateToFoodCreatorScreen(params.customFood, false);
+    } else {
+      alertCustomFoodRef.current?.onShow(undefined, false, true);
+    }
+  };
+  const onEditCustomRecipePress = async () => {
+    if (params.prevRouteName === 'MyFood') {
+      if (params.onEditRecipeFood) {
+        params.onEditRecipeFood(foodLog);
+      } else {
+        alertCustomFoodRef.current?.onShow(
+          foodLog.refCustomFoodID?.startsWith(CUSTOM_USER_RECIPE__PREFIX)
+            ? foodLog.refCustomFoodID
+            : undefined,
+          true,
+          true
+        );
+      }
+    } else if (params.prevRouteName === 'MealLog') {
+      alertCustomFoodRef.current?.onShow(
+        foodLog.refCustomFoodID?.startsWith(CUSTOM_USER_RECIPE__PREFIX)
+          ? foodLog.refCustomFoodID
+          : undefined,
+        true,
+        false
+      );
+    } else {
+      // Other
+      alertCustomFoodRef.current?.onShow(undefined, true, true);
+    }
   };
 
   const onMoreDetailPress = () => {
     navigation.navigate('NutritionInformationScreen', {
       nutrient: mergeNutrients(foodLog.foodItems.flatMap((i) => i.nutrients)),
+      foodLog: foodLog,
     });
   };
 
@@ -228,6 +350,22 @@ export function useEditFoodLog() {
     onConfirmDateSelection(date);
   };
 
+  const jumpToDiary = () => {
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [
+          {
+            name: 'BottomNavigation',
+            params: {
+              screen: 'MealLogScreen',
+            },
+          },
+        ],
+      })
+    );
+  };
+
   const onSavePress = async () => {
     try {
       await saveFoodLog();
@@ -238,8 +376,13 @@ export function useEditFoodLog() {
         navigation.dispatch(StackActions.pop(3));
       } else if (params.prevRouteName === 'QuickScan') {
         navigation.dispatch(StackActions.pop(1));
+      } else if (
+        params.prevRouteName === 'Barcode' ||
+        params.prevRouteName === 'ExistedBarcode'
+      ) {
+        jumpToDiary();
       } else {
-        navigation.dispatch(StackActions.pop(2));
+        jumpToDiary();
       }
       params?.onSaveLogPress?.({ ...foodLog });
     } catch (e) {}
@@ -278,36 +421,6 @@ export function useEditFoodLog() {
     navigation.dispatch(StackActions.pop(1));
   };
 
-  const onAddIngredientPress = () => {
-    navigation.push('FoodSearchScreen', {
-      onSaveData: (item) => {
-        const foodItem = convertPassioFoodItemToFoodLog(
-          item,
-          new Date(),
-          undefined
-        ).foodItems[0];
-        if (foodItem) {
-          addIngredient(foodItem);
-        }
-      },
-      from: 'Ingredient',
-    });
-  };
-
-  const onEditIngredientPress = useCallback(
-    (foodItem: FoodItem) => {
-      navigation.navigate('EditIngredientScreen', {
-        foodItem: foodItem,
-        deleteIngredient: (item) => {
-          deleteIngredient(item);
-          navigation.goBack();
-        },
-        updateIngredient,
-      });
-    },
-    [navigation, updateIngredient, deleteIngredient]
-  );
-
   const onMealLabelPress = (label: MealLabel) => {
     foodLog.meal = label;
     setFoodLog({ ...foodLog });
@@ -328,38 +441,32 @@ export function useEditFoodLog() {
   }, [foodLog, foodLog.refCode, services.dataService]);
 
   return {
+    alertCustomFoodRef,
     branding,
+    closeDatePicker,
     eventTimeStamp,
     foodLog,
+    foodNotFoundRef,
     from: params.prevRouteName,
     isFavorite,
-    isOpenDatePicker,
-    isOpenFavoriteFoodAlert,
-    isOpenFoodNameAlert,
+    isHideFavorite: params.prevRouteName === 'Favorites',
     isHideMealTime: params.prevRouteName === 'Favorites',
     isHideTimeStamp: params.prevRouteName === 'Favorites',
-    isHideFavorite: params.prevRouteName === 'Favorites',
-    closeDatePicker,
-    closeFavoriteFoodLogAlert,
-    closeSaveFoodNameAlert,
-    deleteIngredient,
-    onAddIngredientPress,
+    isOpenDatePicker,
+    onEditCustomRecipePress,
     onCancelPress,
+    onCreateCustomFood,
     onDateChangePress,
-    onDeleteFoodLogPress,
     onDeleteFavoritePress,
+    onDeleteFoodLogPress,
+    onEditCustomFood,
     onEditCustomFoodPress,
-    onEditIngredientPress,
     onMealLabelPress,
-    onSwitchAlternativePress,
+    onMoreDetailPress,
     onSaveFavoriteFoodLog,
-    onSaveFoodLogName,
     onSavePress,
-    onSwitchAlternative,
     onUpdateFavoritePress,
     onUpdateFoodLog,
     openDatePicker,
-    setOpenFoodNameAlert,
-    onMoreDetailPress,
   };
 }

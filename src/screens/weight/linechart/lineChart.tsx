@@ -6,6 +6,7 @@ import {
   VictoryAxis,
   VictoryLine,
   VictoryScatter,
+  VictoryVoronoiContainer,
 } from 'victory-native';
 import { useBranding } from '../../../contexts';
 import { scaleHeight, scaledSize } from '../../../utils';
@@ -31,6 +32,28 @@ export const WeightTrendChart = ({ data, target }: WeightTrendChartProps) => {
     maxValue = maxValue > 0 ? Math.round(maxValue + 10) : 30;
   }
 
+  // Break data into segments of consecutive points
+  const segments = [];
+  let currentSegment = [];
+
+  for (let i = 0; i < data.length; i++) {
+    if (data[i].value > 0) {
+      currentSegment.push(data[i]);
+    } else {
+      if (currentSegment.length > 0) {
+        segments.push(currentSegment);
+        currentSegment = [];
+      }
+
+      segments.push([data[i]]);
+    }
+  }
+
+  // Add the last segment if it's non-empty
+  if (currentSegment.length > 0) {
+    segments.push(currentSegment);
+  }
+
   return (
     <View
       style={{
@@ -40,6 +63,7 @@ export const WeightTrendChart = ({ data, target }: WeightTrendChartProps) => {
       }}
     >
       <VictoryChart
+        containerComponent={<VictoryVoronoiContainer />}
         domainPadding={{ x: 16 }}
         width={Dimensions.get('window').width - 60}
         theme={VictoryTheme.material}
@@ -79,16 +103,19 @@ export const WeightTrendChart = ({ data, target }: WeightTrendChartProps) => {
           minDomain={{ y: 0 }}
         />
 
-        <VictoryLine
-          style={{
-            labels: { display: 'none' },
-            data: { stroke: primaryColor },
-          }}
-          x="label"
-          y="value"
-          data={data}
-          interpolation="monotoneX"
-        />
+        {segments.map((segment, index) => (
+          <VictoryLine
+            key={index}
+            style={{
+              labels: { display: 'none' },
+              data: { stroke: primaryColor },
+            }}
+            x="label"
+            y="value"
+            data={segment}
+            interpolation="monotoneX"
+          />
+        ))}
 
         <VictoryScatter
           data={data.filter((o) => o.value > 0)}

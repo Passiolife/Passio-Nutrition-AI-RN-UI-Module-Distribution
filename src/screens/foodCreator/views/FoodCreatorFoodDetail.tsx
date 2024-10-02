@@ -13,12 +13,15 @@ import type { FiledSelectionViewRef } from '../../../components/filed/FiledSelec
 import { FiledViewClick } from '../../../components/filed/FiledViewClick';
 import type { CustomFood, Image } from '../../../models';
 import { PassioFoodIcon } from '../../../components/passio/PassioFoodIcon';
+import { ICONS } from '../../../assets';
 
 interface Props {
   foodLog?: CustomFood;
+  barcode?: string;
   onBarcodePress?: () => void;
   onEditImagePress?: () => void;
   image?: Image;
+  isNutritionFact?: boolean;
 }
 
 export type FoodCreatorFoodDetailType = 'name' | 'brand' | 'barcode';
@@ -37,7 +40,14 @@ export const FoodCreatorFoodDetail = React.forwardRef<
   Props
 >(
   (
-    { foodLog: defaultFoodLog, onBarcodePress, onEditImagePress, image }: Props,
+    {
+      foodLog: defaultFoodLog,
+      barcode: defaultBarcode,
+      onBarcodePress,
+      onEditImagePress,
+      image,
+      isNutritionFact,
+    }: Props,
     ref: React.Ref<FoodCreatorFoodDetailRef>
   ) => {
     const branding = useBranding();
@@ -45,10 +55,15 @@ export const FoodCreatorFoodDetail = React.forwardRef<
     const styles = requireNutritionFactStyle(branding);
 
     const [foodLog, setFoodLog] = useState(defaultFoodLog);
+    const [barcode, setBarcode] = useState(defaultBarcode);
 
     useEffect(() => {
       setFoodLog(defaultFoodLog);
     }, [defaultFoodLog]);
+
+    useEffect(() => {
+      setBarcode(defaultBarcode);
+    }, [defaultBarcode]);
 
     const nameRef = useRef<FiledViewRef>(null);
     const brandNameRef = useRef<FiledViewRef>(null);
@@ -79,7 +94,7 @@ export const FoodCreatorFoodDetail = React.forwardRef<
 
             if (key !== 'barcode' && key !== 'brand') {
               currentRef?.errorCheck();
-              if (value === undefined || value.length === 0) {
+              if (value === undefined || value.trim().length === 0) {
                 isNotValid = true;
               }
             } else {
@@ -101,18 +116,26 @@ export const FoodCreatorFoodDetail = React.forwardRef<
       <Card style={styles.card}>
         {
           <View>
-            <Text style={styles.title}>{'Scan Description'}</Text>
+            <Text size="title" weight="600" style={styles.title}>
+              {'Scan Description'}
+            </Text>
             <View style={styles.container}>
               <TouchableOpacity onPress={onEditImagePress} style={styles.left}>
                 <PassioFoodIcon
                   style={styles.icon}
                   iconID={image?.id}
                   extra={image?.base64}
+                  defaultImage={
+                    isNutritionFact
+                      ? ICONS.foodNutritionFact
+                      : ICONS.foodCreator
+                  }
                 />
                 <Text
-                  size="_12px"
+                  size="secondlyTitle"
                   color="primaryColor"
                   isLink
+                  onPress={onEditImagePress}
                   style={styles.editImage}
                 >
                   {'Edit Image'}
@@ -138,7 +161,7 @@ export const FoodCreatorFoodDetail = React.forwardRef<
                   name="Brand"
                 />
                 <FiledViewClick
-                  value={foodLog?.barcode}
+                  value={barcode}
                   ref={barcodeRef}
                   isColum
                   name="Barcode"
@@ -165,29 +188,26 @@ const requireNutritionFactStyle = ({}: Branding) =>
     },
     container: {
       flexDirection: 'row',
-      alignContent: 'space-around',
-      justifyContent: 'space-between',
     },
     left: {
-      flex: 1,
       alignContent: 'center',
       alignItems: 'center',
       alignSelf: 'center',
     },
     right: {
-      flex: 1.5,
+      marginStart: 16,
+      flex: 1,
     },
     editImage: {
-      marginVertical: 4,
-      fontSize: 10,
+      marginVertical: 6,
     },
     icon: {
-      height: 80,
-      width: 80,
+      height: 100,
+      width: 100,
       alignItems: 'center',
       alignSelf: 'center',
       justifyContent: 'center',
-      borderRadius: 40,
+      borderRadius: 50,
       overflow: 'hidden',
       alignContent: 'center',
     },

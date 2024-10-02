@@ -8,22 +8,23 @@ import {
   View,
 } from 'react-native';
 import type { Module, ParamList } from '../../navigaitons';
-import type { FoodLog } from '../../models';
+import type { CustomFood, FoodLog } from '../../models';
 import { BasicButton, DatePicker, BackNavigation } from '../../components';
 import { COLORS } from '../../constants';
 import LogInformationView from './views/logInformationsView';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import { TimeStampView } from './views/timeStampsView';
-import { SaveFavoriteFoodItem, UpdateFoodLogAlertPrompt } from './alerts';
 import { MealTimeView } from './views/mealTimesView';
 import { IngredientsView } from './views/ingredients/IngredientsView';
 import { calculateComputedWeightAmount } from './utils';
 import { useEditFoodLog } from './useEditFoodLog';
 import { content } from '../../constants/Content';
 import type { Branding } from '../../contexts';
-import { scaleHeight, scaleWidth, scaled, scaledSize } from '../../utils';
+import { scaleHeight, scaleWidth } from '../../utils';
 import { ICONS } from '../../assets';
 import NewEditServingAmountView from './views/newEditServingsAmountView';
+import AlertCustomFood from './views/AlertCustomFood';
+import FoodNotFound from './views/FoodNotFound';
 
 export type EditFoodLogScreenNavigationProps = StackNavigationProp<
   ParamList,
@@ -32,46 +33,44 @@ export type EditFoodLogScreenNavigationProps = StackNavigationProp<
 
 export interface EditFoodLogScreenProps {
   foodLog: FoodLog;
+  customFood?: CustomFood;
   prevRouteName: String | Module;
   onSaveLogPress?: (foodLog: FoodLog) => void;
   onDeleteLogPress?: (foodLog: FoodLog) => void;
   onCancelPress?: () => void;
+  onEditCustomFood?: (foodLog: FoodLog) => void;
+  onEditRecipeFood?: (foodLog: FoodLog) => void;
 }
 
 export const EditFoodLogScreen = () => {
   const {
+    alertCustomFoodRef,
     branding,
+    closeDatePicker,
     eventTimeStamp,
     foodLog,
+    foodNotFoundRef,
     from,
     isFavorite,
     isHideFavorite,
-    isOpenDatePicker,
-    isOpenFavoriteFoodAlert,
-    isOpenFoodNameAlert,
     isHideMealTime,
     isHideTimeStamp,
-    closeDatePicker,
-    closeFavoriteFoodLogAlert,
-    onSwitchAlternativePress,
-    closeSaveFoodNameAlert,
-    deleteIngredient,
-    onDateChangePress,
-    onAddIngredientPress,
-    onEditIngredientPress,
+    isOpenDatePicker,
+    onEditCustomRecipePress,
     onCancelPress,
-    onDeleteFoodLogPress,
-    onEditCustomFoodPress,
-    onSaveFavoriteFoodLog,
-    onSaveFoodLogName,
-    onSavePress,
-    onUpdateFoodLog,
-    onUpdateFavoritePress,
-    onMealLabelPress,
-    openDatePicker,
-    setOpenFoodNameAlert,
+    onCreateCustomFood,
+    onDateChangePress,
     onDeleteFavoritePress,
+    onDeleteFoodLogPress,
+    onEditCustomFood,
+    onEditCustomFoodPress,
+    onMealLabelPress,
     onMoreDetailPress,
+    onSaveFavoriteFoodLog,
+    onSavePress,
+    onUpdateFavoritePress,
+    onUpdateFoodLog,
+    openDatePicker,
   } = useEditFoodLog();
   const styles = editFoodLogStyle(branding);
 
@@ -80,79 +79,66 @@ export const EditFoodLogScreen = () => {
       <BackNavigation
         title={'Food Details'}
         rightSide={
-          <View style={{ flexDirection: 'row', marginHorizontal: 16 }}>
-            {from === 'QuickScan' && (
-              <Pressable onPress={onSwitchAlternativePress} style={{}}>
+          <View>
+            {foodLog.foodItems.length === 1 ? (
+              <Pressable
+                onPress={onEditCustomFoodPress}
+                style={{ marginStart: 16 }}
+              >
                 <Image
-                  source={ICONS.swap}
+                  source={ICONS.editGreyIc}
                   style={{
                     width: scaleWidth(20),
                     height: scaleHeight(20),
+                    marginEnd: 32,
                   }}
                 />
               </Pressable>
+            ) : (
+              <View style={{ marginStart: 46 }} />
             )}
-            <Pressable
-              onPress={onEditCustomFoodPress}
-              style={{ marginStart: 16 }}
-            >
-              <Image
-                source={ICONS.editGreyIc}
-                style={{
-                  width: scaleWidth(18),
-                  height: scaleHeight(18),
-                }}
-              />
-            </Pressable>
           </View>
         }
       />
       <ScrollView>
         <View style={styles.body}>
-          <TouchableOpacity
-            onPress={() => {
-              setOpenFoodNameAlert(false);
-            }}
-            activeOpacity={1}
-          >
-            <LogInformationView
-              iconID={foodLog.iconID}
-              foodItems={foodLog.foodItems}
-              longName={foodLog.longName}
-              isOpenFood={foodLog.isOpenFood}
-              onMoreDetailPress={onMoreDetailPress}
-              name={foodLog.name}
-              qty={foodLog.selectedQuantity}
-              entityType={foodLog.entityType}
-              servingUnit={foodLog.selectedUnit}
-              weight={calculateComputedWeightAmount(
-                foodLog.selectedQuantity,
-                foodLog.servingUnits,
-                foodLog.selectedUnit
-              )}
-              rightIconForHeader={
-                !isHideFavorite ? (
-                  <TouchableOpacity
-                    onPress={() => {
-                      onSaveFavoriteFoodLog();
-                    }}
-                  >
-                    <Image
-                      source={
-                        isFavorite ? ICONS.filledHeartBlue : ICONS.heartBlue
-                      }
-                      style={
-                        isFavorite
-                          ? styles.filledHeartIconStyle
-                          : styles.heartIconStyle
-                      }
-                      resizeMode="contain"
-                    />
-                  </TouchableOpacity>
-                ) : undefined
-              }
-            />
-          </TouchableOpacity>
+          <LogInformationView
+            iconID={foodLog.iconID}
+            foodItems={foodLog.foodItems}
+            longName={foodLog.longName}
+            isOpenFood={foodLog.isOpenFood}
+            onMoreDetailPress={onMoreDetailPress}
+            name={foodLog.name}
+            qty={foodLog.selectedQuantity}
+            entityType={foodLog.entityType}
+            servingUnit={foodLog.selectedUnit}
+            weight={calculateComputedWeightAmount(
+              foodLog.selectedQuantity,
+              foodLog.servingUnits,
+              foodLog.selectedUnit
+            )}
+            rightIconForHeader={
+              !isHideFavorite ? (
+                <TouchableOpacity
+                  onPress={() => {
+                    onSaveFavoriteFoodLog();
+                  }}
+                >
+                  <Image
+                    source={
+                      isFavorite ? ICONS.filledHeartBlue : ICONS.heartBlue
+                    }
+                    style={
+                      isFavorite
+                        ? styles.filledHeartIconStyle
+                        : styles.heartIconStyle
+                    }
+                    resizeMode="contain"
+                  />
+                </TouchableOpacity>
+              ) : undefined
+            }
+          />
           <NewEditServingAmountView
             foodLog={foodLog}
             onUpdateFoodLog={onUpdateFoodLog}
@@ -170,10 +156,10 @@ export const EditFoodLogScreen = () => {
             />
           )}
           <IngredientsView
+            onAddIngredients={onEditCustomRecipePress}
             foodItems={foodLog.foodItems}
-            onAddIngredients={onAddIngredientPress}
-            deleteIngredientsItem={deleteIngredient}
-            navigateToEditIngredientsScreen={onEditIngredientPress}
+            referenceCode={foodLog.refCustomFoodID}
+            enable={false}
           />
           <View style={styles.lastContainer} />
         </View>
@@ -219,7 +205,7 @@ export const EditFoodLogScreen = () => {
           )}
           <BasicButton
             style={bottomActionStyle.bottomActionButton}
-            text={from === 'MealLog' ? 'Update' : content.log}
+            text={from === 'MealLog' ? 'Save' : content.log}
             testId="testButtonSave"
             small
             secondary={false}
@@ -235,27 +221,17 @@ export const EditFoodLogScreen = () => {
         handleConfirm={(date) => onDateChangePress(date)}
         hideDatePicker={() => closeDatePicker()}
       />
-      <SaveFavoriteFoodItem
-        text={''}
-        onSave={() => onSaveFavoriteFoodLog()}
-        onClose={async () => closeFavoriteFoodLogAlert()}
-        isVisible={isOpenFavoriteFoodAlert}
+      <AlertCustomFood
+        ref={alertCustomFoodRef}
+        onCreatePress={onCreateCustomFood}
+        onEditPress={onEditCustomFood}
       />
-      <UpdateFoodLogAlertPrompt
-        defaultValue={foodLog.name}
-        onSave={async (input) => onSaveFoodLogName(input)}
-        onClose={() => closeSaveFoodNameAlert()}
-        isVisible={isOpenFoodNameAlert}
-      />
+      <FoodNotFound ref={foodNotFoundRef} onCreatePress={onCreateCustomFood} />
     </View>
   );
 };
 
-const editFoodLogStyle = ({
-  backgroundColor,
-  gray300,
-  primaryColor,
-}: Branding) =>
+const editFoodLogStyle = ({ backgroundColor }: Branding) =>
   StyleSheet.create({
     container: {
       backgroundColor: backgroundColor,
@@ -309,12 +285,12 @@ const editFoodLogStyle = ({
       height: 50,
     },
     heartIconStyle: {
-      ...scaled(24),
-      tintColor: gray300,
+      height: 24,
+      width: 24,
     },
     filledHeartIconStyle: {
-      ...scaled(20),
-      tintColor: primaryColor,
+      height: 24,
+      width: 24,
     },
   });
 
@@ -324,18 +300,16 @@ const bottomActionStyle = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-evenly',
     marginBottom: 32,
-    marginHorizontal: scaleWidth(16),
+    marginHorizontal: 16,
   },
   bottomActionButton: {
     flex: 1,
     marginHorizontal: 8,
-    borderRadius: scaledSize(4),
+    borderRadius: 4,
     justifyContent: 'center',
   },
   deleteActionButton: {
     flex: 1,
-    marginHorizontal: 8,
-    borderRadius: scaledSize(4),
     backgroundColor: 'rgba(239, 68, 68, 1)',
     borderColor: 'rgba(239, 68, 68, 1)',
     justifyContent: 'center',

@@ -19,6 +19,7 @@ import type { ParamList } from 'src/navigaitons';
 import { ShowToast } from '../../utils';
 import { Alert } from 'react-native';
 import type { SwipeToDeleteRef } from '../../components';
+import { createFoodItemByFavorite } from '../foodCreator/FoodCreator.utils';
 
 export function useFavorites() {
   const services = useServices();
@@ -45,17 +46,21 @@ export function useFavorites() {
   const meal = getMealLog(date, route.params.logToMeal);
 
   const onSaveFoodLogs = async (favoriteFoodItem: FavoriteFoodItem) => {
-    const foodLog = createFoodLogFromFavoriteFoodItem(
-      favoriteFoodItem,
-      meal,
-      date
-    );
-    await services.dataService.saveFoodLog(foodLog);
-    ShowToast('Log added');
-    navigation.pop(1);
-    navigation.navigate('BottomNavigation', {
-      screen: 'MealLogScreen',
-    });
+    if (route.params.from === 'Recipe') {
+      route.params?.addIngredient?.(createFoodItemByFavorite(favoriteFoodItem));
+    } else {
+      const foodLog = createFoodLogFromFavoriteFoodItem(
+        favoriteFoodItem,
+        meal,
+        date
+      );
+      await services.dataService.saveFoodLog(foodLog);
+      ShowToast('Log added');
+      navigation.pop(1);
+      navigation.navigate('BottomNavigation', {
+        screen: 'MealLogScreen',
+      });
+    }
   };
 
   const onDeleteFavoritePress = async (uuid: string) => {
@@ -83,20 +88,30 @@ export function useFavorites() {
   const navigateToFavoriteFoodLogEditor = (
     favoriteFoodItem: FavoriteFoodItem
   ) => {
-    navigation.push('EditFoodLogScreen', {
-      foodLog: favoriteFoodItem,
-      prevRouteName: 'Favorites',
-      onSaveLogPress: (foodLog) => {
-        onUpdateFavoritePress({
-          ...favoriteFoodItem,
-          ...foodLog,
-          meal: meal,
-        });
-      },
-      onDeleteLogPress: (foodLog) => {
-        onDeleteFavoritePress(foodLog.uuid);
-      },
-    });
+    if (route.params.from === 'Recipe') {
+      navigation.push('EditIngredientScreen', {
+        foodItem: { ...createFoodItemByFavorite(favoriteFoodItem) },
+        updateIngredient: (item) => {
+          navigation.goBack();
+          route.params?.addIngredient?.(item);
+        },
+      });
+    } else {
+      navigation.push('EditFoodLogScreen', {
+        foodLog: favoriteFoodItem,
+        prevRouteName: 'Favorites',
+        onSaveLogPress: (foodLog) => {
+          onUpdateFavoritePress({
+            ...favoriteFoodItem,
+            ...foodLog,
+            meal: meal,
+          });
+        },
+        onDeleteLogPress: (foodLog) => {
+          onDeleteFavoritePress(foodLog.uuid);
+        },
+      });
+    }
   };
 
   return {

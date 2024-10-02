@@ -11,9 +11,10 @@ import { scaleHeight, scaleWidth, scaledSize } from '../../utils';
 import { useNutritionInformation } from './useNutritionInformation';
 import { nutrientName, nutrientUnits, type Nutrient } from '../../models';
 import { ICONS } from '../../assets';
+import FoodInfo from './FoodInfo';
 
 const NutritionInformationScreen = () => {
-  const { nutrients, isInfo, onInfoPress } = useNutritionInformation();
+  const { nutrients, isInfo, onInfoPress, foodLog } = useNutritionInformation();
 
   const renderItem = ({ item }: { item: Nutrient; index: number }) => {
     return (
@@ -28,7 +29,11 @@ const NutritionInformationScreen = () => {
             size={'_24px'}
             style={styles.itemText}
           >
-            {Math.round(item.amount)}
+            {item.amount === 0
+              ? item.amount.toFixed(0)
+              : item.amount.toFixed(2) === '0'
+                ? 0
+                : item.amount.toFixed(2)}
             <Text
               weight="400"
               color="secondaryText"
@@ -64,8 +69,8 @@ const NutritionInformationScreen = () => {
 
               <Text
                 weight="400"
-                size="_12px"
-                style={{ textAlign: 'center', paddingHorizontal: 12 }}
+                size="secondlyTitle"
+                style={{ textAlign: 'center', paddingHorizontal: 0 }}
               >
                 {
                   'Please note that not all foods in our database have available micronutrient information, so the summary provided may be incomplete.'
@@ -76,6 +81,10 @@ const NutritionInformationScreen = () => {
         )}
       </>
     );
+  };
+
+  const renderFood = () => {
+    return <FoodInfo foodLog={foodLog} />;
   };
 
   return (
@@ -103,7 +112,12 @@ const NutritionInformationScreen = () => {
           style={styles.list}
           numColumns={2}
           showsVerticalScrollIndicator={false}
-          ListHeaderComponent={renderInfo}
+          ListHeaderComponent={
+            <>
+              {renderInfo()}
+              {renderFood()}
+            </>
+          }
         />
       </View>
     </>
@@ -144,7 +158,6 @@ const styles = StyleSheet.create({
   itemTextTitle: {
     flex: 2,
     fontWeight: '700',
-    textTransform: 'capitalize',
   },
   info: {
     textTransform: 'capitalize',

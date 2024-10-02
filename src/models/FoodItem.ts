@@ -1,7 +1,7 @@
 import type { Nutrient, NutrientType } from './Nutrient';
 
 import type { ComputedWeight } from './ComputedWeight';
-import type { PassioIDEntityType } from '@passiolife/nutritionai-react-native-sdk-v3/src/sdk/v2';
+import type { PassioIDEntityType } from '@passiolife/nutritionai-react-native-sdk-v3';
 import type { ServingInfo } from './ServingInfo';
 
 export interface FoodItem extends ServingInfo {

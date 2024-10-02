@@ -1,14 +1,12 @@
 import React, { useRef } from 'react';
 import {
   StyleSheet,
-  Text,
   View,
   Platform,
   TouchableOpacity,
   Animated,
 } from 'react-native';
 import type { FoodItem } from '../../../../models/FoodItem';
-import { caloriesTextForFoodItem } from '../../../../utils/StringUtils';
 import { COLORS } from '../../../../constants';
 import {
   GestureHandlerRootView,
@@ -18,11 +16,15 @@ import { DeleteIngredientAlert } from '../../alerts/DeleteIngredientAlert';
 import { content } from '../../../../constants/Content';
 import { PassioFoodIcon } from '../../../../components/passio/PassioFoodIcon';
 import { round, round2Digit } from '../../../../utils/V3Utils';
+import { Text } from '../../../../components';
+import { totalAmountOfNutrientWithoutRound } from '../../utils';
+import { NumberRound } from '../../../../utils/NumberUtils';
 
 interface Props {
   foodItem: FoodItem;
   onPress: (foodItem: FoodItem) => void;
   deleteIngredientsItem: (foodItem: FoodItem) => void;
+  enabled?: boolean;
 }
 
 const IngredientView = (props: Props) => {
@@ -81,6 +83,7 @@ const IngredientView = (props: Props) => {
     <GestureHandlerRootView>
       <Swipeable
         ref={swipeableRef}
+        enabled={props.enabled ?? true}
         containerStyle={styles.swipeableContainer}
         childrenContainerStyle={styles.swipeableShadowContainer}
         overshootLeft={true}
@@ -103,17 +106,32 @@ const IngredientView = (props: Props) => {
             />
           </View>
           <View style={styles.mealDetail}>
-            <Text style={styles.mealName} numberOfLines={2}>
+            <Text
+              size="secondlyTitle"
+              color="text"
+              weight="600"
+              style={styles.mealName}
+            >
               {foodItem.name}
             </Text>
             {/* <Text style={styles.mealSize}>{servingLabel(foodItem)}</Text> */}
 
             <Text
+              size="secondlyTitle"
+              color="gray500"
+              weight="400"
               style={styles.mealSize}
             >{`${round2Digit(foodItem.selectedQuantity)} ${foodItem.selectedUnit} (${round(foodItem.computedWeight.value)} ${foodItem.computedWeight.unit})`}</Text>
           </View>
-          <Text style={styles.rightArrowIcon}>
-            {caloriesTextForFoodItem(foodItem, content.calories)}
+          <Text
+            size="secondlyTitle"
+            color="text"
+            weight="400"
+            style={styles.rightArrowIcon}
+          >
+            {NumberRound(
+              totalAmountOfNutrientWithoutRound([foodItem], 'calories')
+            ) + ' kcal'}
           </Text>
         </TouchableOpacity>
       </Swipeable>
@@ -126,7 +144,7 @@ export default React.memo(IngredientView);
 const styles = StyleSheet.create({
   mealContainer: {
     flexDirection: 'row',
-    alignContent: 'space-around',
+    justifyContent: 'center',
   },
   mealImgLayout: {
     flexShrink: 0,
@@ -137,13 +155,11 @@ const styles = StyleSheet.create({
   },
   mealDetail: {
     marginHorizontal: 10,
+    alignSelf: 'center',
     flex: 1,
   },
   rightArrowIcon: {
-    flexShrink: 0,
-    height: 24,
     alignSelf: 'center',
-    tintColor: COLORS.grey8,
   },
 
   mealImg: {
@@ -151,16 +167,9 @@ const styles = StyleSheet.create({
     width: 50,
   },
   mealName: {
-    fontWeight: '600',
-    fontSize: 15,
     textTransform: 'capitalize',
-    color: COLORS.grey7,
   },
-  mealSize: {
-    color: COLORS.grey7,
-    fontSize: 14,
-    fontWeight: '400',
-  },
+  mealSize: {},
   detailView: {
     justifyContent: 'space-between',
   },
@@ -185,6 +194,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   swipeableContainer: {
+    marginVertical: 8,
     ...Platform.select({
       ios: {
         marginTop: 0,
@@ -202,13 +212,11 @@ const styles = StyleSheet.create({
       ios: {
         backgroundColor: 'white',
         paddingHorizontal: 10,
-        marginVertical: 5,
         marginHorizontal: 4,
         flex: 1,
       },
       android: {
         backgroundColor: COLORS.white,
-        marginVertical: 5,
         paddingHorizontal: 10,
         marginHorizontal: 4,
       },

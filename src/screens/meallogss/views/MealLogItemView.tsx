@@ -1,11 +1,14 @@
 import React, { useCallback } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import type { FoodLog } from '../../../models';
-import { DeleteFoodLogAlert } from '../../editFoodLogs';
-import { caloriesText } from '../../../utils/StringUtils';
+import {
+  DeleteFoodLogAlert,
+  totalAmountOfNutrientWithoutRound,
+} from '../../editFoodLogs';
 import { SwipeToDelete, Text } from '../../../components';
 import { COLORS } from '../../../constants';
 import { PassioFoodIcon } from '../../../components/passio/PassioFoodIcon';
+import { NumberRound } from '../../../utils/NumberUtils';
 
 interface Props {
   foodLog: FoodLog;
@@ -25,6 +28,10 @@ const MealLogItemView = (props: Props) => {
     });
   }, [foodLog, props]);
 
+  const computedWeight =
+    foodLog.computedWeight?.value ??
+    foodLog.foodItems.at(0)?.computedWeight.value;
+
   return (
     <SwipeToDelete
       onPressDelete={onDeleteFoodLog}
@@ -42,7 +49,7 @@ const MealLogItemView = (props: Props) => {
         <View style={styles.mealDetail}>
           <Text
             weight="600"
-            size="_14px"
+            size="secondlyTitle"
             color="text"
             numberOfLines={2}
             ellipsizeMode="tail"
@@ -52,22 +59,26 @@ const MealLogItemView = (props: Props) => {
           </Text>
           <Text
             weight="400"
-            size="_14px"
+            size="secondlyTitle"
             color="secondaryText"
             style={styles.mealSize}
           >
             {`${foodLog.selectedQuantity} ${foodLog.selectedUnit}`}
             {' ('}
-            {Math.round(foodLog.foodItems.at(0)?.computedWeight.value ?? 0) +
+            {(computedWeight?.toFixed(1) ??
+              Math.round(foodLog.foodItems.at(0)?.computedWeight.value ?? 0)) +
               ' ' +
-              foodLog.foodItems.at(0)?.computedWeight.unit}
+              (foodLog.computedWeight?.unit ??
+                foodLog.foodItems.at(0)?.computedWeight.unit)}
             {') '}
           </Text>
         </View>
         <View style={styles.mealContainer}>
           <TouchableOpacity>
-            <Text weight="400" size="_14px" style={styles.plus}>
-              {caloriesText(foodLog.foodItems, 'cal')}
+            <Text weight="400" size="secondlyTitle" style={styles.plus}>
+              {NumberRound(
+                totalAmountOfNutrientWithoutRound(foodLog.foodItems, 'calories')
+              ) + ' kcal'}
             </Text>
           </TouchableOpacity>
         </View>
@@ -93,6 +104,7 @@ const styles = StyleSheet.create({
   },
   mealDetail: {
     marginHorizontal: 10,
+    alignSelf: 'center',
     flex: 1,
   },
   mealContainer: {

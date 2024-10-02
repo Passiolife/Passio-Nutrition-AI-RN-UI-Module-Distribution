@@ -11,7 +11,6 @@ import { SwitchTabLabelEnum } from '../../types';
 import { ShowToast } from '../../utils';
 import { useSettingScreen } from '../setting/useSettingScreen';
 import {
-  convertKGToPounds,
   convertMlToOg,
   convertOgToMl,
 } from '../nutritionProfile/unitConversions';
@@ -40,9 +39,9 @@ export const useWaters = () => {
   useEffect(() => {
     services.dataService.getNutritionProfile().then((profile) => {
       if (isImperialWeight) {
-        setTarget(convertKGToPounds(profile?.targetWeight ?? 0));
+        setTarget(convertMlToOg(profile?.targetWater ?? 0));
       } else {
-        setTarget(profile?.targetWeight ?? 0);
+        setTarget(profile?.targetWater ?? 0);
       }
     });
   }, [isImperialWeight, services.dataService]);

@@ -1,5 +1,5 @@
 import React from 'react';
-import type { MealLabel } from '../../models';
+import type { FoodItem, MealLabel } from '../../models';
 import type { ParamList } from '../../navigaitons';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import { useFavorites } from './useFavorites';
@@ -8,7 +8,7 @@ import { COLORS } from '../../constants';
 import { FavoriteEmptyView } from './index';
 import type { FavoriteFoodItem } from '../../models';
 import FavoriteFoodLogView from './views/FavoriteFoodLogView';
-import { withLoading } from '../../utils';
+import withLoading from '../../utils/withLoading';
 import { ProgressLoadingView, BackNavigation } from '../../components';
 import { content } from '../../constants/Content';
 import type { Branding } from '../../contexts';
@@ -20,6 +20,8 @@ export type FavoritesScreenNavigationProps = StackNavigationProp<
 export interface FavoritesScreenProps {
   logToDate?: Date;
   logToMeal?: MealLabel;
+  from?: 'Recipe' | 'Other';
+  addIngredient?: (foodItem: FoodItem) => void;
 }
 
 const MyFavoritesScreen = () => {

@@ -2,7 +2,7 @@ import {
   IconSize,
   type PassioID,
   PassioIconView,
-} from '@passiolife/nutritionai-react-native-sdk-v3/src/sdk/v2';
+} from '@passiolife/nutritionai-react-native-sdk-v3';
 
 import {
   Image,
@@ -13,7 +13,11 @@ import {
 
 import React, { useEffect, useState } from 'react';
 import type { PassioIconType } from '../../models';
-import { CUSTOM_USER_FOOD } from '../../screens/foodCreator/FoodCreator.utils';
+import {
+  CUSTOM_USER_FOOD_PREFIX,
+  CUSTOM_USER_NUTRITION_FACT__PREFIX,
+  CUSTOM_USER_RECIPE__PREFIX,
+} from '../../screens/foodCreator/FoodCreator.utils';
 import { useServices } from '../../contexts';
 import { ICONS } from '../../assets';
 
@@ -37,10 +41,33 @@ export const PassioFoodIcon = (props: Props) => {
   const { passioID, imageName, size, iconID, extra, defaultImage } = props;
   const [base64, setBase64] = useState('');
   const { dataService } = useServices();
+  let icon = iconID || passioID || imageName;
 
   useEffect(() => {
     async function init() {
-      if (iconID && iconID.includes(CUSTOM_USER_FOOD)) {
+      if (
+        iconID &&
+        iconID.startsWith(CUSTOM_USER_FOOD_PREFIX) &&
+        iconID.length > CUSTOM_USER_FOOD_PREFIX.length
+      ) {
+        const image = await dataService.getImage(iconID);
+        if (image) {
+          setBase64(image.base64);
+        }
+      } else if (
+        iconID &&
+        iconID.startsWith(CUSTOM_USER_RECIPE__PREFIX) &&
+        iconID.length > CUSTOM_USER_RECIPE__PREFIX.length
+      ) {
+        const image = await dataService.getImage(iconID);
+        if (image) {
+          setBase64(image.base64);
+        }
+      } else if (
+        iconID &&
+        iconID.startsWith(CUSTOM_USER_NUTRITION_FACT__PREFIX) &&
+        iconID.length > CUSTOM_USER_NUTRITION_FACT__PREFIX.length
+      ) {
         const image = await dataService.getImage(iconID);
         if (image) {
           setBase64(image.base64);
@@ -48,9 +75,7 @@ export const PassioFoodIcon = (props: Props) => {
       }
     }
     init();
-  }, [dataService, iconID, extra]);
-
-  let icon = iconID || passioID || imageName;
+  }, [dataService, extra, iconID]);
 
   return (
     <>
@@ -60,7 +85,11 @@ export const PassioFoodIcon = (props: Props) => {
           style={[props.style]}
           source={{ uri: `data:image/png;base64,${base64}` }}
         />
-      ) : icon ? (
+      ) : icon?.length === 0 ||
+        (icon &&
+          !icon.includes(CUSTOM_USER_RECIPE__PREFIX) &&
+          !icon.includes(CUSTOM_USER_FOOD_PREFIX) &&
+          !icon.includes(CUSTOM_USER_NUTRITION_FACT__PREFIX)) ? (
         <PassioIconView
           testID="testPassioFoodIconImage"
           style={[props.style]}
@@ -79,7 +108,15 @@ export const PassioFoodIcon = (props: Props) => {
             },
             props.style,
           ]}
-          source={defaultImage ?? ICONS.FoodEditImage}
+          source={
+            defaultImage
+              ? defaultImage
+              : icon?.startsWith(CUSTOM_USER_RECIPE__PREFIX)
+                ? ICONS.recipe
+                : icon?.startsWith(CUSTOM_USER_NUTRITION_FACT__PREFIX)
+                  ? ICONS.foodNutritionFact
+                  : ICONS.foodCreator
+          }
         />
       )}
     </>

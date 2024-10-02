@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Text } from '../../components';
 import { Branding, useBranding } from '../../contexts';
@@ -7,11 +7,18 @@ import { scaleHeight } from '../../utils';
 export interface TabBarProps {
   list: string[];
   onTabSelect: (value: string) => void;
+  selectedTab?: string;
 }
 
-export const TabBar = ({ list, onTabSelect }: TabBarProps) => {
+export const TabBar = ({ list, onTabSelect, selectedTab }: TabBarProps) => {
   const styles = tabStyles(useBranding());
   const [tab, setTab] = useState<string>(list[0]);
+
+  useEffect(() => {
+    if (selectedTab) {
+      setTab(selectedTab);
+    }
+  }, [selectedTab]);
 
   return (
     <View>

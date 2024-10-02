@@ -27,7 +27,7 @@ const ScanningModeSelector: React.FC<ScanningModeSelectorProps> = ({
           ]}
           onPress={() => {
             setMode(item as ScanningMode);
-            ShowToast(`${item} Mode`);
+            ShowToast(`${item} Mode`, 'center');
           }}
         >
           <Image
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
     flexDirection: 'row',
-    marginTop: 16,
+    marginVertical: 8,
   },
   icons: {
     height: 24,
