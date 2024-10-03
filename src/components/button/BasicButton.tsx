@@ -99,7 +99,7 @@ export const BasicButton: React.FC<Props> = (props) => {
 
   return (
     <TouchableHighlight
-      disabled={disabled}
+      disabled={disabled || isLoading}
       testID={testId}
       style={[
         styles.container,
