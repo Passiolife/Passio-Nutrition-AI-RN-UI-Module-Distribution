@@ -107,7 +107,7 @@
     "react-native-swipe-gestures": "^1.0.5",
     "react-native-toast-message": "^2.2.0",
     "react-native-uuid": "^2.0.1",
-    "react-native-vision-camera": "^4.3.2",
+    "react-native-vision-camera": "4.3.2",
     "use-async-resource": "^2.2.2",
     "victory-native": "^37.0.2"
   },
