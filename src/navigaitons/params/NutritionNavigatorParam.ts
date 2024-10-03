@@ -21,10 +21,7 @@ import type {
   Weight,
 } from '../../models';
 import type { FavoritesScreenProps } from '../../screens/myFavoritess';
-import type {
-  TakePictureScreenProps,
-  VoiceLoggingScreenProps,
-} from '../../screens/voiceLogging';
+import type { VoiceLoggingScreenProps } from '../../screens/voiceLogging';
 
 export type Module =
   | 'QuickScan'
@@ -102,6 +99,13 @@ export interface EditRecipeScreenProps {
   onCancelPress?: () => void;
 }
 
+export interface TakePictureScreenProps {
+  logToDate?: Date | undefined;
+  logToMeal?: MealLabel | undefined;
+  type: 'picture' | 'camera';
+  isMultiple?: boolean;
+  images?: string[];
+}
 export type ParamList = {
   MealLogScreen: MealLogScreenProps;
   ScanningScreen: ScanningScreenProps;
