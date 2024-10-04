@@ -40,11 +40,16 @@ export const renderTabBarIcons = (
   );
 };
 
-export const bottomTabStyle = ({ white, primaryColor, border }: Branding) => {
+export const bottomTabStyle = ({
+  white,
+  primaryColor,
+  border,
+  footer,
+}: Branding) => {
   const styles = StyleSheet.create({
     tabBarContainer: {
       alignItems: 'center',
-      backgroundColor: white,
+      backgroundColor: footer,
       borderColor: border,
       borderWidth: Platform.OS === 'android' ? 0.2 : 0,
       borderTopColor: border,

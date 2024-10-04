@@ -2,14 +2,14 @@ import { StyleSheet } from 'react-native';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import type { Branding } from '../../contexts';
 
-export const foodCreatorStyle = ({ searchBody }: Branding) =>
+export const foodCreatorStyle = ({ backgroundColor }: Branding) =>
   StyleSheet.create({
     statusBarLayout: {
       height: getStatusBarHeight(),
-      backgroundColor: searchBody,
+      backgroundColor: backgroundColor,
     },
     body: {
-      backgroundColor: searchBody,
+      backgroundColor: backgroundColor,
       flex: 1,
     },
   });

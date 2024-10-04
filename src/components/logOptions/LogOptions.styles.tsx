@@ -2,10 +2,10 @@ import { StyleSheet } from 'react-native';
 import type { Branding } from '../../contexts';
 import { scaleHeight, scaleWidth, scaledSize } from '../../utils';
 
-const logOptionsStyle = ({ white, primaryColor }: Branding) =>
+const logOptionsStyle = ({ primaryColor, card }: Branding) =>
   StyleSheet.create({
     optionContainer: {
-      backgroundColor: white,
+      backgroundColor: card,
       paddingVertical: scaleHeight(12),
       marginVertical: scaleHeight(8),
       flexDirection: 'row',
