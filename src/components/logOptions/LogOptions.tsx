@@ -35,7 +35,11 @@ export const LogOptions = ({
   const renderItem = (icon: number, title: string, onPress: () => void) => {
     return (
       <Pressable onPress={onPress} style={styles.optionContainer}>
-        <Image source={icon} style={styles.optionIcon} resizeMode="contain" />
+        <Image
+          source={icon}
+          style={[styles.optionIcon, styles.iconColor]}
+          resizeMode="contain"
+        />
         <Text weight="500" size="_16px" color="text" style={styles.optionTitle}>
           {title}
         </Text>

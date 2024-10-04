@@ -94,7 +94,7 @@ export const WidgetsCard = ({
   );
 };
 
-const WidgetsCardStyle = ({}: Branding) =>
+const WidgetsCardStyle = ({ primaryColor }: Branding) =>
   StyleSheet.create({
     widgetContainer: {
       borderRadius: scaledSize(8),
@@ -111,6 +111,7 @@ const WidgetsCardStyle = ({}: Branding) =>
     },
     icon: {
       ...scaled(24),
+      tintColor: primaryColor,
     },
     title: {
       marginLeft: scaleWidth(8),

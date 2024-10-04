@@ -68,7 +68,7 @@ export const DashboardMenu = ({ hide }: Props) => {
           }}
           style={styles.main}
         >
-          <Image source={ICONS.hamburger} style={styles.icon} />
+          <Image source={ICONS.hamburger} style={[styles.icon]} />
         </TouchableOpacity>
       </TutorialView>
     );

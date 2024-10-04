@@ -40,7 +40,7 @@ const MealPlanScreen = () => {
               source={ICONS.mealPlan}
               resizeMethod="resize"
               resizeMode="contain"
-              style={mealPlanStyle.icon}
+              style={[mealPlanStyle.icon, mealPlanStyle.iconColor]}
             />
             <Text
               weight="600"
