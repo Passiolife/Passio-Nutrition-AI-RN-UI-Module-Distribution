@@ -87,9 +87,11 @@ export const EditFoodLogScreen = () => {
               >
                 <Image
                   source={ICONS.editGreyIc}
+                  resizeMethod="resize"
+                  resizeMode="contain"
                   style={{
-                    width: scaleWidth(20),
-                    height: scaleHeight(20),
+                    width: scaleWidth(24),
+                    height: scaleHeight(24),
                     marginEnd: 32,
                   }}
                 />
