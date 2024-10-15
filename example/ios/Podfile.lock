@@ -906,7 +906,7 @@ PODS:
     - React-Core
   - react-native-safe-area-context (4.11.0):
     - React-Core
-  - react-native-slider (4.5.3):
+  - react-native-slider (4.5.4):
     - glog
     - RCT-Folly (= 2022.05.16.00)
     - React-Core
@@ -1395,7 +1395,7 @@ SPEC CHECKSUMS:
   react-native-nutrition-ux: 39b9f3f23fad607bac411b97b8283a527dc2dd63
   react-native-pdf: 103940c90d62adfd259f63cca99c7c0c306b514c
   react-native-safe-area-context: 851c62c48dce80ccaa5637b6aa5991a1bc36eca9
-  react-native-slider: be2b72356acfac774af6e61aaa8459dd65630b7c
+  react-native-slider: 077ac825b5bd911772e8feb04245baa6cf2a0577
   react-native-sqlite-storage: f6d515e1c446d1e6d026aa5352908a25d4de3261
   react-native-voice: f5e8eec2278451d0017eb6a30a6ccc726aca34e0
   React-nativeconfig: d753fbbc8cecc8ae413d615599ac378bbf6999bb
