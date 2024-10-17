@@ -193,7 +193,7 @@ export const updateServing = (
 ) => {
   const { computedWeight, foodItems } = foodLog;
   const servingWeight =
-    computedWeight?.value ?? foodItems[0]?.computedWeight.value;
+    computedWeight?.value ?? foodItems?.[0]?.computedWeight.value;
   const defaultWeight = servingWeight ?? 0;
   const newQuantity = Number(defaultWeight / mass);
   foodLog.selectedQuantity = Number(

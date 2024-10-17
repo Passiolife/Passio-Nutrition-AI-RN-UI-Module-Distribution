@@ -26,7 +26,7 @@ const SegmentProgressBar = ({
 }: Props) => {
   const sectionsPercentage: Array<number> = [];
   const finalValue = values[values.length - 1] ?? 0;
-  const adjustedFinalValue = finalValue - (values?.at(0) ?? 0);
+  const adjustedFinalValue = finalValue - (values?.at?.(0) ?? 0);
 
   values.forEach(
     (v, i) =>

@@ -51,8 +51,9 @@ const NewEditServingAmountView = ({ foodLog, onUpdateFoodLog }: Props) => {
   };
 
   const servingWeight =
-    computedWeight?.value ?? foodItems[0]?.computedWeight.value;
-  const servingUnit = computedWeight?.unit ?? foodItems[0]?.computedWeight.unit;
+    computedWeight?.value ?? foodItems?.[0]?.computedWeight.value;
+  const servingUnit =
+    computedWeight?.unit ?? foodItems?.[0]?.computedWeight.unit;
 
   const onTapServingSize = async ({ mass, unit }: ServingUnit) => {
     if (unit.toLowerCase() === selectedUnit.toLowerCase()) {

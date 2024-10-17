@@ -121,7 +121,7 @@ export const recalculatedFoodLogPerQtyUnitWeight = (
 ) => {
   const { computedWeight, foodItems } = foodLog;
   const servingWeight =
-    computedWeight?.value ?? foodItems[0]?.computedWeight.value;
+    computedWeight?.value ?? foodItems?.[0]?.computedWeight.value;
   const defaultWeight = servingWeight ?? 0;
   const newQuantity = Number(defaultWeight / Number(qty));
   foodLog.selectedQuantity = Number(newQuantity);
@@ -137,7 +137,7 @@ export const updateFoodLogByServingUnits = (
   if (servingUnit) {
     const { computedWeight, foodItems } = foodLog;
     const servingWeight =
-      computedWeight?.value ?? foodItems[0]?.computedWeight.value;
+      computedWeight?.value ?? foodItems?.[0]?.computedWeight.value;
     const defaultWeight = servingWeight ?? 0;
     const newQuantity = Number(defaultWeight / servingUnit.mass);
     foodLog.selectedQuantity = Number(
