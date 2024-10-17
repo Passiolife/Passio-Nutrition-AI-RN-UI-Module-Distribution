@@ -1,21 +1,23 @@
 import React, {
   useCallback,
+  useEffect,
   useImperativeHandle,
   useRef,
   useState,
 } from 'react';
 import type { TakePictureScreenProps } from '../useTakePicture';
 import { useBranding } from '../../../contexts';
-// import {
-//   Camera,
-//   CameraCaptureError,
-//   useCameraDevice,
-//   useCameraPermission,
-// } from 'react-native-vision-camera';
+import {
+  Camera,
+  CameraCaptureError,
+  useCameraDevice,
+  useCameraPermission,
+} from 'react-native-vision-camera';
 import {
   Dimensions,
   FlatList,
   Image,
+  Platform,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -112,7 +114,7 @@ export const TakePicture = React.forwardRef<TakePictureRef, Props>(
     ref: React.Ref<TakePictureRef>
   ) => {
     const [images, setImages] = useState<string[]>([]);
-    // const camera = useRef<Camera>(null);
+    const camera = useRef<Camera>(null);
     const navigation = useNavigation<TakePictureScreenProps>();
     const flatListRef = useRef<FlatList>(null);
 
@@ -131,26 +133,26 @@ export const TakePicture = React.forwardRef<TakePictureRef, Props>(
     };
 
     const captureImage = useCallback(async () => {
-      // camera.current
-      //   ?.takePhoto({ enableShutterSound: true })
-      //   .then((value) => {
-      //     let path =
-      //       Platform.OS === 'android' ? `file://${value.path}` : value.path;
-      //     if (!isMultiple) {
-      //       recognizePictureRemote([path]);
-      //     } else {
-      //       setImages([...images, path]);
-      //     }
-      //   })
-      //   .catch((_val: CameraCaptureError) => {});
-    }, []);
+      camera.current
+        ?.takePhoto({ enableShutterSound: true })
+        .then((value) => {
+          let path =
+            Platform.OS === 'android' ? `file://${value.path}` : value.path;
+          if (!isMultiple) {
+            recognizePictureRemote([path]);
+          } else {
+            setImages([...images, path]);
+          }
+        })
+        .catch((_val: CameraCaptureError) => {});
+    }, [images, isMultiple, recognizePictureRemote]);
 
-    // const { hasPermission, requestPermission } = useCameraPermission();
-    // const device = useCameraDevice('back');
+    const { hasPermission, requestPermission } = useCameraPermission();
+    const device = useCameraDevice('back');
     const branding = useBranding();
-    // useEffect(() => {
-    //   requestPermission();
-    // }, [hasPermission, requestPermission]);
+    useEffect(() => {
+      requestPermission();
+    }, [hasPermission, requestPermission]);
 
     const animatedStyle = useAnimatedStyle(() => {
       return {
@@ -166,17 +168,17 @@ export const TakePicture = React.forwardRef<TakePictureRef, Props>(
       };
     });
 
-    // if (!hasPermission) {
-    //   return <></>;
-    // }
+    if (!hasPermission) {
+      return <></>;
+    }
 
-    // if (!device) {
-    //   return <></>;
-    // }
+    if (!device) {
+      return <></>;
+    }
 
     return (
       <SafeAreaView style={{ flex: 1, justifyContent: 'flex-end' }}>
-        {/* <Camera
+        <Camera
           style={{
             position: 'absolute',
             top: 0,
@@ -189,7 +191,7 @@ export const TakePicture = React.forwardRef<TakePictureRef, Props>(
           isActive={true}
           ref={camera}
           photo={true}
-        /> */}
+        />
         <View
           style={{
             position: 'absolute',

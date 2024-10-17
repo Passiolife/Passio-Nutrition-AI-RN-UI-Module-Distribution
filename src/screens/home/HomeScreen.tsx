@@ -13,10 +13,10 @@ import { dateFormatter } from '../../utils';
 import { withLoading } from '../../components/withLoading';
 import { content } from '../../constants/Content';
 import { useHome } from './useHome';
-// import WeeklyAdherence from '../../components/weeklyAddhernce/WeeklyAdherence';
+import WeeklyAdherence from '../../components/weeklyAddhernce/WeeklyAdherence';
 import { useBranding } from '../../contexts';
 import homeScreenStyle from './styles';
-// import { DateTime } from 'luxon';
+import { DateTime } from 'luxon';
 
 export interface HomeScreenScreenProps {
   defaultDate?: Date;
@@ -95,7 +95,7 @@ const HomeScreenView = () => {
       >
         <DailyNutrition foodLogs={foodLogs} />
 
-        {/* <WeeklyAdherence headerDate={DateTime.fromJSDate(date)} /> */}
+        <WeeklyAdherence headerDate={DateTime.fromJSDate(date)} />
 
         <View style={styles.widgetsContainer}>
           <WidgetsCard

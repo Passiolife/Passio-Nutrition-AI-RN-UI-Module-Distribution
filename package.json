@@ -108,7 +108,8 @@
     "react-native-toast-message": "^2.2.0",
     "react-native-uuid": "^2.0.1",
     "use-async-resource": "^2.2.2",
-    "victory-native": "^37.0.2"
+    "victory-native": "^37.0.2",
+    "react-native-vision-camera": "^4.3.2"
   },
   "devDependencies": {
     "@passiolife/nutritionai-react-native-sdk-v3": "3.2.1",

@@ -51,9 +51,9 @@ const NewEditServingAmountView = ({ foodLog, onUpdateFoodLog }: Props) => {
   };
 
   const servingWeight =
-    computedWeight?.value ?? foodItems?.[0]?.computedWeight.value;
+    computedWeight?.value ?? foodItems?.[0]?.computedWeight.value ?? '0';
   const servingUnit =
-    computedWeight?.unit ?? foodItems?.[0]?.computedWeight.unit;
+    computedWeight?.unit ?? foodItems?.[0]?.computedWeight.unit ?? 'g';
 
   const onTapServingSize = async ({ mass, unit }: ServingUnit) => {
     if (unit.toLowerCase() === selectedUnit.toLowerCase()) {
@@ -91,14 +91,16 @@ const NewEditServingAmountView = ({ foodLog, onUpdateFoodLog }: Props) => {
       <View style={styles.cardHeader}>
         <Text weight="600" size="title" color="text" style={styles.headerText}>
           {content.editAmount}
-          <Text
-            weight="400"
-            size="_16px"
-            color="text"
-            style={styles.servingAmountTxt}
-          >
-            {` (${servingWeight?.toFixed(1).replaceAll('.0', '')} ${servingUnit})`}
-          </Text>
+          {servingWeight && (
+            <Text
+              weight="400"
+              size="_16px"
+              color="text"
+              style={styles.servingAmountTxt}
+            >
+              {` (${servingWeight} ${servingUnit})`}
+            </Text>
+          )}
         </Text>
       </View>
 
