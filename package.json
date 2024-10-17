@@ -107,12 +107,11 @@
     "react-native-swipe-gestures": "^1.0.5",
     "react-native-toast-message": "^2.2.0",
     "react-native-uuid": "^2.0.1",
-    "react-native-vision-camera": "4.3.2",
     "use-async-resource": "^2.2.2",
     "victory-native": "^37.0.2"
   },
   "devDependencies": {
-    "@passiolife/nutritionai-react-native-sdk-v3": "3.2.0-1",
+    "@passiolife/nutritionai-react-native-sdk-v3": "3.2.1",
     "@commitlint/cli": "^19.2.1",
     "@commitlint/config-conventional": "^19.1.0",
     "@react-native/eslint-config": "^0.73.2",
@@ -250,8 +249,5 @@
         }
       ]
     ]
-  },
-  "engines": {
-    "node": ">= 18.0.0"
   }
 }

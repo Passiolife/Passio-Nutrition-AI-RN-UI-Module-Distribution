@@ -1081,7 +1081,7 @@ PODS:
     - React-jsi (= 0.73.2)
     - React-logger (= 0.73.2)
     - React-perflogger (= 0.73.2)
-  - ReactNativePassioSDK (3.2.0-1):
+  - ReactNativePassioSDK (3.2.1):
     - React-Core
   - RNCAsyncStorage (1.24.0):
     - React-Core
@@ -1125,12 +1125,6 @@ PODS:
   - RNSVG (15.7.1):
     - React-Core
   - SocketRocket (0.6.1)
-  - VisionCamera (4.3.2):
-    - VisionCamera/Core (= 4.3.2)
-    - VisionCamera/React (= 4.3.2)
-  - VisionCamera/Core (4.3.2)
-  - VisionCamera/React (4.3.2):
-    - React-Core
   - Yoga (1.14.0)
 
 DEPENDENCIES:
@@ -1205,7 +1199,6 @@ DEPENDENCIES:
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSVG (from `../node_modules/react-native-svg`)
-  - VisionCamera (from `../node_modules/react-native-vision-camera`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -1352,8 +1345,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-screens"
   RNSVG:
     :path: "../node_modules/react-native-svg"
-  VisionCamera:
-    :path: "../node_modules/react-native-vision-camera"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -1418,7 +1409,7 @@ SPEC CHECKSUMS:
   React-runtimescheduler: df8945a656356ff10f58f65a70820478bfcf33ad
   React-utils: f5bc61e7ea3325c0732ae2d755f4441940163b85
   ReactCommon: 45b5d4f784e869c44a6f5a8fad5b114ca8f78c53
-  ReactNativePassioSDK: 7890b9358c4500e0811affd0c2313d9a8c2859a4
+  ReactNativePassioSDK: d60243ff1073e936cd398c8546ddef4273cb1b2c
   RNCAsyncStorage: ec53e44dc3e75b44aa2a9f37618a49c3bc080a7a
   RNCPicker: 0b6860a6b208d4046227d2f626ad0722f99a969c
   RNDateTimePicker: 4f3c4dbd4f908be32ec8c93f086e8924bd4a2e07
@@ -1429,7 +1420,6 @@ SPEC CHECKSUMS:
   RNScreens: 79f5606e7eb08dc81336f83a223fb6d6e74f32d1
   RNSVG: 4590aa95758149fa27c5c83e54a6a466349a1688
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
-  VisionCamera: 2c4cb89c573c5d54d1191e433bd224998d3b14b7
   Yoga: e64aa65de36c0832d04e8c7bd614396c77a80047
 
 PODFILE CHECKSUM: a2947df3ae3fe759cfd0e850554bc385583bc722

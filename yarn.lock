@@ -1859,10 +1859,10 @@
   dependencies:
     "@octokit/openapi-types" "^22.2.0"
 
-"@passiolife/nutritionai-react-native-sdk-v3@3.2.0-1":
-  version "3.2.0-1"
-  resolved "https://npm.pkg.github.com/download/@passiolife/nutritionai-react-native-sdk-v3/3.2.0-1/6915d6400ace8c68f973fadcdb3710c65efb4a55#6915d6400ace8c68f973fadcdb3710c65efb4a55"
-  integrity sha512-lvtb07lbloVhI6zS8NIZK//xLrk+LLGqYyoiun/5y2muBmxnumTm4ot0D4Q9XQo6S3glf4iXChGGsXg/Q6pUkA==
+"@passiolife/nutritionai-react-native-sdk-v3@3.2.1":
+  version "3.2.1"
+  resolved "https://npm.pkg.github.com/download/@passiolife/nutritionai-react-native-sdk-v3/3.2.1/47ea9b76fb4e9c9ee604e3f835c0340420793fbf#47ea9b76fb4e9c9ee604e3f835c0340420793fbf"
+  integrity sha512-Q1vU7oCoBNVEA1VRCdvKGIT0uF6mCzUvIuE8HwBIwNmgrNdSHNV9OP34zAYt7nx9CCX8pxDZODXibEYP+YLLPw==
 
 "@pkgjs/parseargs@^0.11.0":
   version "0.11.0"
@@ -8847,11 +8847,6 @@ react-native-uuid@^2.0.1:
   resolved "https://registry.yarnpkg.com/react-native-uuid/-/react-native-uuid-2.0.2.tgz#3da192e342ef35ee95a7def676ab41c1256dfd66"
   integrity sha512-5ypj/hV58P+6VREdjkW0EudSibsH3WdqDERoHKnD9syFWjF+NfRWWrJb2sa3LIwI5zpzMvUiabs+DX40WHpEMw==
 
-react-native-vision-camera@4.3.2:
-  version "4.3.2"
-  resolved "https://registry.yarnpkg.com/react-native-vision-camera/-/react-native-vision-camera-4.3.2.tgz#4acf80b62328275a69b22cd142f71a4e4aa2c12e"
-  integrity sha512-zrMWS+I5kIV9UShryRBOjV0PfOvKIH1LlvnQKw8n4D2NOuT6d3dTZ1KtwmktorwrPxRPf3FRktSn2Gv6F1kmWQ==
-
 react-native@0.69.11:
   version "0.69.11"
   resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.69.11.tgz#9bd331ffd43a8ebb49cc8af2e8590e268f1ed538"
@@ -10880,6 +10875,7 @@ wordwrap@^1.0.0:
   integrity sha512-gvVzJFlPycKc5dZN4yPkP8w7Dc37BtP1yczEneOb4uq34pXZcvrtRTmWV8W+Ume+XCxKgbjM+nevkyFPMybd4Q==
 
 "wrap-ansi-cjs@npm:wrap-ansi@^7.0.0", wrap-ansi@^7.0.0:
+  name wrap-ansi-cjs
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-7.0.0.tgz#67e145cff510a6a6984bdf1152911d69d2eb9e43"
   integrity sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==
