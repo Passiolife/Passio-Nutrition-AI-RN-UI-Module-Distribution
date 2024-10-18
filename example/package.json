@@ -48,7 +48,9 @@
     "react-native-screens": "^3.30.1",
     "react-native-sqlite-storage": "^6.0.1",
     "react-native-svg": "^15.1.0",
-    "victory-native": "^37.0.2"
+    "victory-native": "^37.0.2",
+    "react-native-vision-camera": "^2.15.4"
+
   },
   "resolutions": {
     "@types/react": "^18.2.0",
