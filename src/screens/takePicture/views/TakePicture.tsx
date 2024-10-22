@@ -1,23 +1,16 @@
 import React, {
   useCallback,
-  useEffect,
   useImperativeHandle,
   useRef,
   useState,
 } from 'react';
 import type { TakePictureScreenProps } from '../useTakePicture';
 import { useBranding } from '../../../contexts';
-import {
-  Camera,
-  CameraCaptureError,
-  useCameraDevice,
-  useCameraPermission,
-} from 'react-native-vision-camera';
+import { RNCamera } from 'react-native-camera';
 import {
   Dimensions,
   FlatList,
   Image,
-  Platform,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -114,7 +107,7 @@ export const TakePicture = React.forwardRef<TakePictureRef, Props>(
     ref: React.Ref<TakePictureRef>
   ) => {
     const [images, setImages] = useState<string[]>([]);
-    const camera = useRef<Camera>(null);
+    const camera = useRef<RNCamera>(null);
     const navigation = useNavigation<TakePictureScreenProps>();
     const flatListRef = useRef<FlatList>(null);
 
@@ -133,26 +126,21 @@ export const TakePicture = React.forwardRef<TakePictureRef, Props>(
     };
 
     const captureImage = useCallback(async () => {
-      camera.current
-        ?.takePhoto({ enableShutterSound: true })
-        .then((value) => {
-          let path =
-            Platform.OS === 'android' ? `file://${value.path}` : value.path;
-          if (!isMultiple) {
-            recognizePictureRemote([path]);
-          } else {
-            setImages([...images, path]);
-          }
-        })
-        .catch((_val: CameraCaptureError) => {});
+      if (camera.current === null) {
+        return;
+      }
+      try {
+        const { uri } = await camera.current.takePictureAsync();
+        let path = uri;
+        if (!isMultiple) {
+          recognizePictureRemote([path]);
+        } else {
+          setImages([...images, path]);
+        }
+      } catch (_e) {}
     }, [images, isMultiple, recognizePictureRemote]);
 
-    const { hasPermission, requestPermission } = useCameraPermission();
-    const device = useCameraDevice('back');
     const branding = useBranding();
-    useEffect(() => {
-      requestPermission();
-    }, [hasPermission, requestPermission]);
 
     const animatedStyle = useAnimatedStyle(() => {
       return {
@@ -168,17 +156,10 @@ export const TakePicture = React.forwardRef<TakePictureRef, Props>(
       };
     });
 
-    if (!hasPermission) {
-      return <></>;
-    }
-
-    if (!device) {
-      return <></>;
-    }
-
     return (
       <SafeAreaView style={{ flex: 1, justifyContent: 'flex-end' }}>
-        <Camera
+        <RNCamera
+          ref={camera}
           style={{
             position: 'absolute',
             top: 0,
@@ -186,11 +167,20 @@ export const TakePicture = React.forwardRef<TakePictureRef, Props>(
             right: 0,
             left: 0,
           }}
-          photoQualityBalance="balanced"
-          device={device}
-          isActive={true}
-          ref={camera}
-          photo={true}
+          type={RNCamera.Constants.Type.back}
+          flashMode={RNCamera.Constants.FlashMode.auto}
+          androidCameraPermissionOptions={{
+            title: 'Permission to use camera',
+            message: 'We need your permission to use your camera',
+            buttonPositive: 'Ok',
+            buttonNegative: 'Cancel',
+          }}
+          androidRecordAudioPermissionOptions={{
+            title: 'Permission to use audio recording',
+            message: 'We need your permission to use your audio',
+            buttonPositive: 'Ok',
+            buttonNegative: 'Cancel',
+          }}
         />
         <View
           style={{

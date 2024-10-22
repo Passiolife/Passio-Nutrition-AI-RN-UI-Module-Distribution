@@ -35,6 +35,7 @@
     "react": "18.2.0",
     "react-native": "0.73.2",
     "react-native-blob-util": "^0.19.6",
+    "react-native-camera": "^4.2.1",
     "react-native-dotenv": "^3.4.11",
     "react-native-fs": "^2.20.0",
     "react-native-gesture-handler": "^2.16.0",
@@ -48,9 +49,7 @@
     "react-native-screens": "^3.30.1",
     "react-native-sqlite-storage": "^6.0.1",
     "react-native-svg": "^15.1.0",
-    "victory-native": "^37.0.2",
-    "react-native-vision-camera": "^2.15.4"
-
+    "victory-native": "^37.0.2"
   },
   "resolutions": {
     "@types/react": "^18.2.0",

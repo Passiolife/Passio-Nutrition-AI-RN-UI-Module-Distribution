@@ -50,7 +50,7 @@ export function useTakePicture() {
 
         let foodInfoArray: Array<PassioAdvisorFoodInfo[] | null> = [];
 
-        const data = imgs.map(async (item) => {
+        const data = imgs.map(async (item) => {          
           const val = await PassioSDK.recognizeImageRemote(
             item.replace('file://', '') ?? ''
           );
