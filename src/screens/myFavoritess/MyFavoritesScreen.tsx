@@ -50,7 +50,10 @@ const MyFavoritesScreen = () => {
                   foodLog={item}
                   onDeleteFoodLog={(fav) => onDeleteFavoritePress(fav.uuid)}
                   onLogItem={onSaveFoodLogs}
-                  onTap={navigateToFavoriteFoodLogEditor}
+                  onTap={(item) => navigateToFavoriteFoodLogEditor(item, false)}
+                  onEditItem={(item) =>
+                    navigateToFavoriteFoodLogEditor(item, false)
+                  }
                 />
               );
             }}

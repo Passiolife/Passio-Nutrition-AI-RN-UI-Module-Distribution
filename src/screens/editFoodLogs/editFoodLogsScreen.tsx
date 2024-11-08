@@ -54,9 +54,10 @@ export const EditFoodLogScreen = () => {
     isFavorite,
     isHideFavorite,
     isHideMealTime,
+    isSubmitting,
     isHideTimeStamp,
     isOpenDatePicker,
-    onEditCustomRecipePress,
+    onEditIngredientPress,
     onCancelPress,
     onCreateCustomFood,
     onDateChangePress,
@@ -71,6 +72,7 @@ export const EditFoodLogScreen = () => {
     onUpdateFavoritePress,
     onUpdateFoodLog,
     openDatePicker,
+    onEditCustomRecipePress,
   } = useEditFoodLog();
   const styles = editFoodLogStyle(branding);
 
@@ -158,10 +160,11 @@ export const EditFoodLogScreen = () => {
             />
           )}
           <IngredientsView
-            onAddIngredients={onEditCustomRecipePress}
             foodItems={foodLog.foodItems}
             referenceCode={foodLog.refCustomFoodID}
             enable={false}
+            onAddIngredients={onEditCustomRecipePress}
+            navigateToEditIngredientsScreen={onEditIngredientPress}
           />
           <View style={styles.lastContainer} />
         </View>
@@ -210,6 +213,7 @@ export const EditFoodLogScreen = () => {
             text={from === 'MealLog' ? 'Save' : content.log}
             testId="testButtonSave"
             small
+            isLoading={isSubmitting}
             secondary={false}
             onPress={() => onSavePress()}
           />

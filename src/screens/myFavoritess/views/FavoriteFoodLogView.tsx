@@ -10,6 +10,7 @@ import { ICONS } from '../../../assets';
 interface Props {
   foodLog: FavoriteFoodItem;
   onLogItem: (favoriteFoodItem: FavoriteFoodItem) => void;
+  onEditItem: (favoriteFoodItem: FavoriteFoodItem) => void;
   onTap: (favoriteFoodItem: FavoriteFoodItem) => void;
   onDeleteFoodLog: (favoriteFoodItem: FavoriteFoodItem) => void;
 }
@@ -20,8 +21,8 @@ const FavoriteFoodLogView = (props: Props) => {
   return (
     <SwipeToDelete
       onPressDelete={() => props.onDeleteFoodLog(foodLog)}
-      onPressEdit={() => props.onTap(foodLog)}
-      marginVertical={4}
+      onPressEdit={() => props.onEditItem(foodLog)}
+      marginVertical={0}
       swipeableContainer={{ marginHorizontal: 20 }}
       childrenContainerStyle={styles.shadowContainer}
     >
@@ -57,16 +58,16 @@ export default React.memo(FavoriteFoodLogView);
 const styles = StyleSheet.create({
   shadowContainer: {
     borderRadius: 8,
-    marginVertical: 4,
-    marginHorizontal: 8,
+    marginVertical: 6,
+    marginHorizontal: 2,
     shadowColor: '#00000029',
     shadowOpacity: 1,
     shadowOffset: {
-      width: 1.5,
-      height: 2.0,
+      width: 1.0,
+      height: 1.0,
     },
-    shadowRadius: 2.85,
-    elevation: 12,
+    shadowRadius: 2,
+    elevation: 8,
   },
   mealContainer: {
     flexDirection: 'row',

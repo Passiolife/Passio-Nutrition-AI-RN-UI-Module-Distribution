@@ -86,7 +86,8 @@ export function useFavorites() {
   };
 
   const navigateToFavoriteFoodLogEditor = (
-    favoriteFoodItem: FavoriteFoodItem
+    favoriteFoodItem: FavoriteFoodItem,
+    isEdit: boolean
   ) => {
     if (route.params.from === 'Recipe') {
       navigation.push('EditIngredientScreen', {
@@ -99,13 +100,15 @@ export function useFavorites() {
     } else {
       navigation.push('EditFoodLogScreen', {
         foodLog: favoriteFoodItem,
-        prevRouteName: 'Favorites',
+        prevRouteName: isEdit ? 'Favorites' : 'Search',
         onSaveLogPress: (foodLog) => {
-          onUpdateFavoritePress({
-            ...favoriteFoodItem,
-            ...foodLog,
-            meal: meal,
-          });
+          if (isEdit) {
+            onUpdateFavoritePress({
+              ...favoriteFoodItem,
+              ...foodLog,
+              meal: meal,
+            });
+          }
         },
         onDeleteLogPress: (foodLog) => {
           onDeleteFavoritePress(foodLog.uuid);
