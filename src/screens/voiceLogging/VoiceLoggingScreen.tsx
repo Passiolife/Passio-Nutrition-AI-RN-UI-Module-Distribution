@@ -12,6 +12,7 @@ import { VoiceLoggingResult } from './views/VoiceLoggingResult';
 import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
 import { ICONS, LottieAsset } from '../../assets';
 import LottieView from 'lottie-react-native';
+import { VoiceLoggingResultFailed } from './views/VoiceLoggingResultFailed';
 
 export interface VoiceLoggingScreenProps {
   logToDate?: Date | undefined;
@@ -21,8 +22,10 @@ export interface VoiceLoggingScreenProps {
 
 export const VoiceLoggingScreen = gestureHandlerRootHOC(() => {
   const {
-    bottomSheetModalRef,
+    voiceLoggingResultRef,
+    voiceLoggingFailedRef,
     snapPoints,
+    snapPointsFailed,
     searchQuery,
     voiceRecords,
     isFetchingResponse,
@@ -101,7 +104,7 @@ export const VoiceLoggingScreen = gestureHandlerRootHOC(() => {
       </SafeAreaView>
 
       <BottomSheet
-        ref={bottomSheetModalRef}
+        ref={voiceLoggingResultRef}
         index={-1}
         snapPoints={snapPoints}
         backgroundStyle={styles.bottomSheetChildrenContainer}
@@ -112,6 +115,18 @@ export const VoiceLoggingScreen = gestureHandlerRootHOC(() => {
           onTryAgain={onTryAgainPress}
           onSearchManuallyPress={onSearchManuallyPress}
           result={voiceRecords ?? []}
+        />
+      </BottomSheet>
+      <BottomSheet
+        ref={voiceLoggingFailedRef}
+        index={-1}
+        snapPoints={snapPointsFailed}
+        backgroundStyle={styles.bottomSheetChildrenContainer}
+        handleIndicatorStyle={{ display: 'none' }}
+      >
+        <VoiceLoggingResultFailed
+          onTryAgain={onTryAgainPress}
+          onSearchManuallyPress={onSearchManuallyPress}
         />
       </BottomSheet>
     </>

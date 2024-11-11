@@ -37,8 +37,10 @@ export function useVoiceLogging() {
   const services = useServices();
   const navigation = useNavigation<VoiceLoggingScreenNavigationProps>();
   const route = useRoute<RouteProp<ParamList, 'VoiceLoggingScreen'>>();
-  const bottomSheetModalRef = useRef<BottomSheet>(null);
+  const voiceLoggingResultRef = useRef<BottomSheet>(null);
+  const voiceLoggingFailedRef = useRef<BottomSheet>(null);
   const snapPoints = useMemo(() => ['30%', '60%'], []);
+  const snapPointsFailed = useMemo(() => ['20%', '30%'], []);
   const isSubmitting = useRef<boolean>(false);
 
   const [isRecording, setIsRecord] = useState(false);
@@ -56,7 +58,7 @@ export function useVoiceLogging() {
       setVoiceRecords(null);
       const val = await PassioSDK.recognizeSpeechRemote(text);
       if (val && val.length > 0) {
-        bottomSheetModalRef.current?.expand();
+        voiceLoggingResultRef.current?.expand();
         setVoiceRecords(
           val.map((o) => {
             return {
@@ -66,10 +68,10 @@ export function useVoiceLogging() {
           })
         );
       } else {
-        setSearchQuery('');
-        ShowToast("Sorry we didn't recognize your input, please try again");
+        voiceLoggingFailedRef.current?.expand();
       }
     } catch (error) {
+      voiceLoggingFailedRef.current?.expand();
     } finally {
       setFetchResponse(false);
     }
@@ -149,8 +151,12 @@ export function useVoiceLogging() {
   };
 
   const onTryAgainPress = () => {
-    bottomSheetModalRef.current?.close();
+    voiceLoggingResultRef.current?.close();
+    voiceLoggingFailedRef.current?.close();
     setSearchQuery('');
+    setTimeout(() => {
+      onRecordingPress();
+    }, 500);
   };
 
   const onSearchManuallyPress = () => {
@@ -193,8 +199,10 @@ export function useVoiceLogging() {
 
   return {
     voiceRecords,
-    bottomSheetModalRef,
+    voiceLoggingResultRef,
+    voiceLoggingFailedRef,
     snapPoints,
+    snapPointsFailed,
     isRecording,
     searchQuery,
     isFetchingResponse,
