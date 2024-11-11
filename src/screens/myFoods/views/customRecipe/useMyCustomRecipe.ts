@@ -17,6 +17,7 @@ export const useMyCustomRecipe = () => {
 
   const [customRecipes, setCustomRecipe] = useState<CustomRecipe[]>();
   const isFocused = useIsFocused();
+  const isSubmitting = useRef<boolean>(false);
 
   useEffect(() => {
     function init() {
@@ -51,9 +52,14 @@ export const useMyCustomRecipe = () => {
   };
 
   const onLogPress = async (food: CustomFood) => {
+    if (isSubmitting.current) {
+      return;
+    }
+    isSubmitting.current = true;
     const log = getFoodLog(food);
     await services.dataService.saveFoodLog(log);
     ShowToast('Added your food into ' + log.meal);
+    isSubmitting.current = false;
   };
 
   const onEditCustomRecipePress = (

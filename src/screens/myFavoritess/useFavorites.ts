@@ -20,11 +20,13 @@ import { ShowToast } from '../../utils';
 import { Alert } from 'react-native';
 import type { SwipeToDeleteRef } from '../../components';
 import { createFoodItemByFavorite } from '../foodCreator/FoodCreator.utils';
+import { convertDateToDBFormat } from '../../utils/DateFormatter';
 
 export function useFavorites() {
   const services = useServices();
   const isFocused = useIsFocused();
   const branding = useBranding();
+  const isSubmitting = useRef<boolean>(false);
 
   const navigation = useNavigation<FavoritesScreenNavigationProps>();
   const route = useRoute<RouteProp<ParamList, 'FavoritesScreen'>>();
@@ -46,6 +48,10 @@ export function useFavorites() {
   const meal = getMealLog(date, route.params.logToMeal);
 
   const onSaveFoodLogs = async (favoriteFoodItem: FavoriteFoodItem) => {
+    if (isSubmitting.current === true) {
+      return;
+    }
+    isSubmitting.current = true;
     if (route.params.from === 'Recipe') {
       route.params?.addIngredient?.(createFoodItemByFavorite(favoriteFoodItem));
     } else {
@@ -61,6 +67,7 @@ export function useFavorites() {
         screen: 'MealLogScreen',
       });
     }
+    isSubmitting.current = false;
   };
 
   const onDeleteFavoritePress = async (uuid: string) => {
@@ -99,7 +106,11 @@ export function useFavorites() {
       });
     } else {
       navigation.push('EditFoodLogScreen', {
-        foodLog: favoriteFoodItem,
+        foodLog: {
+          ...favoriteFoodItem,
+          meal: meal,
+          eventTimestamp: convertDateToDBFormat(date),
+        },
         prevRouteName: isEdit ? 'Favorites' : 'Search',
         onSaveLogPress: (foodLog) => {
           if (isEdit) {

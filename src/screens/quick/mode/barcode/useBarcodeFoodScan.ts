@@ -33,6 +33,7 @@ export const useBarcodeFoodScan = () => {
   const services = useServices();
   const navigation = useNavigation<ScanningScreenNavigationProps>();
   const passioQuickResultRef = useRef<QuickResult | null>(null);
+  const isSubmitting = useRef<boolean>(false);
 
   const { params } = useRoute<RouteProp<ParamList, 'ScanningScreen'>>();
   const date = getLogToDate(params.logToDate, params.logToMeal);
@@ -77,6 +78,11 @@ export const useBarcodeFoodScan = () => {
 
   const onSavedLog = useCallback(
     async (item: FoodLog) => {
+      if (isSubmitting.current) {
+        return;
+      }
+      isSubmitting.current = true;
+
       await services.dataService.saveFoodLog(item);
       await recordAnalyticsFoodLogs({
         id: item.refCode ?? '',
@@ -85,6 +91,7 @@ export const useBarcodeFoodScan = () => {
       });
       setStopScan(true);
       setLoggedFood(true);
+      isSubmitting.current = false;
     },
     [services.dataService]
   );

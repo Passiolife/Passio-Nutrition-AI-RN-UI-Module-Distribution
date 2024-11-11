@@ -21,6 +21,7 @@ export function useMealPlan() {
   const navigation = useNavigation<MealPlanScreenNavigationProps>();
   const { params } = useRoute<RouteProp<ParamList, 'MyPlanScreen'>>();
   const isFocus = useIsFocused();
+  const isSubmitting = useRef<boolean>(false);
 
   const nutritionProfileRef = useRef<NutritionProfile | undefined>(undefined);
   const navigateEditFoodLogRef = useRef<boolean>(false);
@@ -64,10 +65,15 @@ export function useMealPlan() {
   };
 
   const saveFoodLog = async (item: PassioMealPlanItem) => {
+    if (isSubmitting.current) {
+      return;
+    }
+    isSubmitting.current = true;
     const result = await convertFoodLog(item);
     if (result) {
       await services.dataService.saveFoodLog(result);
     }
+    isSubmitting.current = false;
   };
 
   const onAddFoodLogPress = async (item: PassioMealPlanItem) => {

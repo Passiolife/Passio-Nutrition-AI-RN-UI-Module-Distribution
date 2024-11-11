@@ -25,6 +25,7 @@ export const FoodCreatorScreen = () => {
     onSavePress,
     onNutritionFactSave,
     onDeletePress,
+    isSubmitting,
     isDeleteButtonVisible,
     onCancelPress,
     onBarcodePress,
@@ -93,6 +94,7 @@ export const FoodCreatorScreen = () => {
             {from === 'NutritionFact' ? (
               <BasicButton
                 text={'Done'}
+                isLoading={isSubmitting}
                 onPress={onNutritionFactSave}
                 style={{
                   flexDirection: 'row',
@@ -104,6 +106,7 @@ export const FoodCreatorScreen = () => {
             ) : (
               <BasicButton
                 text={'Save'}
+                isLoading={isSubmitting}
                 onPress={onSavePress}
                 style={{
                   flexDirection: 'row',

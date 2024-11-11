@@ -41,6 +41,7 @@ export function useEditFoodLog() {
   const { params } = useRoute<RouteProp<ParamList, 'EditFoodLogScreen'>>();
   const branding = useBranding();
   const navigation = useNavigation<EditFoodLogScreenNavigationProps>();
+  const isSubmittingRef = useRef<boolean>(false);
 
   const [foodLog, setFoodLog] = useState<FoodLog>(params.foodLog);
   const [isFavorite, setFavorite] = useState<boolean>(false);
@@ -195,6 +196,11 @@ export function useEditFoodLog() {
     navigation.push('FoodCreatorScreen', {
       foodLog: customFood,
       onSave: async (item) => {
+        if (isSubmittingRef.current) {
+          return;
+        }
+        isSubmittingRef.current = true;
+
         if (item && isUpdateUponCreating) {
           await services.dataService.saveFoodLog(
             combineCustomFoodAndFoodLog(item, foodLog)
@@ -231,6 +237,7 @@ export function useEditFoodLog() {
             logToMeal: undefined,
           });
         }
+        isSubmittingRef.current = false;
       },
       from: 'FoodDetail',
     });
@@ -244,6 +251,11 @@ export function useEditFoodLog() {
     navigation.push('EditRecipeScreen', {
       recipe: JSON.parse(JSON.stringify(customFood)),
       onSaveLogPress: async (item) => {
+        if (isSubmittingRef.current) {
+          return;
+        }
+        isSubmittingRef.current = true;
+
         if (item && isUpdateUponCreating) {
           const updatedFoodLog = combineCustomFoodAndFoodLog(item, foodLog);
           //  For recipe long name should be empty
@@ -285,6 +297,7 @@ export function useEditFoodLog() {
             });
           }, 50);
         }
+        isSubmittingRef.current = false;
       },
       from: 'FoodDetail',
     });

@@ -39,6 +39,7 @@ export function useVoiceLogging() {
   const route = useRoute<RouteProp<ParamList, 'VoiceLoggingScreen'>>();
   const bottomSheetModalRef = useRef<BottomSheet>(null);
   const snapPoints = useMemo(() => ['30%', '60%'], []);
+  const isSubmitting = useRef<boolean>(false);
 
   const [isRecording, setIsRecord] = useState(false);
   const [isFetchingResponse, setFetchResponse] = useState(false);
@@ -103,6 +104,11 @@ export function useVoiceLogging() {
   };
 
   const onLogSelectPress = async (selected: PassioSpeechRecognitionModel[]) => {
+    if (isSubmitting.current) {
+      return;
+    }
+    isSubmitting.current = true;
+
     const logToDate = getLogToDate(
       route.params.logToDate,
       route.params.logToMeal
@@ -116,7 +122,8 @@ export function useVoiceLogging() {
       if (item.advisorInfo.foodDataInfo) {
         const foodItem = await PassioSDK.fetchFoodItemForDataInfo(
           item.advisorInfo.foodDataInfo,
-          item.advisorInfo.weightGrams
+          item.advisorInfo.foodDataInfo?.nutritionPreview?.servingQuantity,
+          item.advisorInfo.foodDataInfo?.nutritionPreview?.servingUnit
         );
         if (foodItem) {
           let foodLog = createFoodLogUsingWeightGram(
@@ -138,6 +145,7 @@ export function useVoiceLogging() {
     navigation.navigate('BottomNavigation', {
       screen: 'MealLogScreen',
     });
+    isSubmitting.current = false;
   };
 
   const onTryAgainPress = () => {

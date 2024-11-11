@@ -52,6 +52,7 @@ export const useFoodCreator = () => {
   );
   const [isImagePickerVisible, setImagePickerModalVisible] = useState(false);
   const [isDeleteButtonVisible, setDeleteButtonVisible] = useState(false);
+  const [isSubmitting, setSubmitting] = useState<boolean>(false);
 
   const otherNutritionFactsRef = useRef<OtherNutritionFactsRef>(null);
   const requireNutritionFactsRef = useRef<RequireNutritionFactsRef>(null);
@@ -181,13 +182,16 @@ export const useFoodCreator = () => {
   };
 
   const onNutritionFactSave = async () => {
+    setSubmitting(true);
     const customFood = getCurrentFood();
     if (customFood) {
       await services.dataService.saveCustomFood(customFood);
       params.onSave?.(customFood);
     }
+    setSubmitting(false);
   };
   const onSavePress = async () => {
+    setSubmitting(true);
     const food = getCurrentFood();
     if (food) {
       await services.dataService.saveCustomFood(food);
@@ -224,6 +228,7 @@ export const useFoodCreator = () => {
         navigation.goBack();
       }
     }
+    setSubmitting(false);
   };
 
   const onEditImagePress = () => {
@@ -301,6 +306,7 @@ export const useFoodCreator = () => {
   return {
     branding,
     barcode,
+    isSubmitting,
     foodLog,
     isDeleteButtonVisible,
     image,

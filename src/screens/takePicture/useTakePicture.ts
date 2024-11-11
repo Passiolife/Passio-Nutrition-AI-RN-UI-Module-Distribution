@@ -28,6 +28,7 @@ export function useTakePicture() {
   const services = useServices();
   const takePictureRef = useRef<TakePictureRef>(null);
   const selectPhotoRef = useRef<SelectPhotosRef>(null);
+  const isSubmitting = useRef<boolean>(false);
 
   const route = useRoute<RouteProp<ParamList, 'TakePictureScreen'>>();
 
@@ -83,6 +84,11 @@ export function useTakePicture() {
 
   const onLogSelectPress = useCallback(
     async (selected: PicturePassioAdvisorFoodInfo[]) => {
+      if (isSubmitting.current) {
+        return;
+      }
+      isSubmitting.current = true;
+
       if (isPreparingLog) {
         return;
       }
@@ -103,6 +109,8 @@ export function useTakePicture() {
       navigation.navigate('BottomNavigation', {
         screen: 'MealLogScreen',
       });
+
+      isSubmitting.current = false;
     },
 
     [
@@ -111,6 +119,7 @@ export function useTakePicture() {
       route.params.logToDate,
       route.params.logToMeal,
       services.dataService,
+      isSubmitting,
     ]
   );
 

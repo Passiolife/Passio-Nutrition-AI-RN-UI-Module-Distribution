@@ -23,7 +23,8 @@ export const createFoodLogUsingFoodDataInfo = async (
     if (item && item.foodDataInfo) {
       const foodItem = await PassioSDK.fetchFoodItemForDataInfo(
         item.foodDataInfo,
-        item.weightGrams
+        item.foodDataInfo?.nutritionPreview?.servingQuantity,
+        item.foodDataInfo?.nutritionPreview?.servingUnit
       );
       if (foodItem) {
         const foodLog = convertPassioFoodItemToFoodLog(
