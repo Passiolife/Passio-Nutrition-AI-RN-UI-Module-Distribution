@@ -20,6 +20,7 @@ interface WidgetsCardProps {
   unitValue?: string;
   remain?: number;
   value: string | number;
+  info?: string;
   onPressRightIcon?: () => void;
   onPressLeftIcon?: () => void;
 }
@@ -32,6 +33,7 @@ export const WidgetsCard = ({
   unitValue,
   remain,
   onPressRightIcon,
+  info = 'remain to daily goal',
   onPressLeftIcon,
 }: WidgetsCardProps) => {
   const styles = WidgetsCardStyle(useBranding());
@@ -86,7 +88,7 @@ export const WidgetsCard = ({
               {unitValue}
             </Text>
             <Text>&nbsp;</Text>
-            remain to daily goal
+            {info}
           </Text>
         </View>
       </Pressable>

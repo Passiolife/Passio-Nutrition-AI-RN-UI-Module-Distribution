@@ -111,6 +111,7 @@ const HomeScreenView = () => {
             widgetTitle="Weight"
             onPressRightIcon={onWeightPress}
             leftIcon={ICONS.blueWeightMachine}
+            info="remain to goal"
             rightIcon={ICONS.newAddPlus}
             value={Math.round(achievedWeight)}
             unitValue={unitOfWeight}
