@@ -59,7 +59,7 @@ export const WeightTrendChart = ({ data, target }: WeightTrendChartProps) => {
       style={{
         overflow: 'hidden',
         marginTop: scaleHeight(0),
-        height: 150,
+        height: 190,
         paddingVertical: scaledSize(16),
       }}
     >

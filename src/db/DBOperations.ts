@@ -496,8 +496,10 @@ export const getWeightByStartDateAndEndDate = async (
       const db = await DBHandler.getInstance();
 
       const results = await db.executeSql(
-        `SELECT * FROM ${TABLE_WEIGHT} where ${ROW_DAY} >= "${startDate.toISOString()}"
-      AND ${ROW_DAY} <= "${endDate.toISOString()}";`
+        `SELECT * FROM ${TABLE_WEIGHT} 
+         WHERE ${ROW_DAY} >= "${startDate.toISOString()}" 
+         AND ${ROW_DAY} <= "${endDate.toISOString()}"
+         ORDER BY ${ROW_DAY} DESC;`
       );
 
       resolve(convertResultToWeights(results));
@@ -519,6 +521,10 @@ export const getLatestWeightDB = async (): Promise<Weight | null> => {
         `SELECT * FROM ${TABLE_WEIGHT}
          ORDER BY ${ROW_DAY} DESC
          LIMIT 1;`
+      );
+      console.log(
+        'convertResultToWeights(results)?.[0] || null==========================',
+        convertResultToWeights(results)?.[0] || null
       );
       resolve(convertResultToWeights(results)?.[0] || null);
     } catch (error) {
