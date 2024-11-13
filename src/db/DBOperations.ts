@@ -98,7 +98,7 @@ export const saveFoodLog = async (
 export const saveCustomFood = async (
   db: SQLiteDatabase,
   foodLog: CustomFood
-): Promise<void> => {
+): Promise<string> => {
   return new Promise((resolve, reject) => {
     const insertQuery = `INSERT or REPLACE INTO  ${TABLE_CUSTOM_FOOD_LOGS} (${ROW_UUID}, ${ROW_NAME}, ${ROW_IMAGE_NAME}, ${ROW_ENTITY_TYPE}, ${ROW_BARCODE}, ${ROW_BRAND_NAME}, ${ROW_USER_FOOD_IMAGE}, ${ROW_ICON_ID}, ${ROW_COMPUTED_WEIGHT}, ${ROW_FOOD_ITEMS},${ROW_SERVING_SIZES},${ROW_SERVING_UNITS},${ROW_SELECTED_UNIT},${ROW_SELECTED_QUANTITY}) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
     db.transaction((tx) => {
@@ -121,7 +121,7 @@ export const saveCustomFood = async (
           foodLog.selectedQuantity,
         ],
         () => {
-          resolve();
+          resolve(foodLog.uuid);
         },
         (_, error) => {
           console.error(`Failed to save food logs ${error}`);
@@ -135,7 +135,7 @@ export const saveCustomFood = async (
 export const saveCustomRecipe = async (
   db: SQLiteDatabase,
   foodLog: CustomRecipe
-): Promise<void> => {
+): Promise<string> => {
   return new Promise((resolve, reject) => {
     const insertQuery = `INSERT or REPLACE INTO  ${TABLE_CUSTOM_RECIPE_LOGS} (${ROW_UUID}, ${ROW_NAME}, ${ROW_IMAGE_NAME}, ${ROW_ENTITY_TYPE}, ${ROW_BARCODE}, ${ROW_BRAND_NAME}, ${ROW_USER_FOOD_IMAGE}, ${ROW_ICON_ID}, ${ROW_COMPUTED_WEIGHT}, ${ROW_FOOD_ITEMS},${ROW_SERVING_SIZES},${ROW_SERVING_UNITS},${ROW_SELECTED_UNIT},${ROW_SELECTED_QUANTITY}) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
     db.transaction((tx) => {
@@ -158,7 +158,7 @@ export const saveCustomRecipe = async (
           foodLog.selectedQuantity,
         ],
         () => {
-          resolve();
+          resolve(foodLog.uuid);
         },
         (_, error) => {
           console.error(`Failed to save food logs ${error}`);
@@ -507,6 +507,23 @@ export const getWeightByStartDateAndEndDate = async (
       );
       reject(`Failed to get weight logs ${error} ${startDate}-${endDate}`);
       throw error;
+    }
+  });
+};
+
+export const getLatestWeightDB = async (): Promise<Weight | null> => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const db = await DBHandler.getInstance();
+      const results = await db.executeSql(
+        `SELECT * FROM ${TABLE_WEIGHT}
+         ORDER BY ${ROW_DAY} DESC
+         LIMIT 1;`
+      );
+      resolve(convertResultToWeights(results)?.[0] || null);
+    } catch (error) {
+      console.error(`Failed to get weight logs ${error}`);
+      reject(`Failed to get weight logs ${error}`);
     }
   });
 };

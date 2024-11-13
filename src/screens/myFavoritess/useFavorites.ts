@@ -111,7 +111,7 @@ export function useFavorites() {
           meal: meal,
           eventTimestamp: convertDateToDBFormat(date),
         },
-        prevRouteName: isEdit ? 'Favorites' : 'Search',
+        prevRouteName: isEdit ? 'Favorites' : 'MealLog',
         onSaveLogPress: (foodLog) => {
           if (isEdit) {
             onUpdateFavoritePress({

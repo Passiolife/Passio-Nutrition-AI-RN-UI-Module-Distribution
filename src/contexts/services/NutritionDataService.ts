@@ -17,8 +17,8 @@ export interface NutritionDataService {
   saveFoodLog(foodLog: FoodLog): Promise<void>;
   deleteFoodLog(uuID: string): Promise<void>;
   getFoodLogs(): Promise<FoodLog[]>;
-  saveCustomFood(food: CustomFood): Promise<void>;
-  saveCustomRecipe(food: CustomRecipe): Promise<void>;
+  saveCustomFood(food: CustomFood): Promise<string>;
+  saveCustomRecipe(food: CustomRecipe): Promise<string>;
   deleteCustomFood(uuID: string): Promise<void>;
   deleteCustomRecipe(uuID: string): Promise<void>;
   getCustomFoodLogs(): Promise<CustomFood[]>;
@@ -38,6 +38,7 @@ export interface NutritionDataService {
   deleteWeight(uuid: string): Promise<void>;
   saveWater: (water: Water) => Promise<void>;
   getWeight: (startDate: Date, endDate: Date) => Promise<Weight[]>;
+  getLatestWeight: () => Promise<Weight | null | undefined>;
   saveWeight: (weight: Weight) => Promise<void>;
   saveImage: (image: Image) => Promise<CustomImageID>;
   getImage: (id: CustomImageID) => Promise<Image | undefined | null>;

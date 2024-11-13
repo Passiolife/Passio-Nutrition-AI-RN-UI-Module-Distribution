@@ -28,6 +28,7 @@ import {
   getCustomRecipe,
   deleteCustomRecipe,
   getCustomRecipes,
+  getLatestWeightDB,
 } from '../../../db';
 import {
   ActivityLevelType,
@@ -51,10 +52,10 @@ const dataService: NutritionDataService = {
   async saveFoodLog(foodLog: FoodLog): Promise<void> {
     return saveFoodLog(await DBHandler.getInstance(), foodLog);
   },
-  async saveCustomFood(foodLog: CustomFood): Promise<void> {
+  async saveCustomFood(foodLog: CustomFood): Promise<string> {
     return saveCustomFood(await DBHandler.getInstance(), foodLog);
   },
-  async saveCustomRecipe(foodLog: CustomFood): Promise<void> {
+  async saveCustomRecipe(foodLog: CustomFood): Promise<string> {
     return saveCustomRecipe(await DBHandler.getInstance(), foodLog);
   },
   async saveWater(water: Water): Promise<void> {
@@ -106,6 +107,9 @@ const dataService: NutritionDataService = {
 
   async getWeight(startDate: Date, endDate: Date): Promise<Weight[]> {
     return getWeightByStartDateAndEndDate(startDate, endDate);
+  },
+  async getLatestWeight(): Promise<Weight | undefined | null> {
+    return getLatestWeightDB();
   },
 
   async saveFavoriteFoodItem(

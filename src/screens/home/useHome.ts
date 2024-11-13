@@ -6,8 +6,8 @@ import { useNutritionProfile } from '../nutritionProfile/useNutritionProfile';
 import { useEffect, useState } from 'react';
 import { useServices } from '../../contexts';
 import {
+  getLatestWeight,
   getWatersForDate,
-  getWeightForDate,
 } from '../../utils/DataServiceHelper';
 import { totalWater } from '../water/waterUtils';
 import { averageWeight } from '../weight/views/weightentry/Weight.utils';
@@ -57,8 +57,11 @@ export function useHome() {
 
   useEffect(() => {
     if (isFocused) {
-      getWeightForDate(date, services).then((data) => {
-        const total = averageWeight(data, unitsWeight);
+      getLatestWeight(services).then((data) => {
+        let total = 0;
+        if (data) {
+          total = averageWeight(data, unitsWeight);
+        }
         const target = Number(targetWeight ?? 0) - total;
         setRemainWeight(target);
         setAchievedWeight(total);
