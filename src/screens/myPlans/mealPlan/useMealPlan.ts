@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useServices } from '../../../contexts';
 import type { MealLabel, MealPlan, NutritionProfile } from '../../../models';
 import type { MealPlanScreenNavigationProps } from '../MyPlanScreen';
@@ -22,6 +22,7 @@ export function useMealPlan() {
   const { params } = useRoute<RouteProp<ParamList, 'MyPlanScreen'>>();
   const isFocus = useIsFocused();
   const isSubmitting = useRef<boolean>(false);
+  const [isInfo, setInfo] = useState<boolean>(true);
 
   const nutritionProfileRef = useRef<NutritionProfile | undefined>(undefined);
   const navigateEditFoodLogRef = useRef<boolean>(false);
@@ -190,6 +191,10 @@ export function useMealPlan() {
     init();
   }, [day, selectedPassioMealPlan]);
 
+  const onInfoPress = useCallback(() => {
+    setInfo((i) => !i);
+  }, []);
+
   return {
     activeMealPlanName: selectedPassioMealPlan?.mealPlanTitle,
     day,
@@ -202,5 +207,7 @@ export function useMealPlan() {
     onDayChanged,
     onEditFoodLogPress,
     onMultipleLogPress,
+    isInfo,
+    onInfoPress,
   };
 }
