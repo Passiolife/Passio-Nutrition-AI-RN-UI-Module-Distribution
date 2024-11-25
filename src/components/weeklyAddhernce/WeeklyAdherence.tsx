@@ -16,6 +16,7 @@ import { getMealLogsFormDateToDate } from '../../utils/DataServiceHelper';
 
 interface Props {
   headerDate: DateTime;
+  onDateClick: (date: string | null) => void;
 }
 
 interface DayItem {
@@ -24,7 +25,7 @@ interface DayItem {
   isCurrentMonth: boolean;
 }
 
-const WeeklyAdherence = ({ headerDate }: Props) => {
+const WeeklyAdherence = ({ headerDate, onDateClick }: Props) => {
   const branding = useBranding();
   const styles = calderComponentStyle(branding);
 
@@ -270,6 +271,9 @@ const WeeklyAdherence = ({ headerDate }: Props) => {
             status === 'Logged' && styles.loggedDate,
             isToday(item.isoDate) && styles.todayDateBg,
           ]}
+          onPress={() => {
+            onDateClick?.(item.isoDate);
+          }}
         >
           <Text
             weight="600"

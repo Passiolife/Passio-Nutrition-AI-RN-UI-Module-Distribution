@@ -174,6 +174,13 @@ export const HomeBottomNavigation = React.memo(() => {
             onDateChange: (date) => {
               mealLogDateRef.current = date;
             },
+            navigateToMealLog: (date) => {
+              mealLogDateRef.current = date;
+              navigation.replace('BottomNavigation', {
+                screen: 'MealLogScreen',
+                params: { defaultDate: date },
+              });
+            },
           }}
         />
         <BottomTab.Screen

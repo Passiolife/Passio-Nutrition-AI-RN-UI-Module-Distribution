@@ -45,6 +45,7 @@ export interface HomeBottom {
     | 'ProgressScreen'
     | 'MyPlanScreen'
     | 'Bank';
+  params?: any;
 }
 
 interface WaterEntryProp {
