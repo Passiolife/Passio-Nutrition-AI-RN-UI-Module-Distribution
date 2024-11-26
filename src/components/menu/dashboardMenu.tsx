@@ -46,11 +46,6 @@ export const DashboardMenu = ({ hide }: Props) => {
         navigation.navigate('SettingScreen', {});
       },
     },
-    {
-      icon: ICONS.dashboardMenuLogout,
-      title: 'Log Out',
-      onPress: () => {},
-    },
   ].filter((item) => !hide?.includes(item.title as any));
 
   const render = () => {

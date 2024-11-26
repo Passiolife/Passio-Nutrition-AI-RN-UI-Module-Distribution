@@ -31,7 +31,6 @@ import {
   getLatestWeightDB,
 } from '../../../db';
 import {
-  ActivityLevelType,
   CustomFood,
   CustomImageID,
   CustomRecipe,
@@ -145,19 +144,14 @@ const dataService: NutritionDataService = {
           const profile: NutritionProfile | undefined = profileString
             ? JSON.parse(profileString ?? '')
             : {
-                age: 26,
                 height: 183,
-                weight: 60,
                 gender: 'male',
                 unitLength: UnitSystem.IMPERIAL,
                 unitsWeight: UnitSystem.IMPERIAL,
-                targetWater: 100,
-                targetWeight: 70,
-                caloriesTarget: 1300,
+                caloriesTarget: 2100,
                 carbsPercentage: 50,
                 fatPercentage: 25,
                 proteinPercentage: 25,
-                activityLevel: ActivityLevelType.active,
               };
           resolve(profile);
         })
