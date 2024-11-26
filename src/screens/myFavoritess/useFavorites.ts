@@ -44,8 +44,8 @@ export function useFavorites() {
     }
   }, [getUpdatedFavoriteFood, isFocused, services]);
 
-  const date = getLogToDate(route.params.logToDate, route.params.logToMeal);
-  const meal = getMealLog(date, route.params.logToMeal);
+  const date = getLogToDate(undefined, undefined);
+  const meal = getMealLog(date, undefined);
 
   const onSaveFoodLogs = async (favoriteFoodItem: FavoriteFoodItem) => {
     if (isSubmitting.current === true) {
