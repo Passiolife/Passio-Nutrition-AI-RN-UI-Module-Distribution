@@ -81,7 +81,7 @@ export const MessageRecords = ({
           const { calories } = getUpdatedCaloriesOfPassioAdvisorFoodInfo(item);
           return (
             <MessageRecordItem
-              foodName={item?.recognisedName}
+              foodName={item?.foodDataInfo?.foodName ?? item?.recognisedName}
               imageName={foodDataInfo?.iconID}
               bottom={`${item?.foodDataInfo?.nutritionPreview?.servingQuantity} ${item?.foodDataInfo?.nutritionPreview?.servingUnit} | ${Math.round(calories)} cal`}
               onFoodLogSelect={() => {
