@@ -21,6 +21,7 @@ import { Alert } from 'react-native';
 import type { SwipeToDeleteRef } from '../../components';
 import { createFoodItemByFavorite } from '../foodCreator/FoodCreator.utils';
 import { convertDateToDBFormat } from '../../utils/DateFormatter';
+import uuid4 from 'react-native-uuid';
 
 export function useFavorites() {
   const services = useServices();
@@ -109,9 +110,10 @@ export function useFavorites() {
         foodLog: {
           ...favoriteFoodItem,
           meal: meal,
+          uuid: uuid4.v4().toString(),
           eventTimestamp: convertDateToDBFormat(date),
         },
-        prevRouteName: isEdit ? 'Favorites' : 'MealLog',
+        prevRouteName: isEdit ? 'Favorites' : 'Search',
         onSaveLogPress: (foodLog) => {
           if (isEdit) {
             onUpdateFavoritePress({

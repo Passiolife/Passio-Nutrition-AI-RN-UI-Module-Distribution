@@ -67,6 +67,13 @@ export const RequireNutritionFacts = React.forwardRef<
 
     const [foodLog, setFoodLog] = useState(defaultFoodLog);
 
+    const servingUnits = defaultFoodLog?.selectedUnit
+      ? [
+          defaultFoodLog?.selectedUnit,
+          ...Units.filter((i) => i !== defaultFoodLog?.selectedUnit),
+        ]
+      : Units;
+
     useEffect(() => {
       setFoodLog(defaultFoodLog);
       setUnits(defaultFoodLog?.selectedUnit ?? '');
@@ -177,7 +184,7 @@ export const RequireNutritionFacts = React.forwardRef<
             }
           />
           <FiledSelectionView
-            lists={Units}
+            lists={servingUnits}
             name="Units"
             value={foodLog?.selectedUnit}
             ref={unitRef}
