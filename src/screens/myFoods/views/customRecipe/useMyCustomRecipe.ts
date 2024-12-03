@@ -112,18 +112,14 @@ export const useMyCustomRecipe = () => {
     const uuid: string = uuid4.v4() as string;
     navigation.push('EditRecipeScreen', {
       recipe: {
-        name: '',
         uuid: uuid,
         iconID: CUSTOM_USER_RECIPE__PREFIX,
         foodItems: [],
-        selectedUnit: 'g',
-        selectedQuantity: 100,
-        computedWeight: {
-          unit: 'g',
-          value: 100,
-        },
-        servingSizes: [{ unit: 'g', quantity: 100 }],
-        servingUnits: [{ unit: 'g', mass: 1 }],
+        name: '',
+        selectedUnit: 'serving',
+        selectedQuantity: 1,
+        servingSizes: [],
+        servingUnits: [],
       },
       from: 'Recipe',
     });

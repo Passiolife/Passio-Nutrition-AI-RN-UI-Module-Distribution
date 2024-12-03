@@ -145,7 +145,9 @@ export const EditIngredient = () => {
         <View style={bottomActionStyle.space} />
         <BasicButton
           style={bottomActionStyle.bottomActionButton}
-          text={params.deleteIngredient !== undefined ? 'Save' : 'Save'}
+          text={
+            params.deleteIngredient !== undefined ? 'Save' : 'Add Ingredient'
+          }
           testId="testButtonSave"
           small
           secondary={false}
