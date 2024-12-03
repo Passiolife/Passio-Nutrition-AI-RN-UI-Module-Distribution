@@ -64,7 +64,7 @@ export const nutrientUnits: Record<NutrientType, NutrientUnit> = {
   fiber: 'g',
   sugars: 'g',
   sugarAdded: 'g',
-  vitaminD: 'mg',
+  vitaminD: 'μg',
   calcium: 'mg',
   iron: 'mg',
   potassium: 'mg',

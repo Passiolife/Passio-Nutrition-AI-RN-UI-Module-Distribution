@@ -210,26 +210,26 @@ export const RequireNutritionFacts = React.forwardRef<
           )}
           <FiledView
             ref={caloriesRef}
-            name="Calories"
+            name="Calories (kcal)"
             value={Number.isFinite(calories) ? calories?.toString() : ''}
             keyboardType="decimal-pad"
           />
           <FiledView
             ref={fatRef}
             value={Number.isFinite(fat) ? fat?.toString() : ''}
-            name="Fat"
+            name="Fat (g)"
             keyboardType="decimal-pad"
           />
           <FiledView
             ref={carbsRef}
             value={Number.isFinite(carbs) ? carbs?.toString() : ''}
-            name="Carbs"
+            name="Carbs (g)"
             keyboardType="decimal-pad"
           />
           <FiledView
             ref={proteinRef}
             value={Number.isFinite(proteins) ? proteins?.toString() : ''}
-            name="Protein"
+            name="Protein (g)"
             keyboardType="decimal-pad"
           />
         </View>

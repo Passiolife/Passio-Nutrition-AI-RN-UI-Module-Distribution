@@ -19,7 +19,13 @@ import {
   generateCustomID,
   generateCustomNutritionFactID,
 } from './FoodCreator.utils';
-import type { BarcodeCustomResult, CustomFood, Image } from '../../models';
+import type {
+  BarcodeCustomResult,
+  CustomFood,
+  FoodItem,
+  Image,
+  Nutrient,
+} from '../../models';
 import { convertPassioFoodItemToFoodLog } from '../../utils/V3Utils';
 import RNFS from 'react-native-fs';
 import { Alert, Platform } from 'react-native';
@@ -30,13 +36,48 @@ export type ScanningScreenNavigationProps = StackNavigationProp<
   'FoodCreatorScreen'
 >;
 
+function formatNumber(num: number | undefined) {
+  if (num) {
+    if (!isFinite(num)) return num; // Handle non-finite numbers like Infinity, NaN
+    const trimmed = parseFloat(num.toFixed(3)); // Limit to 3 decimal places
+    return Number(trimmed.toString()); // Ensure no trailing zeroes
+  } else {
+    return undefined;
+  }
+}
+
+const convertFormateFoodLog = (
+  food: CustomFood | undefined
+): CustomFood | undefined => {
+  if (food) {
+    const foodItems: FoodItem[] = food.foodItems.map((i) => {
+      return {
+        ...i,
+        nutrients: i.nutrients.map((o) => {
+          const nutrient: Nutrient = {
+            ...o,
+            amount: formatNumber(o.amount) ?? 0,
+          };
+          return nutrient;
+        }),
+      };
+    });
+    return {
+      ...food,
+      foodItems: foodItems,
+    };
+  } else {
+    return food;
+  }
+};
+
 export const useFoodCreator = () => {
   const branding = useBranding();
   const services = useServices();
   const navigation = useNavigation<ScanningScreenNavigationProps>();
   const { params } = useRoute<RouteProp<ParamList, 'FoodCreatorScreen'>>();
   const [foodLog, _setCustomFood] = useState<CustomFood | undefined>(
-    params.foodLog
+    convertFormateFoodLog(params.foodLog)
   );
   const [barcode, setBarcode] = useState<string | undefined>(
     params.foodLog?.barcode
