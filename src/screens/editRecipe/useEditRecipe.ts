@@ -139,6 +139,28 @@ export function useEditRecipe() {
         value: sum,
         unit: 'g',
       };
+      updatedFoodLog.selectedUnit = 'serving';
+      updatedFoodLog.selectedQuantity = 1;
+      updatedFoodLog.servingUnits = [
+        {
+          unit: 'serving',
+          mass: sum,
+        },
+        {
+          unit: 'gram',
+          mass: 1,
+        },
+      ];
+      updatedFoodLog.servingSizes = [
+        {
+          unit: 'serving',
+          quantity: 1,
+        },
+        {
+          unit: 'gram',
+          quantity: sum,
+        },
+      ];
       return updatedFoodLog;
     },
     []
@@ -223,7 +245,6 @@ export function useEditRecipe() {
       onSaveData: (item) => {
         const foodItem = item.foodItems;
         if (foodItem) {
-          navigation.goBack();
           addIngredient(foodItem);
         }
       },
@@ -247,6 +268,7 @@ export function useEditRecipe() {
                 entityType: 'user-food',
               },
               updateIngredient: (updatedIngredient) => {
+                navigation.goBack();
                 addIngredient([updatedIngredient]);
               },
             });
