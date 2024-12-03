@@ -16,7 +16,6 @@ import {
 } from '../../utils/DataServiceHelper';
 import { totalWater } from '../water/waterUtils';
 import { averageWeight } from '../weight/views/weightentry/Weight.utils';
-import { PassioSDK } from '@passiolife/nutritionai-react-native-sdk-v3';
 
 type ScreenNavigationProps = StackNavigationProp<ParamList, 'HomeScreen'>;
 
@@ -61,10 +60,6 @@ export function useHome() {
       });
     }
   }, [date, isFocused, services, targetWater, unitsWeight]);
-
-  useEffect(() => {
-    PassioSDK.updateLanguage('es');
-  }, []);
 
   useEffect(() => {
     if (isFocused) {
