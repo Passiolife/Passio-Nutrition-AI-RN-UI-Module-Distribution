@@ -223,6 +223,7 @@ export function useEditRecipe() {
       onSaveData: (item) => {
         const foodItem = item.foodItems;
         if (foodItem) {
+          navigation.goBack();
           addIngredient(foodItem);
         }
       },

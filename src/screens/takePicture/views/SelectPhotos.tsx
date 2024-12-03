@@ -10,6 +10,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import { launchImageLibrary } from 'react-native-image-picker';
 import { PHOTO_LIMIT, type TakePictureScreenProps } from '../useTakePicture';
+import { BackOnly } from '../../../components';
 
 const width = Dimensions.get('screen').width;
 
@@ -84,6 +85,7 @@ export const SelectPhotos = React.forwardRef<SelectPhotosRef, Props>(
 
     return (
       <SafeAreaView style={{ backgroundColor: 'white', flex: 1 }}>
+        <BackOnly />
         <View>
           <FlatList
             data={images}

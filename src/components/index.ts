@@ -45,6 +45,7 @@ export * from './filed';
 export * from './imagePickerOptions';
 export * from './recipeOptions';
 export * from './usages';
+export * from './backNavigations/BackOnly';
 
 import ActionSheet from './actionSheets/ActionSheet';
 export { ActionSheet };
