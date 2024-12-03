@@ -3,7 +3,9 @@ export * from './models';
 export * from './utils';
 export * from './hooks';
 import { usePassioSDK } from './passio_sdk';
+import { useUpdateLanguage } from './hooks';
 export { usePassioSDK };
+export { useUpdateLanguage };
 export * from './navigaitons';
 
 // voiceLogging
