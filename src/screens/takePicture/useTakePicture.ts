@@ -33,7 +33,9 @@ export function useTakePicture() {
   const route = useRoute<RouteProp<ParamList, 'TakePictureScreen'>>();
 
   const bottomSheetModalRef = useRef<BottomSheet>(null);
+  const noResultFoundRef = useRef<BottomSheet>(null);
   const snapPoints = useMemo(() => ['30%', '70%'], []);
+  const snapPointsNoResultFound = useMemo(() => ['20%', '40%'], []);
   const [isFetchingResponse, setFetchResponse] = useState(false);
   const [isPreparingLog, setPreparingLog] = useState(false);
   const [passioAdvisorFoodInfo, setPassioAdvisorFoodInfo] = useState<
@@ -72,7 +74,7 @@ export function useTakePicture() {
             })
           );
         } else {
-          bottomSheetModalRef.current?.expand();
+          noResultFoundRef.current?.expand();
         }
       } catch (error) {
       } finally {
@@ -126,10 +128,12 @@ export function useTakePicture() {
   const onRetakePress = useCallback(() => {
     if (route.params.type === 'camera') {
       bottomSheetModalRef.current?.close();
+      noResultFoundRef.current?.close();
       setPassioAdvisorFoodInfo([]);
       takePictureRef.current?.onRetake();
     } else {
       bottomSheetModalRef.current?.close();
+      noResultFoundRef.current?.close();
       setPassioAdvisorFoodInfo([]);
       selectPhotoRef.current?.onRetake();
     }
@@ -139,15 +143,24 @@ export function useTakePicture() {
     navigation.goBack();
   }, [navigation]);
 
+  const onSearchManuallyPress = useCallback(() => {
+    navigation.replace('FoodSearchScreen', {
+      from: 'Search',
+    });
+  }, [navigation]);
+
   return {
     recognizePictureRemote,
     snapPoints,
     bottomSheetModalRef,
+    snapPointsNoResultFound,
+    noResultFoundRef,
     selectPhotoRef,
     onLogSelectPress,
     passioAdvisorFoodInfo,
     onRetakePress,
     onCancelPress,
+    onSearchManuallyPress,
     isPreparingLog,
     isFetchingResponse,
     type: route.params.type ?? 'camera',

@@ -83,7 +83,10 @@ export const createFoodLogUsingFoodCreator = ({
     (key) => {
       let data: Nutrient = {
         id: key as NutrientType,
-        amount: Number(otherNutritionFact[key as NutrientType].replaceAll(',', '.')) ?? 0,
+        amount:
+          Number(
+            otherNutritionFact[key as NutrientType].replaceAll(',', '.')
+          ) ?? 0,
         unit: nutrientUnits[key as NutrientType],
       };
       return data;
