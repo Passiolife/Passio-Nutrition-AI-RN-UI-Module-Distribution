@@ -50,6 +50,8 @@ export const ICONS = {
   addedToDiary: require('./icons/added_to_diary.png'),
   barcode: require('./icons/barocde.png'),
   barcodeNotFound: require('./icons/scan_barcode_not_fouind.png'),
+  takePhoto: require('./icons/take_photo.png'),
+  selectPhoto: require('./icons/select_photo.png'),
 
   foodCreator: require('./icons/food_creator.png'),
   foodNutritionFact: require('./icons/food_nutrition_fact.png'),

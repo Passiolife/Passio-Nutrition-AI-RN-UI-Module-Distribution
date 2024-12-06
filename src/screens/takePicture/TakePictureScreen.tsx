@@ -26,7 +26,6 @@ export const TakePictureScreen = gestureHandlerRootHOC(() => {
     snapPointsNoResultFound,
     isFetchingResponse,
     takePictureRef,
-    onCancelPress,
     isPreparingLog,
   } = useTakePicture();
 
@@ -73,7 +72,7 @@ export const TakePictureScreen = gestureHandlerRootHOC(() => {
         <PictureLoggingResult
           onLogSelect={onLogSelectPress}
           onRetake={onRetakePress}
-          onCancel={onCancelPress}
+          onCancel={onRetakePress}
           type={type}
           isPreparingLog={isPreparingLog}
           passioAdvisorFoodInfoResult={passioAdvisorFoodInfo ?? []}

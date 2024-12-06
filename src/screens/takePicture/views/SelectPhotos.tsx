@@ -11,6 +11,7 @@ import { useNavigation } from '@react-navigation/native';
 import { launchImageLibrary } from 'react-native-image-picker';
 import { PHOTO_LIMIT, type TakePictureScreenProps } from '../useTakePicture';
 import { BackOnly } from '../../../components';
+import { useBranding } from '../../../contexts';
 
 const width = Dimensions.get('screen').width;
 
@@ -30,6 +31,7 @@ export const SelectPhotos = React.forwardRef<SelectPhotosRef, Props>(
   ) => {
     const [images, setImages] = useState<string[]>([]);
     const navigation = useNavigation<TakePictureScreenProps>();
+    const branding = useBranding();
     const isFirstTime = useRef(true);
 
     const onTakeImages = useCallback(async () => {
@@ -86,35 +88,87 @@ export const SelectPhotos = React.forwardRef<SelectPhotosRef, Props>(
     return (
       <SafeAreaView style={{ backgroundColor: 'white', flex: 1 }}>
         <BackOnly />
-        <View>
-          <FlatList
-            data={images}
-            style={{
-              margin: 16,
-            }}
-            renderItem={({ item }) => {
-              return (
-                <Image
-                  source={{
-                    uri: Image.resolveAssetSource({
-                      uri:
-                        Platform.OS === 'android'
-                          ? `${'file://' + item}`
-                          : item,
-                    }).uri,
-                  }}
-                  resizeMode="cover"
-                  resizeMethod="resize"
-                  style={{
-                    height: width / 3.5,
-                    margin: 3,
-                    width: width / 3.5,
-                  }}
-                />
-              );
-            }}
-            numColumns={3}
-          />
+        <View style={{ backgroundColor: branding.backgroundColor, flex: 1 }}>
+          {images.length === 1 ? (
+            <Image
+              source={{
+                uri: Image.resolveAssetSource({
+                  uri:
+                    Platform.OS === 'android'
+                      ? `${'file://' + images[0]}`
+                      : images[0],
+                }).uri,
+              }}
+              resizeMode="cover"
+              resizeMethod="resize"
+              style={{
+                height: width / 1,
+                marginHorizontal: 16,
+                borderRadius: 12,
+                margin: 3,
+              }}
+            />
+          ) : images.length === 2 ? (
+            <FlatList
+              data={images}
+              style={{
+                margin: 16,
+              }}
+              renderItem={({ item }) => {
+                return (
+                  <Image
+                    source={{
+                      uri: Image.resolveAssetSource({
+                        uri:
+                          Platform.OS === 'android'
+                            ? `${'file://' + item}`
+                            : item,
+                      }).uri,
+                    }}
+                    resizeMode="cover"
+                    resizeMethod="resize"
+                    style={{
+                      height: width / 2.3,
+                      borderRadius: 12,
+                      margin: 3,
+                      width: width / 2.3,
+                    }}
+                  />
+                );
+              }}
+              numColumns={3}
+            />
+          ) : (
+            <FlatList
+              data={images}
+              style={{
+                margin: 16,
+              }}
+              renderItem={({ item }) => {
+                return (
+                  <Image
+                    source={{
+                      uri: Image.resolveAssetSource({
+                        uri:
+                          Platform.OS === 'android'
+                            ? `${'file://' + item}`
+                            : item,
+                      }).uri,
+                    }}
+                    resizeMode="cover"
+                    resizeMethod="resize"
+                    style={{
+                      height: width / 3.5,
+                      borderRadius: 12,
+                      margin: 3,
+                      width: width / 3.5,
+                    }}
+                  />
+                );
+              }}
+              numColumns={3}
+            />
+          )}
         </View>
       </SafeAreaView>
     );

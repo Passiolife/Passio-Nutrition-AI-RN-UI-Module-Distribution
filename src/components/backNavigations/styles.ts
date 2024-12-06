@@ -23,7 +23,7 @@ const headerStyle = ({ header }: Branding, insets: EdgeInsets) => {
     leftSize: {
       justifyContent: 'center',
       alignItems: 'center',
-      paddingVertical: scaleHeight(16),
+      paddingVertical: scaleHeight(12),
       paddingHorizontal: scaleHeight(16),
     },
     body: {

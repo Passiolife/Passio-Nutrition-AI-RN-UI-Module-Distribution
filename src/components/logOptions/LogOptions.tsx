@@ -64,12 +64,8 @@ export const LogOptions = ({
       ) : (
         <>
           <>
-            {renderItem(ICONS.logOptionSearch, 'Take Photos', onTakeCamera)}
-            {renderItem(
-              ICONS.logOptionFoodScanner,
-              'Select Photos',
-              onTakePicture
-            )}
+            {renderItem(ICONS.takePhoto, 'Take Photos', onTakeCamera)}
+            {renderItem(ICONS.selectPhoto, 'Select Photos', onTakePicture)}
           </>
         </>
       )}

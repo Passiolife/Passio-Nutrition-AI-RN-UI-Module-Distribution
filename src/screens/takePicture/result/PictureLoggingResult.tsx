@@ -58,7 +58,14 @@ export const PictureLoggingResult = ({
     );
   };
   const onClearPress = () => {
-    setPicturePassioAdvisorFoodInfo([]);
+    setPicturePassioAdvisorFoodInfo((item) => {
+      return item.map((o) => {
+        return {
+          ...o,
+          isSelected: false,
+        };
+      });
+    });
   };
 
   const renderNoDataFound = () => {
@@ -145,7 +152,7 @@ export const PictureLoggingResult = ({
               }
             }}
             style={styles.buttonTryAgain}
-            text={type === 'camera' ? 'Retake' : 'Cancel'}
+            text={type === 'camera' ? 'Retake' : 'Search Again'}
           />
           <BasicButton
             onPress={() => {

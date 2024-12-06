@@ -41,7 +41,8 @@ const RenderItem = ({
   };
   const styles = mealLogViewStyle(useBranding());
 
-  const [expandable, setExpandable] = useState(item.data.length > 0);
+  const [expandable, setExpandable] = useState(true);
+
   return (
     <Card style={styles.cardContainer}>
       <Pressable
@@ -66,7 +67,7 @@ const RenderItem = ({
           ]}
         />
       </Pressable>
-      {expandable && item.data.length > 0 && (
+      {expandable && (
         <>
           <View style={styles.line} />
           <FlatList
