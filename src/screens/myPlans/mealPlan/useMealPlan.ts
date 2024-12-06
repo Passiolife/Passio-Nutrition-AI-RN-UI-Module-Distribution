@@ -43,7 +43,11 @@ export function useMealPlan() {
   }
 
   const convertFoodLog = async (item: PassioMealPlanItem) => {
-    let result = await PassioSDK.fetchFoodItemForDataInfo(item.meal);
+    let result = await PassioSDK.fetchFoodItemForDataInfo(
+      item.meal,
+      item.meal?.nutritionPreview?.servingQuantity,
+      item?.meal?.nutritionPreview?.servingUnit
+    );
 
     let qty = item.meal?.nutritionPreview?.servingQuantity ?? '1';
     let servingUnit = item.meal?.nutritionPreview?.servingUnit ?? '';
