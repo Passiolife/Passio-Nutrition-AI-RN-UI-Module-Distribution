@@ -109,10 +109,12 @@ export const EditFoodLogScreen = () => {
           <LogInformationView
             iconID={foodLog.iconID}
             foodItems={foodLog.foodItems}
-            longName={foodLog.longName}
             isOpenFood={foodLog.isOpenFood}
             onMoreDetailPress={onMoreDetailPress}
             name={foodLog.name}
+            longName={
+              foodLog.name === foodLog.longName ? undefined : foodLog.longName
+            }
             qty={foodLog.selectedQuantity}
             entityType={foodLog.entityType}
             servingUnit={foodLog.selectedUnit}
