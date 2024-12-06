@@ -162,7 +162,7 @@ export const getUpdatedCaloriesOfPassioAdvisorFoodInfo = (
   const calories = ratio * advisorInfoWeightGram;
 
   return {
-    calories: calories,
+    calories: passio?.foodDataInfo?.nutritionPreview?.calories ?? calories,
     advisorInfoWeightGram: advisorInfoWeightGram,
   };
 };

@@ -126,12 +126,14 @@ export const PictureLoggingResult = ({
           const ratio = npCalories / npWeightQuantity;
           const advisorInfoWeightGram = item?.weightGrams ?? 0;
           const calories = ratio * advisorInfoWeightGram;
-
+          const newCalories =
+            foodDataInfo?.nutritionPreview?.calories ?? calories;
+          // Update calculation for package food info
           return (
             <PictureLoggingResultItemView
               foodName={item?.foodDataInfo?.foodName ?? item?.recognisedName}
               imageName={foodDataInfo?.iconID}
-              bottom={`${item?.foodDataInfo?.nutritionPreview?.servingQuantity} ${item?.foodDataInfo?.nutritionPreview?.servingUnit} | ${Math.round(calories)} cal`}
+              bottom={`${item?.foodDataInfo?.nutritionPreview?.servingQuantity} ${item?.foodDataInfo?.nutritionPreview?.servingUnit} | ${Math.round(newCalories)} cal`}
               onFoodLogSelect={() => {
                 onFoodSelect(item);
               }}
