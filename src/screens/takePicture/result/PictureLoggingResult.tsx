@@ -154,7 +154,7 @@ export const PictureLoggingResult = ({
               }
             }}
             style={styles.buttonTryAgain}
-            text={type === 'camera' ? 'Retake' : 'Search Again'}
+            text={type === 'camera' ? 'Retake' : 'Select Again'}
           />
           <BasicButton
             onPress={() => {
