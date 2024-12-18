@@ -14,9 +14,11 @@ import {
   useCameraPermission,
 } from 'react-native-vision-camera';
 import {
+  Alert,
   Dimensions,
   FlatList,
   Image,
+  Linking,
   Platform,
   TouchableOpacity,
   View,
@@ -150,8 +152,28 @@ export const TakePicture = React.forwardRef<TakePictureRef, Props>(
     const { hasPermission, requestPermission } = useCameraPermission();
     const device = useCameraDevice('back');
     const branding = useBranding();
+
     useEffect(() => {
-      requestPermission();
+      const permission = requestPermission();
+      if (!permission) {
+        Alert.alert(
+          'Error',
+          'Permission require for this module, so please enable it or grant permission from setting',
+          [
+            {
+              style: 'cancel',
+              text: 'Cancel',
+            },
+            {
+              onPress: () => {
+                Linking.openSettings();
+              },
+              text: 'Settings', // Navigate to settings or perform another action
+            },
+          ],
+          { cancelable: false } // Prevents closing the alert by tapping outside
+        );
+      }
     }, [hasPermission, requestPermission]);
 
     const animatedStyle = useAnimatedStyle(() => {
