@@ -1,5 +1,6 @@
 import Voice, {
   SpeechEndEvent,
+  SpeechErrorEvent,
   SpeechResultsEvent,
   SpeechStartEvent,
 } from '@react-native-voice/voice';
@@ -23,6 +24,7 @@ import type { ParamList } from '../../navigaitons';
 import { useServices } from '../../contexts';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import type BottomSheet from '@gorhom/bottom-sheet';
+import { Alert, Linking } from 'react-native';
 
 export type VoiceLoggingScreenNavigationProps = StackNavigationProp<
   ParamList,
@@ -186,11 +188,24 @@ export function useVoiceLogging() {
     } catch (error) {}
   };
 
+  const speechErrorHandler = async (e: SpeechErrorEvent) => {
+    try {
+      if (e.error?.message === 'User denied access to speech recognition') {
+        Linking.openSettings();
+      } else {
+        if (e?.error?.message) {
+          Alert.alert(e.error?.message);
+        }
+      }
+    } catch (error) {}
+  };
+
   useEffect(() => {
     Voice.onSpeechStart = speechStartHandler;
     Voice.onSpeechEnd = speechEndHandler;
     Voice.onSpeechResults = speechResultsHandler;
     Voice.onSpeechPartialResults = speechResultsHandler;
+    Voice.onSpeechError = speechErrorHandler;
     return () => {
       Voice.destroy().then(Voice.removeAllListeners);
     };
