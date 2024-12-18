@@ -11,7 +11,6 @@ import {
   PassioSDK,
   PassioCameraZoomLevel,
 } from '@passiolife/nutritionai-react-native-sdk-v3';
-import ScanningModeSelector from './views/ScanningModeSelector';
 import ZoomIndicator from './views/ZoomIndicator';
 import type { MealLabel } from '../../models';
 import QuickScanInfo from './views/QuickScanInfo';
@@ -57,7 +56,7 @@ export const QuickScanningScreen = gestureHandlerRootHOC(() => {
             style={styles.cameraView}
             volumeDetectionMode="none"
           />
-          {!info && <ScanningModeSelector mode={mode} setMode={setMode} />}
+          {/* {!info && <ScanningModeSelector mode={mode} setMode={setMode} />} */}
           {!info && <ScanSVG />}
           {!info && level && <ZoomIndicator mode={mode} level={level} />}
           {info && <QuickScanInfo onOkPress={() => setInfo(false)} />}

@@ -2,10 +2,11 @@ import React from 'react';
 import { Dimensions } from 'react-native';
 import { View } from 'react-native';
 import { Path, Svg } from 'react-native-svg';
+import { scaleHeight } from '../../utils';
 
 const ScanSVG = ({ margin = 40 }: { margin?: number }) => {
   return (
-    <View style={{ alignItems: 'center', marginTop: 0 }}>
+    <View style={{ alignItems: 'center', marginTop: scaleHeight(52) }}>
       <Svg
         width={Dimensions.get('window').width - margin}
         height="360"

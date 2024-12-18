@@ -14,7 +14,7 @@ export const QuickScanningActionView = (props: Props) => {
       <View style={closeActionContainer}>
         <BackNavigation
           onBackArrowPress={props.onClosedPressed}
-          title="Scan a Barcode"
+          title="Barcode Scan"
           rightIcon={ICONS.foodScannerInfo}
           onRightPress={props.onInfoPress}
         />
