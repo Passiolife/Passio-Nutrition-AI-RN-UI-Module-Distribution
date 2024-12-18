@@ -191,7 +191,23 @@ export function useVoiceLogging() {
   const speechErrorHandler = async (e: SpeechErrorEvent) => {
     try {
       if (e.error?.message === 'User denied access to speech recognition') {
-        Linking.openSettings();
+        Alert.alert(
+          'Error',
+          e.error?.message, // The error message you want to display
+          [
+            {
+              style: 'cancel',
+              text: 'Cancel',
+            },
+            {
+              onPress: () => {
+                Linking.openSettings();
+              },
+              text: 'Settings', // Navigate to settings or perform another action
+            },
+          ],
+          { cancelable: false } // Prevents closing the alert by tapping outside
+        );
       } else {
         if (e?.error?.message) {
           Alert.alert(e.error?.message);
