@@ -19,7 +19,6 @@ interface Props {
 type Type = 'All' | 'UseImage';
 
 export const LogOptions = ({
-  onFavorite,
   onFoodScanner,
   onTextSearch,
   onVoiceLogging,
@@ -51,15 +50,15 @@ export const LogOptions = ({
     <View style={styles.main}>
       {type === 'All' ? (
         <>
-          {renderItem(ICONS.menuMyFoods, 'My Foods', onMyFoods)}
-          {renderItem(ICONS.menuFav, 'Favorites', onFavorite)}
-          {renderItem(ICONS.menuVoiceLogging, 'Voice Logging', onVoiceLogging)}
-          {renderItem(ICONS.menuAIAdviosr, 'AI Advisor', onAiAdvisor)}
-          {renderItem(ICONS.menuUseImage, 'Use Image', () => {
+          {/* {renderItem(ICONS.menuFav, 'Favorites', onFavorite)} */}
+          {renderItem(ICONS.menuUseImage, 'Photo Logging', () => {
             setType('UseImage');
           })}
+          {renderItem(ICONS.barcode, 'Scan a Barcode', onFoodScanner)}
+          {renderItem(ICONS.menuVoiceLogging, 'Voice Logging', onVoiceLogging)}
+          {renderItem(ICONS.menuAIAdviosr, 'AI Advisor', onAiAdvisor)}
           {renderItem(ICONS.menuSearch, 'Text Search', onTextSearch)}
-          {renderItem(ICONS.menuFoodScanner, 'Food Scanner', onFoodScanner)}
+          {renderItem(ICONS.menuMyFoods, 'My Foods', onMyFoods)}
         </>
       ) : (
         <>

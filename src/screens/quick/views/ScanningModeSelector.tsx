@@ -18,7 +18,7 @@ const ScanningModeSelector: React.FC<ScanningModeSelectorProps> = ({
 
   return (
     <View style={styles.container}>
-      {['Visual', 'Barcode', 'NutritionFact'].map((item) => (
+      {['Barcode'].map((item) => (
         <TouchableOpacity
           key={item}
           style={[

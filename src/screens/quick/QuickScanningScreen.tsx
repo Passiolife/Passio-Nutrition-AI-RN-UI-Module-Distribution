@@ -33,7 +33,7 @@ export type ScanningScreenNavigationProps = StackNavigationProp<
 
 export const QuickScanningScreen = gestureHandlerRootHOC(() => {
   const [info, setInfo] = useState(false);
-  const [mode, setMode] = useState<ScanningMode>('Visual');
+  const [mode, setMode] = useState<ScanningMode>('Barcode');
   const navigation = useNavigation();
   const [level, setLevel] = useState<PassioCameraZoomLevel>();
 
