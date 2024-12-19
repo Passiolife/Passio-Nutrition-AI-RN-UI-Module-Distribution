@@ -17,6 +17,7 @@ import QuickScanInfo from './views/QuickScanInfo';
 import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import type { ParamList } from '../../navigaitons';
+import type { ScreenNavigationProps } from '../myFoods/useMyFoodScreen';
 
 export interface ScanningScreenProps {
   logToDate: Date | undefined;
@@ -32,8 +33,8 @@ export type ScanningScreenNavigationProps = StackNavigationProp<
 
 export const QuickScanningScreen = gestureHandlerRootHOC(() => {
   const [info, setInfo] = useState(false);
-  const [mode, setMode] = useState<ScanningMode>('Barcode');
-  const navigation = useNavigation();
+  const [mode] = useState<ScanningMode>('Barcode');
+  const navigation = useNavigation<ScreenNavigationProps>();
   const [level, setLevel] = useState<PassioCameraZoomLevel>();
 
   useEffect(() => {
@@ -43,6 +44,12 @@ export const QuickScanningScreen = gestureHandlerRootHOC(() => {
     };
     setTimeout(init, 300);
   }, []);
+
+  const onTakePhoto = () => {
+    navigation.replace('TakePictureScreen', {
+      type: 'camera',
+    });
+  };
 
   return (
     <View style={styles.container}>
@@ -64,9 +71,7 @@ export const QuickScanningScreen = gestureHandlerRootHOC(() => {
       </View>
       {mode === 'Visual' && !info && <VisualFoodScan />}
       {mode === 'Barcode' && !info && (
-        <BarcodeFoodScan
-          onScanNutritionFacts={() => setMode('NutritionFact')}
-        />
+        <BarcodeFoodScan onTakePhoto={onTakePhoto} />
       )}
       {mode === 'NutritionFact' && !info && <NutritionFactScan />}
     </View>

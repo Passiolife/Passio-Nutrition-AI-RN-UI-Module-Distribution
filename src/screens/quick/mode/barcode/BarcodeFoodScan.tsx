@@ -21,9 +21,9 @@ import { useBarcodeFoodScan } from './useBarcodeFoodScan';
 import { BarcodeNotDetect } from './BarcodeNotDetect';
 
 interface Props {
-  onScanNutritionFacts: () => void;
+  onTakePhoto: () => void;
 }
-export const BarcodeFoodScan = ({ onScanNutritionFacts }: Props) => {
+export const BarcodeFoodScan = ({ onTakePhoto }: Props) => {
   const {
     alternatives,
     isLodgedFood,
@@ -59,7 +59,7 @@ export const BarcodeFoodScan = ({ onScanNutritionFacts }: Props) => {
         }}
       >
         <BarcodeNotDetect
-          onScanNutritionFacts={onScanNutritionFacts}
+          onTakePhoto={onTakePhoto}
           onCancelPress={resetScanning}
         />
       </View>

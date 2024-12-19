@@ -6,14 +6,11 @@ import { ICONS } from '../../../../assets';
 import { screenHeight } from '../../../../utils';
 
 interface Props {
-  onScanNutritionFacts?: () => void;
+  onTakePhoto?: () => void;
   onCancelPress?: () => void;
 }
 
-export const BarcodeNotDetect = ({
-  onScanNutritionFacts,
-  onCancelPress,
-}: Props) => {
+export const BarcodeNotDetect = ({ onTakePhoto, onCancelPress }: Props) => {
   return (
     <View style={styles.container}>
       <Card style={styles.card}>
@@ -23,7 +20,7 @@ export const BarcodeNotDetect = ({
             Barcode Not Recognized
           </Text>
           <Text color="gray500" weight="400" style={styles.description}>
-            Try scanning nutrition facts instead.
+            Try taking photos of your food instead.
           </Text>
         </View>
         <View style={styles.buttonContainers}>
@@ -35,10 +32,10 @@ export const BarcodeNotDetect = ({
             secondary
           />
           <BasicButton
-            onPress={onScanNutritionFacts}
+            onPress={onTakePhoto}
             style={styles.button}
             small
-            text={'Scan Nutrition Facts'}
+            text={'Take Photos'}
           />
         </View>
       </Card>

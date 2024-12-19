@@ -9,8 +9,7 @@ import { FavoriteEmptyView } from './index';
 import type { FavoriteFoodItem } from '../../models';
 import FavoriteFoodLogView from './views/FavoriteFoodLogView';
 import withLoading from '../../utils/withLoading';
-import { ProgressLoadingView, BackNavigation } from '../../components';
-import { content } from '../../constants/Content';
+import { ProgressLoadingView } from '../../components';
 import type { Branding } from '../../contexts';
 
 export type FavoritesScreenNavigationProps = StackNavigationProp<
@@ -37,7 +36,6 @@ const MyFavoritesScreen = () => {
 
   return (
     <View style={styles.content}>
-      <BackNavigation title={content.myFavorites} />
       {favoriteFoodLogs == null ? (
         <ProgressLoadingView />
       ) : favoriteFoodLogs.length > 0 ? (
@@ -74,6 +72,7 @@ const myFavoritesStyle = ({ backgroundColor }: Branding) =>
   StyleSheet.create({
     content: {
       flexDirection: 'column',
+      paddingTop: 10,
       flex: 1,
     },
     headerIconImg: {

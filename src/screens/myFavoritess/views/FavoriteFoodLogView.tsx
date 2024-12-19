@@ -1,7 +1,6 @@
 import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import type { FavoriteFoodItem } from '../../../models';
-import { servingLabel } from '../../../utils/StringUtils';
 import { SwipeToDelete } from '../../../components';
 import { COLORS } from '../../../constants';
 import { PassioFoodIcon } from '../../../components/passio/PassioFoodIcon';
@@ -40,9 +39,9 @@ const FavoriteFoodLogView = (props: Props) => {
           </View>
           <View style={styles.mealDetail}>
             <Text style={styles.mealName}>{foodLog.name}</Text>
-            {servingLabel(foodLog).length > 1 && (
-              <Text style={styles.mealSize}>{servingLabel(foodLog)}</Text>
-            )}
+            {foodLog.longName !== foodLog.name ? (
+              <Text style={styles.mealSize}>{foodLog.longName}</Text>
+            ) : null}
           </View>
           <TouchableOpacity onPress={() => props.onLogItem(foodLog)}>
             <Image source={ICONS.newAddPlus} style={[styles.logItem]} />
