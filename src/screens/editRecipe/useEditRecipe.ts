@@ -244,24 +244,29 @@ export function useEditRecipe() {
     navigation.push('FoodSearchScreen', {
       onSaveData: (item) => {
         const foodItem = item;
-        if (foodItem) {
-          navigation.push('EditIngredientScreen', {
-            foodItem: {
-              ...foodItem,
-              nutrients: mergeNutrients(
-                item.foodItems?.flatMap((i) => i.nutrients)
-              ),
-              refCode: foodItem.refCode ?? '',
-              iconId: foodItem?.iconID ?? foodItem.foodItems[0].iconId,
-              computedWeight:
-                foodItem.computedWeight ?? foodItem.foodItems[0].computedWeight,
-              entityType: 'user-food',
-            },
-            updateIngredient: (updatedIngredient) => {
-              navigation.goBack();
-              addIngredient([updatedIngredient]);
-            },
-          });
+        if (item.foodItems.length > 1) {
+          addIngredient(item.foodItems);
+        } else {
+          if (foodItem) {
+            navigation.push('EditIngredientScreen', {
+              foodItem: {
+                ...foodItem,
+                nutrients: mergeNutrients(
+                  item.foodItems?.flatMap((i) => i.nutrients)
+                ),
+                refCode: foodItem.refCode ?? '',
+                iconId: foodItem?.iconID ?? foodItem.foodItems[0].iconId,
+                computedWeight:
+                  foodItem.computedWeight ??
+                  foodItem.foodItems[0].computedWeight,
+                entityType: 'user-food',
+              },
+              updateIngredient: (updatedIngredient) => {
+                navigation.goBack();
+                addIngredient([updatedIngredient]);
+              },
+            });
+          }
         }
         // if (foodItem) {
         //   addIngredient(foodItem);
@@ -269,24 +274,29 @@ export function useEditRecipe() {
       },
       onEditFoodData: (item) => {
         const foodItem = item;
-        if (foodItem) {
-          navigation.push('EditIngredientScreen', {
-            foodItem: {
-              ...foodItem,
-              nutrients: mergeNutrients(
-                item.foodItems?.flatMap((i) => i.nutrients)
-              ),
-              refCode: foodItem.refCode ?? '',
-              iconId: foodItem?.iconID ?? foodItem.foodItems[0].iconId,
-              computedWeight:
-                foodItem.computedWeight ?? foodItem.foodItems[0].computedWeight,
-              entityType: 'user-food',
-            },
-            updateIngredient: (updatedIngredient) => {
-              navigation.goBack();
-              addIngredient([updatedIngredient]);
-            },
-          });
+        if (item.foodItems.length > 1) {
+          addIngredient(item.foodItems);
+        } else {
+          if (foodItem) {
+            navigation.push('EditIngredientScreen', {
+              foodItem: {
+                ...foodItem,
+                nutrients: mergeNutrients(
+                  item.foodItems?.flatMap((i) => i.nutrients)
+                ),
+                refCode: foodItem.refCode ?? '',
+                iconId: foodItem?.iconID ?? foodItem.foodItems[0].iconId,
+                computedWeight:
+                  foodItem.computedWeight ??
+                  foodItem.foodItems[0].computedWeight,
+                entityType: 'user-food',
+              },
+              updateIngredient: (updatedIngredient) => {
+                navigation.goBack();
+                addIngredient([updatedIngredient]);
+              },
+            });
+          }
         }
       },
       from: 'Ingredient',
