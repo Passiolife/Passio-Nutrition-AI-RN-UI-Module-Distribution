@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Pressable, View } from 'react-native';
+import { Linking, Pressable, View } from 'react-native';
 import { useBranding } from '../contexts';
 import { LogOptions, Text, type FloatingOptionRef } from '../components';
 import { FloatingOption } from '../components';
@@ -49,6 +49,8 @@ export const TabBar = React.memo((props: TabBarProps) => {
                     if (isAuthorize) {
                       floatingRef.current?.onClose();
                       props.onFoodScanner();
+                    } else {
+                      Linking.openSettings();
                     }
                   }}
                   onTextSearch={() => {
