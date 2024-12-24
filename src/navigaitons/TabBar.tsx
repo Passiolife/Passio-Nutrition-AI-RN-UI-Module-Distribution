@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Linking, Pressable, View } from 'react-native';
+import { Alert, Linking, Pressable, View } from 'react-native';
 import { useBranding } from '../contexts';
 import { LogOptions, Text, type FloatingOptionRef } from '../components';
 import { FloatingOption } from '../components';
@@ -50,7 +50,23 @@ export const TabBar = React.memo((props: TabBarProps) => {
                       floatingRef.current?.onClose();
                       props.onFoodScanner();
                     } else {
-                      Linking.openSettings();
+                      Alert.alert(
+                        'Require Permission!',
+                        'Please allow camera permission from setting to continue with this feature', // The error message you want to display
+                        [
+                          {
+                            style: 'cancel',
+                            text: 'Cancel',
+                          },
+                          {
+                            onPress: () => {
+                              Linking.openSettings();
+                            },
+                            text: 'Settings', // Navigate to settings or perform another action
+                          },
+                        ],
+                        { cancelable: false } // Prevents closing the alert by tapping outside
+                      );
                     }
                   }}
                   onTextSearch={() => {
