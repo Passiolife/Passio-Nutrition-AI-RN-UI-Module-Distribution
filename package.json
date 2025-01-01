@@ -1,13 +1,13 @@
 {
   "name": "@passiolife/nutrition-ai-ui-ux",
-  "version": "3.1.0-alpha-3",
+  "version": "3.2.0",
   "description": "A white-labeled nutrition tracking module implemented in React Native",
   "license": "MIT",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
   "types": "lib/typescript/index.d.ts",
-  "react-native": "src/index",
   "source": "src/index",
+  "react-native": "src/index",
   "files": [
     "src",
     "lib",
@@ -71,11 +71,10 @@
     "@babel/runtime": "^7.23.8",
     "@gorhom/bottom-sheet": "^4.6.1",
     "@notifee/react-native": "^7.8.2",
-    "@passiolife/nutritionai-react-native-sdk-v3": "3.1.1-3",
     "@react-native-async-storage/async-storage": "^1.21.0",
     "@react-native-community/datetimepicker": "^7.6.3",
     "@react-native-community/slider": "^4.5.0",
-    "@react-native-picker/picker": "^2.6.1",
+    "@react-native-picker/picker": "^2.7.7",
     "@react-native-voice/voice": "^3.2.4",
     "@react-navigation/bottom-tabs": "^6.5.20",
     "@react-navigation/native": "^6.1.17",
@@ -89,8 +88,10 @@
     "patch-package": "^8.0.0",
     "react-error-boundary": "^4.0.12",
     "react-native-blob-util": "^0.19.6",
+    "react-native-fs": "^2.20.0",
     "react-native-gesture-handler": "^2.16.0",
     "react-native-image-picker": "^7.1.2",
+    "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-linear-gradient": "^2.8.3",
     "react-native-markdown-display": "^7.0.2",
     "react-native-modal": "^13.0.1",
@@ -106,11 +107,12 @@
     "react-native-swipe-gestures": "^1.0.5",
     "react-native-toast-message": "^2.2.0",
     "react-native-uuid": "^2.0.1",
-    "react-native-vision-camera": "^4.3.2",
+    "react-native-vision-camera": "4.3.2",
     "use-async-resource": "^2.2.2",
     "victory-native": "^37.0.2"
   },
   "devDependencies": {
+    "@passiolife/nutritionai-react-native-sdk-v3": "3.2.3",
     "@commitlint/cli": "^19.2.1",
     "@commitlint/config-conventional": "^19.1.0",
     "@react-native/eslint-config": "^0.73.2",
@@ -145,7 +147,8 @@
   },
   "peerDependencies": {
     "react": "*",
-    "react-native": "*"
+    "react-native": "*",
+    "@passiolife/nutritionai-react-native-sdk-v3": "*"
   },
   "jest": {
     "globalSetup": "./global-setup.js",

@@ -21,11 +21,15 @@ export function getMealLog(date: Date, meal: MealLabel | undefined): MealLabel {
 export function mealLabelByDate(date: Date): MealLabel {
   try {
     const hours = date.getHours();
-    if (hours >= 4 && hours <= 10) {
+    const minute = date.getMinutes() / 10;
+    const hoursWithMinutes = Number(
+      hours + '.' + minute.toString().replaceAll('.', '')
+    );
+    if (hoursWithMinutes >= 5.3 && hoursWithMinutes <= 10.3) {
       return 'breakfast';
-    } else if (hours >= 11 && hours <= 14) {
+    } else if (hoursWithMinutes >= 11.3 && hoursWithMinutes <= 14) {
       return 'lunch';
-    } else if (hours >= 17 && hours <= 21) {
+    } else if (hoursWithMinutes >= 17 && hoursWithMinutes <= 21) {
       return 'dinner';
     } else {
       return 'snack';

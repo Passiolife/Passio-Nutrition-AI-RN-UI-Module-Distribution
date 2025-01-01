@@ -1,4 +1,4 @@
-import { AlternativeFoodLogsView, BasicButton } from '../../../../components';
+import { BasicButton } from '../../../../components';
 import {
   Dimensions,
   Modal,
@@ -16,8 +16,6 @@ import { COLORS } from '../../../../constants';
 import EditServingAmountView from '../../../editFoodLogs/views/EditServingAmountView';
 import type { FoodItem } from '../../../../models';
 import LogInformationView from '../../../editFoodLogs/views/logInformationsView';
-import type { PassioIDAttributes } from '@passiolife/nutritionai-react-native-sdk-v3/src/sdk/v2';
-import { convertPassioIDAttributesToFoodItem } from '../../../../utils';
 
 interface EditIngredientsModalProps {
   isEditModalOpen: boolean;
@@ -33,10 +31,6 @@ const EditIngredientsModal = (props: EditIngredientsModalProps) => {
   );
   const [isUpdateAlertPromptOpen, setUpdateAlertPromptOpen] =
     useState<boolean>(false);
-
-  const onSwitchAlternative = async (attributes: PassioIDAttributes) => {
-    setFoodItem(convertPassioIDAttributesToFoodItem(attributes));
-  };
 
   const saveIngredient = () => {
     props.updateIngredientsItem(foodItem);
@@ -95,10 +89,9 @@ const EditIngredientsModal = (props: EditIngredientsModalProps) => {
           >
             <LogInformationView
               foodItems={[foodItem]}
-              passioID={foodItem.passioID}
+              iconID={foodItem.iconId}
               name={foodItem.name}
               qty={foodItem.selectedQuantity}
-              imageName={foodItem.imageName}
               servingUnit={foodItem.selectedUnit}
               entityType={foodItem.entityType}
               weight={calculateComputedWeightAmount(
@@ -122,11 +115,6 @@ const EditIngredientsModal = (props: EditIngredientsModalProps) => {
               }
             }}
           />
-          <AlternativeFoodLogsView
-            passioId={foodItem.passioID}
-            onAlternateItemCall={onSwitchAlternative}
-          />
-
           <View style={styles.lastContainer} />
           {bottomActionView()}
           <UpdateFoodLogAlertPrompt

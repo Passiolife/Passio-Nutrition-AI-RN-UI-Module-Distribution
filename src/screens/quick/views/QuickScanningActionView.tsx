@@ -14,7 +14,7 @@ export const QuickScanningActionView = (props: Props) => {
       <View style={closeActionContainer}>
         <BackNavigation
           onBackArrowPress={props.onClosedPressed}
-          title="Food Scanner"
+          title="Barcode Scan"
           rightIcon={ICONS.foodScannerInfo}
           onRightPress={props.onInfoPress}
         />
@@ -23,8 +23,4 @@ export const QuickScanningActionView = (props: Props) => {
   );
 };
 
-const closeActionContainer: ViewStyle = {
-  position: 'absolute',
-  left: 0,
-  right: 0,
-};
+const closeActionContainer: ViewStyle = {};

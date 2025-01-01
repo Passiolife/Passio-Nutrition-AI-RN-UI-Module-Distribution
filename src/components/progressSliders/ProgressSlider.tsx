@@ -6,6 +6,7 @@ interface Props {
   sliderValue: number;
   sliderMaxValue: number;
   step: number;
+  minimumValue?: number;
   minimumTrackTintColor: string;
   maximumTrackTintColor: string;
   thumbTintColor: string;
@@ -20,6 +21,7 @@ export const ProgressSlider = (props: Props) => {
     minimumTrackTintColor,
     maximumTrackTintColor,
     thumbTintColor,
+    minimumValue = 0,
     onChangeSliderValue,
     sliderMaxValue,
     step,
@@ -34,7 +36,7 @@ export const ProgressSlider = (props: Props) => {
       maximumTrackTintColor={maximumTrackTintColor}
       thumbTintColor={thumbTintColor}
       vertical={isVertical}
-      minimumValue={0}
+      minimumValue={minimumValue}
       step={step}
       maximumValue={sliderMaxValue}
       style={sliderStyle}

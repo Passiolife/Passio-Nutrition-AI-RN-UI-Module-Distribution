@@ -7,33 +7,37 @@ interface Props {
   onOpenFoodLogEditor?: () => void;
   onSaveFoodLog?: () => void;
   onFoodSearchManuallyPress?: () => void;
+  hideSearch?: boolean;
 }
 
 export const QuickScanLogButtonView = ({
   onOpenFoodLogEditor,
   onSaveFoodLog,
   onFoodSearchManuallyPress,
+  hideSearch,
 }: Props) => {
   return (
     <View style={styles.container}>
-      <View
-        style={{
-          flexDirection: 'row',
-          flex: 1,
-          alignSelf: 'center',
-        }}
-      >
-        <Text weight="400" size="_14px">
-          {' Not what you’re looking for?  '}
-        </Text>
-        <LinkText
-          onPress={onFoodSearchManuallyPress}
-          weight="600"
-          color="primaryColor"
+      {!hideSearch && (
+        <View
+          style={{
+            flexDirection: 'row',
+            flex: 1,
+            alignSelf: 'center',
+          }}
         >
-          Search Manually
-        </LinkText>
-      </View>
+          <Text weight="400" size="_14px">
+            {' Not what you’re looking for?  '}
+          </Text>
+          <LinkText
+            onPress={onFoodSearchManuallyPress}
+            weight="600"
+            color="primaryColor"
+          >
+            Search Manually
+          </LinkText>
+        </View>
+      )}
       <View
         style={{
           flexDirection: 'row',

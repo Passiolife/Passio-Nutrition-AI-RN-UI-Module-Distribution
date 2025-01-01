@@ -10,12 +10,18 @@ import type {
   HomeScreenScreenProps,
 } from '../../screens';
 import type { IngredientQuickScanScreenProps } from '../../screens/recipeEditor/RecipesScan/IngredientQuickScanScreen/IngredientQuickScanScreen';
-import type { MealLabel, Nutrient, Water, Weight } from '../../models';
-import type { FavoritesScreenProps } from '../../screens/myFavoritess';
 import type {
-  TakePictureScreenProps,
-  VoiceLoggingScreenProps,
-} from '../../screens/voiceLogging';
+  BarcodeCustomResult,
+  CustomFood,
+  CustomRecipe,
+  FoodLog,
+  MealLabel,
+  Nutrient,
+  Water,
+  Weight,
+} from '../../models';
+import type { FavoritesScreenProps } from '../../screens/myFavoritess';
+import type { VoiceLoggingScreenProps } from '../../screens/voiceLogging';
 
 export type Module =
   | 'QuickScan'
@@ -24,6 +30,12 @@ export type Module =
   | 'Other'
   | 'Favorites'
   | 'VoiceLogging'
+  | 'MyFood'
+  | 'Recipe'
+  | 'NutritionFact'
+  | 'FoodDetail'
+  | 'Barcode'
+  | 'ExistedBarcode'
   | 'Ingredient';
 
 export interface HomeBottom {
@@ -33,6 +45,7 @@ export interface HomeBottom {
     | 'ProgressScreen'
     | 'MyPlanScreen'
     | 'Bank';
+  params?: any;
 }
 
 interface WaterEntryProp {
@@ -49,22 +62,56 @@ interface SettingScreenProps {
 
 interface NutritionScreenProps {
   nutrient: Nutrient[];
+  foodLog: FoodLog;
 }
 
 export type ImagePickerType = 'camera' | 'gallery';
 interface ImagePickerProps {
   onImages: (images: string[]) => void;
   type: ImagePickerType;
+  isMultiple?: boolean;
 }
 export interface AdvisorScreenProps {
   logToDate?: Date | undefined;
   logToMeal?: MealLabel | undefined;
 }
+export interface FoodCreatorNavProps {
+  logToDate?: Date | undefined;
+  logToMeal?: MealLabel | undefined;
+  foodLog?: CustomFood;
+  from?: Module;
+  onSave?: (customFood?: CustomFood) => void;
+}
+export interface MyFoodsScreenNavProps {
+  logToDate?: Date | undefined;
+  logToMeal?: MealLabel | undefined;
+  tab?: 'CustomFood' | 'Recipe';
+}
+export interface BarcodeScanScreenNavProps {
+  onCreateFoodAnyWay?: (result?: BarcodeCustomResult) => void;
+  onViewExistingItem?: (result?: BarcodeCustomResult) => void;
+  onBarcodePress?: (result?: BarcodeCustomResult) => void;
+}
+export interface EditRecipeScreenProps {
+  recipe: CustomRecipe;
+  from: String | Module;
+  onSaveLogPress?: (recipe: CustomRecipe) => void;
+  onDeleteLogPress?: (recipe: CustomRecipe) => void;
+  onCancelPress?: () => void;
+}
 
+export interface TakePictureScreenProps {
+  logToDate?: Date | undefined;
+  logToMeal?: MealLabel | undefined;
+  type: 'picture' | 'camera';
+  isMultiple?: boolean;
+  images?: string[];
+}
 export type ParamList = {
   MealLogScreen: MealLogScreenProps;
   ScanningScreen: ScanningScreenProps;
   EditFoodLogScreen: EditFoodLogScreenProps;
+  EditRecipeScreen: EditRecipeScreenProps;
   ProfileScreen: undefined;
   ProfileScreenApp: undefined;
   DashboardScreen: undefined;
@@ -89,4 +136,7 @@ export type ParamList = {
   TakePictureScreen: TakePictureScreenProps;
   AdvisorScreen: AdvisorScreenProps;
   ImagePickerScreen: ImagePickerProps;
+  FoodCreatorScreen: FoodCreatorNavProps;
+  MyFoodsScreen: MyFoodsScreenNavProps;
+  BarcodeScanScreen: BarcodeScanScreenNavProps;
 };

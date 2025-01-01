@@ -35,44 +35,55 @@ export const BottomBar = ({
   return (
     <View style={styles.row}>
       <View style={[styles.inputContainer]}>
-        {isOptionShow ? (
-          <View style={{ flexDirection: 'row' }}>
-            <TouchableOpacity
-              onPress={onImagePicker}
-              style={[styles.button, styles.camera]}
-            >
-              <Image
-                source={ICONS.camera}
-                tintColor={'white'}
-                resizeMode="contain"
-                style={styles.plusIcon}
-              />
-            </TouchableOpacity>
+        {inputValue.length === 0 && (
+          <>
+            {isOptionShow ? (
+              <View style={{ flexDirection: 'row' }}>
+                <TouchableOpacity
+                  onPress={onImagePicker}
+                  style={[styles.button, styles.camera]}
+                >
+                  <Image
+                    source={ICONS.camera}
+                    tintColor={'white'}
+                    resizeMode="contain"
+                    style={styles.plusIcon}
+                  />
+                </TouchableOpacity>
 
-            <TouchableOpacity
-              onPress={onGalleryPicker}
-              style={[styles.button, styles.gallery]}
-            >
-              <Image
-                source={ICONS.gallery}
-                tintColor={'white'}
-                resizeMode="contain"
-                style={styles.plusIcon}
-              />
-            </TouchableOpacity>
-          </View>
-        ) : (
-          <TouchableOpacity
-            onPress={plusIconHandler}
-            style={[styles.button, styles.plusIconView]}
-          >
-            <Image
-              source={ICONS.newAddPlus}
-              tintColor={'white'}
-              resizeMode="contain"
-              style={styles.plusIcon}
-            />
-          </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={onGalleryPicker}
+                  style={[styles.button, styles.gallery]}
+                >
+                  <Image
+                    source={ICONS.gallery}
+                    tintColor={'white'}
+                    resizeMode="contain"
+                    style={styles.plusIcon}
+                  />
+                </TouchableOpacity>
+              </View>
+            ) : (
+              <TouchableOpacity
+                onPress={plusIconHandler}
+                disabled={sending}
+                style={[
+                  styles.button,
+                  styles.plusIconView,
+                  {
+                    opacity: sending ? 0.5 : 1,
+                  },
+                ]}
+              >
+                <Image
+                  source={ICONS.newAddPlus}
+                  tintColor={'white'}
+                  resizeMode="contain"
+                  style={styles.plusIcon}
+                />
+              </TouchableOpacity>
+            )}
+          </>
         )}
         <TextInput
           placeholder="Type your message here..."

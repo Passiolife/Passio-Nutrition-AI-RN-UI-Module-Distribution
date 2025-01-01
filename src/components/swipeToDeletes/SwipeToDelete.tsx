@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useImperativeHandle, useRef } from 'react';
 import {
   Animated,
   Platform,
@@ -12,105 +12,151 @@ import {
   GestureHandlerRootView,
   Swipeable,
 } from 'react-native-gesture-handler';
-import { COLORS } from '../../constants';
 import { scaleHeight } from '../../utils';
+import type { Branding } from '../../contexts';
+import { useBranding } from '../../contexts';
 
 interface Props extends React.PropsWithChildren {
   onPressDelete: () => void;
+  onPressEdit?: () => void;
   swipeableContainer?: ViewStyle;
+  childrenContainerStyle?: ViewStyle;
+  marginVertical?: number;
+  action1?: string;
+}
+export interface SwipeToDeleteRef {
+  closeSwipe: () => void;
 }
 
-export const SwipeToDelete: React.FC<Props> = (props) => {
-  const swipeableRef = useRef<Swipeable | null>(null);
+export const SwipeToDelete = React.forwardRef<SwipeToDeleteRef, Props>(
+  (props: Props, ref: React.Ref<SwipeToDeleteRef>) => {
+    const swipeReg = useRef<Swipeable | null>(null);
 
-  const rightActionMealLogView = (
-    _: Animated.AnimatedInterpolation<number>,
-    dragX: Animated.AnimatedInterpolation<number>
-  ) => {
-    const scale = dragX.interpolate({
-      inputRange: [-100, 50, 50, 50],
-      outputRange: [0, 90, 2, 10],
-    });
+    const branding = useBranding();
+    const styles = stylesObj(branding);
 
-    return (
-      <Animated.View
-        style={[
-          styles.actionContainer,
-          {
-            transform: [{ translateX: scale }],
-          },
-        ]}
-      >
-        <TouchableOpacity
-          style={styles.deleteBtnBackgroundColor}
-          onPress={props.onPressDelete}
-        >
-          <View style={[styles.swipeableButton]}>
-            <Text style={styles.swipeableBtnTxt}>Delete</Text>
-          </View>
-        </TouchableOpacity>
-      </Animated.View>
+    useImperativeHandle(
+      ref,
+      () => ({
+        closeSwipe: () => {
+          return swipeReg.current?.close();
+        },
+      }),
+      []
     );
-  };
 
-  let swipeableContainer = [
-    {
-      ...styles.swipeableContainer,
-      ...(props.swipeableContainer ? props.swipeableContainer : null),
-    },
-  ];
-  return (
-    <GestureHandlerRootView style={{ marginVertical: scaleHeight(8) }}>
-      <Swipeable
-        ref={swipeableRef}
-        containerStyle={swipeableContainer}
-        childrenContainerStyle={styles.shadowContainer}
-        overshootLeft={true}
-        renderRightActions={(progressAnimatedValue, dragAnimatedValue) =>
-          rightActionMealLogView(progressAnimatedValue, dragAnimatedValue)
-        }
-      >
-        {props.children}
-      </Swipeable>
-    </GestureHandlerRootView>
-  );
-};
+    const rightActionMealLogView = (
+      _: Animated.AnimatedInterpolation<number>,
+      dragX: Animated.AnimatedInterpolation<number>
+    ) => {
+      const scale = dragX.interpolate({
+        inputRange: [-150, 30, 30, 30],
+        outputRange: [0, 0, 2, 10],
+      });
 
-const styles = StyleSheet.create({
-  swipeableContainer: {
-    ...Platform.select({
-      ios: {},
-      android: {
-        backgroundColor: 'transparent',
-        overflow: 'hidden',
+      return (
+        <Animated.View
+          style={[
+            styles.actionContainer,
+            {
+              transform: [{ translateX: scale }],
+            },
+          ]}
+        >
+          <TouchableOpacity
+            style={styles.editBtnBackground}
+            onPress={() => {
+              swipeReg?.current?.close();
+              props.onPressEdit?.();
+            }}
+          >
+            <View style={[styles.swipeableButton]}>
+              <Text style={styles.swipeableBtnTxt}>
+                {props.action1 ?? 'Edit'}
+              </Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.deleteBtnBackgroundColor}
+            onPress={props.onPressDelete}
+          >
+            <View style={[styles.swipeableButton]}>
+              <Text style={styles.swipeableBtnTxt}>Delete</Text>
+            </View>
+          </TouchableOpacity>
+        </Animated.View>
+      );
+    };
+
+    let swipeableContainer = [
+      {
+        ...styles.swipeableContainer,
+        ...(props.swipeableContainer ? props.swipeableContainer : null),
       },
-    }),
-  },
-  shadowContainer: {
-    flexDirection: 'row',
-    paddingVertical: 4,
-    alignItems: 'center',
-    backgroundColor: COLORS.white,
-    paddingHorizontal: 12,
-    justifyContent: 'space-between',
-  },
-  actionContainer: {
-    flexDirection: 'row',
-  },
-  swipeableBtnTxt: {
-    color: 'white',
-    fontWeight: '600',
-  },
-  swipeableButton: {
-    flex: 1,
-    width: 85,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  editBtnBackgroundColor: {
-    backgroundColor: '#009aff',
-  },
-  deleteBtnBackgroundColor: {
-    backgroundColor: '#fd3c2f',
-  },
-});
+    ];
+    return (
+      <GestureHandlerRootView
+        style={{ marginVertical: scaleHeight(props.marginVertical ?? 8) }}
+      >
+        <Swipeable
+          ref={swipeReg}
+          containerStyle={swipeableContainer}
+          childrenContainerStyle={[
+            styles.shadowContainer,
+            props.childrenContainerStyle,
+          ]}
+          overshootLeft={true}
+          renderRightActions={(progressAnimatedValue, dragAnimatedValue) =>
+            rightActionMealLogView(progressAnimatedValue, dragAnimatedValue)
+          }
+        >
+          {props.children}
+        </Swipeable>
+      </GestureHandlerRootView>
+    );
+  }
+);
+
+const stylesObj = ({ primaryColor, error, card }: Branding) =>
+  StyleSheet.create({
+    swipeableContainer: {
+      ...Platform.select({
+        ios: {},
+        android: {
+          backgroundColor: 'transparent',
+          overflow: 'hidden',
+        },
+      }),
+    },
+    shadowContainer: {
+      flexDirection: 'row',
+      paddingVertical: 4,
+      alignItems: 'center',
+      backgroundColor: card,
+      paddingHorizontal: 12,
+      justifyContent: 'space-between',
+    },
+    actionContainer: {
+      flexDirection: 'row',
+    },
+    swipeableBtnTxt: {
+      color: 'white',
+      fontWeight: '600',
+    },
+    swipeableButton: {
+      flex: 1,
+      minWidth: 85,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    editBtnBackgroundColor: {
+      backgroundColor: primaryColor,
+    },
+    deleteBtnBackgroundColor: {
+      backgroundColor: error,
+      overflow: 'hidden',
+    },
+    editBtnBackground: {
+      backgroundColor: primaryColor,
+    },
+  });

@@ -76,10 +76,9 @@ export function createFoodLogFromPassioIDAttributes(
   return {
     name: attributes.name,
     uuid: uuid,
-    passioID: attributes.passioID,
-    imageName: attributes.imageName,
     entityType: attributes.entityType,
     meal: meal,
+    refCode: '',
     eventTimestamp: dateFormat,
     selectedQuantity: convertSelectedQuantity(foodItem ?? recipe),
     selectedUnit: convertSelectedUnit(foodItem ?? recipe),
@@ -159,6 +158,7 @@ export function foodItemsFromAttributes({
 export function convertPassioFoodItem(foodItem: PassioFoodItem): FoodItem {
   return {
     ...foodItem,
+    refCode: '',
     servingSizes: convertServingSizes(foodItem),
     servingUnits: convertServingUnits(foodItem),
     nutrients: nutrientsFromFoodItem(foodItem),
@@ -172,7 +172,6 @@ export function convertPassioIDAttributesToFoodItem(
     return {
       ...convertPassioFoodItem(<PassioFoodItem>passioIDAttributes.foodItem),
       name: passioIDAttributes.name,
-      imageName: passioIDAttributes.imageName,
     };
   } else {
     const servingUnits = [
@@ -193,9 +192,8 @@ export function convertPassioIDAttributesToFoodItem(
         ),
       },
       entityType: passioIDAttributes.entityType,
-      passioID: passioIDAttributes.passioID,
       name: passioIDAttributes.name,
-      imageName: passioIDAttributes.imageName,
+      refCode: '',
       nutrients: nutrientsFromFoodItem(passioIDAttributes.recipe),
       selectedUnit: selectedUnit,
       selectedQuantity: selectedQuantity,
@@ -221,13 +219,11 @@ export function convertPassioRecipe(recipe: PassioRecipe): FoodRecipe {
 
 // Convert foodLogs Data Into  FavoriteFoodItem
 export function convertFoodLogsToFavoriteFoodLog(
-  name: string,
   foodLog: FoodLog
 ): FavoriteFoodItem {
   return {
     ...foodLog,
-    name: name,
-    uuid: uuid4.v4() as string,
+    uuid: foodLog.refCode ?? (uuid4.v4() as string),
   };
 }
 
@@ -275,7 +271,7 @@ export function createFoodLogFromRecipe(
   recipe: Recipe,
   meal: MealLabel,
   date: Date,
-  passioID?: PassioID
+  _passioID?: PassioID
 ): FoodLog {
   const uuid: string = uuid4.v4() as string;
   return {
@@ -285,8 +281,6 @@ export function createFoodLogFromRecipe(
     entityType: ENTITY_TYPE_RECIPE_PREFIX,
     uuid: uuid,
     name: recipe.name,
-    imageName: 'passioSDKNutritionIcon',
-    passioID: passioID ?? `${ENTITY_TYPE_RECIPE_PREFIX}-${uuid}`,
     selectedUnit: 'serving',
     selectedQuantity: 1,
     servingUnits: [
@@ -353,7 +347,7 @@ export function calculateBMR(
   height: number,
   weight: number,
   gender: 'male' | 'female',
-  level: ActivityLevelType
+  level: ActivityLevelType | undefined
 ): number {
   const bmr = getBMR(age, height, weight, gender);
   switch (level) {
@@ -366,6 +360,7 @@ export function calculateBMR(
     case ActivityLevelType.active:
       return bmr * 1.725;
   }
+  return bmr;
 }
 /**
  *

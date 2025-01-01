@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import {
   FlatList,
   Image,
+  TextInput,
   TouchableOpacity,
   View,
   type StyleProp,
@@ -17,12 +18,17 @@ interface Props<T> {
   lists: string[];
   labelList?: string[];
   value: string;
+  defaultInput?: string;
   title: string;
-  error: string;
+  error?: string;
   style: StyleProp<ViewStyle>;
   label?: string;
   extraWidth?: number;
   onChange: (size: T) => void;
+  onChangeText?: (value: string) => void;
+  isCenter?: boolean;
+  isTextInput?: boolean;
+  input?: string;
 }
 
 export const ListPicker: React.FC<Props<any>> = ({
@@ -32,6 +38,11 @@ export const ListPicker: React.FC<Props<any>> = ({
   extraWidth,
   value,
   onChange,
+  isCenter,
+  defaultInput,
+  onChangeText,
+  isTextInput = false,
+  error,
 }) => {
   const branding = useBranding();
   const styles = menuStyle(branding);
@@ -49,6 +60,8 @@ export const ListPicker: React.FC<Props<any>> = ({
         }}
       >
         <Text
+          weight="500"
+          size="_14px"
           style={[
             styles.optionTitle,
             {
@@ -68,6 +81,7 @@ export const ListPicker: React.FC<Props<any>> = ({
     return (
       <Picker
         ref={pickerRef}
+        isCenter={isCenter}
         extraWidth={extraWidth ?? 0}
         options={
           <FlatList
@@ -80,9 +94,35 @@ export const ListPicker: React.FC<Props<any>> = ({
         }
       >
         <View style={styles.main}>
-          <Text style={styles.mainTitle}>{label ?? value}</Text>
+          {isTextInput && (
+            <TextInput
+              defaultValue={defaultInput}
+              onChangeText={onChangeText}
+              keyboardType="decimal-pad"
+              returnKeyLabel="Okay"
+              returnKeyType="done"
+              style={{ flex: 1, marginStart: 8 }}
+            />
+          )}
+          <Text
+            weight="400"
+            size="_14px"
+            style={[
+              styles.mainTitle,
+              isTextInput && {
+                flex: undefined,
+              },
+            ]}
+          >
+            {label ?? value}
+          </Text>
           <Image source={ICONS.down} style={styles.icon} />
         </View>
+        {error && (
+          <Text weight="400" size="_12px" style={[styles.error]}>
+            {error}
+          </Text>
+        )}
       </Picker>
     );
   };

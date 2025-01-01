@@ -1,4 +1,4 @@
-import type { PassioID } from '@passiolife/nutritionai-react-native-sdk-v3/src/sdk/v2';
+import type { PassioID } from '@passiolife/nutritionai-react-native-sdk-v3';
 import type { MealLabel } from './MealLabel';
 
 export interface MealPlan {

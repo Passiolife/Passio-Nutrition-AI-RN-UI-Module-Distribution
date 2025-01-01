@@ -33,9 +33,9 @@ export const MessageRecords = ({
   onViewDiary,
   response,
 }: Props) => {
-  const [selected, setSelected] = useState<Selection[]>([]);
   const branding = useBranding();
   const { records = [] } = response;
+  const [selected, setSelected] = useState<Selection[]>(records);
 
   const onFoodSelect = (result: Selection) => {
     const find = selected?.find((item) => item.index === result?.index);
@@ -63,9 +63,11 @@ export const MessageRecords = ({
         color="white"
         style={styles.quickSuggestionTextStyle}
       >
-        {
-          'Based on the image you took, I’ve recognized the following items. Please select the items you want and log them.'
-        }
+        {response.isLogged
+          ? 'I’ve add the items below to your log:'
+          : response.recordType === 'searchTool'
+            ? 'Here are the items from the recipe above'
+            : 'Based on the image you took, I’ve recognized the following items. Please select the items you want and log them.'}
       </Text>
       <FlatList
         style={styles.list}
@@ -79,9 +81,9 @@ export const MessageRecords = ({
           const { calories } = getUpdatedCaloriesOfPassioAdvisorFoodInfo(item);
           return (
             <MessageRecordItem
-              foodName={item?.recognisedName}
+              foodName={item?.foodDataInfo?.foodName ?? item?.recognisedName}
               imageName={foodDataInfo?.iconID}
-              bottom={`${item?.portionSize} | ${Math.round(calories)} cal`}
+              bottom={`${item?.foodDataInfo?.nutritionPreview?.servingQuantity} ${item?.foodDataInfo?.nutritionPreview?.servingUnit} | ${Math.round(calories)} cal`}
               onFoodLogSelect={() => {
                 if (response.isLogged) {
                   return;

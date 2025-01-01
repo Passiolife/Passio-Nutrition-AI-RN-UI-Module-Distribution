@@ -24,6 +24,7 @@ type ScreenNavigationProps = StackNavigationProp<ParamList, 'WaterScreen'>;
 export const useWaters = () => {
   const [isContentVisible, setIsContentVisible] = useState(true); // State to toggle content visibility
   const [waters, setWaterSection] = useState<Water[]>([]); // State to toggle content visibility
+  const [target, setTarget] = useState<number>(1000);
 
   const services = useServices();
 
@@ -34,6 +35,16 @@ export const useWaters = () => {
   const navigation = useNavigation<ScreenNavigationProps>();
 
   const [chartData, setChartData] = useState<ChartData[]>([]);
+
+  useEffect(() => {
+    services.dataService.getNutritionProfile().then((profile) => {
+      if (isImperialWeight) {
+        setTarget(convertMlToOg(profile?.targetWater ?? 0));
+      } else {
+        setTarget(profile?.targetWater ?? 0);
+      }
+    });
+  }, [isImperialWeight, services.dataService]);
 
   const getWaters = useCallback(
     (startDate: Date, endDate: Date, type: SwitchTabLabelEnum) => {
@@ -126,6 +137,7 @@ export const useWaters = () => {
   };
 
   return {
+    target,
     calendarCarouselRef,
     chartData,
     isContentVisible,

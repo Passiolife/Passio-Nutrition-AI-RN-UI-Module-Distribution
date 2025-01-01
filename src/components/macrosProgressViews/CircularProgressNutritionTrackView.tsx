@@ -66,13 +66,19 @@ export const CircularProgressNutritionTrackView = ({
             <Text
               weight="700"
               color="text"
+              size="_14px"
               testID="testNutrientCalories"
               style={styles.calorieItemValue}
             >
               {Math.round(actualRecord) + (unit ? ` ${unit}` : '')}
             </Text>
             <View style={styles.line} />
-            <Text weight="500" color="text" style={styles.calorieItemTitle}>
+            <Text
+              weight="400"
+              color="text"
+              size="_14px"
+              style={styles.calorieItemTitle}
+            >
               {Math.round(actualTotal)}
             </Text>
           </View>
@@ -80,7 +86,7 @@ export const CircularProgressNutritionTrackView = ({
 
         <Text
           weight={'500'}
-          size="_14px"
+          size="secondlyTitle"
           color={'text'}
           style={styles.progressTextStyle}
         >
@@ -110,14 +116,11 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   calorieItemTitle: {
-    fontSize: 12,
     textTransform: 'capitalize',
   },
-  calorieItemValue: {
-    fontSize: 12,
-  },
+  calorieItemValue: {},
   progressTextStyle: {
-    marginTop: 5,
+    marginTop: 8,
     textTransform: 'capitalize',
   },
   progressContainerStyle: {

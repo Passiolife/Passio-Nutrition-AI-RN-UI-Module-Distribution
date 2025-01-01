@@ -46,11 +46,6 @@ export const DashboardMenu = ({ hide }: Props) => {
         navigation.navigate('SettingScreen', {});
       },
     },
-    {
-      icon: ICONS.dashboardMenuLogout,
-      title: 'Log Out',
-      onPress: () => {},
-    },
   ].filter((item) => !hide?.includes(item.title as any));
 
   const render = () => {
@@ -68,7 +63,7 @@ export const DashboardMenu = ({ hide }: Props) => {
           }}
           style={styles.main}
         >
-          <Image source={ICONS.hamburger} style={styles.icon} />
+          <Image source={ICONS.hamburger} style={[styles.icon]} />
         </TouchableOpacity>
       </TutorialView>
     );

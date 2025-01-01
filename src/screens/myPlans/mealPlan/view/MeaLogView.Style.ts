@@ -59,8 +59,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   mealName: {
-    fontWeight: '600',
-    fontSize: 15,
     textTransform: 'capitalize',
   },
   mealSize: {

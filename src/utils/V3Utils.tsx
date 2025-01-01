@@ -19,13 +19,16 @@ import { convertDateToDBFormat } from './DateFormatter';
 import { getMealLog } from '../utils';
 import type { PassioIngredient } from '@passiolife/nutritionai-react-native-sdk-v3/src';
 import type { QuickSuggestion } from 'src/models/QuickSuggestion';
+import type { DefaultNutrients } from '../screens/foodCreator/views/OtherNutritionFacts';
+import { CUSTOM_USER_RECIPE__PREFIX } from '../screens/foodCreator/FoodCreator.utils';
 
 export const convertPassioFoodItemToFoodLog = (
   item: PassioFoodItem,
   logDate: Date | undefined,
-  logMeal: MealLabel | undefined
+  logMeal: MealLabel | undefined,
+  isRecipe?: boolean
 ): FoodLog => {
-  const uuid: string = uuid4.v4() as string;
+  const uuid: string = `${uuid4.v4() as string}`;
   const date = logDate ?? new Date();
   const meal = logMeal ?? getMealLog(date, undefined);
 
@@ -33,8 +36,13 @@ export const convertPassioFoodItemToFoodLog = (
 
   const foodItem = item;
 
-  let newFoodIngredient = (foodItem.ingredients ?? []).map(
-    convertPassioIngredientToFoodItem
+  let newFoodIngredient = (foodItem.ingredients ?? []).map((i) =>
+    convertPassioIngredientToFoodItem(
+      i,
+      foodItem.ingredients && foodItem.ingredients?.length === 1
+        ? foodItem.iconId
+        : i.iconId
+    )
   );
 
   const selectedUnit = foodItem.amount.servingSizes?.find(
@@ -56,13 +64,12 @@ export const convertPassioFoodItemToFoodLog = (
     name: foodItem.name,
     uuid: uuid,
     longName: foodItem.details,
-    passioID: foodItem.refCode ?? foodItem.id,
     refCode: foodItem.refCode,
     eventTimestamp: dateFormat,
     isOpenFood: foodItem.isOpenFood,
     meal: meal,
-    imageName: foodItem.iconId,
-    entityType: PassioIDEntityType.group,
+    iconID: isRecipe ? CUSTOM_USER_RECIPE__PREFIX : foodItem.iconId,
+    entityType: PassioIDEntityType.item,
     foodItems: newFoodIngredient,
     computedWeight: {
       unit: foodItem.amount.weight.unit,
@@ -88,7 +95,10 @@ export const convertPassioFoodItemToFoodLog = (
   return log;
 };
 
-function convertPassioIngredientToFoodItem(item: PassioIngredient): FoodItem {
+function convertPassioIngredientToFoodItem(
+  item: PassioIngredient,
+  iconID?: string
+): FoodItem {
   let passioIngredient = item;
   const selectedUnit = passioIngredient.amount.servingSizes?.find(
     (i) => i.unitName === passioIngredient?.amount.selectedUnit
@@ -103,18 +113,27 @@ function convertPassioIngredientToFoodItem(item: PassioIngredient): FoodItem {
     {
       ingredients: [passioIngredient],
       name: passioIngredient.name,
-      iconId: passioIngredient.iconId,
+      iconId:
+        passioIngredient.iconId?.length > 0
+          ? passioIngredient.iconId
+          : (iconID ?? ''),
       amount: passioIngredient.amount,
-      weight: passioIngredient.weight,
+      ingredientWeight: passioIngredient.weight,
       id: passioIngredient.id,
+      refCode: '',
     },
     passioIngredient.amount.weight
   );
   const foodItem: FoodItem = {
-    passioID: passioIngredient.refCode ?? passioIngredient.id,
     name: passioIngredient.name,
-    imageName: passioIngredient.id,
-    entityType: PassioIDEntityType.group,
+    refCode: passioIngredient.refCode ?? '',
+    iconId:
+      passioIngredient.iconId?.length > 0
+        ? passioIngredient.iconId
+        : (iconID ?? ''),
+    entityType: PassioIDEntityType.item,
+    barcode: passioIngredient?.metadata?.barcode,
+    ingredientsDescription: passioIngredient?.metadata?.ingredientsDescription,
     computedWeight: {
       unit: passioIngredient.amount.weight.unit,
       value: passioIngredient.amount.weight.value,
@@ -147,12 +166,15 @@ function nutrientV3(food: PassioNutrients): Nutrient[] {
   let key: keyof typeof food;
   let nutrients: Nutrient[] = [];
   for (key in food) {
-    const amount = food[key] as unknown as UnitMass;
-    nutrients.push({
-      id: key as NutrientType,
-      amount: amount.value,
-      unit: amount.unit,
-    });
+    if (key === 'weight') {
+    } else {
+      const amount = food[key] as unknown as UnitMass;
+      nutrients.push({
+        id: key as NutrientType,
+        amount: amount.value,
+        unit: amount.unit,
+      });
+    }
   }
 
   return nutrients;
@@ -237,3 +259,53 @@ export const passioSuggestedFoods = async (
     })
   );
 };
+
+export const macroNutrientPercentages = (
+  carbsG?: number,
+  fatG?: number,
+  proteinG?: number
+) => {
+  // Calculate calories contributed by each macro nutrient
+  let carbsContributeOfCalories = (carbsG ?? 0) * 4;
+  let fatContributeOfCalories = (fatG ?? 0) * 9;
+  let proteinContributeOfCalories = (proteinG ?? 0) * 4;
+
+  // Calculate total calories from macro nutrients
+  let totalMacroNutrientCalories =
+    carbsContributeOfCalories +
+    fatContributeOfCalories +
+    proteinContributeOfCalories;
+
+  // Calculate percentages
+  let carbsPercentage =
+    (carbsContributeOfCalories / totalMacroNutrientCalories) * 100;
+  let fatPercentage =
+    (fatContributeOfCalories / totalMacroNutrientCalories) * 100;
+  let proteinPercentage =
+    (proteinContributeOfCalories / totalMacroNutrientCalories) * 100;
+
+  return {
+    carbsPercentage: isNaN(carbsPercentage) ? 0 : carbsPercentage,
+    fatPercentage: isNaN(fatPercentage) ? 0 : fatPercentage,
+    proteinPercentage: isNaN(proteinPercentage) ? 0 : proteinPercentage,
+  };
+};
+
+export function sumNutrients(
+  nutrients: DefaultNutrients[]
+): DefaultNutrients[] {
+  const nutrientMap = nutrients.reduce(
+    (acc, nutrient) => {
+      if (nutrient.value !== undefined) {
+        acc[nutrient.label] = (acc[nutrient.label] || 0) + nutrient.value;
+      }
+      return acc;
+    },
+    {} as Record<NutrientType, number>
+  );
+
+  return Object.keys(nutrientMap).map((label) => ({
+    label: label as NutrientType,
+    value: nutrientMap[label as NutrientType],
+  }));
+}

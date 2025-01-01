@@ -9,6 +9,7 @@ import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
 import { useSharedValue } from 'react-native-reanimated';
 import { TakePicture } from './views/TakePicture';
 import { SelectPhotos } from './views/SelectPhotos';
+import { NoResultFound } from './views/NoResultFound';
 
 export const TakePictureScreen = gestureHandlerRootHOC(() => {
   const {
@@ -16,13 +17,15 @@ export const TakePictureScreen = gestureHandlerRootHOC(() => {
     recognizePictureRemote,
     snapPoints,
     bottomSheetModalRef,
+    noResultFoundRef,
     selectPhotoRef,
     onLogSelectPress,
     passioAdvisorFoodInfo,
     onRetakePress,
+    onSearchManuallyPress,
+    snapPointsNoResultFound,
     isFetchingResponse,
     takePictureRef,
-    onCancelPress,
     isPreparingLog,
   } = useTakePicture();
 
@@ -50,11 +53,13 @@ export const TakePictureScreen = gestureHandlerRootHOC(() => {
           recognizePictureRemote={recognizePictureRemote}
           animatedIndex={animatedIndex}
           ref={takePictureRef}
+          isMultiple
         />
       ) : (
         <SelectPhotos
           recognizePictureRemote={recognizePictureRemote}
           ref={selectPhotoRef}
+          isMultiple
         />
       )}
       <BottomSheet
@@ -67,10 +72,22 @@ export const TakePictureScreen = gestureHandlerRootHOC(() => {
         <PictureLoggingResult
           onLogSelect={onLogSelectPress}
           onRetake={onRetakePress}
-          onCancel={onCancelPress}
+          onCancel={onRetakePress}
           type={type}
           isPreparingLog={isPreparingLog}
           passioAdvisorFoodInfoResult={passioAdvisorFoodInfo ?? []}
+        />
+      </BottomSheet>
+      <BottomSheet
+        ref={noResultFoundRef}
+        index={-1}
+        snapPoints={snapPointsNoResultFound}
+        backgroundStyle={styles.bottomSheetChildrenContainer}
+        handleIndicatorStyle={{ display: 'none' }}
+      >
+        <NoResultFound
+          onTryAgain={onRetakePress}
+          onSearchManuallyPress={onSearchManuallyPress}
         />
       </BottomSheet>
     </>

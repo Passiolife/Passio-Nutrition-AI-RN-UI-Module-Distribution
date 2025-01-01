@@ -13,17 +13,18 @@ interface Props {
   onTakePicture: () => void;
   onTakeCamera: () => void;
   onAiAdvisor: () => void;
+  onMyFoods: () => void;
 }
 
 type Type = 'All' | 'UseImage';
 
 export const LogOptions = ({
-  onFavorite,
   onFoodScanner,
   onTextSearch,
   onVoiceLogging,
   onTakePicture,
   onTakeCamera,
+  onMyFoods,
   onAiAdvisor,
 }: Props) => {
   const branding = useBranding();
@@ -33,7 +34,11 @@ export const LogOptions = ({
   const renderItem = (icon: number, title: string, onPress: () => void) => {
     return (
       <Pressable onPress={onPress} style={styles.optionContainer}>
-        <Image source={icon} style={styles.optionIcon} resizeMode="contain" />
+        <Image
+          source={icon}
+          style={[styles.optionIcon, styles.iconColor]}
+          resizeMode="contain"
+        />
         <Text weight="500" size="_16px" color="text" style={styles.optionTitle}>
           {title}
         </Text>
@@ -45,28 +50,21 @@ export const LogOptions = ({
     <View style={styles.main}>
       {type === 'All' ? (
         <>
-          {renderItem(ICONS.logOptionFavorite, 'Favorites', onFavorite)}
-          {renderItem(ICONS.Mic, 'Voice Logging', onVoiceLogging)}
-          {renderItem(ICONS.AIAdvisor, 'AI Advisor', onAiAdvisor)}
-          {renderItem(ICONS.logOptionSearch, 'Text Search', onTextSearch)}
-          {renderItem(
-            ICONS.logOptionFoodScanner,
-            'Food Scanner',
-            onFoodScanner
-          )}
-          {renderItem(ICONS.logOptionFoodScanner, 'Use Image', () => {
+          {/* {renderItem(ICONS.menuFav, 'Favorites', onFavorite)} */}
+          {renderItem(ICONS.menuUseImage, 'Photo Logging', () => {
             setType('UseImage');
           })}
+          {renderItem(ICONS.barcode, 'Scan a Barcode', onFoodScanner)}
+          {renderItem(ICONS.menuVoiceLogging, 'Voice Logging', onVoiceLogging)}
+          {renderItem(ICONS.menuAIAdviosr, 'AI Advisor', onAiAdvisor)}
+          {renderItem(ICONS.menuSearch, 'Text Search', onTextSearch)}
+          {renderItem(ICONS.menuMyFoods, 'My Foods', onMyFoods)}
         </>
       ) : (
         <>
           <>
-            {renderItem(ICONS.logOptionSearch, 'Take Photos', onTakeCamera)}
-            {renderItem(
-              ICONS.logOptionFoodScanner,
-              'Select Photos',
-              onTakePicture
-            )}
+            {renderItem(ICONS.takePhoto, 'Take Photos', onTakeCamera)}
+            {renderItem(ICONS.selectPhoto, 'Select Photos', onTakePicture)}
           </>
         </>
       )}

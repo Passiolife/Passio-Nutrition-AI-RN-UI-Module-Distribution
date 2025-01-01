@@ -14,9 +14,11 @@ import {
   useCameraPermission,
 } from 'react-native-vision-camera';
 import {
+  Alert,
   Dimensions,
   FlatList,
   Image,
+  Linking,
   Platform,
   TouchableOpacity,
   View,
@@ -36,6 +38,7 @@ import ScanSVG from '../../../components/svgs/scan';
 interface Props {
   recognizePictureRemote: (images: string[]) => void;
   animatedIndex: SharedValue<number>;
+  isMultiple?: boolean;
 }
 
 export interface TakePictureRef {
@@ -109,7 +112,7 @@ const RenderItem = ({
 
 export const TakePicture = React.forwardRef<TakePictureRef, Props>(
   (
-    { recognizePictureRemote, animatedIndex }: Props,
+    { recognizePictureRemote, animatedIndex, isMultiple }: Props,
     ref: React.Ref<TakePictureRef>
   ) => {
     const [images, setImages] = useState<string[]>([]);
@@ -137,16 +140,40 @@ export const TakePicture = React.forwardRef<TakePictureRef, Props>(
         .then((value) => {
           let path =
             Platform.OS === 'android' ? `file://${value.path}` : value.path;
-          setImages([...images, path]);
+          if (!isMultiple) {
+            recognizePictureRemote([path]);
+          } else {
+            setImages([...images, path]);
+          }
         })
         .catch((_val: CameraCaptureError) => {});
-    }, [images]);
+    }, [images, isMultiple, recognizePictureRemote]);
 
     const { hasPermission, requestPermission } = useCameraPermission();
     const device = useCameraDevice('back');
     const branding = useBranding();
+
     useEffect(() => {
-      requestPermission();
+      const permission = requestPermission();
+      if (!permission) {
+        Alert.alert(
+          'Error',
+          'Permission require for this module, so please enable it or grant permission from setting',
+          [
+            {
+              style: 'cancel',
+              text: 'Cancel',
+            },
+            {
+              onPress: () => {
+                Linking.openSettings();
+              },
+              text: 'Settings', // Navigate to settings or perform another action
+            },
+          ],
+          { cancelable: false } // Prevents closing the alert by tapping outside
+        );
+      }
     }, [hasPermission, requestPermission]);
 
     const animatedStyle = useAnimatedStyle(() => {
@@ -249,22 +276,31 @@ export const TakePicture = React.forwardRef<TakePictureRef, Props>(
             marginBottom: scaleHeight(26),
           }}
         >
-          <BasicButton
-            text="Cancel"
-            boarderColor={branding.primaryColor}
-            secondary={true}
-            onPress={onCancelPress}
-            style={{
-              backgroundColor: 'white',
-              maxHeight: 50,
-              marginStart: 16,
-              flex: 1,
-              marginEnd: 16,
-            }}
-          />
+          {isMultiple && (
+            <BasicButton
+              text="Cancel"
+              boarderColor={branding.primaryColor}
+              secondary={true}
+              onPress={onCancelPress}
+              style={{
+                backgroundColor: 'white',
+                maxHeight: 50,
+                marginStart: 16,
+                flex: 1,
+                marginEnd: 16,
+              }}
+            />
+          )}
           <TouchableOpacity
             onPress={captureImage}
             disabled={images.length >= 7}
+            style={{
+              justifyContent: 'center',
+              alignContent: 'center',
+              alignItems: 'center',
+              flex: 1,
+              marginHorizontal: 16,
+            }}
           >
             <Image
               source={ICONS.CaptureIcon}
@@ -274,20 +310,40 @@ export const TakePicture = React.forwardRef<TakePictureRef, Props>(
               style={{ height: 78, width: 78 }}
             />
           </TouchableOpacity>
-          <BasicButton
-            disabled={images.length < 0}
-            onPress={() => recognizePictureRemote(images)}
-            text="Next"
-            boarderColor={branding.primaryColor}
-            style={{
-              maxHeight: 50,
-              flex: 1,
-              marginEnd: 16,
-              marginStart: 16,
-              opacity: images.length > 0 ? 1 : 0.5,
-            }}
-          />
+          {isMultiple && (
+            <BasicButton
+              disabled={images.length < 0}
+              onPress={() => recognizePictureRemote(images)}
+              text="Next"
+              boarderColor={branding.primaryColor}
+              style={{
+                maxHeight: 50,
+                flex: 1,
+                marginEnd: 16,
+                marginStart: 16,
+                opacity: images.length > 0 ? 1 : 0.5,
+              }}
+            />
+          )}
         </View>
+        {!isMultiple && (
+          <TouchableOpacity
+            onPress={onCancelPress}
+            style={{
+              position: 'absolute',
+              right: 24,
+              top: 32,
+            }}
+          >
+            <Image
+              source={ICONS.newClose}
+              style={{
+                height: 48,
+                width: 48,
+              }}
+            />
+          </TouchableOpacity>
+        )}
       </SafeAreaView>
     );
   }

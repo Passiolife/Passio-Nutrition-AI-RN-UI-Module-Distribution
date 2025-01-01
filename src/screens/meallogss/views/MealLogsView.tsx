@@ -41,7 +41,8 @@ const RenderItem = ({
   };
   const styles = mealLogViewStyle(useBranding());
 
-  const [expandable, setExpandable] = useState(item.data.length > 0);
+  const [expandable, setExpandable] = useState(true);
+
   return (
     <Card style={styles.cardContainer}>
       <Pressable
@@ -53,7 +54,7 @@ const RenderItem = ({
         }}
         style={styles.heder}
       >
-        <Text weight={'600'} size="_16px" color="text" style={styles.title}>
+        <Text weight={'600'} size="title" color="text" style={styles.title}>
           {item.title}
         </Text>
         <Image
@@ -66,7 +67,7 @@ const RenderItem = ({
           ]}
         />
       </Pressable>
-      {expandable && item.data.length > 0 && (
+      {expandable && (
         <>
           <View style={styles.line} />
           <FlatList

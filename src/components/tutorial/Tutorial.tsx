@@ -62,7 +62,9 @@ export const TutorialView = (props: TutorialViewProps) => {
     const { onPress, title, icon } = item;
     return (
       <TouchableOpacity onPress={onPress} style={styles.optionContainer}>
-        {icon && <Image source={icon} style={styles.optionIcon} />}
+        {icon && (
+          <Image source={icon} style={[styles.optionIcon, styles.iconColor]} />
+        )}
         <Text weight="500" size="_16px" color="text" style={styles.optionTitle}>
           {title}
         </Text>

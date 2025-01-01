@@ -20,6 +20,7 @@ import { BackNavigation, Text } from '../../components';
 import { useBranding, type Branding } from '../../contexts';
 import { MessageRecords } from './view/message/records/MessageRecords';
 import { ImageScanning } from './view/message/ImageScanning';
+import { SessionError } from './view/message/SessionError';
 
 export const AdvisorScreen = () => {
   const {
@@ -50,8 +51,8 @@ export const AdvisorScreen = () => {
           <MessageSendTextView
             msg={
               item.type === 'text'
-                ? item.message ?? ''
-                : item.response?.markupContent ?? ''
+                ? (item.message ?? '')
+                : (item.response?.markupContent ?? '')
             }
           />
         );
@@ -86,6 +87,8 @@ export const AdvisorScreen = () => {
         return <TypingView />;
       case 'imageScanning':
         return <ImageScanning />;
+      case 'sessionError':
+        return <SessionError />;
       default:
         return <></>;
     }
@@ -110,6 +113,7 @@ export const AdvisorScreen = () => {
                     keyExtractor={(_item, index) => index.toString()}
                     renderItem={renderItem}
                     showsVerticalScrollIndicator={false}
+                    contentContainerStyle={{ flexGrow: 1 }}
                     style={styles.flatListStyle}
                     // onContentSizeChange={() => listRef.current?.scrollToEnd()}
                     // onLayout={() => listRef.current?.scrollToEnd()}

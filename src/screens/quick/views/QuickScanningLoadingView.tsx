@@ -1,34 +1,40 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { ProgressLoadingView } from '../../../components/loader';
-import { Text } from '../../../components';
-import { scaleHeight, scaleWidth } from '../../../utils';
+import { Card, Text } from '../../../components';
 
-export const QuickScanningLoadingView = () => {
+interface Props {
+  text?: string;
+}
+export const QuickScanningLoadingView = ({
+  text = 'Place your food within the frame',
+}: Props) => {
   return (
-    <View style={styles.container}>
+    <Card style={styles.container}>
       <View style={styles.loader}>
         <ProgressLoadingView />
       </View>
-      <View>
+      <View style={{ flex: 1 }}>
         <Text weight="600" size="_15px">
           Scanning...
         </Text>
         <Text weight="400" size="_14px">
-          Place your food within the frame
+          {text}
         </Text>
       </View>
-    </View>
+    </Card>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    marginTop: scaleHeight(16),
+    marginTop: 16,
+    paddingVertical: 16,
+    marginHorizontal: 24,
   },
   loader: {
-    marginStart: scaleWidth(24),
-    marginEnd: scaleWidth(16),
+    marginStart: 24,
+    marginEnd: 16,
   },
 });

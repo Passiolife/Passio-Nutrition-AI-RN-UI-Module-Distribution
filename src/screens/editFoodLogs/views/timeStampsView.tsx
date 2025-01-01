@@ -17,7 +17,7 @@ export const TimeStampView = ({ date, onPress }: Props) => {
   return (
     <TouchableOpacity activeOpacity={1} onPress={onPress}>
       <Card style={styles.container}>
-        <Text weight="600" size="_16px" color="text" style={styles.headerText}>
+        <Text weight="600" size="title" color="text" style={styles.headerText}>
           {content.date}
         </Text>
         <View style={styles.timeStampContainer}>

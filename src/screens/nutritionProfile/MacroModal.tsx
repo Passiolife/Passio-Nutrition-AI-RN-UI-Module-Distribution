@@ -3,8 +3,6 @@ import { StyleSheet, View, Keyboard, Dimensions, Modal } from 'react-native';
 import { BasicButton, ProgressSlider, Text, TextInput } from '../../components';
 import { COLORS } from '../../constants';
 
-import { scaled } from '../../utils';
-
 interface Config {
   totalCalories: number;
   carbs: number;
@@ -416,6 +414,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   editIcon: {
-    ...scaled(16),
+    height: 16,
+    width: 16,
   },
 });

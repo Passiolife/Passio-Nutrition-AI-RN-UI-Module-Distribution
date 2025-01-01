@@ -3,10 +3,10 @@ import type { WeightTrendChart } from '../../linechart/lineChart';
 import { UnitSystem, type Weight } from '../../../../models';
 import { convertKGToPounds } from '../../../../screens/nutritionProfile/unitConversions';
 
-export const averageWeight = (weights: Weight[], unit: UnitSystem): number => {
+export const averageWeight = (weights: Weight, unit: UnitSystem): number => {
   return unit === UnitSystem.IMPERIAL
-    ? convertKGToPounds(Number(weights[0]?.weight ?? 0))
-    : Number(weights[0]?.weight ?? 0);
+    ? convertKGToPounds(Number(weights.weight ?? 0))
+    : Number(weights.weight ?? 0);
 };
 
 export const prepPareWeightChart = (

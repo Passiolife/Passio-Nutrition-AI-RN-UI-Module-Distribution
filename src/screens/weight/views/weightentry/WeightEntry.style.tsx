@@ -19,6 +19,7 @@ const weightEntryStyle = ({ white, backgroundColor }: Branding) =>
       marginVertical: scaleHeight(4),
       paddingStart: scaleWidth(16),
       backgroundColor: white,
+      fontSize: 16,
     },
 
     formView: {
@@ -31,7 +32,7 @@ const weightEntryStyle = ({ white, backgroundColor }: Branding) =>
       marginTop: 10,
     },
     inputTitle: {
-      marginTop: scaleHeight(16),
+      marginTop: scaleHeight(8),
     },
 
     actionContainer: {
@@ -41,7 +42,7 @@ const weightEntryStyle = ({ white, backgroundColor }: Branding) =>
       marginHorizontal: scaleWidth(16),
     },
     buttonSeparator: {
-      width: scaleWidth(22),
+      width: scaleWidth(8),
     },
     bottomActionButton: {
       flex: 1,

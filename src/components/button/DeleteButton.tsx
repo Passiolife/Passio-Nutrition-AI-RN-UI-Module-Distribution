@@ -20,6 +20,7 @@ interface Props {
 export const DeleteButton = (props: Props) => {
   const { onPress, style, small = false, testId } = props;
   const [btnTextColor, setBtnTextColor] = useState(COLORS.darkRed);
+  const styles = styleObj();
 
   return (
     <TouchableHighlight
@@ -49,38 +50,39 @@ export const DeleteButton = (props: Props) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 16,
-    minWidth: 100,
-    borderWidth: 1,
-    borderColor: COLORS.darkRed,
-    backgroundColor: COLORS.transparent,
-  },
-  text: {
-    paddingVertical: scaleHeight(12),
-    fontWeight: '400',
-  },
-  // primary button styles
-  primaryContainer: {
-    backgroundColor: COLORS.blue,
-  },
-  // normal sized button styles
-  normalContainer: {
-    borderRadius: 20,
-  },
-  normalText: {
-    fontSize: 15,
-  },
+const styleObj = () =>
+  StyleSheet.create({
+    container: {
+      justifyContent: 'center',
+      alignItems: 'center',
+      paddingHorizontal: 16,
+      minWidth: 100,
+      borderWidth: 1,
+      borderColor: COLORS.darkRed,
+      backgroundColor: COLORS.transparent,
+    },
+    text: {
+      paddingVertical: scaleHeight(12),
+      fontWeight: '400',
+    },
+    // primary button styles
+    primaryContainer: {
+      backgroundColor: COLORS.blue,
+    },
+    // normal sized button styles
+    normalContainer: {
+      borderRadius: 4,
+    },
+    normalText: {
+      fontSize: 15,
+    },
 
-  // small sized button styles
-  smallContainer: {
-    borderRadius: 20,
-  },
-  smallText: {
-    fontSize: 15,
-    lineHeight: 18,
-  },
-});
+    // small sized button styles
+    smallContainer: {
+      borderRadius: 4,
+    },
+    smallText: {
+      fontSize: 15,
+      lineHeight: 18,
+    },
+  });

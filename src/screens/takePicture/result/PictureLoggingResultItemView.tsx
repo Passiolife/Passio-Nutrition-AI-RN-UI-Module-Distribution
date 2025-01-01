@@ -19,9 +19,8 @@ export const PictureLoggingResultItemView = (props: Props) => {
     <TouchableOpacity onPress={onFoodLogSelect} style={styles.container}>
       <View style={styles.imageContainer}>
         <PassioFoodIcon
-          imageName={imageName}
           style={styles.image}
-          passioID={imageName}
+          iconID={imageName}
           entityType={PassioIDEntityType.group}
         />
       </View>
@@ -36,7 +35,7 @@ export const PictureLoggingResultItemView = (props: Props) => {
         <Text
           weight="400"
           size="_12px"
-          style={[styles.text, styles.secondaryText]}
+          style={[styles.bottom, styles.secondaryText]}
         >
           {bottom}
         </Text>
@@ -76,6 +75,7 @@ const styles = StyleSheet.create({
 
   image: {
     width: 42,
+    height: 42,
     aspectRatio: 1,
   },
   addIcon: {
@@ -89,6 +89,11 @@ const styles = StyleSheet.create({
   },
   text: {
     textTransform: 'capitalize',
+    marginStart: 16,
+    marginVertical: 2,
+    marginRight: 10,
+  },
+  bottom: {
     marginStart: 16,
     marginVertical: 2,
     marginRight: 10,

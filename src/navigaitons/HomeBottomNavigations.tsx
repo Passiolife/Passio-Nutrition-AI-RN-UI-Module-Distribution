@@ -144,6 +144,12 @@ export const HomeBottomNavigation = React.memo(() => {
               logToMeal: undefined,
             });
           }}
+          onMyFoods={() => {
+            navigation.navigate('MyFoodsScreen', {
+              logToDate: mealLogDateRef.current,
+              logToMeal: undefined,
+            });
+          }}
           onTakePicture={onTakePicture}
           {...props}
           items={menu}
@@ -167,6 +173,13 @@ export const HomeBottomNavigation = React.memo(() => {
             defaultDate: mealLogDateRef.current,
             onDateChange: (date) => {
               mealLogDateRef.current = date;
+            },
+            navigateToMealLog: (date) => {
+              mealLogDateRef.current = date;
+              navigation.replace('BottomNavigation', {
+                screen: 'MealLogScreen',
+                params: { defaultDate: date },
+              });
             },
           }}
         />

@@ -18,3 +18,7 @@ export * from './ActionPlan';
 export * from './QuickResult';
 export * from './Water';
 export * from './Weight';
+export * from './CustomFood';
+export * from './CustomRecipe';
+export * from './BarcodeCustomResult';
+export * from './Image';

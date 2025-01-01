@@ -3,7 +3,7 @@ export interface Nutrient {
   amount: number;
   unit: string;
 }
-export type NutrientUnit = 'cal' | 'kcal' | 'g' | 'mg' | 'ug' | 'IU' | 'ml';
+export type NutrientUnit = 'cal' | 'kcal' | 'g' | 'mg' | 'μg' | 'IU' | 'ml';
 
 export type NutrientType =
   | 'calories'
@@ -44,7 +44,9 @@ export type NutrientType =
   | 'chromium'
   | 'fibers'
   | 'sugarsAdded'
-  | 'iodine';
+  | 'weight'
+  | 'iodine'
+  | 'vitaminARAE';
 
 export const unitForNutrient = (id: NutrientType) => nutrientUnits[id];
 
@@ -62,7 +64,7 @@ export const nutrientUnits: Record<NutrientType, NutrientUnit> = {
   fiber: 'g',
   sugars: 'g',
   sugarAdded: 'g',
-  vitaminD: 'mg',
+  vitaminD: 'μg',
   calcium: 'mg',
   iron: 'mg',
   potassium: 'mg',
@@ -70,23 +72,25 @@ export const nutrientUnits: Record<NutrientType, NutrientUnit> = {
   vitaminC: 'mg',
   alcohol: 'g',
   sugarAlcohol: 'g',
-  vitaminB12: 'ug',
-  vitaminB12Added: 'ug',
+  vitaminB12: 'μg',
+  vitaminB12Added: 'μg',
   vitaminB6: 'mg',
   vitaminE: 'mg',
   vitaminEAdded: 'mg',
   magnesium: 'mg',
   phosphorus: 'mg',
-  iodine: 'ug',
+  iodine: 'μg',
   zinc: 'mg',
-  selenium: 'g',
-  folicAcid: 'g',
-  vitaminKPhylloquinone: 'g',
-  vitaminKMenaquinone4: 'g',
-  vitaminKDihydrophylloquinone: 'g',
+  selenium: 'μg',
+  folicAcid: 'μg',
+  vitaminKPhylloquinone: 'μg',
+  vitaminKMenaquinone4: 'μg',
+  vitaminKDihydrophylloquinone: 'μg',
   fibers: 'g',
-  chromium: 'g',
+  chromium: 'μg',
+  vitaminARAE: 'μg',
   sugarsAdded: 'g',
+  weight: 'g',
 };
 
 export const nutrientName: Record<NutrientType, String> = {
@@ -101,8 +105,8 @@ export const nutrientName: Record<NutrientType, String> = {
   cholesterol: 'Cholesterol',
   sodium: 'Sodium',
   fiber: 'Dietary Fiber',
-  sugars: 'Sugar',
-  sugarAdded: 'SugarAdded',
+  sugars: 'Total Sugar',
+  sugarAdded: 'Added Sugar',
   vitaminD: 'Vitamin D',
   calcium: 'Calcium',
   iron: 'Iron',
@@ -115,7 +119,7 @@ export const nutrientName: Record<NutrientType, String> = {
   vitaminB12Added: 'Vitamin B12 Added',
   vitaminB6: 'Vitamin B6',
   vitaminE: 'Vitamin E',
-  vitaminEAdded: 'Vitamin E Added',
+  vitaminEAdded: 'Vitamin E',
   magnesium: 'Magnesium',
   phosphorus: 'Phosphorus',
   iodine: 'Iodine',
@@ -126,8 +130,10 @@ export const nutrientName: Record<NutrientType, String> = {
   vitaminKMenaquinone4: 'Vitamin K Menaquinone',
   vitaminKDihydrophylloquinone: 'Vitamin K Dihydrophylloquinone',
   chromium: 'Chromium',
-  fibers: 'Fibers',
-  sugarsAdded: 'Sugars Added',
+  fibers: 'Dietary Fibers',
+  sugarsAdded: 'Added Sugar',
+  weight: 'weight',
+  vitaminARAE: 'Vitamin A RAE',
 };
 
 export const recommendedNutrient: Record<NutrientType, number> = {
@@ -165,9 +171,11 @@ export const recommendedNutrient: Record<NutrientType, number> = {
   zinc: 0,
   selenium: 0,
   folicAcid: 0,
+  weight: 0,
   vitaminKPhylloquinone: 0,
   vitaminKMenaquinone4: 0,
   vitaminKDihydrophylloquinone: 0,
+  vitaminARAE: 0,
   chromium: 0,
 };
 
@@ -178,6 +186,7 @@ export const sortByNutrientType: NutrientType[] = [
   'sodium',
   'fibers',
   'sugars',
+  'sugarsAdded',
   'vitaminD',
   'calcium',
   'iron',
@@ -190,11 +199,11 @@ export const sortByNutrientType: NutrientType[] = [
   'vitaminB12',
   'vitaminE',
   'vitaminA',
+  'vitaminARAE',
   'vitaminC',
   'zinc',
   'selenium',
   'folicAcid',
   'chromium',
   'fibers',
-  'sugarsAdded',
 ];

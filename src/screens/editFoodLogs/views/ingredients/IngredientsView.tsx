@@ -8,20 +8,23 @@ import {
 } from 'react-native';
 import { useBranding, type Branding } from '../../../../contexts';
 import type { FoodItem } from '../../../../models';
-import { ICONS } from '../../../../assets';
 import IngredientItemView from './IngredientItemView';
-import { content } from '../../../../constants/Content';
-import { Card, Text } from '../../../../components';
+import { BasicButton, Card, Text } from '../../../../components';
 import { scaleHeight, scaleWidth } from '../../../../utils';
+import { ICONS } from '../../../../assets';
 
 interface Props {
   foodItems: FoodItem[];
-  onAddIngredients: () => void;
-  deleteIngredientsItem: (foodItem: FoodItem) => void;
-  navigateToEditIngredientsScreen: (
+  isShowAll?: boolean;
+  enable?: boolean;
+  referenceCode?: string;
+  onAddIngredients?: () => void;
+  deleteIngredientsItem?: (foodItem: FoodItem) => void;
+  navigateToEditIngredientsScreen?: (
     foodItem: FoodItem,
-    deleteIngredientsItem: (foodItem: FoodItem) => void
+    deleteIngredientsItem?: (foodItem: FoodItem) => void
   ) => void;
+  type?: 'EditRecipe' | 'Other';
 }
 
 export const IngredientsView = ({
@@ -29,49 +32,76 @@ export const IngredientsView = ({
   onAddIngredients,
   deleteIngredientsItem,
   navigateToEditIngredientsScreen,
+  isShowAll = false,
+  enable = true,
+  type = 'Other',
 }: Props) => {
   const branding = useBranding();
   const styles = ingredientViewStyle(branding);
 
   const onIngredientClickPress = async (item: FoodItem) => {
-    navigateToEditIngredientsScreen(item, deleteIngredientsItem);
+    navigateToEditIngredientsScreen?.(item, deleteIngredientsItem);
   };
 
   return (
     <View>
       <Card style={styles.container}>
-        <TouchableOpacity
-          style={styles.plusTouchOpacity}
-          onPress={onAddIngredients}
-        >
+        <View style={styles.plusTouchOpacity}>
           <Text
             weight="600"
-            size="_16px"
+            size="title"
             color="text"
             style={[styles.ingredientText]}
           >
-            {content.addIngredients}
+            {type === 'EditRecipe' ? 'Add Ingredient' : 'Ingredients'}
           </Text>
-
-          <Image
-            resizeMode="contain"
-            source={ICONS.newAddPlus}
-            style={styles.plusIcon}
-          />
-        </TouchableOpacity>
+          {type === 'EditRecipe' ? (
+            <TouchableOpacity onPress={onAddIngredients}>
+              <Image
+                source={ICONS.newAddPlus}
+                style={{
+                  height: 24,
+                  width: 24,
+                }}
+              />
+            </TouchableOpacity>
+          ) : (
+            <>
+              {foodItems.length > 1 ? (
+                <BasicButton
+                  onPress={onAddIngredients}
+                  text={'Edit recipe'}
+                  style={{ paddingVertical: 0 }}
+                />
+              ) : (
+                <BasicButton
+                  onPress={onAddIngredients}
+                  text={'Make custom recipe'}
+                  style={{ paddingVertical: 0 }}
+                />
+              )}
+            </>
+          )}
+        </View>
 
         <>
-          {foodItems.length > 1 ? (
+          {isShowAll || foodItems.length > 1 ? (
             <View>
               <View style={styles.line} />
+              <View
+                style={{
+                  height: 10,
+                }}
+              />
               <FlatList
                 data={foodItems}
                 renderItem={({ item }: { item: FoodItem }) => {
                   return (
                     <IngredientItemView
                       deleteIngredientsItem={(foodItem: FoodItem) =>
-                        deleteIngredientsItem(foodItem)
+                        deleteIngredientsItem?.(foodItem)
                       }
+                      enabled={enable}
                       foodItem={item}
                       onPress={onIngredientClickPress}
                     />
@@ -92,17 +122,17 @@ const ingredientViewStyle = ({ border }: Branding) =>
   StyleSheet.create({
     container: {
       marginTop: scaleHeight(16),
-      paddingVertical: scaleHeight(16),
+      paddingVertical: scaleHeight(8),
       flex: 1,
     },
     line: {
-      height: 1,
-      marginVertical: scaleHeight(14),
       backgroundColor: border,
     },
     ingredientText: {},
     plusTouchOpacity: {
       flexDirection: 'row',
+      paddingVertical: 8,
+      alignItems: 'center',
       paddingHorizontal: scaleWidth(13),
       alignContent: 'space-between',
       justifyContent: 'space-between',

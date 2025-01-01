@@ -19,20 +19,27 @@ export type TakePictureScreenProps = StackNavigationProp<
 
 export const PHOTO_LIMIT = 7;
 
+export interface PicturePassioAdvisorFoodInfo extends PassioAdvisorFoodInfo {
+  isSelected?: boolean;
+}
+
 export function useTakePicture() {
   const navigation = useNavigation<TakePictureScreenProps>();
   const services = useServices();
   const takePictureRef = useRef<TakePictureRef>(null);
   const selectPhotoRef = useRef<SelectPhotosRef>(null);
+  const isSubmitting = useRef<boolean>(false);
 
   const route = useRoute<RouteProp<ParamList, 'TakePictureScreen'>>();
 
   const bottomSheetModalRef = useRef<BottomSheet>(null);
+  const noResultFoundRef = useRef<BottomSheet>(null);
   const snapPoints = useMemo(() => ['30%', '70%'], []);
+  const snapPointsNoResultFound = useMemo(() => ['20%', '40%'], []);
   const [isFetchingResponse, setFetchResponse] = useState(false);
   const [isPreparingLog, setPreparingLog] = useState(false);
   const [passioAdvisorFoodInfo, setPassioAdvisorFoodInfo] = useState<
-    PassioAdvisorFoodInfo[] | null
+    PicturePassioAdvisorFoodInfo[] | null
   >(null);
 
   const recognizePictureRemote = useCallback(
@@ -59,10 +66,15 @@ export function useTakePicture() {
           setFetchResponse(false);
           bottomSheetModalRef.current?.expand();
           setPassioAdvisorFoodInfo(
-            foodInfoArrayFlat as PassioAdvisorFoodInfo[]
+            (foodInfoArrayFlat as PassioAdvisorFoodInfo[]).map((i) => {
+              return {
+                ...i,
+                isSelected: true,
+              };
+            })
           );
         } else {
-          bottomSheetModalRef.current?.expand();
+          noResultFoundRef.current?.expand();
         }
       } catch (error) {
       } finally {
@@ -73,13 +85,18 @@ export function useTakePicture() {
   );
 
   const onLogSelectPress = useCallback(
-    async (selected: PassioAdvisorFoodInfo[]) => {
+    async (selected: PicturePassioAdvisorFoodInfo[]) => {
+      if (isSubmitting.current) {
+        return;
+      }
+      isSubmitting.current = true;
+
       if (isPreparingLog) {
         return;
       }
       setPreparingLog(true);
       const foodLogs = await createFoodLogUsingFoodDataInfo(
-        selected,
+        selected.filter((i) => i.isSelected),
         route.params.logToDate,
         route.params.logToMeal
       );
@@ -94,6 +111,8 @@ export function useTakePicture() {
       navigation.navigate('BottomNavigation', {
         screen: 'MealLogScreen',
       });
+
+      isSubmitting.current = false;
     },
 
     [
@@ -102,16 +121,19 @@ export function useTakePicture() {
       route.params.logToDate,
       route.params.logToMeal,
       services.dataService,
+      isSubmitting,
     ]
   );
 
   const onRetakePress = useCallback(() => {
     if (route.params.type === 'camera') {
       bottomSheetModalRef.current?.close();
+      noResultFoundRef.current?.close();
       setPassioAdvisorFoodInfo([]);
       takePictureRef.current?.onRetake();
     } else {
       bottomSheetModalRef.current?.close();
+      noResultFoundRef.current?.close();
       setPassioAdvisorFoodInfo([]);
       selectPhotoRef.current?.onRetake();
     }
@@ -121,15 +143,24 @@ export function useTakePicture() {
     navigation.goBack();
   }, [navigation]);
 
+  const onSearchManuallyPress = useCallback(() => {
+    navigation.replace('FoodSearchScreen', {
+      from: 'Search',
+    });
+  }, [navigation]);
+
   return {
     recognizePictureRemote,
     snapPoints,
     bottomSheetModalRef,
+    snapPointsNoResultFound,
+    noResultFoundRef,
     selectPhotoRef,
     onLogSelectPress,
     passioAdvisorFoodInfo,
     onRetakePress,
     onCancelPress,
+    onSearchManuallyPress,
     isPreparingLog,
     isFetchingResponse,
     type: route.params.type ?? 'camera',

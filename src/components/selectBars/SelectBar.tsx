@@ -1,7 +1,5 @@
 import React from 'react';
-import { TouchableHighlight, View } from 'react-native';
-
-import { COLORS } from '../../constants';
+import { TouchableOpacity, View } from 'react-native';
 
 import { useBranding } from '../../contexts';
 import selectedBarStyle from './SelectBar.style';
@@ -31,7 +29,7 @@ export const SelectBar: React.FC<Props> = ({
   return (
     <View style={styles.container}>
       {options.map((option, index, list) => (
-        <TouchableHighlight
+        <TouchableOpacity
           key={index}
           style={[
             styles.item,
@@ -39,11 +37,10 @@ export const SelectBar: React.FC<Props> = ({
             index === list.length - 1 && styles.last,
             option.value === selectedValue && styles.itemSelected,
           ]}
-          underlayColor={COLORS.blue}
           onPress={() => onOptionPress(option)}
         >
           <Text
-            size="_12px"
+            size="secondlyTitle"
             weight="500"
             style={[
               styles.itemText,
@@ -52,7 +49,7 @@ export const SelectBar: React.FC<Props> = ({
           >
             {option.label}
           </Text>
-        </TouchableHighlight>
+        </TouchableOpacity>
       ))}
     </View>
   );

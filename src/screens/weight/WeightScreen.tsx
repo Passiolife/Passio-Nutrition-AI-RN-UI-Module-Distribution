@@ -27,6 +27,7 @@ import { WeightTrendChart } from './linechart/lineChart';
 
 const WeightScreen = () => {
   const {
+    target,
     calendarCarouselRef,
     isContentVisible,
     weightLabel,
@@ -46,7 +47,7 @@ const WeightScreen = () => {
     return (
       <View style={styles.header}>
         <View style={styles.headerContent}>
-          <Text style={styles.headerText}>
+          <Text weight="600" size="title" style={styles.headerText}>
             {DateTime.fromJSDate(
               calendarCarouselRef?.current?.getStartDate() ?? new Date()
             ).toFormat('MM/dd/yy') +
@@ -119,7 +120,7 @@ const WeightScreen = () => {
             <Text style={styles.headerOvr}>Weight Trend</Text>
           </View>
           {weightTrendData.length > 0 ? (
-            <WeightTrendChart data={weightTrendData} />
+            <WeightTrendChart data={weightTrendData} target={target} />
           ) : null}
         </Card>
         <Card style={styles.roundedAndShadowView}>
@@ -181,8 +182,7 @@ const waterIntakeStyle = ({ white, border }: Branding) =>
       marginVertical: scaleHeight(16),
     },
     headerText: {
-      fontSize: scaledSize(14),
-      fontWeight: '600',
+      marginStart: 6,
     },
     headerOvr: {
       fontSize: scaledSize(18),

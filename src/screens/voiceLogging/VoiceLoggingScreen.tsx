@@ -12,25 +12,22 @@ import { VoiceLoggingResult } from './views/VoiceLoggingResult';
 import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
 import { ICONS, LottieAsset } from '../../assets';
 import LottieView from 'lottie-react-native';
+import { VoiceLoggingResultFailed } from './views/VoiceLoggingResultFailed';
 
 export interface VoiceLoggingScreenProps {
   logToDate?: Date | undefined;
   logToMeal?: MealLabel | undefined;
   onSaveData?: (item: PassioFoodItem) => void;
 }
-export interface TakePictureScreenProps {
-  logToDate?: Date | undefined;
-  logToMeal?: MealLabel | undefined;
-  type: 'picture' | 'camera';
-  images?: string[];
-}
 
 export const VoiceLoggingScreen = gestureHandlerRootHOC(() => {
   const {
-    bottomSheetModalRef,
+    voiceLoggingResultRef,
+    voiceLoggingFailedRef,
     snapPoints,
+    snapPointsFailed,
     searchQuery,
-    PassioSpeechRecognitionResult,
+    voiceRecords,
     isFetchingResponse,
     isRecording,
     onRecordingPress,
@@ -107,7 +104,7 @@ export const VoiceLoggingScreen = gestureHandlerRootHOC(() => {
       </SafeAreaView>
 
       <BottomSheet
-        ref={bottomSheetModalRef}
+        ref={voiceLoggingResultRef}
         index={-1}
         snapPoints={snapPoints}
         backgroundStyle={styles.bottomSheetChildrenContainer}
@@ -117,7 +114,19 @@ export const VoiceLoggingScreen = gestureHandlerRootHOC(() => {
           onLogSelect={onLogSelectPress}
           onTryAgain={onTryAgainPress}
           onSearchManuallyPress={onSearchManuallyPress}
-          passioSpeechRecognitionResults={PassioSpeechRecognitionResult ?? []}
+          result={voiceRecords ?? []}
+        />
+      </BottomSheet>
+      <BottomSheet
+        ref={voiceLoggingFailedRef}
+        index={-1}
+        snapPoints={snapPointsFailed}
+        backgroundStyle={styles.bottomSheetChildrenContainer}
+        handleIndicatorStyle={{ display: 'none' }}
+      >
+        <VoiceLoggingResultFailed
+          onTryAgain={onTryAgainPress}
+          onSearchManuallyPress={onSearchManuallyPress}
         />
       </BottomSheet>
     </>

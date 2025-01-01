@@ -60,4 +60,20 @@ export class AsyncStorageHelper {
       return null;
     }
   }
+  static async setReadMealPlanDisclaimer(isRead: boolean): Promise<void> {
+    try {
+      // Convert boolean to string before storing
+      await AsyncStorage.setItem('MealPlanDes', JSON.stringify(isRead));
+    } catch (e) {}
+  }
+
+  static async isReadMealPlanDisclaimer(): Promise<boolean | null> {
+    try {
+      const value = await AsyncStorage.getItem('MealPlanDes');
+      // Parse the string back to a boolean
+      return value !== null ? JSON.parse(value) : null;
+    } catch (e) {
+      return null;
+    }
+  }
 }

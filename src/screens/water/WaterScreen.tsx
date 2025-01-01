@@ -29,6 +29,7 @@ const WaterScreen = () => {
   const {
     calendarCarouselRef,
     chartData,
+    target,
     isContentVisible,
     isImperialWeight,
     ogMlLabel,
@@ -58,11 +59,13 @@ const WaterScreen = () => {
         style={styles.swipple}
       >
         <Pressable onPress={() => onEditPress(item)} style={styles.item}>
-          <Text style={styles.weight}>
+          <Text weight="600" style={styles.weight}>
             {Math.round(convertConsumeValueAsUnitSystem(Number(item.consumed)))}
-            <Text color="secondaryText">&nbsp;{ogMlLabel}</Text>
+            <Text weight="400" color="secondaryText">
+              &nbsp;{ogMlLabel}
+            </Text>
           </Text>
-          <Text style={styles.timestamp}>
+          <Text weight="400" style={styles.timestamp}>
             {displayDate + '\n' + displayTime}
           </Text>
         </Pressable>
@@ -74,7 +77,7 @@ const WaterScreen = () => {
     return (
       <View style={styles.header}>
         <View style={styles.headerContent}>
-          <Text style={styles.headerText}>
+          <Text weight="600" size="title" style={styles.headerText}>
             {DateTime.fromJSDate(
               calendarCarouselRef?.current?.getStartDate() ?? new Date()
             ).toFormat('MM/dd/yy') +
@@ -93,6 +96,10 @@ const WaterScreen = () => {
         </View>
       </View>
     );
+  };
+
+  const renderFooter = () => {
+    return <View style={styles.footer} />;
   };
 
   return (
@@ -115,6 +122,7 @@ const WaterScreen = () => {
             barData={chartData}
             title="Water Trend"
             barChartContainerStyle={{ marginTop: 16 }}
+            target={target}
           />
         )}
         <QuickAddTracking
@@ -129,6 +137,7 @@ const WaterScreen = () => {
             style={styles.sectionList}
             renderItem={renderItem}
             ListHeaderComponent={renderHeader}
+            ListFooterComponent={renderFooter}
           />
         </Card>
       </ScrollView>
@@ -143,6 +152,9 @@ const waterIntakeStyle = ({ white, border }: Branding) =>
     },
     cardStyle: {
       paddingVertical: 0,
+    },
+    footer: {
+      height: 0,
     },
     switchTabContainer: {
       marginTop: scaleHeight(12),
@@ -181,8 +193,7 @@ const waterIntakeStyle = ({ white, border }: Branding) =>
       marginVertical: scaleHeight(16),
     },
     headerText: {
-      fontSize: scaledSize(14),
-      fontWeight: '600',
+      marginStart: 8,
     },
     weight: {
       fontSize: scaledSize(14),
@@ -192,7 +203,7 @@ const waterIntakeStyle = ({ white, border }: Branding) =>
       ...scaled(24),
     },
     roundedAndShadowView: {
-      marginVertical: scaleHeight(24),
+      marginVertical: scaleHeight(8),
     },
     timestamp: {
       textAlign: 'right',

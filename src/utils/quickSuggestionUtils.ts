@@ -83,10 +83,10 @@ export function orderFrequencySort(items: FoodLog[]): QuickSuggestion[] {
       const find = items.find((i) => i.name === itemName);
       if (find) {
         result.push({
-          refCode: find.refCode ?? find.passioID,
+          refCode: find.refCode ?? find.refCode,
           foodLog: find,
           foodName: find.name,
-          iconID: find.imageName,
+          iconID: find.iconID ?? '',
         });
       }
       addedItems.add(itemName);

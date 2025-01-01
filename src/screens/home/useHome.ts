@@ -1,13 +1,18 @@
 import type { StackNavigationProp } from '@react-navigation/stack';
 import { useMealLogs } from '../meallogss/useMealLogs';
 import type { ParamList } from '../../navigaitons';
-import { useIsFocused, useNavigation } from '@react-navigation/native';
+import {
+  RouteProp,
+  useIsFocused,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
 import { useNutritionProfile } from '../nutritionProfile/useNutritionProfile';
 import { useEffect, useState } from 'react';
 import { useServices } from '../../contexts';
 import {
+  getLatestWeight,
   getWatersForDate,
-  getWeightForDate,
 } from '../../utils/DataServiceHelper';
 import { totalWater } from '../water/waterUtils';
 import { averageWeight } from '../weight/views/weightentry/Weight.utils';
@@ -18,6 +23,7 @@ export function useHome() {
   const isFocused = useIsFocused();
   const services = useServices();
   const navigation = useNavigation<ScreenNavigationProps>();
+  const { params } = useRoute<RouteProp<ParamList, 'HomeScreen'>>();
 
   const [remainWater, setRemainWater] = useState(0);
   const [achievedWater, setAchievedWater] = useState(0);
@@ -57,8 +63,11 @@ export function useHome() {
 
   useEffect(() => {
     if (isFocused) {
-      getWeightForDate(date, services).then((data) => {
-        const total = averageWeight(data, unitsWeight);
+      getLatestWeight(services).then((data) => {
+        let total = 0;
+        if (data) {
+          total = averageWeight(data, unitsWeight);
+        }
         const target = Number(targetWeight ?? 0) - total;
         setRemainWeight(target);
         setAchievedWeight(total);
@@ -69,12 +78,14 @@ export function useHome() {
 
   return {
     achievedWater,
+    navigation,
     achievedWeight,
     date,
     foodLogs,
     isOpenDatePicker,
     name,
     remainWater,
+    params,
     remainWeight,
     targetWeight,
     unitOfWater,

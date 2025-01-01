@@ -25,6 +25,7 @@ const DoughnutChart: React.FC<DoughnutChartProps> = ({
   gap = 10, // Angle in degrees for the gap at the end of each segment
 }) => {
   const radius = size / 2;
+  const diz = 180;
 
   // Calculate the total progress
   const totalProgress = data.reduce((total, item) => total + item.progress, 0);
@@ -38,17 +39,17 @@ const DoughnutChart: React.FC<DoughnutChartProps> = ({
 
     const x1 =
       radius +
-      (radius - strokeWidth / 2) * Math.cos((Math.PI * startAngle) / 180);
+      (radius - strokeWidth / 2) * Math.cos((Math.PI * startAngle) / diz);
     const y1 =
       radius +
-      (radius - strokeWidth / 2) * Math.sin((Math.PI * startAngle) / 180);
+      (radius - strokeWidth / 2) * Math.sin((Math.PI * startAngle) / diz);
     const x2 =
       radius +
-      (radius - strokeWidth / 2) * Math.cos((Math.PI * adjustedEndAngle) / 180);
+      (radius - strokeWidth / 2) * Math.cos((Math.PI * adjustedEndAngle) / diz);
     const y2 =
       radius +
-      (radius - strokeWidth / 2) * Math.sin((Math.PI * adjustedEndAngle) / 180);
-    const largeArcFlag = segmentAngle <= 180 ? 0 : 1;
+      (radius - strokeWidth / 2) * Math.sin((Math.PI * adjustedEndAngle) / diz);
+    const largeArcFlag = segmentAngle <= diz ? 0 : 1;
     return `M${x1},${y1}
             A${radius - strokeWidth / 2},${
               radius - strokeWidth / 2
@@ -56,24 +57,32 @@ const DoughnutChart: React.FC<DoughnutChartProps> = ({
   };
 
   return (
-    <View style={{ width: size, height: size }}>
-      <Svg width={size + 10} height={size + 10}>
-        {data.map((item, index) => {
-          const path = calculatePath(item.progress, index);
-          startAngle += 360 * (item.progress / totalProgress);
-          return (
-            <G key={index}>
-              <Path
-                d={path}
-                fill="transparent"
-                stroke={item.color}
-                strokeWidth={strokeWidth}
-                strokeLinecap={strokeLinecap}
-              />
-            </G>
-          );
-        })}
-      </Svg>
+    <View
+      style={{
+        width: size,
+        height: size,
+        alignItems: 'center',
+      }}
+    >
+      {totalProgress > 0 && (
+        <Svg width={size} height={size}>
+          {data.map((item, index) => {
+            const path = calculatePath(item.progress, index);
+            startAngle += 360 * (item.progress / totalProgress);
+            return (
+              <G key={index}>
+                <Path
+                  d={path}
+                  fill="transparent"
+                  stroke={item.color}
+                  strokeWidth={strokeWidth}
+                  strokeLinecap={strokeLinecap}
+                />
+              </G>
+            );
+          })}
+        </Svg>
+      )}
     </View>
   );
 };

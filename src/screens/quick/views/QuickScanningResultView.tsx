@@ -1,4 +1,5 @@
 import {
+  Image,
   TouchableOpacity,
   View,
   type ImageStyle,
@@ -9,12 +10,14 @@ import React from 'react';
 
 import { PassioFoodIcon } from '../../../components/passio/PassioFoodIcon';
 import { PassioIDEntityType } from '@passiolife/nutritionai-react-native-sdk-v3/src/sdk/v2';
-import { Text } from '../../../components';
+import { Card, Text } from '../../../components';
 import type { QuickResult } from '../../../models';
+import { ICONS } from '../../../assets';
 
 interface Props {
   result: QuickResult;
   onOpenFoodLogEditor: (passioIDAttributes: QuickResult) => void;
+  onFoodLog: (passioIDAttributes: QuickResult) => void;
   onClear?: () => void;
 }
 
@@ -22,7 +25,7 @@ export const QuickScanningResultView = React.memo((props: Props) => {
   const result = props.result;
 
   return (
-    <View style={scanningResultBaseContainerStyle}>
+    <Card style={scanningResultBaseContainerStyle}>
       <TouchableOpacity
         activeOpacity={1}
         onPress={() => {
@@ -34,6 +37,7 @@ export const QuickScanningResultView = React.memo((props: Props) => {
             <PassioFoodIcon
               passioID={props.result.passioID}
               imageName={props.result.passioID}
+              iconID={props.result.passioID}
               style={foodLogImageStyle}
               entityType={PassioIDEntityType.item}
             />
@@ -42,16 +46,45 @@ export const QuickScanningResultView = React.memo((props: Props) => {
             <Text weight="600" size="_14px" style={foodLogNameStyle}>
               {props.result.name}
             </Text>
+            {props.result.barcode && (
+              <Text
+                weight="500"
+                size="_14px"
+                color={'secondaryText'}
+                style={foodLogNameStyle}
+              >
+                {`UPC: ${props.result.barcode}`}
+              </Text>
+            )}
           </View>
+          <TouchableOpacity
+            style={{
+              alignSelf: 'center',
+            }}
+            onPress={() => {
+              props.onFoodLog(props.result);
+            }}
+          >
+            <Image
+              source={ICONS.newAddPlus}
+              style={{
+                height: 28,
+                width: 28,
+                alignSelf: 'center',
+                marginHorizontal: 16,
+              }}
+            />
+          </TouchableOpacity>
         </View>
       </TouchableOpacity>
-    </View>
+    </Card>
   );
 });
 
 // Scanning Result Styles....
 const scanningResultBaseContainerStyle: ViewStyle = {
   marginHorizontal: 10,
+  marginTop: 10,
 };
 
 const foodLogContainerStyle: ViewStyle = {

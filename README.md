@@ -27,32 +27,32 @@ npmScopes:
 
 ```sh
 yarn add @passiolife/nutrition-ai-ui-ux
+
+yarn add @passiolife/nutritionai-react-native-sdk-v3
 ```
 
 #### Step 3: add react-native.config.js at root
 
-```sh
-module.exports = {
-  dependencies: {
-    'lottie-react-native': {},
-    'lottie-ios': {},
-    '@react-native-community/slider': {},
-    '@passiolife/nutritionai-react-native-sdk-v3': {},
-    '@react-native-community/datetimepicker': {},
-    'react-native-reanimated': {},
-    'react-native-gesture-handler': {},
-    'luxon': {},
-    'react-native-safe-area-context': {},
-    'react-native-linear-gradient': {},
-    'react-native-svg': {},
-    'react-native-sqlite-storage': {},
-    '@react-native-voice/voice': {},
-    '@notifee/react-native': {},
-    '@react-native-async-storage/async-storage': {},
-    'react-native-vision-camera': {},
-    'react-native-image-picker': {},
-  },
-};
+```shmodule.exports = {
+    project: {
+      ios: {},
+      android: {},
+    },
+    dependencies: {
+      'react-native-linear-gradient': {},
+      '@react-native-async-storage/async-storage': {},
+      '@react-native-community/datetimepicker': {},
+      'react-native-fs': {},
+      '@notifee/react-native': {},
+      'react-native-svg': {},
+      '@passiolife/nutritionai-react-native-sdk-v3': {},
+      'react-native-vision-camera': {},
+      'react-native-image-picker': {},
+      '@react-native-community/slider': {},
+      'lottie-react-native': {},
+      '@react-native-voice/voice': {},
+    },
+  };
 ```
 
 #### Step 4: For Android, add this implementation line to the dependencies section on app/build.gradle file
@@ -64,6 +64,19 @@ dependencies {
     ...
 }
 
+```
+
+#### Make sure this dependencies are added into your project
+
+```
+yarn add @react-navigation/native
+yarn add @react-navigation/native-stack
+yarn add @react-navigation/stack
+yarn add react-native-gesture-handler
+yarn add react-native-reanimated
+yarn add react-native-safe-area-context
+yarn add react-native-screens
+yarn add react-native-sqlite-storage
 
 ```
 

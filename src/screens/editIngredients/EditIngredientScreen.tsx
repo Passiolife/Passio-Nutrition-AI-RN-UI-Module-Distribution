@@ -1,17 +1,12 @@
 import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import type { ParamList } from '../../navigaitons';
-import type { FoodItem } from '../../models';
+import type { FoodItem, FoodLog } from '../../models';
 import {
   calculateComputedWeightAmount,
   DeleteIngredientAlert,
 } from '../editFoodLogs';
-import {
-  BasicButton,
-  DeleteButton,
-  AlternativeFoodLogsView,
-  BackNavigation,
-} from '../../components';
+import { BasicButton, BackNavigation } from '../../components';
 import { COLORS } from '../../constants';
 import LogInformationView from '../editFoodLogs/views/logInformationsView';
 import {
@@ -20,8 +15,9 @@ import {
   useRoute,
 } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
-import EditServingAmountView from '../editFoodLogs/views/EditServingAmountView';
+import NewEditServingAmountView from '../editFoodLogs/views/newEditServingsAmountView';
 import { useEditIngredient } from './useEditIngredient';
+import { mergeNutrients } from '../../utils/NutritentsUtils';
 
 export type EditIngredientNavigationProps = StackNavigationProp<
   ParamList,
@@ -38,18 +34,15 @@ export const EditIngredientScreen = () => {
   return <EditIngredient />;
 };
 
-export const EditIngredient = (props?: EditIngredientsScreenProps) => {
+export const EditIngredient = () => {
   const { params } = useRoute<RouteProp<ParamList, 'EditIngredientScreen'>>();
+
   const navigation = useNavigation<EditIngredientNavigationProps>();
 
-  const { foodItem, updateFoodItem, onSwitchAlternative } = useEditIngredient(
-    params ?? props
-  );
+  const { foodItem, updateFoodItem } = useEditIngredient(params);
 
   const onSavePress = async () => {
-    await saveIngredient().then(() => {
-      navigation.goBack();
-    });
+    await saveIngredient().then(() => {});
   };
 
   const saveIngredient = async () => {
@@ -64,68 +57,95 @@ export const EditIngredient = (props?: EditIngredientsScreenProps) => {
       async onDelete() {
         if (params.deleteIngredient !== undefined && foodItem) {
           params.deleteIngredient(foodItem);
-          navigation.goBack();
         }
       },
     });
   };
 
+  if (foodItem === undefined) {
+    return <></>;
+  }
+
+  const foodLog: FoodLog = {
+    foodItems: [foodItem],
+    computedWeight: foodItem.computedWeight,
+    selectedQuantity: foodItem.selectedQuantity,
+    selectedUnit: foodItem.selectedUnit,
+    servingSizes: foodItem.servingSizes,
+    servingUnits: foodItem.servingUnits,
+    iconID: foodItem.iconId,
+    name: foodItem.name,
+  } as FoodLog;
+
+  const onMoreDetailPress = () => {
+    navigation.navigate('NutritionInformationScreen', {
+      nutrient: mergeNutrients(foodLog.foodItems.flatMap((i) => i.nutrients)),
+      foodLog: foodLog,
+    });
+  };
+
   return (
     <View style={styles.container}>
-      <BackNavigation title="Edit Ingridient" />
+      <BackNavigation title="Edit Ingredient" />
 
       {foodItem ? (
         <ScrollView>
           <View style={styles.body}>
             <LogInformationView
               foodItems={[foodItem]}
-              passioID={foodItem.passioID}
+              iconID={foodItem.iconId}
               name={foodItem.name}
               qty={foodItem.selectedQuantity}
-              imageName={foodItem.imageName}
               servingUnit={foodItem.selectedUnit}
               entityType={foodItem.entityType}
+              onMoreDetailPress={onMoreDetailPress}
               weight={calculateComputedWeightAmount(
                 foodItem.selectedQuantity,
                 foodItem.servingUnits,
                 foodItem.selectedUnit
               )}
             />
-            <EditServingAmountView
-              servingInfo={foodItem}
-              foodItems={[foodItem]}
-              onUpdateServingInfo={(servingInfo, foodItems) => {
-                if (foodItems[0]) {
+            <NewEditServingAmountView
+              foodLog={foodLog}
+              onUpdateFoodLog={(updateFoodLog) => {
+                if (updateFoodLog.foodItems?.[0]) {
                   let copyOfFavFoodItem: FoodItem = {
-                    ...foodItems[0],
-                    selectedUnit: servingInfo.selectedUnit,
-                    selectedQuantity: servingInfo.selectedQuantity,
-                  };
+                    ...updateFoodLog.foodItems?.[0],
+                    ...updateFoodLog,
+                  } as FoodItem;
                   updateFoodItem(copyOfFavFoodItem);
                 }
               }}
-            />
-            <AlternativeFoodLogsView
-              passioId={foodItem.passioID}
-              onAlternateItemCall={async (passioIDAttributes) =>
-                onSwitchAlternative(passioIDAttributes)
-              }
             />
             <View style={styles.lastContainer} />
           </View>
         </ScrollView>
       ) : null}
       <View style={bottomActionStyle.bottomActionContainer}>
-        {params.deleteIngredient !== undefined && (
-          <DeleteButton
-            style={bottomActionStyle.bottomActionButton}
-            small
-            onPress={onDeleteIngredient}
-          />
-        )}
         <BasicButton
           style={bottomActionStyle.bottomActionButton}
-          text="Save"
+          text="Cancel"
+          testId="testButtonSave"
+          small
+          secondary
+          onPress={() => onSavePress()}
+        />
+        {params.deleteIngredient !== undefined && (
+          <>
+            <View style={bottomActionStyle.space} />
+            <BasicButton
+              isDelete
+              small
+              text="Delete"
+              onPress={onDeleteIngredient}
+            />
+          </>
+        )}
+
+        <View style={bottomActionStyle.space} />
+        <BasicButton
+          style={bottomActionStyle.bottomActionButton}
+          text={params.deleteIngredient !== undefined ? 'Save' : 'Save'}
           testId="testButtonSave"
           small
           secondary={false}
@@ -197,12 +217,13 @@ const bottomActionStyle = StyleSheet.create({
     justifyContent: 'space-evenly',
     marginVertical: 32,
     marginBottom: 60,
-    marginHorizontal: 32,
+    marginHorizontal: 24,
   },
   bottomActionButton: {
     flex: 1,
-    marginHorizontal: 8,
-    borderRadius: 14,
     justifyContent: 'center',
+  },
+  space: {
+    width: 8,
   },
 });

@@ -2,11 +2,14 @@ import { StyleSheet } from 'react-native';
 import type { Branding } from '../../contexts';
 import { scaleHeight, scaleWidth, scaledSize } from '../../utils';
 
-const tutorialStyle = ({ white }: Branding) =>
+const tutorialStyle = ({ white, primaryColor }: Branding) =>
   StyleSheet.create({
     background: {
       flex: 1,
       backgroundColor: 'rgba(0, 0, 0, 0.4)',
+    },
+    iconColor: {
+      tintColor: primaryColor,
     },
     title: {
       fontSize: 20,

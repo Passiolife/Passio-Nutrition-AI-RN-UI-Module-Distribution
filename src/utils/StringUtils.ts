@@ -38,7 +38,7 @@ export function caloriesText(
     'calories'
   );
   if (calorie !== undefined) {
-    calorieText = `${calorie.toFixed(0)} ${text}`;
+    calorieText = `${Math.round(calorie)} ${text}`;
   }
   return calorieText;
 }
@@ -53,7 +53,7 @@ export function caloriesTextForFoodItem(
     'calories'
   );
   if (calorie !== undefined) {
-    caloriesTextOutput = `${calorie.toFixed(0)} ${text === 'calories' ? 'c' : text}`;
+    caloriesTextOutput = `${Math.round(calorie)} ${text === 'calories' ? 'c' : text}`;
   }
   return caloriesTextOutput;
 }

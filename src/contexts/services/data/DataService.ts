@@ -18,9 +18,23 @@ import {
   getWeightByStartDateAndEndDate,
   deleteWaterLog,
   deleteWeightLog,
+  getCustomFoods,
+  saveCustomFood,
+  deleteCustomFood,
+  getImage,
+  saveImage,
+  getCustomFood,
+  saveCustomRecipe,
+  getCustomRecipe,
+  deleteCustomRecipe,
+  getCustomRecipes,
+  getLatestWeightDB,
 } from '../../../db';
 import {
-  ActivityLevelType,
+  CustomFood,
+  CustomImageID,
+  CustomRecipe,
+  Image,
   UnitSystem,
   type FavoriteFoodItem,
   type FoodLog,
@@ -37,6 +51,12 @@ const dataService: NutritionDataService = {
   async saveFoodLog(foodLog: FoodLog): Promise<void> {
     return saveFoodLog(await DBHandler.getInstance(), foodLog);
   },
+  async saveCustomFood(foodLog: CustomFood): Promise<string> {
+    return saveCustomFood(await DBHandler.getInstance(), foodLog);
+  },
+  async saveCustomRecipe(foodLog: CustomFood): Promise<string> {
+    return saveCustomRecipe(await DBHandler.getInstance(), foodLog);
+  },
   async saveWater(water: Water): Promise<void> {
     return saveWater(await DBHandler.getInstance(), water);
   },
@@ -47,8 +67,20 @@ const dataService: NutritionDataService = {
   getFoodLogs: function (): Promise<FoodLog[]> {
     return getFoodLogs();
   },
+  getCustomFoodLogs: function (): Promise<CustomFood[]> {
+    return getCustomFoods();
+  },
+  getCustomRecipes: function (): Promise<CustomRecipe[]> {
+    return getCustomRecipes();
+  },
   async deleteFoodLog(uuid: string): Promise<void> {
     return deleteFoodLog(await DBHandler.getInstance(), uuid);
+  },
+  async deleteCustomFood(uuid: string): Promise<void> {
+    return deleteCustomFood(await DBHandler.getInstance(), uuid);
+  },
+  async deleteCustomRecipe(uuid: string): Promise<void> {
+    return deleteCustomRecipe(await DBHandler.getInstance(), uuid);
   },
   async deleteRecipe(uuid: string): Promise<void> {
     return deleteRecipe(await DBHandler.getInstance(), uuid);
@@ -75,6 +107,9 @@ const dataService: NutritionDataService = {
   async getWeight(startDate: Date, endDate: Date): Promise<Weight[]> {
     return getWeightByStartDateAndEndDate(startDate, endDate);
   },
+  async getLatestWeight(): Promise<Weight | undefined | null> {
+    return getLatestWeightDB();
+  },
 
   async saveFavoriteFoodItem(
     favoriteFoodItem: FavoriteFoodItem
@@ -96,6 +131,12 @@ const dataService: NutritionDataService = {
   getRecipes: function (): Promise<Recipe[]> {
     return getRecipes();
   },
+  getImage: function (id: CustomImageID): Promise<Image | undefined> {
+    return getImage(id);
+  },
+  saveImage: async function (image: Image): Promise<CustomImageID> {
+    return saveImage(await DBHandler.getInstance(), image);
+  },
   getNutritionProfile: (): Promise<NutritionProfile | undefined> => {
     return new Promise<NutritionProfile | undefined>((resolve, reject) => {
       AsyncStorage.getItem('nutritionProfile')
@@ -103,19 +144,14 @@ const dataService: NutritionDataService = {
           const profile: NutritionProfile | undefined = profileString
             ? JSON.parse(profileString ?? '')
             : {
-                age: 26,
                 height: 183,
-                weight: 60,
                 gender: 'male',
                 unitLength: UnitSystem.IMPERIAL,
                 unitsWeight: UnitSystem.IMPERIAL,
-                targetWater: 100,
-                targetWeight: 70,
-                caloriesTarget: 1300,
+                caloriesTarget: 2100,
                 carbsPercentage: 50,
                 fatPercentage: 25,
                 proteinPercentage: 25,
-                activityLevel: ActivityLevelType.active,
               };
           resolve(profile);
         })
@@ -123,6 +159,16 @@ const dataService: NutritionDataService = {
           reject(reason);
         });
     });
+  },
+  getCustomFoodLog: function (
+    uuID: string
+  ): Promise<CustomFood | undefined | null> {
+    return getCustomFood(uuID);
+  },
+  getCustomRecipe: function (
+    uuID: string
+  ): Promise<CustomFood | undefined | null> {
+    return getCustomRecipe(uuID);
   },
 };
 export default dataService;

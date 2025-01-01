@@ -1,3 +1,4 @@
+import uuid4 from 'react-native-uuid';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { MealLogScreenNavigationProps } from '.';
 import {
@@ -10,7 +11,7 @@ import { useServices } from '../../contexts';
 import type { FoodLog } from '../../models';
 import { getMealLogsForDate } from '../../utils/DataServiceHelper';
 import { AsyncStorageHelper } from '../../utils/AsyncStorageHelper';
-import type { ParamList } from '../../navigaitons';
+import type { Module, ParamList } from '../../navigaitons';
 import { ShowToast, getMealLog } from '../../utils';
 import type BottomSheet from '@gorhom/bottom-sheet';
 import type { QuickSuggestion } from '../../models/QuickSuggestion';
@@ -30,6 +31,7 @@ export function useMealLogs() {
   const [foodLogs, setFoodLogs] = useState<FoodLog[]>([]);
   const [date, setDate] = useState<Date>(params.defaultDate ?? new Date());
   const [isOpenDatePicker, openDatePicker] = useState(false);
+  const isSubmitting = useRef<boolean>(false);
 
   useEffect(() => {
     const initData = async () => {
@@ -68,6 +70,10 @@ export function useMealLogs() {
     quickSuggestion: QuickSuggestion,
     isOpenEditor: boolean
   ) {
+    if (isSubmitting.current) {
+      return;
+    }
+    isSubmitting.current = true;
     let foodLog = quickSuggestion.foodLog;
 
     if (foodLog === undefined && quickSuggestion.refCode) {
@@ -87,21 +93,24 @@ export function useMealLogs() {
     }
 
     if (foodLog !== undefined) {
+      const uuid: string = `${uuid4.v4() as string}`;
       const updateFoodLog = {
         ...foodLog,
+        uuid: uuid,
         eventTimestamp: convertDateToDBFormat(date),
         meal: getMealLog(date, undefined),
       };
 
       if (isOpenEditor) {
-        navigateToEditFoodLog(updateFoodLog);
+        navigateToEditFoodLog(updateFoodLog, 'Other');
       } else {
         await services.dataService.saveFoodLog(updateFoodLog);
         ShowToast(`"${updateFoodLog.name}" added into "${updateFoodLog.meal}"`);
-        setFoodLogs((value) => [...value, foodLog!]);
+        setFoodLogs((value) => [...value, updateFoodLog!]);
       }
       bottomSheetModalRef.current?.snapToIndex(0);
     }
+    isSubmitting.current = false;
   }
 
   const changeDate = (updateDate: Date) => {
@@ -110,10 +119,10 @@ export function useMealLogs() {
   };
 
   const navigateToEditFoodLog = useCallback(
-    (foodLog: FoodLog) => {
+    (foodLog: FoodLog, prevRouteName?: Module) => {
       navigation.navigate('EditFoodLogScreen', {
         foodLog: foodLog,
-        prevRouteName: 'MealLog',
+        prevRouteName: prevRouteName ?? 'MealLog',
       });
     },
     [navigation]

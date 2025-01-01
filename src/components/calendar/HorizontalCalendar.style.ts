@@ -2,14 +2,14 @@ import { StyleSheet } from 'react-native';
 import { scaleHeight } from '../../utils';
 import type { Branding } from '../../contexts';
 
-const horizontalCalendarStyle = ({ border, white, text }: Branding) =>
+const horizontalCalendarStyle = ({ border, white, secondaryText }: Branding) =>
   StyleSheet.create({
     listContainer: {
       padding: 16,
     },
     dayText: {
       fontSize: 14,
-      color: text,
+      color: secondaryText,
       paddingVertical: scaleHeight(6),
     },
     dayStyle: {},

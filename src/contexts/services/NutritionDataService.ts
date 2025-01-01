@@ -1,5 +1,12 @@
 import type { Water } from 'src/models/Water';
-import type { NutritionProfile, Recipe } from '../../models';
+import type {
+  CustomFood,
+  CustomImageID,
+  CustomRecipe,
+  Image,
+  NutritionProfile,
+  Recipe,
+} from '../../models';
 import type { FoodLog, FavoriteFoodItem } from '../../models';
 import type { PatientProfile } from '../../models';
 import type { Weight } from '../../models/Weight';
@@ -10,6 +17,14 @@ export interface NutritionDataService {
   saveFoodLog(foodLog: FoodLog): Promise<void>;
   deleteFoodLog(uuID: string): Promise<void>;
   getFoodLogs(): Promise<FoodLog[]>;
+  saveCustomFood(food: CustomFood): Promise<string>;
+  saveCustomRecipe(food: CustomRecipe): Promise<string>;
+  deleteCustomFood(uuID: string): Promise<void>;
+  deleteCustomRecipe(uuID: string): Promise<void>;
+  getCustomFoodLogs(): Promise<CustomFood[]>;
+  getCustomRecipes(): Promise<CustomRecipe[]>;
+  getCustomFoodLog(uuID: string): Promise<CustomFood | undefined | null>;
+  getCustomRecipe(uuID: string): Promise<CustomRecipe | undefined | null>;
   saveFavoriteFoodItem(favoriteFoodItem: FavoriteFoodItem): Promise<void>;
   getFavoriteFoodItems(): Promise<FavoriteFoodItem[]>;
   deleteFavoriteFoodItem(uuID: string): Promise<void>;
@@ -23,5 +38,8 @@ export interface NutritionDataService {
   deleteWeight(uuid: string): Promise<void>;
   saveWater: (water: Water) => Promise<void>;
   getWeight: (startDate: Date, endDate: Date) => Promise<Weight[]>;
+  getLatestWeight: () => Promise<Weight | null | undefined>;
   saveWeight: (weight: Weight) => Promise<void>;
+  saveImage: (image: Image) => Promise<CustomImageID>;
+  getImage: (id: CustomImageID) => Promise<Image | undefined | null>;
 }

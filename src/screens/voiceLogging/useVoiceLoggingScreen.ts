@@ -1,5 +1,6 @@
 import Voice, {
   SpeechEndEvent,
+  SpeechErrorEvent,
   SpeechResultsEvent,
   SpeechStartEvent,
 } from '@react-native-voice/voice';
@@ -10,7 +11,7 @@ import {
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   ShowToast,
-  createFoodLogUsingPortionSize,
+  createFoodLogUsingWeightGram,
   getLogToDate,
   mealLabelByDate,
 } from '../../utils';
@@ -23,40 +24,56 @@ import type { ParamList } from '../../navigaitons';
 import { useServices } from '../../contexts';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import type BottomSheet from '@gorhom/bottom-sheet';
+import { Alert, Linking } from 'react-native';
 
 export type VoiceLoggingScreenNavigationProps = StackNavigationProp<
   ParamList,
   'VoiceLoggingScreen'
 >;
 
+export interface VoiceLogRecord extends PassioSpeechRecognitionModel {
+  isSelected?: boolean;
+}
+
 export function useVoiceLogging() {
   const services = useServices();
   const navigation = useNavigation<VoiceLoggingScreenNavigationProps>();
   const route = useRoute<RouteProp<ParamList, 'VoiceLoggingScreen'>>();
-  const bottomSheetModalRef = useRef<BottomSheet>(null);
+  const voiceLoggingResultRef = useRef<BottomSheet>(null);
+  const voiceLoggingFailedRef = useRef<BottomSheet>(null);
   const snapPoints = useMemo(() => ['30%', '60%'], []);
+  const snapPointsFailed = useMemo(() => ['20%', '30%'], []);
+  const isSubmitting = useRef<boolean>(false);
 
   const [isRecording, setIsRecord] = useState(false);
   const [isFetchingResponse, setFetchResponse] = useState(false);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const searchQueryRef = useRef<string>('');
 
-  const [PassioSpeechRecognitionResult, setPassioSpeechRecognitionModel] =
-    useState<PassioSpeechRecognitionModel[] | null>(null);
+  const [voiceRecords, setVoiceRecords] = useState<VoiceLogRecord[] | null>(
+    null
+  );
 
   const recognizeSpeechRemote = useCallback(async (text: string) => {
     try {
       setFetchResponse(true);
-      setPassioSpeechRecognitionModel(null);
+      setVoiceRecords(null);
       const val = await PassioSDK.recognizeSpeechRemote(text);
       if (val && val.length > 0) {
-        bottomSheetModalRef.current?.expand();
-        setPassioSpeechRecognitionModel(val);
+        voiceLoggingResultRef.current?.expand();
+        setVoiceRecords(
+          val.map((o) => {
+            return {
+              ...o,
+              isSelected: true,
+            };
+          })
+        );
       } else {
-        setSearchQuery('');
-        ShowToast("Sorry we didn't recognize your input, please try again");
+        voiceLoggingFailedRef.current?.expand();
       }
     } catch (error) {
+      voiceLoggingFailedRef.current?.expand();
     } finally {
       setFetchResponse(false);
     }
@@ -87,10 +104,15 @@ export function useVoiceLogging() {
   };
 
   const onClearPress = () => {
-    setPassioSpeechRecognitionModel(null);
+    setVoiceRecords(null);
   };
 
   const onLogSelectPress = async (selected: PassioSpeechRecognitionModel[]) => {
+    if (isSubmitting.current) {
+      return;
+    }
+    isSubmitting.current = true;
+
     const logToDate = getLogToDate(
       route.params.logToDate,
       route.params.logToMeal
@@ -103,10 +125,12 @@ export function useVoiceLogging() {
     for (const item of selected) {
       if (item.advisorInfo.foodDataInfo) {
         const foodItem = await PassioSDK.fetchFoodItemForDataInfo(
-          item.advisorInfo.foodDataInfo
+          item.advisorInfo.foodDataInfo,
+          item.advisorInfo.foodDataInfo?.nutritionPreview?.servingQuantity,
+          item.advisorInfo.foodDataInfo?.nutritionPreview?.servingUnit
         );
         if (foodItem) {
-          let foodLog = createFoodLogUsingPortionSize(
+          let foodLog = createFoodLogUsingWeightGram(
             foodItem,
             logToDate,
             meal,
@@ -125,11 +149,16 @@ export function useVoiceLogging() {
     navigation.navigate('BottomNavigation', {
       screen: 'MealLogScreen',
     });
+    isSubmitting.current = false;
   };
 
   const onTryAgainPress = () => {
-    bottomSheetModalRef.current?.close();
+    voiceLoggingResultRef.current?.close();
+    voiceLoggingFailedRef.current?.close();
     setSearchQuery('');
+    setTimeout(() => {
+      onRecordingPress();
+    }, 500);
   };
 
   const onSearchManuallyPress = () => {
@@ -159,11 +188,40 @@ export function useVoiceLogging() {
     } catch (error) {}
   };
 
+  const speechErrorHandler = async (e: SpeechErrorEvent) => {
+    try {
+      if (e.error?.message === 'User denied access to speech recognition') {
+        Alert.alert(
+          'Error',
+          e.error?.message, // The error message you want to display
+          [
+            {
+              style: 'cancel',
+              text: 'Cancel',
+            },
+            {
+              onPress: () => {
+                Linking.openSettings();
+              },
+              text: 'Settings', // Navigate to settings or perform another action
+            },
+          ],
+          { cancelable: false } // Prevents closing the alert by tapping outside
+        );
+      } else {
+        if (e?.error?.message) {
+          Alert.alert(e.error?.message);
+        }
+      }
+    } catch (error) {}
+  };
+
   useEffect(() => {
     Voice.onSpeechStart = speechStartHandler;
     Voice.onSpeechEnd = speechEndHandler;
     Voice.onSpeechResults = speechResultsHandler;
     Voice.onSpeechPartialResults = speechResultsHandler;
+    Voice.onSpeechError = speechErrorHandler;
     return () => {
       Voice.destroy().then(Voice.removeAllListeners);
     };
@@ -171,9 +229,11 @@ export function useVoiceLogging() {
   }, []);
 
   return {
-    PassioSpeechRecognitionResult,
-    bottomSheetModalRef,
+    voiceRecords,
+    voiceLoggingResultRef,
+    voiceLoggingFailedRef,
     snapPoints,
+    snapPointsFailed,
     isRecording,
     searchQuery,
     isFetchingResponse,

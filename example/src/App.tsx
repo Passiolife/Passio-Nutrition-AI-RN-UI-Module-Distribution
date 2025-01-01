@@ -11,10 +11,10 @@ import { SplashScreen } from './SplashScreen';
 import { ENV_PASSIO_KEY } from '@env';
 
 export default function App() {
-  const { isReady } = usePassioConfig({ key: ENV_PASSIO_KEY });
+  const { isReady, error } = usePassioConfig({ key: ENV_PASSIO_KEY });
 
   if (!isReady) {
-    return <SplashScreen />;
+    return <SplashScreen error={error} />;
   }
 
   return (

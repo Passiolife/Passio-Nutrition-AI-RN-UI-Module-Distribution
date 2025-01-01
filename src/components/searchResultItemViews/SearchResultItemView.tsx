@@ -5,15 +5,17 @@ import { PassioFoodIcon } from '../passio/PassioFoodIcon';
 import type { PassioID } from '@passiolife/nutritionai-react-native-sdk-v3/src/sdk/v2';
 import type { PassioIDEntityType } from '@passiolife/nutritionai-react-native-sdk-v3/src/sdk/v2';
 import React from 'react';
-import styles from './SearchResultItemView.style';
+import { stylesObj } from './SearchResultItemView.style';
 import { Text } from '../texts';
 import { ICONS } from '../../assets';
+import { useBranding } from '../../contexts';
 
 interface Props {
   passioID: PassioID;
   imageName: string;
   name: string;
   brandName?: string;
+  isRecipe?: boolean;
   onPressEditor: () => void;
   onPressLog: () => void;
   entityType: PassioIDEntityType;
@@ -27,17 +29,35 @@ const SearchResultItemView = ({
   entityType,
   brandName,
   imageName,
+  isRecipe,
 }: Props) => {
+  const branding = useBranding();
+  const styles = stylesObj(branding);
   return (
     <Card style={styles.shadowContainer}>
       <TouchableOpacity style={styles.mealContainer} onPress={onPressEditor}>
-        <View style={styles.mealImgLayout}>
-          <PassioFoodIcon
-            passioID={passioID}
-            imageName={imageName}
-            style={styles.mealImg}
-            entityType={entityType}
-          />
+        <View>
+          <View style={styles.mealImgLayout}>
+            <PassioFoodIcon
+              passioID={passioID}
+              iconID={passioID}
+              imageName={imageName}
+              style={styles.mealImg}
+              entityType={entityType}
+            />
+          </View>
+          {isRecipe && (
+            <Image
+              source={ICONS.recipe}
+              style={{
+                position: 'absolute',
+                right: 0,
+                bottom: 0,
+                height: 16,
+                width: 16,
+              }}
+            />
+          )}
         </View>
         <View style={styles.mealDetail}>
           <Text weight="600" size="_14px" color="text" style={styles.mealName}>

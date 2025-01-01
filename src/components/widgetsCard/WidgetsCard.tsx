@@ -20,6 +20,7 @@ interface WidgetsCardProps {
   unitValue?: string;
   remain?: number;
   value: string | number;
+  info?: string;
   onPressRightIcon?: () => void;
   onPressLeftIcon?: () => void;
 }
@@ -32,6 +33,7 @@ export const WidgetsCard = ({
   unitValue,
   remain,
   onPressRightIcon,
+  info = 'remain to daily goal',
   onPressLeftIcon,
 }: WidgetsCardProps) => {
   const styles = WidgetsCardStyle(useBranding());
@@ -49,7 +51,7 @@ export const WidgetsCard = ({
                 />
               </TouchableOpacity>
             ) : undefined}
-            <Text weight="600" size="_18px" color="text" style={styles.title}>
+            <Text weight="600" size="title" color="text" style={styles.title}>
               {widgetTitle}
             </Text>
           </View>
@@ -86,7 +88,7 @@ export const WidgetsCard = ({
               {unitValue}
             </Text>
             <Text>&nbsp;</Text>
-            remain to daily goal
+            {info}
           </Text>
         </View>
       </Pressable>
@@ -94,7 +96,7 @@ export const WidgetsCard = ({
   );
 };
 
-const WidgetsCardStyle = ({}: Branding) =>
+const WidgetsCardStyle = ({ primaryColor }: Branding) =>
   StyleSheet.create({
     widgetContainer: {
       borderRadius: scaledSize(8),
@@ -111,6 +113,7 @@ const WidgetsCardStyle = ({}: Branding) =>
     },
     icon: {
       ...scaled(24),
+      tintColor: primaryColor,
     },
     title: {
       marginLeft: scaleWidth(8),

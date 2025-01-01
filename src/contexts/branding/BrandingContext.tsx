@@ -22,6 +22,8 @@ const defaultBranding: Branding = {
   indigo50: 'rgba(238, 242, 255, 1)',
   error: 'rgba(239, 68, 68, 1)',
   card: 'white',
+  header: 'white',
+  footer: 'white',
 };
 
 const BrandingContext = React.createContext(defaultBranding);

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useServices } from '../../../contexts';
 import type { MealLabel, MealPlan, NutritionProfile } from '../../../models';
 import type { MealPlanScreenNavigationProps } from '../MyPlanScreen';
@@ -14,14 +14,15 @@ import {
   type PassioMealPlanItem,
 } from '@passiolife/nutritionai-react-native-sdk-v3';
 import type { ParamList } from '../../../navigaitons';
-import { convertPassioFoodItemToFoodLog } from '../../../utils/V3Utils';
-import { ShowToast } from '../../../utils';
+import { createFoodLogUsingPortionSize, ShowToast } from '../../../utils';
 
 export function useMealPlan() {
   const services = useServices();
   const navigation = useNavigation<MealPlanScreenNavigationProps>();
   const { params } = useRoute<RouteProp<ParamList, 'MyPlanScreen'>>();
   const isFocus = useIsFocused();
+  const isSubmitting = useRef<boolean>(false);
+  const [isInfo, setInfo] = useState<boolean>(true);
 
   const nutritionProfileRef = useRef<NutritionProfile | undefined>(undefined);
   const navigateEditFoodLogRef = useRef<boolean>(false);
@@ -42,24 +43,26 @@ export function useMealPlan() {
   }
 
   const convertFoodLog = async (item: PassioMealPlanItem) => {
-    let result = await PassioSDK.fetchFoodItemForDataInfo(item.meal);
+    let result = await PassioSDK.fetchFoodItemForDataInfo(
+      item.meal,
+      item.meal?.nutritionPreview?.servingQuantity,
+      item?.meal?.nutritionPreview?.servingUnit
+    );
+
+    let qty = item.meal?.nutritionPreview?.servingQuantity ?? '1';
+    let servingUnit = item.meal?.nutritionPreview?.servingUnit ?? '';
+    let weightGram = item.meal?.nutritionPreview?.weightQuantity ?? 0;
+    const portionSize = `${qty} ${servingUnit}`;
 
     if (result) {
-      if (item.meal) {
-        result.amount.weight = {
-          unit: item.meal.nutritionPreview?.weightUnit ?? 'gram',
-          value: item.meal.nutritionPreview?.weightQuantity ?? 0,
-        };
-        result.amount.selectedUnit =
-          item.meal.nutritionPreview?.servingUnit ?? 'gram';
-        result.amount.selectedQuantity =
-          item.meal.nutritionPreview?.servingQuantity ?? 0;
-      }
-      const log = convertPassioFoodItemToFoodLog(
+      let log = createFoodLogUsingPortionSize(
         result,
-        params.logToDate,
-        item.mealTime.toLowerCase() as MealLabel
+        params.logToDate ?? new Date(),
+        item.mealTime.toLowerCase() as MealLabel,
+        weightGram,
+        portionSize
       );
+
       return log;
     } else {
       return null;
@@ -67,10 +70,15 @@ export function useMealPlan() {
   };
 
   const saveFoodLog = async (item: PassioMealPlanItem) => {
+    if (isSubmitting.current) {
+      return;
+    }
+    isSubmitting.current = true;
     const result = await convertFoodLog(item);
     if (result) {
       await services.dataService.saveFoodLog(result);
     }
+    isSubmitting.current = false;
   };
 
   const onAddFoodLogPress = async (item: PassioMealPlanItem) => {
@@ -187,6 +195,10 @@ export function useMealPlan() {
     init();
   }, [day, selectedPassioMealPlan]);
 
+  const onInfoPress = useCallback(() => {
+    setInfo((i) => !i);
+  }, []);
+
   return {
     activeMealPlanName: selectedPassioMealPlan?.mealPlanTitle,
     day,
@@ -199,5 +211,7 @@ export function useMealPlan() {
     onDayChanged,
     onEditFoodLogPress,
     onMultipleLogPress,
+    isInfo,
+    onInfoPress,
   };
 }

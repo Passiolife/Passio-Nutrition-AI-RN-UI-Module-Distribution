@@ -10,11 +10,14 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import { launchImageLibrary } from 'react-native-image-picker';
 import { PHOTO_LIMIT, type TakePictureScreenProps } from '../useTakePicture';
+import { BackOnly } from '../../../components';
+import { useBranding } from '../../../contexts';
 
 const width = Dimensions.get('screen').width;
 
 interface Props {
   recognizePictureRemote: (images: string[]) => void;
+  isMultiple?: boolean;
 }
 
 export interface SelectPhotosRef {
@@ -22,15 +25,19 @@ export interface SelectPhotosRef {
 }
 
 export const SelectPhotos = React.forwardRef<SelectPhotosRef, Props>(
-  ({ recognizePictureRemote }: Props, ref: React.Ref<SelectPhotosRef>) => {
+  (
+    { recognizePictureRemote, isMultiple = true }: Props,
+    ref: React.Ref<SelectPhotosRef>
+  ) => {
     const [images, setImages] = useState<string[]>([]);
     const navigation = useNavigation<TakePictureScreenProps>();
+    const branding = useBranding();
     const isFirstTime = useRef(true);
 
     const onTakeImages = useCallback(async () => {
       try {
         const { assets } = await launchImageLibrary({
-          selectionLimit: PHOTO_LIMIT,
+          selectionLimit: isMultiple ? PHOTO_LIMIT : 1,
           mediaType: 'photo',
           quality: 0.4,
         });
@@ -48,7 +55,7 @@ export const SelectPhotos = React.forwardRef<SelectPhotosRef, Props>(
       } catch (e) {
         return [];
       }
-    }, [navigation, recognizePictureRemote]);
+    }, [isMultiple, navigation, recognizePictureRemote]);
 
     useImperativeHandle(
       ref,
@@ -80,35 +87,88 @@ export const SelectPhotos = React.forwardRef<SelectPhotosRef, Props>(
 
     return (
       <SafeAreaView style={{ backgroundColor: 'white', flex: 1 }}>
-        <View>
-          <FlatList
-            data={images}
-            style={{
-              margin: 16,
-            }}
-            renderItem={({ item }) => {
-              return (
-                <Image
-                  source={{
-                    uri: Image.resolveAssetSource({
-                      uri:
-                        Platform.OS === 'android'
-                          ? `${'file://' + item}`
-                          : item,
-                    }).uri,
-                  }}
-                  resizeMode="cover"
-                  resizeMethod="resize"
-                  style={{
-                    height: width / 3.5,
-                    margin: 3,
-                    width: width / 3.5,
-                  }}
-                />
-              );
-            }}
-            numColumns={3}
-          />
+        <BackOnly />
+        <View style={{ backgroundColor: branding.backgroundColor, flex: 1 }}>
+          {images.length === 1 ? (
+            <Image
+              source={{
+                uri: Image.resolveAssetSource({
+                  uri:
+                    Platform.OS === 'android'
+                      ? `${'file://' + images[0]}`
+                      : images[0],
+                }).uri,
+              }}
+              resizeMode="cover"
+              resizeMethod="resize"
+              style={{
+                height: width / 1,
+                marginHorizontal: 16,
+                borderRadius: 12,
+                margin: 3,
+              }}
+            />
+          ) : images.length === 2 ? (
+            <FlatList
+              data={images}
+              style={{
+                margin: 16,
+              }}
+              renderItem={({ item }) => {
+                return (
+                  <Image
+                    source={{
+                      uri: Image.resolveAssetSource({
+                        uri:
+                          Platform.OS === 'android'
+                            ? `${'file://' + item}`
+                            : item,
+                      }).uri,
+                    }}
+                    resizeMode="cover"
+                    resizeMethod="resize"
+                    style={{
+                      height: width / 2.3,
+                      borderRadius: 12,
+                      margin: 3,
+                      width: width / 2.3,
+                    }}
+                  />
+                );
+              }}
+              numColumns={3}
+            />
+          ) : (
+            <FlatList
+              data={images}
+              style={{
+                margin: 16,
+              }}
+              renderItem={({ item }) => {
+                return (
+                  <Image
+                    source={{
+                      uri: Image.resolveAssetSource({
+                        uri:
+                          Platform.OS === 'android'
+                            ? `${'file://' + item}`
+                            : item,
+                      }).uri,
+                    }}
+                    resizeMode="cover"
+                    resizeMethod="resize"
+                    style={{
+                      height: width / 3.5,
+                      borderRadius: 12,
+                      margin: 3,
+                      width: width / 3.5,
+                    }}
+                  />
+                );
+              }}
+              numColumns={3}
+            />
+          )}
         </View>
       </SafeAreaView>
     );
