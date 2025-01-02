@@ -44,15 +44,10 @@ export const TakePictureScreen = gestureHandlerRootHOC(() => {
   const {
     type,
     recognizePictureRemote,
-    snapPoints,
-    bottomSheetModalRef,
-    noResultFoundRef,
     selectPhotoRef,
     onLogSelectPress,
     passioAdvisorFoodInfo,
     onRetakePress,
-    onSearchManuallyPress,
-    snapPointsNoResultFound,
     isFetchingResponse,
     takePictureRef,
     isPreparingLog,
@@ -108,7 +103,7 @@ export const TakePictureScreen = gestureHandlerRootHOC(() => {
               paddingVertical: 6,
               paddingHorizontal: 8,
             }}
-            onChange={(item) => console.log(item)}
+            onChange={() => {}}
           />
         </View>
         <View style={{ flex: 1, marginHorizontal: 12 }}>
@@ -127,7 +122,7 @@ export const TakePictureScreen = gestureHandlerRootHOC(() => {
               paddingVertical: 6,
               paddingHorizontal: 8,
             }}
-            onChange={(item) => console.log(item)}
+            onChange={() => {}}
           />
         </View>
       </View>
