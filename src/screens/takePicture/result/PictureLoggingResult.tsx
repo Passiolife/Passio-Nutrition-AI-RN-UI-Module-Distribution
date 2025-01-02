@@ -4,14 +4,13 @@ import {
   StyleSheet,
   View,
   type ViewStyle,
-  TouchableOpacity,
   Image,
 } from 'react-native';
 import { COLORS } from '../../../constants';
 import { Text } from '../../../components/texts/Text';
 import type { PassioAdvisorFoodInfo } from '@passiolife/nutritionai-react-native-sdk-v3';
 import { PictureLoggingResultItemView } from './PictureLoggingResultItemView';
-import { BasicButton } from '../../../components';
+import { BasicButton, MacrosProgressView } from '../../../components';
 import { FlatList } from 'react-native-gesture-handler';
 import { ICONS } from '../../../assets';
 import type { PicturePassioAdvisorFoodInfo } from '../useTakePicture';
@@ -57,17 +56,6 @@ export const PictureLoggingResult = ({
       })
     );
   };
-  const onClearPress = () => {
-    setPicturePassioAdvisorFoodInfo((item) => {
-      return item.map((o) => {
-        return {
-          ...o,
-          isSelected: false,
-        };
-      });
-    });
-  };
-
   const renderNoDataFound = () => {
     return (
       <View style={styles.noDataFound}>
@@ -81,40 +69,30 @@ export const PictureLoggingResult = ({
 
   return (
     <View style={[styles.itemsContainer, style]}>
-      <View style={styles.clearBtnView}>
-        <TouchableOpacity onPress={onClearPress} style={styles.clearBtn}>
-          <Text size="_14px" weight="400" style={styles.clearBtnText}>
-            {selectedCount && selectedCount > 0 ? 'Clear' : ''}
-          </Text>
-        </TouchableOpacity>
-      </View>
-      {passioAdvisorFoodInfoResult.length > 0 && (
-        <Text
-          weight="700"
-          size="_20px"
-          color="text"
-          style={styles.quickSuggestionTextStyle}
-        >
-          {passioAdvisorFoodInfoResult.length === 0
-            ? 'No Result found'
-            : 'Your Results'}
-        </Text>
-      )}
-
-      {passioAdvisorFoodInfoResult.length > 0 && (
-        <Text
-          weight="400"
-          size="_14px"
-          color="text"
-          style={styles.noQuickSuggestionTitle}
-        >
-          Select the foods you would like to log
-        </Text>
-      )}
       <FlatList
         style={styles.list}
         data={advisorFoodInfo}
         extraData={advisorFoodInfo}
+        ListHeaderComponent={
+          <MacrosProgressView
+            calories={{
+              consumed: 1512,
+              target: 447,
+            }}
+            carbs={{
+              consumed: 170,
+              target: 27,
+            }}
+            protein={{
+              consumed: 113,
+              target: 17,
+            }}
+            fat={{
+              consumed: 42,
+              target: 29,
+            }}
+          />
+        }
         showsVerticalScrollIndicator={false}
         ListEmptyComponent={renderNoDataFound}
         renderItem={({ item }) => {
@@ -154,7 +132,7 @@ export const PictureLoggingResult = ({
               }
             }}
             style={styles.buttonTryAgain}
-            text={type === 'camera' ? 'Retake' : 'Select Again'}
+            text={'Create Recipe'}
           />
           <BasicButton
             onPress={() => {
@@ -187,7 +165,6 @@ export const PictureLoggingResult = ({
 
 const styles = StyleSheet.create({
   itemsContainer: {
-    backgroundColor: 'white',
     flex: 1,
   },
   footer: {},
@@ -224,7 +201,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: 'row',
-    marginBottom: 40,
+    marginBottom: 16,
   },
   buttonTryAgain: { flex: 1, marginStart: 16, marginEnd: 8 },
   buttonLogSelected: { flex: 1, marginEnd: 16, marginStart: 8 },

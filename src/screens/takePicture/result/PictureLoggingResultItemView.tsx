@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'rgba(238, 242, 255, 1)',
+    backgroundColor: 'white',
     flex: 1,
     marginVertical: 4,
     marginHorizontal: 2,

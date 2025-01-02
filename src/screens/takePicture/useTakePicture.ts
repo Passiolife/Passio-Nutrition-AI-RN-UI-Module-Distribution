@@ -36,7 +36,9 @@ export function useTakePicture() {
   const noResultFoundRef = useRef<BottomSheet>(null);
   const snapPoints = useMemo(() => ['30%', '70%'], []);
   const snapPointsNoResultFound = useMemo(() => ['20%', '40%'], []);
-  const [isFetchingResponse, setFetchResponse] = useState(false);
+  const [isFetchingResponse, setFetchResponse] = useState<boolean | undefined>(
+    undefined
+  );
   const [isPreparingLog, setPreparingLog] = useState(false);
   const [passioAdvisorFoodInfo, setPassioAdvisorFoodInfo] = useState<
     PicturePassioAdvisorFoodInfo[] | null
@@ -63,7 +65,6 @@ export function useTakePicture() {
         await Promise.all(data);
         let foodInfoArrayFlat = foodInfoArray.flat();
         if (foodInfoArrayFlat && foodInfoArrayFlat?.length > 0) {
-          setFetchResponse(false);
           bottomSheetModalRef.current?.expand();
           setPassioAdvisorFoodInfo(
             (foodInfoArrayFlat as PassioAdvisorFoodInfo[]).map((i) => {
@@ -73,12 +74,16 @@ export function useTakePicture() {
               };
             })
           );
+          setTimeout(() => {
+            setFetchResponse(false);
+          }, 2500);
         } else {
+          setFetchResponse(false);
           noResultFoundRef.current?.expand();
         }
       } catch (error) {
-      } finally {
         setFetchResponse(false);
+      } finally {
       }
     },
     [isFetchingResponse]

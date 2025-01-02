@@ -123,7 +123,7 @@ export const BasicButton: React.FC<Props> = (props) => {
           />
         ) : (
           <Text
-            weight="600"
+            weight="500"
             size="_14px"
             style={[
               styles.text,
@@ -149,6 +149,7 @@ const basicButtonStyle = ({ primaryColor }: Branding) =>
       paddingHorizontal: 16,
       minWidth: 100,
       flexDirection: 'row',
+      minHeight: scaleHeight(50),
     },
     text: {
       paddingVertical: scaleHeight(8),
