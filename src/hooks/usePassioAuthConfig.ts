@@ -17,7 +17,8 @@ export function usePassioConfig({ key }: { key: string }) {
       const passioSDKStatus = await PassioSDK.configure({
         key: key,
         autoUpdate: true,
-        debugMode: true,
+        debugMode: false,
+        remoteOnly: true,
       });
       setError(undefined);
       setIsReady(passioSDKStatus.mode === 'isReadyForDetection');

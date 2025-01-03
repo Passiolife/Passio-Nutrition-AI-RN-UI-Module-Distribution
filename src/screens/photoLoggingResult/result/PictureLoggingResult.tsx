@@ -6,33 +6,28 @@ import {
   type ViewStyle,
   Image,
 } from 'react-native';
+import type { PassioAdvisorFoodInfo } from '@passiolife/nutritionai-react-native-sdk-v3';
+
 import { COLORS } from '../../../constants';
 import { Text } from '../../../components/texts/Text';
-import type { PassioAdvisorFoodInfo } from '@passiolife/nutritionai-react-native-sdk-v3';
-import { PictureLoggingResultItemView } from './PictureLoggingResultItemView';
-import { BasicButton, MacrosProgressView } from '../../../components';
+import { BasicButton } from '../../../components';
 import { FlatList } from 'react-native-gesture-handler';
 import { ICONS } from '../../../assets';
-import type { PicturePassioAdvisorFoodInfo } from '../useTakePicture';
+import type { PicturePassioAdvisorFoodInfo } from '../../takePicture/useTakePicture';
+import { PictureLoggingResultItemView } from './PictureLoggingResultItemView';
 
 interface Props {
   style?: StyleProp<ViewStyle>;
   passioAdvisorFoodInfoResult: Array<PicturePassioAdvisorFoodInfo>;
-  onRetake: () => void;
-  type: 'camera' | 'picture';
   onLogSelect: (selected: PassioAdvisorFoodInfo[]) => void;
-  onCancel: () => void;
   isPreparingLog: boolean;
 }
 
 export const PictureLoggingResult = ({
   style,
   passioAdvisorFoodInfoResult,
-  type,
   isPreparingLog,
-  onRetake,
   onLogSelect,
-  onCancel,
 }: Props) => {
   const [advisorFoodInfo, setPicturePassioAdvisorFoodInfo] = useState<
     PicturePassioAdvisorFoodInfo[]
@@ -73,26 +68,6 @@ export const PictureLoggingResult = ({
         style={styles.list}
         data={advisorFoodInfo}
         extraData={advisorFoodInfo}
-        ListHeaderComponent={
-          <MacrosProgressView
-            calories={{
-              consumed: 1512,
-              target: 447,
-            }}
-            carbs={{
-              consumed: 170,
-              target: 27,
-            }}
-            protein={{
-              consumed: 113,
-              target: 17,
-            }}
-            fat={{
-              consumed: 42,
-              target: 29,
-            }}
-          />
-        }
         showsVerticalScrollIndicator={false}
         ListEmptyComponent={renderNoDataFound}
         renderItem={({ item }) => {
@@ -111,6 +86,10 @@ export const PictureLoggingResult = ({
             <PictureLoggingResultItemView
               foodName={item?.foodDataInfo?.foodName ?? item?.recognisedName}
               imageName={foodDataInfo?.iconID}
+              calories={foodDataInfo?.nutritionPreview?.calories ?? 0}
+              carbs={foodDataInfo?.nutritionPreview?.carbs ?? 0}
+              fat={foodDataInfo?.nutritionPreview?.fat ?? 0}
+              protein={foodDataInfo?.nutritionPreview?.protein ?? 0}
               bottom={`${item?.foodDataInfo?.nutritionPreview?.servingQuantity} ${item?.foodDataInfo?.nutritionPreview?.servingUnit} | ${Math.round(newCalories)} cal`}
               onFoodLogSelect={() => {
                 onFoodSelect(item);
@@ -120,45 +99,23 @@ export const PictureLoggingResult = ({
           );
         }}
       />
-      {passioAdvisorFoodInfoResult.length > 0 ? (
-        <View style={styles.buttonContainer}>
-          <BasicButton
-            secondary
-            onPress={() => {
-              if (type === 'camera') {
-                onRetake();
-              } else {
-                onCancel();
-              }
-            }}
-            style={styles.buttonTryAgain}
-            text={'Create Recipe'}
-          />
-          <BasicButton
-            onPress={() => {
-              onLogSelect(advisorFoodInfo ?? []);
-            }}
-            style={styles.buttonLogSelected}
-            isLoading={isPreparingLog}
-            enable={selectedCount > 0}
-            text="Log Selected"
-          />
-        </View>
-      ) : (
-        <View style={styles.buttonContainer}>
-          <BasicButton
-            secondary
-            onPress={onCancel}
-            style={styles.buttonTryAgain}
-            text={'Cancel'}
-          />
-          <BasicButton
-            onPress={onRetake}
-            style={styles.buttonLogSelected}
-            text={type === 'camera' ? 'Retake' : 'Select Image'}
-          />
-        </View>
-      )}
+      <View style={styles.buttonContainer}>
+        <BasicButton
+          secondary
+          onPress={() => {}}
+          style={styles.buttonTryAgain}
+          text={'Create Recipe'}
+        />
+        <BasicButton
+          onPress={() => {
+            onLogSelect(advisorFoodInfo ?? []);
+          }}
+          style={styles.buttonLogSelected}
+          isLoading={isPreparingLog}
+          enable={selectedCount > 0}
+          text="Log Selected"
+        />
+      </View>
     </View>
   );
 };
@@ -176,9 +133,8 @@ const styles = StyleSheet.create({
     alignContent: 'center',
   },
   list: {
-    marginHorizontal: 16,
+    marginHorizontal: 8,
     marginBottom: 20,
-    marginTop: 16,
     flex: 1,
   },
   quickSuggestionTextStyle: {

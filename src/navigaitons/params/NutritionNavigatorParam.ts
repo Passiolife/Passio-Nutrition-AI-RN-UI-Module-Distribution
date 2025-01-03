@@ -107,6 +107,13 @@ export interface TakePictureScreenProps {
   isMultiple?: boolean;
   images?: string[];
 }
+
+export interface PhotoLoggingScreenProps {
+  images?: string[];
+  logToDate?: Date | undefined;
+  logToMeal?: MealLabel | undefined;
+}
+
 export type ParamList = {
   MealLogScreen: MealLogScreenProps;
   ScanningScreen: ScanningScreenProps;
@@ -139,4 +146,5 @@ export type ParamList = {
   FoodCreatorScreen: FoodCreatorNavProps;
   MyFoodsScreen: MyFoodsScreenNavProps;
   BarcodeScanScreen: BarcodeScanScreenNavProps;
+  PhotoLoggingScreen: PhotoLoggingScreenProps;
 };

@@ -23,6 +23,7 @@ import {
   FoodCreatorScreen,
   BarcodeScanScreen,
   EditRecipeScreen,
+  PhotoLoggingScreen,
 } from '../screens';
 import {
   DashboardScreenRoute,
@@ -52,6 +53,7 @@ import {
   MyFoodsScreenRoute,
   FoodCreatorScreenRoute,
   EditRecipeScreenRoute,
+  PhotoLoggingScreenRoute,
 } from './Route';
 import MyPlanScreen from '../screens/myPlans/MyPlanScreen';
 import { HomeBottomNavigation } from './HomeBottomNavigations';
@@ -234,6 +236,11 @@ export const NutritionNavigator = () => {
               options={{ headerShown: false }}
               name={EditRecipeScreenRoute}
               component={EditRecipeScreen}
+            />
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name={PhotoLoggingScreenRoute}
+              component={PhotoLoggingScreen}
             />
           </Stack.Navigator>
         </NavigationContainer>
