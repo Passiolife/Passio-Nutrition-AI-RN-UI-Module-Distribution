@@ -6,7 +6,7 @@ import { PassioIDEntityType } from '@passiolife/nutritionai-react-native-sdk-v3'
 import { scaleHeight, scaleWidth } from '../../../utils';
 import { Dropdown } from 'react-native-element-dropdown';
 import { Branding } from '../../../contexts';
-import Slider from '@react-native-community/slider';
+import Slider, { SliderReferenceType } from '@react-native-community/slider';
 import { PhotoLoggingResults } from '../usePhotoLogging';
 import { useEditServing } from './useEditServing';
 
@@ -95,13 +95,16 @@ export const EditServingSizeModal = forwardRef<
           </Text>
           <View style={styles.servingSizeContainer}>
             <TextInput
-              inputMode="decimal"
+              keyboardType="numeric"
               returnKeyLabel="Done"
               returnKeyType="done"
               style={styles.input}
               ref={qtyTextInputRef}
-              onChangeText={handleQtyUpdate}
               defaultValue={`${quantity}`}
+              onBlur={(e) => handleQtyUpdate(e.nativeEvent.text, false)}
+              onSubmitEditing={(e) =>
+                handleQtyUpdate(e.nativeEvent.text.toString(), false)
+              }
             />
             <Dropdown
               data={servingSizes}
@@ -117,7 +120,7 @@ export const EditServingSizeModal = forwardRef<
             minimumValue={min}
             style={styles.slider}
             value={quantity}
-            ref={sliderRef}
+            ref={sliderRef as unknown as SliderReferenceType}
             maximumValue={max}
             onValueChange={(value) => {
               handleQtyUpdate(value.toString(), true);

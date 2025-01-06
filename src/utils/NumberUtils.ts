@@ -20,3 +20,17 @@ export function formatNumber(num: number | undefined) {
     return undefined;
   }
 }
+
+export function validateQuantityInput(input: string) {
+  // Use regex to allow only valid numbers with at most one decimal point
+  const validFormat = /^[0-9]*(\.[0-9]*)?$/;
+
+  // If input matches valid format, return it as-is
+  if (validFormat.test(input)) {
+    return input;
+  }
+
+  // If input is invalid, extract the first valid number
+  const validNumberMatch = input.match(/[0-9]+(\.[0-9]*)?/);
+  return validNumberMatch ? validNumberMatch[0] : ''; // Return valid number or empty string
+}

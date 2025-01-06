@@ -2,14 +2,17 @@ import { useRef, useState, useCallback } from 'react';
 import { TextInput } from 'react-native';
 import { useBranding } from '../../../contexts';
 import { PhotoLoggingResults } from '../usePhotoLogging';
-import { formatNumber } from '../../../utils/NumberUtils';
+import {
+  formatNumber,
+  validateQuantityInput,
+} from '../../../utils/NumberUtils';
 import { updateSlider } from '../../../utils/V3Utils';
 import { EditServingSizeProps } from './EditServingSizeModal';
 import {
   PassioFoodItem,
   PassioSDK,
 } from '@passiolife/nutritionai-react-native-sdk-v3';
-import { SliderRef } from '@react-native-community/slider';
+import Slider from '@react-native-community/slider';
 
 interface Select {
   label: string;
@@ -24,7 +27,7 @@ export const useEditServing = () => {
   const [sliderConfig, setSliderConfig] = useState<number[]>([0, 100, 1]);
   const [selectedUnit, setSelectedUnit] = useState('gram');
   const qtyTextInputRef = useRef<TextInput>(null);
-  const sliderRef = useRef<SliderRef>(null);
+  const sliderRef = useRef<Slider>(null);
   const branding = useBranding();
   const [weight, setWeight] = useState(0);
   const [quantity, setQty] = useState(0);
@@ -32,12 +35,6 @@ export const useEditServing = () => {
 
   const update = useCallback(
     (qty: string, unit: string, isSlider?: boolean) => {
-      let defaultQty =
-        result?.passioFoodItem?.amount?.servingSizes?.find(
-          (i) => i.unitName === unit
-        )?.quantity ||
-        result?.foodDataInfo?.nutritionPreview?.servingQuantity ||
-        0;
       let defaultWeight =
         result?.passioFoodItem?.amount?.servingUnits?.find(
           (i) => i.unitName === unit
@@ -48,31 +45,28 @@ export const useEditServing = () => {
       // 100 gram - 100 gram
       if (unit === 'gram') {
         defaultWeight = 1;
-        defaultQty = 1;
       }
 
       if (qty.length > 0) {
-        setWeight(
-          formatNumber((defaultWeight * Number(qty)) / defaultQty) ?? 0
-        );
+        setWeight(formatNumber(defaultWeight * Number(qty)) ?? 0);
       } else {
         setWeight(0);
       }
       if (isSlider) {
+        const numQty = Number(qty);
         qtyTextInputRef?.current?.setNativeProps({
-          text: formatNumber(Number(qty))?.toString(),
+          text: formatNumber(numQty)?.toString(),
         });
       } else {
+        setQty(Number(qty));
         setSliderConfig(updateSlider(Number(qty)));
-        sliderRef.current?.updateValue?.(Number(qty));
+        // sliderRef.current?.props?.onValueChange?.(Number(qty));
       }
 
       quantityRef.current = Number(qty);
     },
     [
-      result?.foodDataInfo?.nutritionPreview?.servingQuantity,
       result?.foodDataInfo?.nutritionPreview?.weightQuantity,
-      result?.passioFoodItem?.amount?.servingSizes,
       result?.passioFoodItem?.amount?.servingUnits,
     ]
   );
@@ -80,7 +74,7 @@ export const useEditServing = () => {
   /* when text input change or slider update */
   const handleQtyUpdate = useCallback(
     (qty: string, isSlider?: boolean) => {
-      update(qty, selectedUnit, isSlider);
+      update(validateQuantityInput(qty), selectedUnit, isSlider);
     },
     [selectedUnit, update]
   );
