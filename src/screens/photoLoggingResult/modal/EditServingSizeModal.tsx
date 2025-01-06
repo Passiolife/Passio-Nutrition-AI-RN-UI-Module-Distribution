@@ -29,6 +29,7 @@ export const EditServingSizeModal = forwardRef<
     isOpen,
     openEditServingPopup,
     qtyTextInputRef,
+    sliderRef,
     quantity,
     result,
     selectedUnit,
@@ -116,6 +117,7 @@ export const EditServingSizeModal = forwardRef<
             minimumValue={min}
             style={styles.slider}
             value={quantity}
+            ref={sliderRef}
             maximumValue={max}
             onValueChange={(value) => {
               handleQtyUpdate(value.toString(), true);

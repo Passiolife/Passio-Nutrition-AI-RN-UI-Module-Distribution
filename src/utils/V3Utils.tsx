@@ -331,10 +331,10 @@ export function updateSlider(value: number): [number, number, number] {
     sliderStep = sliderMax / 50;
   }
 
-  let sliderSteps = Math.floor(sliderMax / sliderStep) + 1;
-  if (sliderSteps > 50) {
-    sliderSteps = 50;
+  // let sliderSteps = Math.floor(sliderMax / sliderStep) + 1;
+  if (sliderStep > 50) {
+    sliderStep = 50;
   }
 
-  return [0, sliderMax, sliderSteps]; // min, max, step
+  return [0, sliderMax, sliderStep]; // min, max, step
 }

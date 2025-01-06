@@ -9,6 +9,7 @@ import {
   PassioFoodItem,
   PassioSDK,
 } from '@passiolife/nutritionai-react-native-sdk-v3';
+import { SliderRef } from '@react-native-community/slider';
 
 interface Select {
   label: string;
@@ -23,9 +24,11 @@ export const useEditServing = () => {
   const [sliderConfig, setSliderConfig] = useState<number[]>([0, 100, 1]);
   const [selectedUnit, setSelectedUnit] = useState('gram');
   const qtyTextInputRef = useRef<TextInput>(null);
+  const sliderRef = useRef<SliderRef>(null);
   const branding = useBranding();
   const [weight, setWeight] = useState(0);
   const [quantity, setQty] = useState(0);
+  const quantityRef = useRef(0);
 
   const update = useCallback(
     (qty: string, unit: string, isSlider?: boolean) => {
@@ -61,7 +64,10 @@ export const useEditServing = () => {
         });
       } else {
         setSliderConfig(updateSlider(Number(qty)));
+        sliderRef.current?.updateValue?.(Number(qty));
       }
+
+      quantityRef.current = Number(qty);
     },
     [
       result?.foodDataInfo?.nutritionPreview?.servingQuantity,
@@ -111,6 +117,7 @@ export const useEditServing = () => {
     setSelectedUnit(unit ?? 'gram');
     setWeight(defaultWeight);
     setQty(defaultQty);
+    quantityRef.current = defaultQty;
     setSliderConfig(updateSlider(Number(defaultQty)));
     setOpen(true);
     setResult(item);
@@ -136,7 +143,7 @@ export const useEditServing = () => {
         ...passioFoodItem,
         amount: {
           ...passioFoodItem.amount,
-          selectedQuantity: Number(qtyTextInputRef?.current?.props?.value ?? 0),
+          selectedQuantity: Number(quantityRef.current || 0),
           selectedUnit: selectedUnit,
           weight: {
             unit: 'g',
@@ -167,7 +174,9 @@ export const useEditServing = () => {
     sliderConfig,
     openEditServingPopup,
     qtyTextInputRef,
+    sliderRef,
     quantity,
+    quantityRef,
     result,
     selectedUnit,
     servingSizes,
