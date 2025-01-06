@@ -2,26 +2,36 @@ import React from 'react';
 import { takePictureStyle } from '../takePicture/takePicture.styles';
 import { usePhotoLogging } from './usePhotoLogging';
 import { useBranding } from '../../contexts';
-import { View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import { PictureLoggingResult } from './result/PictureLoggingResult';
 import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
-import { BackNavigation, MacrosProgressView, Text } from '../../components';
+import {
+  BackNavigation,
+  DatePicker,
+  MacrosProgressView,
+  Text,
+} from '../../components';
 import FakeProgress from '../../components/progressBard/FakeProgress';
 import { Dropdown } from 'react-native-element-dropdown';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { EditServingSizeModal } from './modal/EditServingSizeModal';
+import { dateFormatter } from '../../utils';
 
 export const PhotoLoggingScreen = gestureHandlerRootHOC(() => {
   const {
-    mealTimes,
-    meal,
-    setMeal,
-    onLogSelectPress,
-    passioAdvisorFoodInfo,
-    isFetchingResponse,
-    isPreparingLog,
+    changeDate,
+    date,
     editServingInfoRef,
+    isFetchingResponse,
+    isOpenDatePicker,
+    isPreparingLog,
+    meal,
+    mealTimes,
+    onLogSelectPress,
     onUpdateFoodItem,
+    openDatePicker,
+    passioAdvisorFoodInfo,
+    setMeal,
   } = usePhotoLogging();
 
   const branding = useBranding();
@@ -29,7 +39,7 @@ export const PhotoLoggingScreen = gestureHandlerRootHOC(() => {
 
   const renderHeader = () => {
     return (
-      <View style={{ marginTop: 10 }}>
+      <View>
         <View
           style={{
             flexDirection: 'row',
@@ -37,7 +47,7 @@ export const PhotoLoggingScreen = gestureHandlerRootHOC(() => {
           }}
         >
           <View style={{ flex: 1, marginHorizontal: 12 }}>
-            <Text color="secondaryText" size="_12px">
+            <Text color="secondaryText" size="_14px" weight="500">
               Meal Time
             </Text>
             <Dropdown
@@ -49,7 +59,8 @@ export const PhotoLoggingScreen = gestureHandlerRootHOC(() => {
                 borderWidth: 1,
                 marginVertical: 4,
                 borderColor: branding.border,
-                paddingVertical: 6,
+                paddingVertical: 12,
+                borderRadius: 8,
                 paddingHorizontal: 8,
               }}
               onChange={(value) => {
@@ -57,44 +68,56 @@ export const PhotoLoggingScreen = gestureHandlerRootHOC(() => {
               }}
             />
           </View>
-          <View style={{ flex: 1, marginHorizontal: 12 }}>
-            <Text color="secondaryText" size="_12px">
+          <TouchableOpacity
+            onPress={() => openDatePicker(true)}
+            style={{ flex: 1, marginHorizontal: 12 }}
+          >
+            <Text color="secondaryText" size="_14px" weight="500">
               Timestamp
             </Text>
-            <Dropdown
-              data={mealTimes}
-              labelField={'label'}
-              value={'value'}
-              valueField={'value'}
+            <Text
               style={{
                 borderWidth: 1,
                 marginVertical: 4,
                 borderColor: branding.border,
-                paddingVertical: 6,
+                paddingVertical: 12,
+                borderRadius: 8,
                 paddingHorizontal: 8,
               }}
-              onChange={(value) => {
-                setMeal(value.value);
-              }}
-            />
-          </View>
+            >
+              {dateFormatter(date)}
+            </Text>
+          </TouchableOpacity>
         </View>
-        <MacrosProgressView
-          calories={{
-            consumed: 1512,
-            target: 447,
-          }}
-          carbs={{
-            consumed: 170,
-            target: 27,
-          }}
-          protein={{
-            consumed: 113,
-            target: 17,
-          }}
-          fat={{
-            consumed: 42,
-            target: 29,
+        {!isFetchingResponse && (
+          <MacrosProgressView
+            calories={{
+              consumed: 1512,
+              target: 447,
+            }}
+            carbs={{
+              consumed: 170,
+              target: 27,
+            }}
+            protein={{
+              consumed: 113,
+              target: 17,
+            }}
+            fat={{
+              consumed: 42,
+              target: 29,
+            }}
+          />
+        )}
+        <View
+          style={{
+            shadowColor: '#000',
+            height: 1,
+            shadowOffset: { width: 0, height: 3 },
+            shadowOpacity: 0.25,
+            shadowRadius: 3.0,
+            elevation: 5,
+            backgroundColor: '#fff',
           }}
         />
       </View>
@@ -138,6 +161,12 @@ export const PhotoLoggingScreen = gestureHandlerRootHOC(() => {
       <EditServingSizeModal
         ref={editServingInfoRef}
         onUpdateFoodItem={onUpdateFoodItem}
+      />
+      <DatePicker
+        isDatePickerVisible={isOpenDatePicker}
+        handleConfirm={changeDate}
+        hideDatePicker={() => openDatePicker(false)}
+        selectedDate={date}
       />
     </SafeAreaView>
   );

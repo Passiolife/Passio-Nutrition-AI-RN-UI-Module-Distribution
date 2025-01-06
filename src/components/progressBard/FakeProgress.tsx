@@ -103,7 +103,7 @@ const FakeProgress = ({
       <View style={styles.progressBarView}>
         <Animated.View style={[styles.barStyle, animWidthStyle]} />
       </View>
-      <Text style={styles.topSpace}>Analyzing Photo...</Text>
+      <Text style={styles.topSpace}>Generating results...</Text>
     </View>
   );
 };

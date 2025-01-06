@@ -66,7 +66,7 @@ export function usePhotoLogging() {
   const [passioAdvisorFoodInfo, setPassioAdvisorFoodInfo] = useState<
     PhotoLoggingResults[] | null
   >(null);
-
+  const [isOpenDatePicker, openDatePicker] = useState(false);
   const [date, setDate] = useState(routes.params.logToDate ?? new Date());
   const [meal, setMeal] = useState<MealLabel>(getMealLog(date, undefined));
 
@@ -183,18 +183,30 @@ export function usePhotoLogging() {
     });
   };
 
+  function onDateChange(updatedDate: Date) {
+    setDate(new Date(updatedDate));
+  }
+
+  const changeDate = (updateDate: Date) => {
+    openDatePicker(false);
+    onDateChange(updateDate);
+  };
+
   return {
-    recognizePictureRemote,
-    onLogSelectPress,
-    passioAdvisorFoodInfo,
-    isPreparingLog,
+    changeDate,
+    date,
+    editServingInfoRef,
     isFetchingResponse,
+    isOpenDatePicker,
+    isPreparingLog,
+    meal,
+    mealTimes,
+    onLogSelectPress,
+    onUpdateFoodItem,
+    openDatePicker,
+    passioAdvisorFoodInfo,
+    recognizePictureRemote,
     setDate,
     setMeal,
-    editServingInfoRef,
-    mealTimes,
-    meal,
-    date,
-    onUpdateFoodItem,
   };
 }
