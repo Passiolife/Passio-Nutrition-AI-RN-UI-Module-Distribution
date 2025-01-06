@@ -309,3 +309,32 @@ export function sumNutrients(
     value: nutrientMap[label as NutrientType],
   }));
 }
+
+export function updateSlider(value: number): [number, number, number] {
+  let sliderStep: number;
+  let sliderMax: number;
+
+  if (value < 5) {
+    sliderStep = 0.5;
+    sliderMax = 4.5;
+  } else if (value <= 9) {
+    sliderStep = 1;
+    sliderMax = 9;
+  } else if (value <= 49) {
+    sliderStep = 1;
+    sliderMax = 49;
+  } else if (value <= 250) {
+    sliderMax = 250;
+    sliderStep = sliderMax / 50;
+  } else {
+    sliderMax = value;
+    sliderStep = sliderMax / 50;
+  }
+
+  let sliderSteps = Math.floor(sliderMax / sliderStep) + 1;
+  if (sliderSteps > 50) {
+    sliderSteps = 50;
+  }
+
+  return [0, sliderMax, sliderSteps]; // min, max, step
+}

@@ -4,6 +4,7 @@ import { PassioIDEntityType } from '@passiolife/nutritionai-react-native-sdk-v3'
 import { PassioFoodIcon } from '../../../components/passio/PassioFoodIcon';
 import { Text } from '../../../components';
 import { formatNumber } from '../../../utils/NumberUtils';
+import { scaleWidth } from '../../../utils';
 
 interface Props {
   imageName?: string;
@@ -11,6 +12,7 @@ interface Props {
   bottom: string;
   onFoodLogEditor?: () => void;
   onFoodLogSelect: () => void;
+  onEditServingInfo: () => void;
   isSelected: boolean;
   calories: number;
   fat: number;
@@ -19,83 +21,99 @@ interface Props {
 }
 
 export const PictureLoggingResultItemView = (props: Props) => {
-  const { foodName, imageName, onFoodLogSelect, isSelected, bottom } = props;
+  const {
+    foodName,
+    imageName,
+    onFoodLogSelect,
+    isSelected,
+    bottom,
+    onEditServingInfo,
+  } = props;
   return (
     <View style={styles.card}>
-      <TouchableOpacity onPress={onFoodLogSelect} style={styles.container}>
-        <View style={styles.imageContainer}>
-          <PassioFoodIcon
-            style={styles.image}
-            iconID={imageName}
-            entityType={PassioIDEntityType.group}
-          />
-        </View>
-        <View
-          style={{
-            flex: 1,
-          }}
-        >
-          <Text weight="700" size="_12px" style={styles.text}>
-            {foodName}
-          </Text>
-          <Text
-            weight="400"
-            size="_12px"
-            style={[styles.bottom, styles.secondaryText]}
+      <TouchableOpacity onPress={onEditServingInfo} style={{ flex: 1 }}>
+        <View style={styles.container}>
+          <View style={styles.imageContainer}>
+            <PassioFoodIcon
+              style={styles.image}
+              iconID={imageName}
+              entityType={PassioIDEntityType.group}
+            />
+          </View>
+          <View
+            style={{
+              flex: 1,
+            }}
           >
-            {bottom}
-          </Text>
+            <Text weight="600" size="_14px" style={styles.text}>
+              {foodName}
+            </Text>
+            <Text
+              weight="400"
+              color="secondaryText"
+              size="_14px"
+              style={[styles.bottom, styles.secondaryText]}
+            >
+              {bottom}
+            </Text>
+          </View>
         </View>
-        <TouchableOpacity onPress={onFoodLogSelect}>
+        <View style={styles.allNutrientsContainer}>
+          <View style={styles.nutrientsContainer}>
+            <Text weight="600" color="calories">
+              {formatNumber(props.calories)}
+            </Text>
+            <Text style={styles.unit} color="secondaryText" weight="400">
+              cal
+            </Text>
+          </View>
+          <View style={styles.nutrientsContainer}>
+            <Text size="_16px" weight="600" color="carbs">
+              {formatNumber(props.carbs)}
+            </Text>
+            <Text style={styles.unit} color="secondaryText" weight="400">
+              g
+            </Text>
+          </View>
+          <View style={styles.nutrientsContainer}>
+            <Text size="_16px" weight="600" color="proteins">
+              {formatNumber(props.protein)}
+            </Text>
+            <Text style={styles.unit} color="secondaryText" weight="400">
+              g
+            </Text>
+          </View>
+          <View style={styles.nutrientsContainer}>
+            <Text size="_16px" weight="600" color="fat">
+              {formatNumber(props.fat)}
+            </Text>
+            <Text
+              style={styles.unit}
+              size="_16px"
+              color="secondaryText"
+              weight="400"
+            >
+              g
+            </Text>
+          </View>
+        </View>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={onFoodLogSelect} style={styles.radioPress}>
+        <View style={styles.radioContainer}>
           <View
             style={[styles.addIcon, isSelected && styles.selectedAddIcon]}
           />
-        </TouchableOpacity>
+        </View>
       </TouchableOpacity>
-      <View style={styles.allNutrientsContainer}>
-        <View style={styles.nutrientsContainer}>
-          <Text weight="600" color="calories">
-            {formatNumber(props.calories)}
-          </Text>
-          <Text color="secondaryText" weight="400">
-            cal
-          </Text>
-        </View>
-        <View style={styles.nutrientsContainer}>
-          <Text weight="600" color="carbs">
-            {formatNumber(props.carbs)}
-          </Text>
-          <Text color="secondaryText" weight="400">
-            g
-          </Text>
-        </View>
-        <View style={styles.nutrientsContainer}>
-          <Text weight="600" color="proteins">
-            {formatNumber(props.protein)}
-          </Text>
-          <Text color="secondaryText" weight="400">
-            g
-          </Text>
-        </View>
-        <View style={styles.nutrientsContainer}>
-          <Text weight="600" color="fat">
-            {formatNumber(props.fat)}
-          </Text>
-          <Text color="secondaryText" weight="400">
-            g
-          </Text>
-        </View>
-      </View>
     </View>
   );
 };
 const styles = StyleSheet.create({
   card: {
-    alignItems: 'center',
     backgroundColor: 'white',
-    flex: 1,
+    flexDirection: 'row',
     marginVertical: 8,
-    marginHorizontal: 4,
+    marginHorizontal: 8,
     paddingVertical: 8,
     borderRadius: 8,
     shadowColor: '#00000029',
@@ -106,6 +124,15 @@ const styles = StyleSheet.create({
     },
     shadowRadius: 0.5,
     elevation: 1,
+  },
+  radioPress: {
+    alignContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 8,
+  },
+  radioContainer: {
+    flex: 1,
+    justifyContent: 'center',
   },
   nutrientsContainer: {
     flexDirection: 'row',
@@ -139,6 +166,7 @@ const styles = StyleSheet.create({
   addIcon: {
     width: 24,
     height: 24,
+    alignSelf: 'center',
     borderRadius: 100,
     borderWidth: 1,
     borderColor: '#D1D5DB',
@@ -162,4 +190,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#4F46E5',
   },
   secondaryText: {},
+  unit: {
+    marginStart: scaleWidth(4),
+  },
 });

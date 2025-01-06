@@ -1,7 +1,6 @@
 import {
   PassioAdvisorFoodInfo,
   PassioFoodItem,
-  PassioSDK,
 } from '@passiolife/nutritionai-react-native-sdk-v3';
 import type { FoodLog, MealLabel, ServingUnit } from '..';
 import { getLogToDate, mealLabelByDate } from './ScaningUtils';
@@ -9,9 +8,10 @@ import {
   convertPassioFoodItemToFoodLog,
   updateQuantityOfFoodLog,
 } from './V3Utils';
+import { PhotoLoggingResults } from 'src/screens/photoLoggingResult/usePhotoLogging';
 
 export const createFoodLogUsingFoodDataInfo = async (
-  foods: PassioAdvisorFoodInfo[],
+  foods: PhotoLoggingResults[],
   date?: Date,
   mealLabel?: MealLabel
 ) => {
@@ -20,12 +20,8 @@ export const createFoodLogUsingFoodDataInfo = async (
   const foodLogs: FoodLog[] = [];
 
   for (const item of foods) {
-    if (item && item.foodDataInfo) {
-      const foodItem = await PassioSDK.fetchFoodItemForDataInfo(
-        item.foodDataInfo,
-        item.foodDataInfo?.nutritionPreview?.servingQuantity,
-        item.foodDataInfo?.nutritionPreview?.servingUnit
-      );
+    if (item && item.passioFoodItem) {
+      const foodItem = item.passioFoodItem;
       if (foodItem) {
         const foodLog = convertPassioFoodItemToFoodLog(
           foodItem,

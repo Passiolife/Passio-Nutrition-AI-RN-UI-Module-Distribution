@@ -6,7 +6,6 @@ import {
   type ViewStyle,
   Image,
 } from 'react-native';
-import type { PassioAdvisorFoodInfo } from '@passiolife/nutritionai-react-native-sdk-v3';
 
 import { COLORS } from '../../../constants';
 import { Text } from '../../../components/texts/Text';
@@ -15,11 +14,13 @@ import { FlatList } from 'react-native-gesture-handler';
 import { ICONS } from '../../../assets';
 import type { PicturePassioAdvisorFoodInfo } from '../../takePicture/useTakePicture';
 import { PictureLoggingResultItemView } from './PictureLoggingResultItemView';
+import { PhotoLoggingResults } from '../usePhotoLogging';
 
 interface Props {
   style?: StyleProp<ViewStyle>;
-  passioAdvisorFoodInfoResult: Array<PicturePassioAdvisorFoodInfo>;
-  onLogSelect: (selected: PassioAdvisorFoodInfo[]) => void;
+  passioAdvisorFoodInfoResult: Array<PhotoLoggingResults>;
+  onLogSelect: (selected: PhotoLoggingResults[]) => void;
+  onEditServingInfo: (selected: PhotoLoggingResults) => void;
   isPreparingLog: boolean;
 }
 
@@ -27,10 +28,11 @@ export const PictureLoggingResult = ({
   style,
   passioAdvisorFoodInfoResult,
   isPreparingLog,
+  onEditServingInfo,
   onLogSelect,
 }: Props) => {
   const [advisorFoodInfo, setPicturePassioAdvisorFoodInfo] = useState<
-    PicturePassioAdvisorFoodInfo[]
+    PhotoLoggingResults[]
   >([]);
 
   useEffect(() => {
@@ -72,27 +74,28 @@ export const PictureLoggingResult = ({
         ListEmptyComponent={renderNoDataFound}
         renderItem={({ item }) => {
           const foodDataInfo = item.foodDataInfo;
-          const npCalories =
-            item?.foodDataInfo?.nutritionPreview?.calories ?? 0;
-          const npWeightQuantity =
-            item?.foodDataInfo?.nutritionPreview?.weightQuantity ?? 0;
-          const ratio = npCalories / npWeightQuantity;
-          const advisorInfoWeightGram = item?.weightGrams ?? 0;
-          const calories = ratio * advisorInfoWeightGram;
-          const newCalories =
-            foodDataInfo?.nutritionPreview?.calories ?? calories;
-          // Update calculation for package food info
           return (
             <PictureLoggingResultItemView
-              foodName={item?.foodDataInfo?.foodName ?? item?.recognisedName}
-              imageName={foodDataInfo?.iconID}
-              calories={foodDataInfo?.nutritionPreview?.calories ?? 0}
+              foodName={
+                item.passioFoodItem?.name ||
+                item?.foodDataInfo?.foodName ||
+                item?.recognisedName
+              }
+              imageName={item.passioFoodItem?.iconId || foodDataInfo?.iconID}
+              calories={
+                item?.nutrients?.calories?.value ||
+                foodDataInfo?.nutritionPreview?.calories ||
+                0
+              }
               carbs={foodDataInfo?.nutritionPreview?.carbs ?? 0}
               fat={foodDataInfo?.nutritionPreview?.fat ?? 0}
               protein={foodDataInfo?.nutritionPreview?.protein ?? 0}
-              bottom={`${item?.foodDataInfo?.nutritionPreview?.servingQuantity} ${item?.foodDataInfo?.nutritionPreview?.servingUnit} | ${Math.round(newCalories)} cal`}
+              bottom={`${item.passioFoodItem?.amount.selectedQuantity || item?.foodDataInfo?.nutritionPreview?.servingQuantity} ${item.passioFoodItem?.amount.selectedUnit || item?.foodDataInfo?.nutritionPreview?.servingUnit} (${Math.round((item.passioFoodItem?.amount.weight.value || item.foodDataInfo?.nutritionPreview?.weightQuantity) ?? 0)} g)`}
               onFoodLogSelect={() => {
                 onFoodSelect(item);
+              }}
+              onEditServingInfo={() => {
+                onEditServingInfo(item);
               }}
               isSelected={item.isSelected ?? false}
             />

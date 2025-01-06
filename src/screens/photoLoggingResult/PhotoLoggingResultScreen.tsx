@@ -9,17 +9,19 @@ import { BackNavigation, MacrosProgressView, Text } from '../../components';
 import FakeProgress from '../../components/progressBard/FakeProgress';
 import { Dropdown } from 'react-native-element-dropdown';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { EditServingSizeModal } from './modal/EditServingSizeModal';
 
 export const PhotoLoggingScreen = gestureHandlerRootHOC(() => {
   const {
     mealTimes,
     meal,
-    date,
     setMeal,
     onLogSelectPress,
     passioAdvisorFoodInfo,
     isFetchingResponse,
     isPreparingLog,
+    editServingInfoRef,
+    onUpdateFoodItem,
   } = usePhotoLogging();
 
   const branding = useBranding();
@@ -100,7 +102,7 @@ export const PhotoLoggingScreen = gestureHandlerRootHOC(() => {
   };
 
   return (
-    <SafeAreaView style={styles.generatingResultLoading}>
+    <SafeAreaView edges={['bottom']} style={styles.generatingResultLoading}>
       <BackNavigation
         title="Your Results"
         bottomView={renderHeader()}
@@ -126,10 +128,17 @@ export const PhotoLoggingScreen = gestureHandlerRootHOC(() => {
       ) : (
         <PictureLoggingResult
           onLogSelect={onLogSelectPress}
+          onEditServingInfo={(item) => {
+            editServingInfoRef.current?.open?.(item);
+          }}
           isPreparingLog={isPreparingLog}
           passioAdvisorFoodInfoResult={passioAdvisorFoodInfo ?? []}
         />
       )}
+      <EditServingSizeModal
+        ref={editServingInfoRef}
+        onUpdateFoodItem={onUpdateFoodItem}
+      />
     </SafeAreaView>
   );
 });
