@@ -9,6 +9,9 @@ import { Branding } from '../../../contexts';
 import Slider, { SliderReferenceType } from '@react-native-community/slider';
 import { PhotoLoggingResults } from '../usePhotoLogging';
 import { useEditServing } from './useEditServing';
+import { EditNutritionFact } from './EditNutritionFactModal';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { formatNumber } from '../../../utils/NumberUtils';
 
 export interface EditServingSizeProps {
   onUpdateFoodItem?: (photoLoggingResults: PhotoLoggingResults) => void;
@@ -37,6 +40,8 @@ export const EditServingSizeModal = forwardRef<
     weight,
     sliderConfig,
     handleDoneClick,
+    editType,
+    setEditType,
   } = useEditServing();
   useImperativeHandle(ref, () => ({
     open: openEditServingPopup,
@@ -54,96 +59,155 @@ export const EditServingSizeModal = forwardRef<
 
   const name = result?.passioFoodItem?.name || result?.foodDataInfo?.foodName;
   const iconID = result?.passioFoodItem?.iconId || result?.foodDataInfo?.iconID;
-  const bottom = `${result?.passioFoodItem?.amount.selectedQuantity || result?.foodDataInfo?.nutritionPreview?.servingQuantity} ${result.passioFoodItem?.amount.selectedUnit || result?.foodDataInfo?.nutritionPreview?.servingUnit} (${weight} g)`;
+  const bottom = `${quantity} ${selectedUnit} (${formatNumber(weight)} g)`;
   const [min, max, steps] = sliderConfig;
+
+  const renderEditServingSize = () => {
+    return (
+      <>
+        <Text size={'_20px'} weight={'700'} style={styles.title}>
+          Adjust Serving Size
+        </Text>
+        <View style={styles.container}>
+          <View style={styles.imageContainer}>
+            <PassioFoodIcon
+              style={styles.image}
+              iconID={iconID}
+              entityType={PassioIDEntityType.group}
+            />
+          </View>
+          <View
+            style={{
+              flex: 1,
+            }}
+          >
+            <Text weight="600" size="_14px" style={styles.text}>
+              {name}
+            </Text>
+            <Text
+              weight="400"
+              color="secondaryText"
+              size="_14px"
+              style={[styles.bottom, styles.secondaryText]}
+            >
+              {bottom}
+            </Text>
+          </View>
+        </View>
+        <Text size={'_16px'} weight={'600'} style={styles.servingSizeTitle}>
+          Serving Size
+        </Text>
+        <View style={styles.servingSizeContainer}>
+          <TextInput
+            keyboardType="numeric"
+            returnKeyLabel="Done"
+            returnKeyType="done"
+            style={styles.input}
+            ref={qtyTextInputRef}
+            defaultValue={`${quantity}`}
+            onBlur={(e) => handleQtyUpdate(e.nativeEvent.text, false)}
+            onSubmitEditing={(e) =>
+              handleQtyUpdate(e.nativeEvent.text.toString(), false)
+            }
+          />
+          <Dropdown
+            data={servingSizes}
+            labelField={'label'}
+            value={selectedUnit}
+            valueField={'value'}
+            style={styles.dropDown}
+            onChange={handleServingChange}
+          />
+        </View>
+        <Slider
+          step={steps}
+          minimumValue={min}
+          style={styles.slider}
+          value={quantity}
+          ref={sliderRef as unknown as SliderReferenceType}
+          maximumValue={max}
+          onValueChange={(value) => {
+            handleQtyUpdate(value.toString(), true);
+          }}
+          minimumTrackTintColor={branding.primaryColor}
+          maximumTrackTintColor={branding.border}
+        />
+
+        <View style={styles.buttonContainer}>
+          <BasicButton
+            text={'Cancel'}
+            onPress={close}
+            secondary
+            style={{ flex: 1, marginEnd: 8 }}
+          />
+          <BasicButton
+            text={'Done'}
+            style={{ flex: 1, marginStart: 8 }}
+            onPress={() => {
+              handleDoneClick(props);
+            }}
+          />
+        </View>
+      </>
+    );
+  };
+
+  const renderEditNutritionFact = () => {
+    const calories =
+      result?.nutrients?.calories?.value ||
+      result?.foodDataInfo?.nutritionPreview?.calories;
+
+    const carbs =
+      result?.nutrients?.carbs?.value ||
+      result?.foodDataInfo?.nutritionPreview?.carbs;
+
+    const protein =
+      result?.nutrients?.protein?.value ||
+      result?.foodDataInfo?.nutritionPreview?.protein;
+
+    const fat =
+      result?.nutrients?.fat?.value ||
+      result?.foodDataInfo?.nutritionPreview?.fat;
+
+    const barcode = result?.passioFoodItem?.ingredients?.[0]?.metadata?.barcode;
+
+    return (
+      <EditNutritionFact
+        calories={calories}
+        carbs={carbs}
+        protein={protein}
+        result={result}
+        barcode={barcode}
+        servingQty={quantity}
+        fat={fat}
+        label={name}
+        iconID={iconID}
+        weight={weight}
+        servingUnit={selectedUnit}
+        onNext={(updatedResult) => {
+          setEditType('serving');
+          openEditServingPopup(updatedResult);
+          console.log(
+            'updatedResult========>',
+            updatedResult?.packagedFoodItem?.amount?.selectedQuantity
+          );
+        }}
+        onClose={close}
+      />
+    );
+  };
+
   return (
     <Modal visible transparent>
       <View style={styles.modalContainer}>
         <View style={styles.flex1} />
-        <View style={styles.card}>
-          <Text size={'_20px'} weight={'700'} style={styles.title}>
-            Adjust Serving Size
-          </Text>
-          <View style={styles.container}>
-            <View style={styles.imageContainer}>
-              <PassioFoodIcon
-                style={styles.image}
-                iconID={iconID}
-                entityType={PassioIDEntityType.group}
-              />
-            </View>
-            <View
-              style={{
-                flex: 1,
-              }}
-            >
-              <Text weight="600" size="_14px" style={styles.text}>
-                {name}
-              </Text>
-              <Text
-                weight="400"
-                color="secondaryText"
-                size="_14px"
-                style={[styles.bottom, styles.secondaryText]}
-              >
-                {bottom}
-              </Text>
-            </View>
-          </View>
-          <Text size={'_16px'} weight={'600'} style={styles.servingSizeTitle}>
-            Serving Size
-          </Text>
-          <View style={styles.servingSizeContainer}>
-            <TextInput
-              keyboardType="numeric"
-              returnKeyLabel="Done"
-              returnKeyType="done"
-              style={styles.input}
-              ref={qtyTextInputRef}
-              defaultValue={`${quantity}`}
-              onBlur={(e) => handleQtyUpdate(e.nativeEvent.text, false)}
-              onSubmitEditing={(e) =>
-                handleQtyUpdate(e.nativeEvent.text.toString(), false)
-              }
-            />
-            <Dropdown
-              data={servingSizes}
-              labelField={'label'}
-              value={selectedUnit}
-              valueField={'value'}
-              style={styles.dropDown}
-              onChange={handleServingChange}
-            />
-          </View>
-          <Slider
-            step={steps}
-            minimumValue={min}
-            style={styles.slider}
-            value={quantity}
-            ref={sliderRef as unknown as SliderReferenceType}
-            maximumValue={max}
-            onValueChange={(value) => {
-              handleQtyUpdate(value.toString(), true);
-            }}
-            minimumTrackTintColor={branding.primaryColor}
-            maximumTrackTintColor={branding.border}
-          />
 
-          <View style={styles.buttonContainer}>
-            <BasicButton
-              text={'Cancel'}
-              onPress={close}
-              secondary
-              style={{ flex: 1, marginEnd: 8 }}
-            />
-            <BasicButton
-              text={'Done'}
-              style={{ flex: 1, marginStart: 8 }}
-              onPress={() => {
-                handleDoneClick(props);
-              }}
-            />
-          </View>
+        <View style={styles.card}>
+          <KeyboardAwareScrollView contentContainerStyle={{}}>
+            {editType === 'nutrient'
+              ? renderEditNutritionFact()
+              : renderEditServingSize()}
+          </KeyboardAwareScrollView>
         </View>
 
         <View style={styles.flex1} />
@@ -160,11 +224,10 @@ const customStyles = ({ border, white }: Branding) =>
       width: '100%',
     },
     card: {
-      alignItems: 'center',
       padding: scaleWidth(16),
       backgroundColor: white,
       marginVertical: 8,
-      marginHorizontal: 8,
+      marginHorizontal: scaleWidth(12),
       paddingVertical: 8,
       borderRadius: 8,
       shadowColor: '#00000029',

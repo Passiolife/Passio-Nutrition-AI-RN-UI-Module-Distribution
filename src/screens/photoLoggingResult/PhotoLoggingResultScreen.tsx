@@ -15,7 +15,7 @@ import FakeProgress from '../../components/progressBard/FakeProgress';
 import { Dropdown } from 'react-native-element-dropdown';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { EditServingSizeModal } from './modal/EditServingSizeModal';
-import { dateFormatter } from '../../utils';
+import { dayFormatterPhotoLogging } from '../../utils';
 
 export const PhotoLoggingScreen = gestureHandlerRootHOC(() => {
   const {
@@ -85,7 +85,7 @@ export const PhotoLoggingScreen = gestureHandlerRootHOC(() => {
                 paddingHorizontal: 8,
               }}
             >
-              {dateFormatter(date)}
+              {dayFormatterPhotoLogging(date)}
             </Text>
           </TouchableOpacity>
         </View>

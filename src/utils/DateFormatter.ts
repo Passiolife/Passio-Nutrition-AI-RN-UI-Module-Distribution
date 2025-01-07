@@ -46,6 +46,13 @@ export const dateFormatter = (date: Date) => {
 
   return `${dayName}, ${getMonth} ${getDay} ${getYear}`;
 };
+export const dayFormatterPhotoLogging = (date: Date) => {
+  let getMonth = date.getMonth() + 1;
+  let getDay = date.getDate();
+  let getYear = date.getFullYear();
+
+  return `${getDay}/${getMonth}/${getYear}`;
+};
 
 //converted date to 'dd'T'HH:mm:ss'Z'' format
 /*2021-09-15T12:00:00.000Z*/
