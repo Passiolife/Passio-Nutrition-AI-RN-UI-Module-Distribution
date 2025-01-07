@@ -161,16 +161,6 @@ export const useEditNutritionFact = (props: EditNutritionFactProps) => {
         ],
       };
 
-      console.log('passioFoodItem=====>', JSON.stringify(passioFoodItem));
-      console.log(
-        'passioFoodItem ref=====>',
-        JSON.stringify(
-          PassioSDK.getNutrientsOfPassioFoodItem(passioFoodItem, {
-            unit: 'g',
-            value: updatedWeight,
-          })
-        )
-      );
       onNext?.({
         ...result,
         passioFoodItem: passioFoodItem,
@@ -181,6 +171,8 @@ export const useEditNutritionFact = (props: EditNutritionFactProps) => {
       });
     }
   }, [onNext, result]);
+
+  const onBarcodePress = () => {};
 
   return {
     onUpdateNutritionUpdate,
@@ -194,6 +186,7 @@ export const useEditNutritionFact = (props: EditNutritionFactProps) => {
     servingQtyRef,
     weightRef,
     servingUnitRef,
+    onBarcodePress,
     nameRef,
     barcodeRef,
     info: {

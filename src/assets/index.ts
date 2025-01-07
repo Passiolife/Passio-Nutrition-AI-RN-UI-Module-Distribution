@@ -5,6 +5,7 @@ export const ic_right_white = require('./chev_right_white.png');
 export const chev_down = require('./chev_down.png');
 export const ICONS = {
   close: require('./icons/close.png'),
+  scanBarcode: require('./icons/scanbarcode.png'),
   back: require('./icons/back.png'),
   menu: require('./icons/menu.png'),
   camera: require('./icons/camera.png'),

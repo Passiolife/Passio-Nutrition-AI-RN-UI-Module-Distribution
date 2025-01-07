@@ -27,6 +27,7 @@ export const useBarcodeScan = () => {
     useState<BarcodeCustomResult | null>(null);
   const [isLoading, setLoading] = useState<boolean>(true);
   const [customFoods, setCustomFood] = useState<CustomFood[]>();
+  const type = params.type ?? 'customFood';
 
   const getQuickResults = useCallback(
     async (barcodeCandidate?: BarcodeCandidate) => {
@@ -61,9 +62,12 @@ export const useBarcodeScan = () => {
             return;
           }
 
-          const existingCustomFood = customFoods?.find(
-            (i) => i.barcode === barcodeCandidate.barcode
-          );
+          const existingCustomFood =
+            type === 'general'
+              ? undefined
+              : customFoods?.find(
+                  (i) => i.barcode === barcodeCandidate.barcode
+                );
 
           let attribute: QuickResult | null =
             await getQuickResults(barcodeCandidate);
@@ -174,5 +178,6 @@ export const useBarcodeScan = () => {
     onCreateCustomWithoutBarcodePress,
     onViewExistingPress,
     onBarcodePress,
+    type: params.type ?? 'customFood',
   };
 };

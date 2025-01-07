@@ -4,7 +4,8 @@ import {
   View,
   TextInput,
   KeyboardType,
-  FlexAlignType,
+  Image,
+  TouchableOpacity,
 } from 'react-native';
 import { BasicButton, Text } from '../../../components';
 import { PassioFoodIcon } from '../../../components/passio/PassioFoodIcon';
@@ -14,6 +15,7 @@ import { Branding } from '../../../contexts';
 import { PhotoLoggingResults } from '../usePhotoLogging';
 import { formatNumber } from '../../../utils/NumberUtils';
 import { useEditNutritionFact } from './useEditNutritionFactModal';
+import { ICONS } from '../../../assets';
 
 export interface EditNutritionFactProps {
   calories?: number;
@@ -29,6 +31,8 @@ export interface EditNutritionFactProps {
   onClose?: () => void;
   onNext?: (result: PhotoLoggingResults) => void;
   result: PhotoLoggingResults;
+  onHide?: () => void;
+  onShow?: () => void;
 }
 
 export interface EditNutritionFactRef {
@@ -53,6 +57,7 @@ export const EditNutritionFact = forwardRef<
     servingQtyRef,
     weightRef,
     nameRef,
+    onBarcodePress,
     barcodeRef,
     servingUnitRef,
   } = useEditNutritionFact(props);
@@ -117,6 +122,43 @@ export const EditNutritionFact = forwardRef<
     );
   };
 
+  const renderBarcode = () => {
+    return (
+      <View
+        style={[
+          {
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginVertical: scaleHeight(8),
+          },
+          styles.input,
+        ]}
+      >
+        <TextInput
+          defaultValue={info.barcode}
+          style={[styles.flex1, styles.inputNutritionFact]}
+          onBlur={(e) => (barcodeRef.current = e.nativeEvent.text)}
+          placeholder="Enter barcode"
+          onSubmitEditing={(e) => (barcodeRef.current = e.nativeEvent.text)}
+        />
+        <TouchableOpacity
+          onPress={onBarcodePress}
+          style={{
+            paddingHorizontal: scaleWidth(16),
+          }}
+        >
+          <Image
+            source={ICONS.scanBarcode}
+            style={{
+              height: scaleHeight(24),
+              width: scaleWidth(24),
+            }}
+          />
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
   return (
     <>
       <Text size={'_20px'} weight={'700'} style={styles.title}>
@@ -142,12 +184,7 @@ export const EditNutritionFact = forwardRef<
             onBlur={(e) => (nameRef.current = e.nativeEvent.text)}
             onSubmitEditing={(e) => (nameRef.current = e.nativeEvent.text)}
           />
-          <TextInput
-            defaultValue={info.barcode}
-            style={[styles.input, styles.inputNutritionFact]}
-            onBlur={(e) => (barcodeRef.current = e.nativeEvent.text)}
-            onSubmitEditing={(e) => (barcodeRef.current = e.nativeEvent.text)}
-          />
+          {renderBarcode()}
         </View>
       </View>
       <Text size={'_16px'} weight={'600'} style={styles.servingSizeTitle}>

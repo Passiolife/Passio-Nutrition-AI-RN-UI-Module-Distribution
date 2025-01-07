@@ -44,6 +44,7 @@ export const EditServingSizeModal = forwardRef<
     onEditServingBackPress,
     editType,
     setEditType,
+    setOpen,
   } = useEditServing();
   useImperativeHandle(ref, () => ({
     open: (item) => {
@@ -208,6 +209,12 @@ export const EditServingSizeModal = forwardRef<
         onNext={(updatedResult) => {
           setEditType('nutrient_with_serving');
           openEditServingPopup(updatedResult);
+        }}
+        onHide={() => {
+          setOpen(false);
+        }}
+        onShow={() => {
+          setOpen(true);
         }}
         onClose={close}
       />

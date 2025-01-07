@@ -191,5 +191,6 @@ export const useEditServing = () => {
     setEditType,
     editType,
     setResult,
+    setOpen,
   };
 };
