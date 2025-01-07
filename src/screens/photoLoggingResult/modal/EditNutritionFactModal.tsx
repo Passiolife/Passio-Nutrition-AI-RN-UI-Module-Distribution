@@ -200,7 +200,7 @@ export const EditNutritionFact = forwardRef<
           title: 'Unit',
           value: servingInfo.servingUnit,
           keyboardType: 'default',
-          alignSelf: 'flex-start',
+          alignSelf: 'left',
           unit: '',
           flex: 2,
           storeRef: servingUnitRef,

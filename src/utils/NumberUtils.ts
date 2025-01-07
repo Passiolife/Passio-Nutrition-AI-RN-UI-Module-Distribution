@@ -6,6 +6,12 @@ export const NumberRound = (number?: number) => {
 };
 
 export function formatNumber(num: number | undefined) {
+  if (num === 0) {
+    return 0;
+  }
+  if (num === undefined) {
+    return 0;
+  }
   if (num) {
     if (!isFinite(num)) return num; // Handle non-finite numbers like Infinity, NaN
 

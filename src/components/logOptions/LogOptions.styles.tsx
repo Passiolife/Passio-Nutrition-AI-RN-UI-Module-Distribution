@@ -9,7 +9,7 @@ const logOptionsStyle = ({ primaryColor, card }: Branding) =>
       paddingVertical: scaleHeight(12),
       marginVertical: scaleHeight(8),
       flexDirection: 'row',
-      minWidth: scaleWidth(170),
+      minWidth: scaleWidth(200),
       borderRadius: scaledSize(24),
     },
     optionTitle: {

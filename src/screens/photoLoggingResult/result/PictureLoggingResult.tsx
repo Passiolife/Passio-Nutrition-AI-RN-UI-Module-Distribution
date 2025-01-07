@@ -16,6 +16,8 @@ import type { PicturePassioAdvisorFoodInfo } from '../../takePicture/useTakePict
 import { PictureLoggingResultItemView } from './PictureLoggingResultItemView';
 import { PhotoLoggingResults } from '../usePhotoLogging';
 
+export const SCANNED_NUTRITION_LABEL = 'Scanned Nutrition Label';
+
 interface Props {
   style?: StyleProp<ViewStyle>;
   passioAdvisorFoodInfoResult: Array<PhotoLoggingResults>;
@@ -79,7 +81,10 @@ export const PictureLoggingResult = ({
               foodName={
                 item.passioFoodItem?.name ||
                 item?.foodDataInfo?.foodName ||
-                item?.recognisedName
+                item?.recognisedName ||
+                (item.resultType === 'nutritionFacts'
+                  ? SCANNED_NUTRITION_LABEL
+                  : '')
               }
               imageName={item.passioFoodItem?.iconId || foodDataInfo?.iconID}
               calories={
@@ -87,9 +92,21 @@ export const PictureLoggingResult = ({
                 foodDataInfo?.nutritionPreview?.calories ||
                 0
               }
-              carbs={foodDataInfo?.nutritionPreview?.carbs ?? 0}
-              fat={foodDataInfo?.nutritionPreview?.fat ?? 0}
-              protein={foodDataInfo?.nutritionPreview?.protein ?? 0}
+              carbs={
+                item?.nutrients?.carbs?.value ||
+                foodDataInfo?.nutritionPreview?.carbs ||
+                0
+              }
+              fat={
+                item?.nutrients?.fat?.value ||
+                foodDataInfo?.nutritionPreview?.fat ||
+                0
+              }
+              protein={
+                item?.nutrients?.protein?.value ||
+                foodDataInfo?.nutritionPreview?.protein ||
+                0
+              }
               bottom={`${item.passioFoodItem?.amount.selectedQuantity || item?.foodDataInfo?.nutritionPreview?.servingQuantity} ${item.passioFoodItem?.amount.selectedUnit || item?.foodDataInfo?.nutritionPreview?.servingUnit} (${Math.round((item.passioFoodItem?.amount.weight.value || item.foodDataInfo?.nutritionPreview?.weightQuantity) ?? 0)} g)`}
               onFoodLogSelect={() => {
                 onFoodSelect(item);
@@ -102,23 +119,25 @@ export const PictureLoggingResult = ({
           );
         }}
       />
-      <View style={styles.buttonContainer}>
-        <BasicButton
-          secondary
-          onPress={() => {}}
-          style={styles.buttonTryAgain}
-          text={'Create Recipe'}
-        />
-        <BasicButton
-          onPress={() => {
-            onLogSelect(advisorFoodInfo ?? []);
-          }}
-          style={styles.buttonLogSelected}
-          isLoading={isPreparingLog}
-          enable={selectedCount > 0}
-          text="Log Selected"
-        />
-      </View>
+      {advisorFoodInfo?.length > 0 && (
+        <View style={styles.buttonContainer}>
+          <BasicButton
+            secondary
+            onPress={() => {}}
+            style={styles.buttonTryAgain}
+            text={'Create Recipe'}
+          />
+          <BasicButton
+            onPress={() => {
+              onLogSelect(advisorFoodInfo ?? []);
+            }}
+            style={styles.buttonLogSelected}
+            isLoading={isPreparingLog}
+            enable={selectedCount > 0}
+            text="Log Selected"
+          />
+        </View>
+      )}
     </View>
   );
 };

@@ -26,14 +26,15 @@ export const useEditServing = () => {
   const [isOpen, setOpen] = useState(false);
   const [sliderConfig, setSliderConfig] = useState<number[]>([0, 100, 1]);
   const [selectedUnit, setSelectedUnit] = useState('gram');
-  const [defaltQty, setDefaulyQty] = useState(0);
   const qtyTextInputRef = useRef<TextInput>(null);
   const sliderRef = useRef<Slider>(null);
   const branding = useBranding();
   const [weight, setWeight] = useState(0);
   const [quantity, setQty] = useState(0);
   const quantityRef = useRef(0);
-  const [editType, setEditType] = useState<'serving' | 'nutrient'>('nutrient');
+  const [editType, setEditType] = useState<
+    'serving' | 'nutrient' | 'nutrient_with_serving'
+  >('serving');
 
   const update = useCallback(
     (qty: string, unit: string, isSlider?: boolean) => {
@@ -162,6 +163,10 @@ export const useEditServing = () => {
   };
 
   const reset = () => {
+    // setEditType('serving');
+    setResult(undefined);
+  };
+  const onEditServingBackPress = () => {
     setEditType('nutrient');
   };
 
@@ -171,6 +176,7 @@ export const useEditServing = () => {
     handleQtyUpdate,
     handleServingChange,
     handleDoneClick,
+    onEditServingBackPress,
     isOpen,
     sliderConfig,
     openEditServingPopup,

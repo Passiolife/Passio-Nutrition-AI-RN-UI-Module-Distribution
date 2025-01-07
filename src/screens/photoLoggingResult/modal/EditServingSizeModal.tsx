@@ -12,6 +12,7 @@ import { useEditServing } from './useEditServing';
 import { EditNutritionFact } from './EditNutritionFactModal';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { formatNumber } from '../../../utils/NumberUtils';
+import { SCANNED_NUTRITION_LABEL } from '../result/PictureLoggingResult';
 
 export interface EditServingSizeProps {
   onUpdateFoodItem?: (photoLoggingResults: PhotoLoggingResults) => void;
@@ -40,11 +41,19 @@ export const EditServingSizeModal = forwardRef<
     weight,
     sliderConfig,
     handleDoneClick,
+    onEditServingBackPress,
     editType,
     setEditType,
   } = useEditServing();
   useImperativeHandle(ref, () => ({
-    open: openEditServingPopup,
+    open: (item) => {
+      if (item.resultType === 'nutritionFacts') {
+        setEditType('nutrient');
+      } else {
+        setEditType('serving');
+      }
+      openEditServingPopup(item);
+    },
   }));
 
   const styles = customStyles(branding);
@@ -57,7 +66,10 @@ export const EditServingSizeModal = forwardRef<
     return null;
   }
 
-  const name = result?.passioFoodItem?.name || result?.foodDataInfo?.foodName;
+  const name =
+    result?.passioFoodItem?.name ||
+    result?.foodDataInfo?.foodName ||
+    (result.resultType === 'nutritionFacts' ? SCANNED_NUTRITION_LABEL : '');
   const iconID = result?.passioFoodItem?.iconId || result?.foodDataInfo?.iconID;
   const bottom = `${quantity} ${selectedUnit} (${formatNumber(weight)} g)`;
   const [min, max, steps] = sliderConfig;
@@ -134,12 +146,21 @@ export const EditServingSizeModal = forwardRef<
         />
 
         <View style={styles.buttonContainer}>
-          <BasicButton
-            text={'Cancel'}
-            onPress={close}
-            secondary
-            style={{ flex: 1, marginEnd: 8 }}
-          />
+          {editType === 'nutrient_with_serving' ? (
+            <BasicButton
+              text={'Back'}
+              onPress={onEditServingBackPress}
+              secondary
+              style={{ flex: 1, marginEnd: 8 }}
+            />
+          ) : (
+            <BasicButton
+              text={'Cancel'}
+              onPress={close}
+              secondary
+              style={{ flex: 1, marginEnd: 8 }}
+            />
+          )}
           <BasicButton
             text={'Done'}
             style={{ flex: 1, marginStart: 8 }}
@@ -185,12 +206,8 @@ export const EditServingSizeModal = forwardRef<
         weight={weight}
         servingUnit={selectedUnit}
         onNext={(updatedResult) => {
-          setEditType('serving');
+          setEditType('nutrient_with_serving');
           openEditServingPopup(updatedResult);
-          console.log(
-            'updatedResult========>',
-            updatedResult?.packagedFoodItem?.amount?.selectedQuantity
-          );
         }}
         onClose={close}
       />

@@ -80,7 +80,7 @@ export const useEditNutritionFact = (props: EditNutritionFactProps) => {
     servingUnits = [
       ...(servingUnits ?? []),
       {
-        unit: updatedUnit,
+        unit: 'g',
         unitName: updatedUnit,
         value: updatedWeight / updatedQty,
       },
@@ -160,13 +160,24 @@ export const useEditNutritionFact = (props: EditNutritionFactProps) => {
           },
         ],
       };
+
+      console.log('passioFoodItem=====>', JSON.stringify(passioFoodItem));
+      console.log(
+        'passioFoodItem ref=====>',
+        JSON.stringify(
+          PassioSDK.getNutrientsOfPassioFoodItem(passioFoodItem, {
+            unit: 'g',
+            value: updatedWeight,
+          })
+        )
+      );
       onNext?.({
         ...result,
         passioFoodItem: passioFoodItem,
-        nutrients: PassioSDK.getNutrientsOfPassioFoodItem(
-          passioFoodItem,
-          passioFoodItem.amount.weight
-        ),
+        nutrients: PassioSDK.getNutrientsOfPassioFoodItem(passioFoodItem, {
+          unit: 'g',
+          value: updatedWeight,
+        }),
       });
     }
   }, [onNext, result]);
