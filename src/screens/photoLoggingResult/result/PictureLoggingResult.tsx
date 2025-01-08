@@ -19,6 +19,7 @@ interface Props {
   onCreateRecipePress: (selected: PhotoLoggingResults[]) => void;
   onUpdateMacros: (selected: PhotoLoggingResults[]) => void;
   onEditServingInfo: (selected: PhotoLoggingResults) => void;
+  onEditNutritionFact: (selected: PhotoLoggingResults) => void;
   onTryAgain: () => void;
   onCancel: () => void;
   isPreparingLog: boolean;
@@ -29,6 +30,7 @@ export const PictureLoggingResult = ({
   passioAdvisorFoodInfoResult,
   isPreparingLog,
   onEditServingInfo,
+  onEditNutritionFact,
   onUpdateMacros,
   onCreateRecipePress,
   onLogSelect,
@@ -109,32 +111,19 @@ export const PictureLoggingResult = ({
                   : '')
               }
               imageName={item.passioFoodItem?.iconId || foodDataInfo?.iconID}
-              calories={
-                item?.nutrients?.calories?.value ||
-                foodDataInfo?.nutritionPreview?.calories ||
-                0
-              }
-              carbs={
-                item?.nutrients?.carbs?.value ||
-                foodDataInfo?.nutritionPreview?.carbs ||
-                0
-              }
-              fat={
-                item?.nutrients?.fat?.value ||
-                foodDataInfo?.nutritionPreview?.fat ||
-                0
-              }
-              protein={
-                item?.nutrients?.protein?.value ||
-                foodDataInfo?.nutritionPreview?.protein ||
-                0
-              }
+              calories={item?.nutrients?.calories?.value}
+              carbs={item?.nutrients?.carbs?.value}
+              fat={item?.nutrients?.fat?.value}
+              protein={item?.nutrients?.protein?.value}
               bottom={`${formatNumber(item.passioFoodItem?.amount.selectedQuantity) || item?.foodDataInfo?.nutritionPreview?.servingQuantity} ${item.passioFoodItem?.amount.selectedUnit || item?.foodDataInfo?.nutritionPreview?.servingUnit} (${Math.round((item.passioFoodItem?.amount.weight.value || item.foodDataInfo?.nutritionPreview?.weightQuantity) ?? 0)} g)`}
               onFoodLogSelect={() => {
                 onFoodSelect(item);
               }}
               onEditServingInfo={() => {
                 onEditServingInfo(item);
+              }}
+              onEditNutritionFact={() => {
+                onEditNutritionFact(item);
               }}
               isSelected={item.isSelected ?? false}
             />

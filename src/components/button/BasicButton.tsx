@@ -22,6 +22,7 @@ interface Props {
   isDelete?: boolean;
   isLoading?: boolean;
   enable?: boolean;
+  textSize?: number;
   boarderColor?: string;
   textColor?: string;
   backgroundColor?: string;
@@ -34,6 +35,7 @@ export const BasicButton: React.FC<Props> = (props) => {
   const brandingContext = useBranding();
   const {
     text,
+    textSize,
     onPress,
     style,
     small = false,
@@ -131,6 +133,7 @@ export const BasicButton: React.FC<Props> = (props) => {
               {
                 color: textColor ?? (secondary ? boarderColor : COLORS.white),
               },
+              textSize ? { fontSize: textSize } : {},
             ]}
           >
             {text}

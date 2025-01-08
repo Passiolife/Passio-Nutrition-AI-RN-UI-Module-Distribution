@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { PassioIDEntityType } from '@passiolife/nutritionai-react-native-sdk-v3';
 import { PassioFoodIcon } from '../../../components/passio/PassioFoodIcon';
-import { Text } from '../../../components';
+import { BasicButton, Text } from '../../../components';
 import { formatNumber } from '../../../utils/NumberUtils';
 import { scaleWidth } from '../../../utils';
 
@@ -13,11 +13,12 @@ interface Props {
   onFoodLogEditor?: () => void;
   onFoodLogSelect: () => void;
   onEditServingInfo: () => void;
+  onEditNutritionFact: () => void;
   isSelected: boolean;
-  calories: number;
-  fat: number;
-  protein: number;
-  carbs: number;
+  calories?: number;
+  fat?: number;
+  protein?: number;
+  carbs?: number;
 }
 
 export const PictureLoggingResultItemView = (props: Props) => {
@@ -28,9 +29,22 @@ export const PictureLoggingResultItemView = (props: Props) => {
     isSelected,
     bottom,
     onEditServingInfo,
+    onEditNutritionFact,
   } = props;
+
+  const isInvalidNutritionFact =
+    props.calories === undefined ||
+    props.carbs === undefined ||
+    props.fat === undefined ||
+    props.protein === undefined;
+
   return (
-    <View style={styles.card}>
+    <View
+      style={[
+        styles.card,
+        isInvalidNutritionFact && styles.invalidNutritionFact,
+      ]}
+    >
       <TouchableOpacity onPress={onEditServingInfo} style={{ flex: 1 }}>
         <View style={styles.container}>
           <View style={styles.imageContainer}>
@@ -46,7 +60,7 @@ export const PictureLoggingResultItemView = (props: Props) => {
             }}
           >
             <Text weight="600" size="_14px" style={styles.text}>
-              {foodName}
+              {isInvalidNutritionFact ? 'Nutrition Facts Incomplete' : foodName}
             </Text>
             <Text
               weight="400"
@@ -54,57 +68,76 @@ export const PictureLoggingResultItemView = (props: Props) => {
               size="_14px"
               style={[styles.bottom, styles.secondaryText]}
             >
-              {bottom}
+              {isInvalidNutritionFact ? 'This item will not log' : bottom}
             </Text>
           </View>
         </View>
-        <View style={styles.allNutrientsContainer}>
-          <View style={styles.nutrientsContainer}>
-            <Text weight="600" color="calories">
-              {formatNumber(props.calories)}
-            </Text>
-            <Text style={styles.unit} color="secondaryText" weight="400">
-              cal
-            </Text>
+        {!isInvalidNutritionFact && (
+          <View style={styles.allNutrientsContainer}>
+            <View style={styles.nutrientsContainer}>
+              <Text weight="600" color="calories">
+                {formatNumber(props.calories)}
+              </Text>
+              <Text style={styles.unit} color="secondaryText" weight="400">
+                cal
+              </Text>
+            </View>
+            <View style={styles.nutrientsContainer}>
+              <Text size="_16px" weight="600" color="carbs">
+                {formatNumber(props.carbs)}
+              </Text>
+              <Text style={styles.unit} color="secondaryText" weight="400">
+                g
+              </Text>
+            </View>
+            <View style={styles.nutrientsContainer}>
+              <Text size="_16px" weight="600" color="proteins">
+                {formatNumber(props.protein)}
+              </Text>
+              <Text style={styles.unit} color="secondaryText" weight="400">
+                g
+              </Text>
+            </View>
+            <View style={styles.nutrientsContainer}>
+              <Text size="_16px" weight="600" color="fat">
+                {formatNumber(props.fat)}
+              </Text>
+              <Text
+                style={styles.unit}
+                size="_16px"
+                color="secondaryText"
+                weight="400"
+              >
+                g
+              </Text>
+            </View>
           </View>
-          <View style={styles.nutrientsContainer}>
-            <Text size="_16px" weight="600" color="carbs">
-              {formatNumber(props.carbs)}
-            </Text>
-            <Text style={styles.unit} color="secondaryText" weight="400">
-              g
-            </Text>
-          </View>
-          <View style={styles.nutrientsContainer}>
-            <Text size="_16px" weight="600" color="proteins">
-              {formatNumber(props.protein)}
-            </Text>
-            <Text style={styles.unit} color="secondaryText" weight="400">
-              g
-            </Text>
-          </View>
-          <View style={styles.nutrientsContainer}>
-            <Text size="_16px" weight="600" color="fat">
-              {formatNumber(props.fat)}
-            </Text>
-            <Text
-              style={styles.unit}
-              size="_16px"
-              color="secondaryText"
-              weight="400"
-            >
-              g
-            </Text>
-          </View>
-        </View>
+        )}
       </TouchableOpacity>
-      <TouchableOpacity onPress={onFoodLogSelect} style={styles.radioPress}>
-        <View style={styles.radioContainer}>
-          <View
-            style={[styles.addIcon, isSelected && styles.selectedAddIcon]}
+      {isInvalidNutritionFact ? (
+        <>
+          <BasicButton
+            text="Edit Nutrition"
+            onPress={() => {
+              onEditNutritionFact();
+            }}
+            style={{
+              minHeight: 0,
+              paddingHorizontal: scaleWidth(4),
+              marginHorizontal: scaleWidth(4),
+            }}
+            textSize={12}
           />
-        </View>
-      </TouchableOpacity>
+        </>
+      ) : (
+        <TouchableOpacity onPress={onFoodLogSelect} style={styles.radioPress}>
+          <View style={styles.radioContainer}>
+            <View
+              style={[styles.addIcon, isSelected && styles.selectedAddIcon]}
+            />
+          </View>
+        </TouchableOpacity>
+      )}
     </View>
   );
 };
@@ -124,6 +157,9 @@ const styles = StyleSheet.create({
     },
     shadowRadius: 0.5,
     elevation: 1,
+  },
+  invalidNutritionFact: {
+    backgroundColor: 'rgba(255, 241, 242, 1))',
   },
   radioPress: {
     alignContent: 'center',
@@ -147,7 +183,6 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'white',
     flex: 1,
   },
   imageContainer: {

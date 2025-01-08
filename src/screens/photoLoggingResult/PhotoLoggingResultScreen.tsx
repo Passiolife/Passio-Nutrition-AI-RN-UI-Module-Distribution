@@ -164,6 +164,9 @@ export const PhotoLoggingScreen = gestureHandlerRootHOC(() => {
           onEditServingInfo={(item) => {
             editServingInfoRef.current?.open?.(item);
           }}
+          onEditNutritionFact={(item) => {
+            editServingInfoRef.current?.openNutritionFact?.(item);
+          }}
           onCancel={onCancel}
           onTryAgain={onTryAgain}
           isPreparingLog={isPreparingLog}

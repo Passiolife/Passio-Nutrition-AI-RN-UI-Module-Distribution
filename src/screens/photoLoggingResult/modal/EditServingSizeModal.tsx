@@ -20,6 +20,7 @@ export interface EditServingSizeProps {
 
 export interface EditServingSizeRef {
   open: (result: PhotoLoggingResults) => void;
+  openNutritionFact: (result: PhotoLoggingResults) => void;
 }
 export const EditServingSizeModal = forwardRef<
   EditServingSizeRef,
@@ -53,6 +54,10 @@ export const EditServingSizeModal = forwardRef<
       } else {
         setEditType('serving');
       }
+      openEditServingPopup(item);
+    },
+    openNutritionFact: (item) => {
+      setEditType('nutrient');
       openEditServingPopup(item);
     },
   }));
@@ -175,21 +180,13 @@ export const EditServingSizeModal = forwardRef<
   };
 
   const renderEditNutritionFact = () => {
-    const calories =
-      result?.nutrients?.calories?.value ||
-      result?.foodDataInfo?.nutritionPreview?.calories;
+    const calories = result?.nutrients?.calories?.value;
 
-    const carbs =
-      result?.nutrients?.carbs?.value ||
-      result?.foodDataInfo?.nutritionPreview?.carbs;
+    const carbs = result?.nutrients?.carbs?.value;
 
-    const protein =
-      result?.nutrients?.protein?.value ||
-      result?.foodDataInfo?.nutritionPreview?.protein;
+    const protein = result?.nutrients?.protein?.value;
 
-    const fat =
-      result?.nutrients?.fat?.value ||
-      result?.foodDataInfo?.nutritionPreview?.fat;
+    const fat = result?.nutrients?.fat?.value;
 
     const barcode = result?.passioFoodItem?.ingredients?.[0]?.metadata?.barcode;
 
