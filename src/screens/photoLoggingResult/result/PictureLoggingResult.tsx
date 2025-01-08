@@ -11,10 +11,10 @@ import { COLORS } from '../../../constants';
 import { Text } from '../../../components/texts/Text';
 import { BasicButton } from '../../../components';
 import { FlatList } from 'react-native-gesture-handler';
-import { ICONS } from '../../../assets';
 import type { PicturePassioAdvisorFoodInfo } from '../../takePicture/useTakePicture';
 import { PictureLoggingResultItemView } from './PictureLoggingResultItemView';
 import { PhotoLoggingResults } from '../usePhotoLogging';
+import { scaleHeight, scaleWidth } from '../../../utils';
 
 export const SCANNED_NUTRITION_LABEL = 'Scanned Nutrition Label';
 
@@ -22,6 +22,7 @@ interface Props {
   style?: StyleProp<ViewStyle>;
   passioAdvisorFoodInfoResult: Array<PhotoLoggingResults>;
   onLogSelect: (selected: PhotoLoggingResults[]) => void;
+  onUpdateMacros: (selected: PhotoLoggingResults[]) => void;
   onEditServingInfo: (selected: PhotoLoggingResults) => void;
   isPreparingLog: boolean;
 }
@@ -31,6 +32,7 @@ export const PictureLoggingResult = ({
   passioAdvisorFoodInfoResult,
   isPreparingLog,
   onEditServingInfo,
+  onUpdateMacros,
   onLogSelect,
 }: Props) => {
   const [advisorFoodInfo, setPicturePassioAdvisorFoodInfo] = useState<
@@ -41,10 +43,10 @@ export const PictureLoggingResult = ({
     setPicturePassioAdvisorFoodInfo(passioAdvisorFoodInfoResult);
   }, [passioAdvisorFoodInfoResult]);
 
-  const onFoodSelect = (record: PicturePassioAdvisorFoodInfo) => {
-    setPicturePassioAdvisorFoodInfo((item) =>
-      item?.map((i) => {
-        if (i.recognisedName === record?.recognisedName) {
+  const onFoodSelect = (record: PhotoLoggingResults) => {
+    setPicturePassioAdvisorFoodInfo((item) => {
+      const updated = item?.map((i) => {
+        if (i.uuID === record?.uuID) {
           return {
             ...i,
             isSelected: !(i.isSelected ?? false),
@@ -52,14 +54,34 @@ export const PictureLoggingResult = ({
         } else {
           return i;
         }
-      })
-    );
+      });
+
+      onUpdateMacros?.(updated);
+      return updated;
+    });
   };
   const renderNoDataFound = () => {
     return (
       <View style={styles.noDataFound}>
-        <Image source={ICONS.bottomMealPlan} />
-        <Text>{'No Result Found'}</Text>
+        <Text
+          style={{
+            fontWeight: '600',
+            textAlign: 'center',
+          }}
+        >
+          {'No Result Found'}
+        </Text>
+        <Text
+          style={{
+            textAlign: 'center',
+            marginHorizontal: scaleWidth(24),
+            marginVertical: scaleHeight(16),
+          }}
+        >
+          {
+            'Sorry, we could not find any matches. Please try again, scan the nutrition facts'
+          }
+        </Text>
       </View>
     );
   };
@@ -119,7 +141,7 @@ export const PictureLoggingResult = ({
           );
         }}
       />
-      {advisorFoodInfo?.length > 0 && (
+      {advisorFoodInfo?.length > 0 ? (
         <View style={styles.buttonContainer}>
           <BasicButton
             secondary
@@ -135,6 +157,24 @@ export const PictureLoggingResult = ({
             isLoading={isPreparingLog}
             enable={selectedCount > 0}
             text="Log Selected"
+          />
+        </View>
+      ) : (
+        <View style={styles.buttonContainer}>
+          <BasicButton
+            secondary
+            onPress={() => {}}
+            style={styles.buttonTryAgain}
+            text={'Try Again'}
+          />
+          <BasicButton
+            onPress={() => {
+              onLogSelect(advisorFoodInfo ?? []);
+            }}
+            style={styles.buttonLogSelected}
+            isLoading={isPreparingLog}
+            enable={selectedCount > 0}
+            text="Scan Nutrition Fact"
           />
         </View>
       )}

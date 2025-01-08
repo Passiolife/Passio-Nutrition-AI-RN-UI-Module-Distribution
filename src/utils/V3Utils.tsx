@@ -338,3 +338,24 @@ export function updateSlider(value: number): [number, number, number] {
 
   return [0, sliderMax, sliderStep]; // min, max, step
 }
+export const sumOfAllPassioNutrients = (data: PassioNutrients[]) => {
+  const summedNutrients: PassioNutrients = {
+    weight: { unit: 'g', value: 0 },
+  };
+
+  data.forEach((nutrient) => {
+    for (const key in nutrient) {
+      let keys = key as NutrientType;
+      if (nutrient[keys] && keys !== 'weight') {
+        if (!summedNutrients[keys]) {
+          summedNutrients[keys] = { ...nutrient[keys] };
+        } else {
+          summedNutrients[keys]!.value += nutrient[keys]!.value;
+        }
+      }
+      // disable
+    }
+  });
+
+  return summedNutrients;
+};

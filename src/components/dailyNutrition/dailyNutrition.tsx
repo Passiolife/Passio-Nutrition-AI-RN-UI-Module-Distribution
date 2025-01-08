@@ -34,20 +34,20 @@ export const DailyNutrition = ({ foodLogs }: DailyNutritionProps) => {
         </TouchableOpacity>
         <MacrosProgressView
           calories={{
-            target: dailyMacroNutrientAndCalories?.amountOfCalories ?? 0,
-            consumed: nutritionTarget?.targetCalories ?? 0,
+            consumes: dailyMacroNutrientAndCalories?.amountOfCalories ?? 0,
+            targeted: nutritionTarget?.targetCalories ?? 0,
           }}
           carbs={{
-            target: dailyMacroNutrientAndCalories?.amountOfCarbs ?? 0,
-            consumed: nutritionTarget?.targetCarbs ?? 0,
+            consumes: dailyMacroNutrientAndCalories?.amountOfCarbs ?? 0,
+            targeted: nutritionTarget?.targetCarbs ?? 0,
           }}
           protein={{
-            target: dailyMacroNutrientAndCalories?.amountOfProtein ?? 0,
-            consumed: nutritionTarget?.targetProtein ?? 0,
+            consumes: dailyMacroNutrientAndCalories?.amountOfProtein ?? 0,
+            targeted: nutritionTarget?.targetProtein ?? 0,
           }}
           fat={{
-            target: dailyMacroNutrientAndCalories?.amountOfFat ?? 0,
-            consumed: nutritionTarget?.targetFat ?? 0,
+            consumes: dailyMacroNutrientAndCalories?.amountOfFat ?? 0,
+            targeted: nutritionTarget?.targetFat ?? 0,
           }}
         />
       </TouchableOpacity>

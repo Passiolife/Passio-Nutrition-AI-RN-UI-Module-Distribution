@@ -13,6 +13,9 @@ import { MealLabel } from '../../models';
 import { StackNavigationProp } from '@react-navigation/stack';
 import uuid4 from 'react-native-uuid';
 import { EditServingSizeRef } from './modal/EditServingSizeModal';
+import { getMealLogsForDate } from '../../utils/DataServiceHelper';
+import { calculateDailyMacroNutrition } from '../dashbaord';
+import { sumOfAllPassioNutrients } from '../../utils/V3Utils';
 
 export const PHOTO_LIMIT = 7;
 
@@ -21,6 +24,16 @@ export interface PhotoLoggingResults extends PassioAdvisorFoodInfo {
   passioFoodItem?: PassioFoodItem;
   uuID: string;
   nutrients?: PassioNutrients;
+}
+export interface MacroInfo {
+  targetCalories?: number;
+  calories?: number;
+  targetProtein?: number;
+  protein?: number;
+  targetFat?: number;
+  fat?: number;
+  targetCarbs?: number;
+  carbs?: number;
 }
 
 export type PhotoLoggingScreenProps = StackNavigationProp<
@@ -69,6 +82,76 @@ export function usePhotoLogging() {
   const [isOpenDatePicker, openDatePicker] = useState(false);
   const [date, setDate] = useState(routes.params.logToDate ?? new Date());
   const [meal, setMeal] = useState<MealLabel>(getMealLog(date, undefined));
+  const [macroInfo, setMacroInfo] = useState<MacroInfo | undefined>(undefined);
+  const [newMacroInfo, setNewMacroInfo] = useState<MacroInfo | undefined>(
+    undefined
+  );
+
+  const fetTargetMacro = useCallback(async () => {
+    const profile = await services.dataService.getNutritionProfile();
+
+    if (profile) {
+      let targetCalories = 0;
+      let targetCarbs = 0;
+      let targetProtein = 0;
+      let targetFat = 0;
+      targetCalories = profile.caloriesTarget;
+      targetCarbs = (targetCalories * profile.carbsPercentage) / 100 / 4;
+      targetFat = (targetCalories * profile.fatPercentage) / 100 / 9;
+      targetProtein = (targetCalories * profile.proteinPercentage) / 100 / 4;
+      setMacroInfo((item) => {
+        let prevMacro = item || {};
+        let updatedMacro: MacroInfo = {
+          ...prevMacro,
+          targetCalories: targetCalories,
+          targetCarbs: targetCarbs,
+          targetFat: targetFat,
+          targetProtein: targetProtein,
+        };
+        return updatedMacro;
+      });
+    }
+  }, [services.dataService]);
+
+  const fetchAchievedGoal = useCallback(async () => {
+    const mealLogs = await getMealLogsForDate(date, services);
+    const foodLogs = mealLogs.filter((i) => i.meal === meal);
+
+    const data = calculateDailyMacroNutrition(foodLogs);
+
+    setMacroInfo((item) => {
+      let prevMacro = item || {};
+      let updatedMacro: MacroInfo = {
+        ...prevMacro,
+        calories: data.amountOfCalories,
+        carbs: data.amountOfCarbs,
+        fat: data.amountOfFat,
+        protein: data.amountOfProtein,
+      };
+      return updatedMacro;
+    });
+  }, [date, meal, services]);
+
+  const updateMacroOnSelection = useCallback(
+    async (result: PhotoLoggingResults[]) => {
+      const nutrients: PassioNutrients[] = result
+        ?.filter((i) => i.isSelected && i.nutrients)
+        .map((i) => i.nutrients) as unknown as PassioNutrients[];
+      const data = sumOfAllPassioNutrients(nutrients);
+      setNewMacroInfo((item) => {
+        let prevMacro = item || {};
+        let updatedMacro: MacroInfo = {
+          ...prevMacro,
+          calories: data.calories?.value || 0,
+          carbs: data.carbs?.value || 0,
+          fat: data.fat?.value || 0,
+          protein: data.protein?.value || 0,
+        };
+        return updatedMacro;
+      });
+    },
+    []
+  );
 
   const recognizePictureRemote = useCallback(
     async (imgs: string[]) => {
@@ -192,6 +275,23 @@ export function usePhotoLogging() {
     onDateChange(updateDate);
   };
 
+  useEffect(() => {
+    fetTargetMacro();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    fetchAchievedGoal();
+  }, [fetchAchievedGoal]);
+
+  useEffect(() => {
+    console.log('updateMacroOnSelection');
+    updateMacroOnSelection(passioAdvisorFoodInfo ?? []);
+  }, [passioAdvisorFoodInfo, updateMacroOnSelection]);
+
+  const onUpdateMacros = (result: PhotoLoggingResults[]) => {
+    updateMacroOnSelection(result);
+  };
   return {
     changeDate,
     date,
@@ -202,11 +302,14 @@ export function usePhotoLogging() {
     meal,
     mealTimes,
     onLogSelectPress,
+    onUpdateMacros,
     onUpdateFoodItem,
     openDatePicker,
     passioAdvisorFoodInfo,
     recognizePictureRemote,
     setDate,
     setMeal,
+    macroInfo,
+    newMacroInfo,
   };
 }

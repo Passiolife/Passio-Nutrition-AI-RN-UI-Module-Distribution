@@ -28,10 +28,13 @@ export const PhotoLoggingScreen = gestureHandlerRootHOC(() => {
     meal,
     mealTimes,
     onLogSelectPress,
+    onUpdateMacros,
     onUpdateFoodItem,
     openDatePicker,
     passioAdvisorFoodInfo,
     setMeal,
+    macroInfo,
+    newMacroInfo,
   } = usePhotoLogging();
 
   const branding = useBranding();
@@ -92,20 +95,22 @@ export const PhotoLoggingScreen = gestureHandlerRootHOC(() => {
         {!isFetchingResponse && (
           <MacrosProgressView
             calories={{
-              consumed: 1512,
-              target: 447,
+              consumes:
+                (macroInfo?.calories || 0) + (newMacroInfo?.calories || 0),
+              targeted: macroInfo?.targetCalories || 0,
             }}
             carbs={{
-              consumed: 170,
-              target: 27,
+              consumes: (macroInfo?.carbs || 0) + (newMacroInfo?.carbs || 0),
+              targeted: macroInfo?.targetCarbs || 0,
             }}
             protein={{
-              consumed: 113,
-              target: 17,
+              consumes:
+                (macroInfo?.protein || 0) + (newMacroInfo?.protein || 0),
+              targeted: macroInfo?.targetProtein || 0,
             }}
             fat={{
-              consumed: 42,
-              target: 29,
+              consumes: (macroInfo?.fat || 0) + (newMacroInfo?.fat || 0),
+              targeted: macroInfo?.targetFat || 0,
             }}
           />
         )}
@@ -151,6 +156,7 @@ export const PhotoLoggingScreen = gestureHandlerRootHOC(() => {
       ) : (
         <PictureLoggingResult
           onLogSelect={onLogSelectPress}
+          onUpdateMacros={onUpdateMacros}
           onEditServingInfo={(item) => {
             editServingInfoRef.current?.open?.(item);
           }}
