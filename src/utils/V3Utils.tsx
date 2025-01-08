@@ -4,6 +4,9 @@ import {
   type PassioFoodItem,
   type PassioNutrients,
   type UnitMass,
+  ServingUnit as PassioServingUnit,
+  ServingSize as PassioServingSize,
+  PassioFoodAmount,
 } from '@passiolife/nutritionai-react-native-sdk-v3';
 import type {
   FoodItem,
@@ -358,4 +361,73 @@ export const sumOfAllPassioNutrients = (data: PassioNutrients[]) => {
   });
 
   return summedNutrients;
+};
+export const createRecipeUsingPassioFoodItem = (data: PassioFoodItem[]) => {
+  const sum = data.reduce((acc, item) => acc + item.amount.weight.value, 0);
+  let servingSizes: PassioServingSize[] = [
+    {
+      unitName: 'serving',
+      quantity: 1,
+    },
+    {
+      unitName: 'gram',
+      quantity: sum,
+    },
+  ];
+
+  let servingUnits: PassioServingUnit[] = [
+    {
+      unitName: 'serving',
+      value: sum,
+      unit: 'g',
+    },
+    {
+      unitName: 'gram',
+      value: 1,
+      unit: 'g',
+    },
+  ];
+
+  let amount: PassioFoodAmount = {
+    selectedQuantity: 1,
+    selectedUnit: 'serving',
+    servingSizes: servingSizes,
+    servingUnits: servingUnits,
+    weight: {
+      unit: 'g',
+      value: sum,
+    },
+    weightGrams: sum,
+  };
+
+  let ingredients: PassioIngredient[] = [];
+
+  data.map((i) => {
+    if (i.ingredients) {
+      const ingredient: PassioIngredient = {
+        ...i.ingredients?.[0],
+        amount: i.amount,
+        iconId: i.iconId,
+        name: i.name,
+      };
+      if (ingredient) {
+        ingredients.push(ingredient);
+      }
+    }
+  });
+
+  const passioFoodItem: PassioFoodItem = {
+    amount: amount,
+    refCode: uuid4.v4() as unknown as string,
+    ingredientWeight: {
+      unit: 'g',
+      value: sum,
+    },
+    name: '',
+    ingredients: ingredients,
+    iconId: '',
+    id: uuid4.v4() as unknown as string,
+  };
+
+  return passioFoodItem;
 };

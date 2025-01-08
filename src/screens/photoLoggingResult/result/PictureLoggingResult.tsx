@@ -1,20 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import {
-  type StyleProp,
-  StyleSheet,
-  View,
-  type ViewStyle,
-  Image,
-} from 'react-native';
+import { type StyleProp, StyleSheet, View, type ViewStyle } from 'react-native';
 
 import { COLORS } from '../../../constants';
 import { Text } from '../../../components/texts/Text';
 import { BasicButton } from '../../../components';
 import { FlatList } from 'react-native-gesture-handler';
-import type { PicturePassioAdvisorFoodInfo } from '../../takePicture/useTakePicture';
 import { PictureLoggingResultItemView } from './PictureLoggingResultItemView';
 import { PhotoLoggingResults } from '../usePhotoLogging';
 import { scaleHeight, scaleWidth } from '../../../utils';
+import { formatNumber } from '../../../utils/NumberUtils';
 
 export const SCANNED_NUTRITION_LABEL = 'Scanned Nutrition Label';
 
@@ -22,8 +16,11 @@ interface Props {
   style?: StyleProp<ViewStyle>;
   passioAdvisorFoodInfoResult: Array<PhotoLoggingResults>;
   onLogSelect: (selected: PhotoLoggingResults[]) => void;
+  onCreateRecipePress: (selected: PhotoLoggingResults[]) => void;
   onUpdateMacros: (selected: PhotoLoggingResults[]) => void;
   onEditServingInfo: (selected: PhotoLoggingResults) => void;
+  onTryAgain: () => void;
+  onCancel: () => void;
   isPreparingLog: boolean;
 }
 
@@ -33,7 +30,10 @@ export const PictureLoggingResult = ({
   isPreparingLog,
   onEditServingInfo,
   onUpdateMacros,
+  onCreateRecipePress,
   onLogSelect,
+  onTryAgain,
+  onCancel,
 }: Props) => {
   const [advisorFoodInfo, setPicturePassioAdvisorFoodInfo] = useState<
     PhotoLoggingResults[]
@@ -129,7 +129,7 @@ export const PictureLoggingResult = ({
                 foodDataInfo?.nutritionPreview?.protein ||
                 0
               }
-              bottom={`${item.passioFoodItem?.amount.selectedQuantity || item?.foodDataInfo?.nutritionPreview?.servingQuantity} ${item.passioFoodItem?.amount.selectedUnit || item?.foodDataInfo?.nutritionPreview?.servingUnit} (${Math.round((item.passioFoodItem?.amount.weight.value || item.foodDataInfo?.nutritionPreview?.weightQuantity) ?? 0)} g)`}
+              bottom={`${formatNumber(item.passioFoodItem?.amount.selectedQuantity) || item?.foodDataInfo?.nutritionPreview?.servingQuantity} ${item.passioFoodItem?.amount.selectedUnit || item?.foodDataInfo?.nutritionPreview?.servingUnit} (${Math.round((item.passioFoodItem?.amount.weight.value || item.foodDataInfo?.nutritionPreview?.weightQuantity) ?? 0)} g)`}
               onFoodLogSelect={() => {
                 onFoodSelect(item);
               }}
@@ -145,7 +145,11 @@ export const PictureLoggingResult = ({
         <View style={styles.buttonContainer}>
           <BasicButton
             secondary
-            onPress={() => {}}
+            enable={selectedCount > 0}
+            onPress={() => {
+              onCreateRecipePress(advisorFoodInfo ?? []);
+            }}
+            disabled={isPreparingLog}
             style={styles.buttonTryAgain}
             text={'Create Recipe'}
           />
@@ -153,6 +157,7 @@ export const PictureLoggingResult = ({
             onPress={() => {
               onLogSelect(advisorFoodInfo ?? []);
             }}
+            disabled={isPreparingLog}
             style={styles.buttonLogSelected}
             isLoading={isPreparingLog}
             enable={selectedCount > 0}
@@ -163,18 +168,18 @@ export const PictureLoggingResult = ({
         <View style={styles.buttonContainer}>
           <BasicButton
             secondary
-            onPress={() => {}}
+            onPress={() => {
+              onCancel?.();
+            }}
             style={styles.buttonTryAgain}
-            text={'Try Again'}
+            text={'Cancel'}
           />
           <BasicButton
             onPress={() => {
-              onLogSelect(advisorFoodInfo ?? []);
+              onTryAgain?.();
             }}
             style={styles.buttonLogSelected}
-            isLoading={isPreparingLog}
-            enable={selectedCount > 0}
-            text="Scan Nutrition Fact"
+            text="Try Again"
           />
         </View>
       )}

@@ -9,6 +9,7 @@ import {
 import { updateSlider } from '../../../utils/V3Utils';
 import { EditServingSizeProps } from './EditServingSizeModal';
 import {
+  PassioFoodAmount,
   PassioFoodItem,
   PassioSDK,
 } from '@passiolife/nutritionai-react-native-sdk-v3';
@@ -136,20 +137,36 @@ export const useEditServing = () => {
 
   const handleDoneClick = (props: EditServingSizeProps) => {
     let passioFoodItem: PassioFoodItem | undefined = result?.passioFoodItem;
-    if (passioFoodItem && result) {
+    const ingredients = passioFoodItem?.ingredients;
+
+    if (passioFoodItem && result && ingredients) {
+      const amount: PassioFoodAmount = {
+        ...passioFoodItem.amount,
+        selectedQuantity: Number(quantityRef.current || 0),
+        selectedUnit: selectedUnit,
+        weight: {
+          unit: 'g',
+          value: weight,
+        },
+        weightGrams: weight,
+      };
       passioFoodItem = {
         ...passioFoodItem,
-        amount: {
-          ...passioFoodItem.amount,
-          selectedQuantity: Number(quantityRef.current || 0),
-          selectedUnit: selectedUnit,
-          weight: {
-            unit: 'g',
-            value: weight,
-          },
-          weightGrams: weight,
-        },
+        amount: amount,
       };
+
+      passioFoodItem = {
+        ...passioFoodItem,
+        ingredients: [
+          {
+            ...ingredients?.[0],
+            amount,
+            referenceNutrients:
+              PassioSDK.getNutrientsReferenceOfPassioFoodItem(passioFoodItem),
+          },
+        ],
+      };
+
       props?.onUpdateFoodItem?.({
         ...result,
         passioFoodItem: passioFoodItem,

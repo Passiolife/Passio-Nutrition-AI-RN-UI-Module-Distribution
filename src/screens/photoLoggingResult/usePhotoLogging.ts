@@ -1,6 +1,10 @@
 import type { ParamList } from '../../navigaitons';
 import { useCallback, useRef, useState, useEffect } from 'react';
-import { createFoodLogUsingFoodDataInfo, getMealLog } from '../../utils';
+import {
+  convertPassioFoodItem,
+  createFoodLogUsingFoodDataInfo,
+  getMealLog,
+} from '../../utils';
 import {
   PassioFoodItem,
   PassioNutrients,
@@ -15,7 +19,11 @@ import uuid4 from 'react-native-uuid';
 import { EditServingSizeRef } from './modal/EditServingSizeModal';
 import { getMealLogsForDate } from '../../utils/DataServiceHelper';
 import { calculateDailyMacroNutrition } from '../dashbaord';
-import { sumOfAllPassioNutrients } from '../../utils/V3Utils';
+import {
+  convertPassioFoodItemToFoodLog,
+  createRecipeUsingPassioFoodItem,
+  sumOfAllPassioNutrients,
+} from '../../utils/V3Utils';
 
 export const PHOTO_LIMIT = 7;
 
@@ -276,22 +284,54 @@ export function usePhotoLogging() {
   };
 
   useEffect(() => {
+    console.log('fetTargetMacro ===>');
     fetTargetMacro();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
+    console.log('fetchAchievedGoal');
+
     fetchAchievedGoal();
   }, [fetchAchievedGoal]);
 
   useEffect(() => {
-    console.log('updateMacroOnSelection');
     updateMacroOnSelection(passioAdvisorFoodInfo ?? []);
   }, [passioAdvisorFoodInfo, updateMacroOnSelection]);
 
   const onUpdateMacros = (result: PhotoLoggingResults[]) => {
-    updateMacroOnSelection(result);
+    setPassioAdvisorFoodInfo(result);
   };
+
+  const onCreateRecipePress = (selected: PhotoLoggingResults[]) => {
+    const recipe = createRecipeUsingPassioFoodItem(
+      selected
+        .filter((i) => i.isSelected && i.passioFoodItem)
+        .map((i) => i.passioFoodItem) as unknown as PassioFoodItem[]
+    );
+
+    const foodLog = convertPassioFoodItemToFoodLog(
+      recipe,
+      undefined,
+      undefined,
+      undefined
+    );
+    navigation.navigate('EditRecipeScreen', {
+      recipe: foodLog,
+      from: 'Barcode',
+    });
+  };
+
+  const onCancel = () => {
+    navigation.goBack();
+  };
+
+  const onTryAgain = () => {
+    navigation.replace('TakePictureScreen', {
+      type: routes.params.type,
+    });
+  };
+
   return {
     changeDate,
     date,
@@ -311,5 +351,8 @@ export function usePhotoLogging() {
     setMeal,
     macroInfo,
     newMacroInfo,
+    onCreateRecipePress,
+    onCancel,
+    onTryAgain,
   };
 }

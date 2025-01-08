@@ -1,3 +1,5 @@
+import { DateTime } from 'luxon';
+
 var days = [
   'Sunday',
   'Monday',
@@ -47,11 +49,7 @@ export const dateFormatter = (date: Date) => {
   return `${dayName}, ${getMonth} ${getDay} ${getYear}`;
 };
 export const dayFormatterPhotoLogging = (date: Date) => {
-  let getMonth = date.getMonth() + 1;
-  let getDay = date.getDate();
-  let getYear = date.getFullYear();
-
-  return `${getDay}/${getMonth}/${getYear}`;
+  return DateTime.fromJSDate(date).toFormat('dd/MM/yyyy');
 };
 
 //converted date to 'dd'T'HH:mm:ss'Z'' format

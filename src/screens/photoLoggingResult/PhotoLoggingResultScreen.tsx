@@ -30,7 +30,10 @@ export const PhotoLoggingScreen = gestureHandlerRootHOC(() => {
     onLogSelectPress,
     onUpdateMacros,
     onUpdateFoodItem,
+    onCreateRecipePress,
     openDatePicker,
+    onCancel,
+    onTryAgain,
     passioAdvisorFoodInfo,
     setMeal,
     macroInfo,
@@ -156,10 +159,13 @@ export const PhotoLoggingScreen = gestureHandlerRootHOC(() => {
       ) : (
         <PictureLoggingResult
           onLogSelect={onLogSelectPress}
+          onCreateRecipePress={onCreateRecipePress}
           onUpdateMacros={onUpdateMacros}
           onEditServingInfo={(item) => {
             editServingInfoRef.current?.open?.(item);
           }}
+          onCancel={onCancel}
+          onTryAgain={onTryAgain}
           isPreparingLog={isPreparingLog}
           passioAdvisorFoodInfoResult={passioAdvisorFoodInfo ?? []}
         />

@@ -113,6 +113,7 @@ export interface PhotoLoggingScreenProps {
   images?: string[];
   logToDate?: Date | undefined;
   logToMeal?: MealLabel | undefined;
+  type: 'picture' | 'camera';
 }
 
 export type ParamList = {
