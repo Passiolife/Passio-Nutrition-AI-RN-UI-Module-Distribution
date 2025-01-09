@@ -233,6 +233,7 @@ export function usePhotoLogging() {
       setPreparingLog(true);
       const foodLogs = await createFoodLogUsingFoodDataInfo(
         selected.filter((i) => i.isSelected),
+        services,
         date,
         meal
       );
@@ -249,7 +250,7 @@ export function usePhotoLogging() {
       itemAddedToDairyViewModalRef.current?.open();
     },
 
-    [isPreparingLog, date, meal, services.dataService]
+    [isPreparingLog, date, meal, services]
   );
 
   useEffect(() => {
