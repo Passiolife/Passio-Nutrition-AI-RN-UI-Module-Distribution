@@ -1,5 +1,12 @@
 import React, { forwardRef, useImperativeHandle } from 'react';
-import { Modal, StyleSheet, View, TextInput } from 'react-native';
+import {
+  Modal,
+  StyleSheet,
+  View,
+  TextInput,
+  TouchableOpacity,
+  Image,
+} from 'react-native';
 import { BasicButton, Text } from '../../../components';
 import { PassioFoodIcon } from '../../../components/passio/PassioFoodIcon';
 import { PassioIDEntityType } from '@passiolife/nutritionai-react-native-sdk-v3';
@@ -13,9 +20,11 @@ import { EditNutritionFact } from './EditNutritionFactModal';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { formatNumber } from '../../../utils/NumberUtils';
 import { SCANNED_NUTRITION_LABEL } from '../result/PictureLoggingResult';
+import { ICONS } from '../../../assets';
 
 export interface EditServingSizeProps {
   onUpdateFoodItem?: (photoLoggingResults: PhotoLoggingResults) => void;
+  openNutritionFactFromServing?: (result: PhotoLoggingResults) => void;
 }
 
 export interface EditServingSizeRef {
@@ -30,6 +39,7 @@ export const EditServingSizeModal = forwardRef<
     branding,
     close,
     handleQtyUpdate,
+    onNutrientsClose,
     handleServingChange,
     isOpen,
     openEditServingPopup,
@@ -46,6 +56,7 @@ export const EditServingSizeModal = forwardRef<
     onEditServingBackPress,
     onBarcodeOpen,
     editType,
+    updatePassioFoodItem,
     setEditType,
     setOpen,
   } = useEditServing();
@@ -112,6 +123,20 @@ export const EditServingSizeModal = forwardRef<
             >
               {bottom}
             </Text>
+          </View>
+          <View>
+            <TouchableOpacity
+              onPress={() => {
+                updatePassioFoodItem();
+                setEditType('edit-serving-to-nutrient');
+              }}
+            >
+              <Image
+                source={ICONS.editGreyIc}
+                resizeMode="contain"
+                style={{ height: 24, width: 24 }}
+              />
+            </TouchableOpacity>
           </View>
         </View>
         <Text size={'_16px'} weight={'600'} style={styles.servingSizeTitle}>
@@ -217,7 +242,7 @@ export const EditServingSizeModal = forwardRef<
         onShow={() => {
           setOpen(true);
         }}
-        onClose={close}
+        onClose={onNutrientsClose}
       />
     );
   };
@@ -229,7 +254,7 @@ export const EditServingSizeModal = forwardRef<
 
         <View style={styles.card}>
           <KeyboardAwareScrollView contentContainerStyle={{}}>
-            {editType === 'nutrient'
+            {editType === 'nutrient' || editType === 'edit-serving-to-nutrient'
               ? renderEditNutritionFact()
               : renderEditServingSize()}
           </KeyboardAwareScrollView>

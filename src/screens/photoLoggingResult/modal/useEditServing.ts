@@ -45,7 +45,10 @@ export const useEditServing = () => {
   const [quantity, setQty] = useState(0);
   const quantityRef = useRef(0);
   const [editType, setEditType] = useState<
-    'serving' | 'nutrient' | 'nutrient_with_serving'
+    | 'serving'
+    | 'nutrient'
+    | 'nutrient_with_serving'
+    | 'edit-serving-to-nutrient'
   >('serving');
 
   const update = useCallback(
@@ -72,6 +75,8 @@ export const useEditServing = () => {
         qtyTextInputRef?.current?.setNativeProps({
           text: formatNumber(numQty)?.toString(),
         });
+        quantityRef.current = numQty;
+        setQty(Number(numQty));
       } else {
         setQty(Number(qty));
         setSliderConfig(updateSlider(Number(qty)));
@@ -137,6 +142,15 @@ export const useEditServing = () => {
     setOpen(false);
   };
 
+  const onNutrientsClose = () => {
+    if (editType === 'edit-serving-to-nutrient') {
+      setEditType('serving');
+    } else {
+      reset();
+      setOpen(false);
+    }
+  };
+
   const servingSizes: Select[] =
     result?.passioFoodItem?.amount?.servingSizes?.map((item) => {
       const option: Select = {
@@ -146,7 +160,7 @@ export const useEditServing = () => {
       return option;
     }) ?? [];
 
-  const handleDoneClick = (props: EditServingSizeProps) => {
+  const updatePassioFoodItem = () => {
     let passioFoodItem: PassioFoodItem | undefined = result?.passioFoodItem;
     const ingredients = passioFoodItem?.ingredients;
 
@@ -177,15 +191,28 @@ export const useEditServing = () => {
           },
         ],
       };
+    }
 
-      props?.onUpdateFoodItem?.({
+    if (passioFoodItem) {
+      const photoLogging = {
         ...result,
         passioFoodItem: passioFoodItem,
         nutrients: PassioSDK.getNutrientsOfPassioFoodItem(
           passioFoodItem,
           passioFoodItem.amount.weight
         ),
-      });
+      } as PhotoLoggingResults;
+      setResult(photoLogging);
+      return photoLogging;
+    } else {
+      return undefined;
+    }
+  };
+
+  const handleDoneClick = (props: EditServingSizeProps) => {
+    const updatedResult = updatePassioFoodItem();
+    if (updatedResult) {
+      props?.onUpdateFoodItem?.(updatedResult);
       setOpen(false);
     }
   };
@@ -219,6 +246,7 @@ export const useEditServing = () => {
   return {
     branding,
     close,
+    onNutrientsClose,
     editType,
     handleDoneClick,
     handleQtyUpdate,
@@ -239,6 +267,7 @@ export const useEditServing = () => {
     setResult,
     sliderConfig,
     sliderRef,
+    updatePassioFoodItem,
     weight,
   };
 };
