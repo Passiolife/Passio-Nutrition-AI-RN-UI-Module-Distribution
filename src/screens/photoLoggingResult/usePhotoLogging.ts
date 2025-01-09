@@ -30,6 +30,7 @@ export interface PhotoLoggingResults extends PassioAdvisorFoodInfo {
   passioFoodItem?: PassioFoodItem;
   uuID: string;
   nutrients?: PassioNutrients;
+  assets?: string;
 }
 export interface MacroInfo {
   targetCalories?: number;
@@ -196,6 +197,7 @@ export function usePhotoLogging() {
                     isSelected: true,
                     passioFoodItem: passioFoodItem ?? undefined,
                     uuID: uuid4.v4() as unknown as string,
+                    assets: item,
                     nutrients: passioFoodItem
                       ? PassioSDK.getNutrientsOfPassioFoodItem(
                           passioFoodItem,

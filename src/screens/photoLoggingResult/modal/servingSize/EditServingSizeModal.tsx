@@ -5,6 +5,7 @@ import {
   TextInput,
   TouchableOpacity,
   Image,
+  Platform,
 } from 'react-native';
 import { BasicButton, Text } from '../../../../components';
 import { PassioFoodIcon } from '../../../../components/passio/PassioFoodIcon';
@@ -67,11 +68,27 @@ export const EditServingSizeModal = forwardRef<
       </Text>
       <View style={styles.container}>
         <View style={styles.imageContainer}>
-          <PassioFoodIcon
-            style={styles.image}
-            iconID={iconID}
-            entityType={PassioIDEntityType.group}
-          />
+          {iconID?.length ? (
+            <PassioFoodIcon
+              style={styles.image}
+              iconID={iconID}
+              entityType={PassioIDEntityType.group}
+            />
+          ) : (
+            <Image
+              resizeMode="cover"
+              resizeMethod="resize"
+              style={styles.image}
+              source={{
+                uri: Image.resolveAssetSource({
+                  uri:
+                    Platform.OS === 'android'
+                      ? `${'file://' + result.assets}`
+                      : result.assets,
+                }).uri,
+              }}
+            />
+          )}
         </View>
         <View
           style={{

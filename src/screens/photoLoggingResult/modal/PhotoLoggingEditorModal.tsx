@@ -89,6 +89,7 @@ export const PhotoLoggingEditorModal = forwardRef<
       <EditNutritionFact
         result={result.passioFoodItem}
         ref={editNutritionFactRef}
+        assets={result.assets}
         onDone={(updatedResult) => {
           props?.onUpdateFoodItem?.({
             ...result,

@@ -111,6 +111,8 @@ export const PictureLoggingResult = ({
                   : '')
               }
               imageName={item.passioFoodItem?.iconId || foodDataInfo?.iconID}
+              type={item.resultType}
+              assets={item.assets}
               calories={item?.nutrients?.calories?.value}
               carbs={item?.nutrients?.carbs?.value}
               fat={item?.nutrients?.fat?.value}

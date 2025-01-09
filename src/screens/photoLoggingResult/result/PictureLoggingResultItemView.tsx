@@ -1,6 +1,15 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import { PassioIDEntityType } from '@passiolife/nutritionai-react-native-sdk-v3';
+import {
+  Image,
+  Platform,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import {
+  PassioFoodResultType,
+  PassioIDEntityType,
+} from '@passiolife/nutritionai-react-native-sdk-v3';
 import { PassioFoodIcon } from '../../../components/passio/PassioFoodIcon';
 import { BasicButton, Text } from '../../../components';
 import { formatNumber } from '../../../utils/NumberUtils';
@@ -8,6 +17,7 @@ import { scaleWidth } from '../../../utils';
 
 interface Props {
   imageName?: string;
+  assets?: string;
   foodName: string;
   bottom: string;
   onFoodLogEditor?: () => void;
@@ -19,6 +29,7 @@ interface Props {
   fat?: number;
   protein?: number;
   carbs?: number;
+  type?: PassioFoodResultType;
 }
 
 export const PictureLoggingResultItemView = (props: Props) => {
@@ -48,11 +59,27 @@ export const PictureLoggingResultItemView = (props: Props) => {
       <TouchableOpacity onPress={onEditServingInfo} style={{ flex: 1 }}>
         <View style={styles.container}>
           <View style={styles.imageContainer}>
-            <PassioFoodIcon
-              style={styles.image}
-              iconID={imageName}
-              entityType={PassioIDEntityType.group}
-            />
+            {imageName?.length ? (
+              <PassioFoodIcon
+                style={styles.image}
+                iconID={imageName}
+                entityType={PassioIDEntityType.group}
+              />
+            ) : (
+              <Image
+                resizeMode="cover"
+                resizeMethod="resize"
+                style={styles.image}
+                source={{
+                  uri: Image.resolveAssetSource({
+                    uri:
+                      Platform.OS === 'android'
+                        ? `${'file://' + props.assets}`
+                        : props.assets,
+                  }).uri,
+                }}
+              />
+            )}
           </View>
           <View
             style={{

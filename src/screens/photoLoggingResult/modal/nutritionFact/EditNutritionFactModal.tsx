@@ -6,13 +6,10 @@ import {
   KeyboardType,
   Image,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
 import { BasicButton, Text } from '../../../../components';
-import { PassioFoodIcon } from '../../../../components/passio/PassioFoodIcon';
-import {
-  PassioFoodItem,
-  PassioIDEntityType,
-} from '@passiolife/nutritionai-react-native-sdk-v3';
+import { PassioFoodItem } from '@passiolife/nutritionai-react-native-sdk-v3';
 import { scaleHeight, scaleWidth } from '../../../../utils';
 import { Branding } from '../../../../contexts';
 import { formatNumber } from '../../../../utils/NumberUtils';
@@ -24,6 +21,7 @@ export interface EditNutritionFactProps {
   onDone?: (result: PassioFoodItem) => void;
   result: PassioFoodItem;
   openBarcodeScanner?: () => void;
+  assets?: string;
 }
 
 export interface EditNutritionFactRef {
@@ -165,10 +163,18 @@ export const EditNutritionFact = forwardRef<
       </Text>
       <View style={[styles.container]}>
         <View style={styles.imageContainer}>
-          <PassioFoodIcon
+          <Image
+            resizeMode="cover"
+            resizeMethod="resize"
             style={styles.image}
-            iconID={info.iconID}
-            entityType={PassioIDEntityType.group}
+            source={{
+              uri: Image.resolveAssetSource({
+                uri:
+                  Platform.OS === 'android'
+                    ? `${'file://' + props.assets}`
+                    : props.assets,
+              }).uri,
+            }}
           />
         </View>
         <View
