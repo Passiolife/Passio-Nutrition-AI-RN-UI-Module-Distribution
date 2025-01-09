@@ -1,6 +1,6 @@
 import React, { forwardRef, useImperativeHandle } from 'react';
 import { Modal, StyleSheet, View } from 'react-native';
-import { scaleHeight, scaleWidth } from '../../../utils';
+import { scaleHeight, scaleWidth, screenHeight } from '../../../utils';
 import { Branding } from '../../../contexts';
 import { PhotoLoggingResults } from '../usePhotoLogging';
 import { usePhotoLoggingEditor } from './usePhotoLoggingEditor';
@@ -109,17 +109,23 @@ export const PhotoLoggingEditorModal = forwardRef<
   return (
     <Modal visible transparent>
       <View style={styles.modalContainer}>
-        <View style={styles.flex1} />
-
-        <View style={styles.card}>
-          <KeyboardAwareScrollView contentContainerStyle={{}}>
+        <KeyboardAwareScrollView
+          contentContainerStyle={{
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            bottom: 0,
+            top: 0,
+          }}
+        >
+          <View style={{ flex: 1 }} />
+          <View style={[styles.card]}>
             {editType === 'nutrient' || editType === 'edit-serving-to-nutrient'
               ? renderEditNutritionFact()
               : renderEditServingSize()}
-          </KeyboardAwareScrollView>
-        </View>
-
-        <View style={styles.flex1} />
+          </View>
+          <View style={{ flex: 1 }} />
+        </KeyboardAwareScrollView>
       </View>
     </Modal>
   );
