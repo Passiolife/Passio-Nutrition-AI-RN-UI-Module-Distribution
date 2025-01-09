@@ -101,7 +101,16 @@ export const PhotoLoggingEditorModal = forwardRef<
           });
           releaseEditor();
         }}
-        openBarcodeScanner={handleBarcodeClick}
+        openBarcodeScanner={(updatedResult) => {
+          handleBarcodeClick?.({
+            ...result,
+            passioFoodItem: updatedResult,
+            nutrients: PassioSDK.getNutrientsOfPassioFoodItem(
+              updatedResult,
+              updatedResult.amount.weight
+            ),
+          });
+        }}
         onClose={handleNutritionFactCloseClick}
       />
     );

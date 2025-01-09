@@ -20,7 +20,7 @@ export interface EditNutritionFactProps {
   onClose?: () => void;
   onDone?: (result: PassioFoodItem) => void;
   result: PassioFoodItem;
-  openBarcodeScanner?: () => void;
+  openBarcodeScanner?: (result: PassioFoodItem) => void;
   assets?: string;
 }
 

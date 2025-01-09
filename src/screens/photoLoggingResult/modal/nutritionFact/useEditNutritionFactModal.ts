@@ -55,7 +55,7 @@ export const useEditNutritionFact = (props: EditNutritionFactProps) => {
   const barcodeRef = useRef(barcode ?? '');
   const barcodeTextInputRef = useRef<TextInput>(null);
 
-  const onUpdateNutritionUpdate = useCallback(() => {
+  const onUpdatePassioFoodItem = useCallback(() => {
     const updatedQty = Number(servingQtyRef.current || 0);
     const updatedWeight = Number(weightRef.current || 0);
     const updatedCalories = Number(caloriesRef.current || 0);
@@ -65,21 +65,6 @@ export const useEditNutritionFact = (props: EditNutritionFactProps) => {
     const updatedUnit = servingUnitRef.current.trim().toLowerCase();
     const updatedName = nameRef.current;
     const updatedBarcode = barcodeRef.current;
-
-    if (!updatedQty || updatedQty <= 0) {
-      Alert.alert('Please enter valid qty');
-      return;
-    }
-
-    if (!updatedWeight || updatedWeight <= 0) {
-      Alert.alert('Please enter valid weight');
-      return;
-    }
-
-    if (!updatedUnit || updatedUnit.length <= 0) {
-      Alert.alert('Please enter valid unit');
-      return;
-    }
 
     let passioFoodItem: PassioFoodItem | undefined | null = result;
 
@@ -174,12 +159,44 @@ export const useEditNutritionFact = (props: EditNutritionFactProps) => {
         ],
       };
 
-      onDone?.(passioFoodItem);
+      return passioFoodItem;
+    } else {
+      return passioFoodItem;
     }
-  }, [onDone, result]);
+  }, [result]);
+
+  const onUpdateNutritionUpdate = useCallback(() => {
+    const updatedQty = Number(servingQtyRef.current || 0);
+    const updatedWeight = Number(weightRef.current || 0);
+    const updatedUnit = servingUnitRef.current.trim().toLowerCase();
+
+    if (!updatedQty || updatedQty <= 0) {
+      Alert.alert('Please enter valid qty');
+      return;
+    }
+
+    if (!updatedWeight || updatedWeight <= 0) {
+      Alert.alert('Please enter valid weight');
+      return;
+    }
+
+    if (!updatedUnit || updatedUnit.length <= 0) {
+      Alert.alert('Please enter valid unit');
+      return;
+    }
+
+    const updatedResult = onUpdatePassioFoodItem();
+    if (updatedResult) {
+      onDone?.(updatedResult);
+    }
+  }, [onDone, onUpdatePassioFoodItem]);
 
   const onBarcodePress = () => {
-    props.openBarcodeScanner?.();
+    const updatedResult = onUpdatePassioFoodItem();
+
+    if (updatedResult) {
+      props.openBarcodeScanner?.(updatedResult);
+    }
   };
 
   return {

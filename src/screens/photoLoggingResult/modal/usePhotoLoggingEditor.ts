@@ -44,7 +44,8 @@ export const usePhotoLoggingEditor = () => {
     }
   };
 
-  const handleBarcodeClick = () => {
+  const handleBarcodeClick = (oldResult: PhotoLoggingResults) => {
+    setResult(oldResult);
     setOpen(false);
     navigation.navigate('BarcodeScanScreen', {
       type: 'general',
