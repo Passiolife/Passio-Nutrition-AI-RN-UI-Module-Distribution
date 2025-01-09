@@ -14,13 +14,23 @@ import {
   PassioSDK,
 } from '@passiolife/nutritionai-react-native-sdk-v3';
 import Slider from '@react-native-community/slider';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { ParamList } from '../../../navigaitons';
+import { EditNutritionFactRef } from './EditNutritionFactModal';
 
 interface Select {
   label: string;
   value: string;
 }
 
+export type NavigationProps = StackNavigationProp<
+  ParamList,
+  'PhotoLoggingScreen'
+>;
+
 export const useEditServing = () => {
+  const navigation = useNavigation<NavigationProps>();
   const [result, setResult] = useState<PhotoLoggingResults | undefined>(
     undefined
   );
@@ -29,6 +39,7 @@ export const useEditServing = () => {
   const [selectedUnit, setSelectedUnit] = useState('gram');
   const qtyTextInputRef = useRef<TextInput>(null);
   const sliderRef = useRef<Slider>(null);
+  const editNutritionFactRef = useRef<EditNutritionFactRef>(null);
   const branding = useBranding();
   const [weight, setWeight] = useState(0);
   const [quantity, setQty] = useState(0);
@@ -187,27 +198,47 @@ export const useEditServing = () => {
     setEditType('nutrient');
   };
 
+  const onBarcodeOpen = () => {
+    setOpen(false);
+    navigation.navigate('BarcodeScanScreen', {
+      type: 'general',
+      onBarcodeOnly: (item) => {
+        setOpen(true);
+        navigation.goBack();
+        setTimeout(() => {
+          editNutritionFactRef?.current?.barcode?.(item);
+        }, 500);
+      },
+      onClose: () => {
+        setOpen(true);
+        navigation.goBack();
+      },
+    });
+  };
+
   return {
     branding,
     close,
+    editType,
+    handleDoneClick,
     handleQtyUpdate,
     handleServingChange,
-    handleDoneClick,
-    onEditServingBackPress,
     isOpen,
-    sliderConfig,
+    onEditServingBackPress,
+    onBarcodeOpen,
+    editNutritionFactRef,
     openEditServingPopup,
     qtyTextInputRef,
-    sliderRef,
     quantity,
     quantityRef,
     result,
     selectedUnit,
     servingSizes,
-    weight,
     setEditType,
-    editType,
-    setResult,
     setOpen,
+    setResult,
+    sliderConfig,
+    sliderRef,
+    weight,
   };
 };

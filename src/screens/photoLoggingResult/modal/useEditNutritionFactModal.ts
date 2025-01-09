@@ -9,7 +9,14 @@ import {
   ServingSize,
   ServingUnit,
 } from '@passiolife/nutritionai-react-native-sdk-v3';
-import { Alert } from 'react-native';
+import { Alert, TextInput } from 'react-native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { ParamList } from '../../../navigaitons';
+
+export type NavigationProps = StackNavigationProp<
+  ParamList,
+  'PhotoLoggingScreen'
+>;
 
 export const useEditNutritionFact = (props: EditNutritionFactProps) => {
   const branding = useBranding();
@@ -39,6 +46,7 @@ export const useEditNutritionFact = (props: EditNutritionFactProps) => {
   const servingUnitRef = useRef(servingUnit.toString());
   const nameRef = useRef(label ?? '');
   const barcodeRef = useRef(barcode ?? '');
+  const barcodeTextInputRef = useRef<TextInput>(null);
 
   const onUpdateNutritionUpdate = useCallback(() => {
     const updatedQty = Number(servingQtyRef.current || 0);
@@ -172,7 +180,9 @@ export const useEditNutritionFact = (props: EditNutritionFactProps) => {
     }
   }, [onNext, result]);
 
-  const onBarcodePress = () => {};
+  const onBarcodePress = () => {
+    props.onBarcodeOpen?.();
+  };
 
   return {
     onUpdateNutritionUpdate,
@@ -186,6 +196,7 @@ export const useEditNutritionFact = (props: EditNutritionFactProps) => {
     servingQtyRef,
     weightRef,
     servingUnitRef,
+    barcodeTextInputRef,
     onBarcodePress,
     nameRef,
     barcodeRef,

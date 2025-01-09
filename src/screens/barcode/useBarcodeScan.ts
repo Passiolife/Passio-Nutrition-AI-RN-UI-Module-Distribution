@@ -14,6 +14,7 @@ import type {
 import { useServices } from '../../contexts';
 import type { ParamList } from '../../navigaitons';
 import { RouteProp, useRoute } from '@react-navigation/native';
+import { BackHandler, NativeEventSubscription } from 'react-native';
 
 export const useBarcodeScan = () => {
   const barcodeRef = useRef<string | undefined>(undefined);
@@ -62,12 +63,14 @@ export const useBarcodeScan = () => {
             return;
           }
 
-          const existingCustomFood =
-            type === 'general'
-              ? undefined
-              : customFoods?.find(
-                  (i) => i.barcode === barcodeCandidate.barcode
-                );
+          if (type === 'general') {
+            params?.onBarcodeOnly?.(barcodeCandidate.barcode);
+            return;
+          }
+
+          const existingCustomFood = customFoods?.find(
+            (i) => i.barcode === barcodeCandidate.barcode
+          );
 
           let attribute: QuickResult | null =
             await getQuickResults(barcodeCandidate);
@@ -109,7 +112,7 @@ export const useBarcodeScan = () => {
     if (detection) {
       init();
     }
-  }, [customFoods, foodDetectEvents, getQuickResults, params]);
+  }, [customFoods, foodDetectEvents, getQuickResults, params, type]);
 
   useEffect(() => {
     const config: FoodDetectionConfig = {
@@ -171,12 +174,32 @@ export const useBarcodeScan = () => {
     }
   };
 
+  useEffect(() => {
+    let backHandler: NativeEventSubscription | undefined;
+    if (params.type === 'general') {
+      const backAction = () => {
+        params?.onClose?.();
+        return false;
+      };
+      backHandler = BackHandler.addEventListener(
+        'hardwareBackPress',
+        backAction
+      );
+    }
+    return () => {
+      if (backHandler) {
+        backHandler.remove();
+      }
+    }; // Cleanup the listener
+  }, [params]);
+
   return {
     quickResult,
     isLoading,
     resetScanning,
     onCreateCustomWithoutBarcodePress,
     onViewExistingPress,
+    params,
     onBarcodePress,
     type: params.type ?? 'customFood',
   };

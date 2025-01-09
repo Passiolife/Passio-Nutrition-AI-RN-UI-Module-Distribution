@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useImperativeHandle } from 'react';
 import {
   StyleSheet,
   View,
@@ -32,16 +32,17 @@ export interface EditNutritionFactProps {
   onNext?: (result: PhotoLoggingResults) => void;
   result: PhotoLoggingResults;
   onHide?: () => void;
+  onBarcodeOpen?: () => void;
   onShow?: () => void;
 }
 
 export interface EditNutritionFactRef {
-  open: (result: PhotoLoggingResults) => void;
+  barcode: (barcode: string) => void;
 }
 export const EditNutritionFact = forwardRef<
   EditNutritionFactRef,
   EditNutritionFactProps
->((props, _ref) => {
+>((props, ref) => {
   const {
     onUpdateNutritionUpdate,
     branding,
@@ -59,9 +60,17 @@ export const EditNutritionFact = forwardRef<
     nameRef,
     onBarcodePress,
     barcodeRef,
+    barcodeTextInputRef,
     servingUnitRef,
   } = useEditNutritionFact(props);
   const styles = customStyles(branding);
+
+  useImperativeHandle(ref, () => ({
+    barcode: (item) => {
+      barcodeRef.current = item;
+      barcodeTextInputRef?.current?.setNativeProps?.({ text: item });
+    },
+  }));
 
   const renderMacro = ({
     title,
@@ -135,6 +144,7 @@ export const EditNutritionFact = forwardRef<
         ]}
       >
         <TextInput
+          ref={barcodeTextInputRef}
           defaultValue={info.barcode}
           style={[styles.flex1, styles.inputNutritionFact]}
           onBlur={(e) => (barcodeRef.current = e.nativeEvent.text)}

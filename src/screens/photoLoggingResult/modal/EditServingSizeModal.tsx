@@ -34,6 +34,7 @@ export const EditServingSizeModal = forwardRef<
     isOpen,
     openEditServingPopup,
     qtyTextInputRef,
+    editNutritionFactRef,
     sliderRef,
     quantity,
     result,
@@ -43,6 +44,7 @@ export const EditServingSizeModal = forwardRef<
     sliderConfig,
     handleDoneClick,
     onEditServingBackPress,
+    onBarcodeOpen,
     editType,
     setEditType,
     setOpen,
@@ -198,6 +200,7 @@ export const EditServingSizeModal = forwardRef<
         result={result}
         barcode={barcode}
         servingQty={quantity}
+        ref={editNutritionFactRef}
         fat={fat}
         label={name}
         iconID={iconID}
@@ -210,6 +213,7 @@ export const EditServingSizeModal = forwardRef<
         onHide={() => {
           setOpen(false);
         }}
+        onBarcodeOpen={onBarcodeOpen}
         onShow={() => {
           setOpen(true);
         }}

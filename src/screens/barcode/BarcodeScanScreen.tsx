@@ -13,14 +13,26 @@ export const BarcodeScanScreen = () => {
   const {
     isLoading,
     quickResult,
+    type,
     resetScanning,
     onCreateCustomWithoutBarcodePress,
+    params,
     onViewExistingPress,
   } = useBarcodeScan();
 
   return (
     <View style={styles.container}>
-      <BackNavigation title="Food Creator" />
+      {type === 'general' ? (
+        <BackNavigation
+          title="Photo Logging"
+          onBackArrowPress={() => {
+            params?.onClose?.();
+          }}
+        />
+      ) : (
+        <BackNavigation title="Food Creator" />
+      )}
+
       <DetectionCameraView style={styles.camera} />
       {quickResult && quickResult.customFood && (
         <CustomFoodBarcodeDetect

@@ -1,10 +1,6 @@
 import type { ParamList } from '../../navigaitons';
 import { useCallback, useRef, useState, useEffect } from 'react';
-import {
-  convertPassioFoodItem,
-  createFoodLogUsingFoodDataInfo,
-  getMealLog,
-} from '../../utils';
+import { createFoodLogUsingFoodDataInfo, getMealLog } from '../../utils';
 import {
   PassioFoodItem,
   PassioNutrients,
@@ -24,6 +20,7 @@ import {
   createRecipeUsingPassioFoodItem,
   sumOfAllPassioNutrients,
 } from '../../utils/V3Utils';
+import { PhotoLoggingBarcodeRef } from './modal/PhotoLoggingBarcodeModal';
 
 export const PHOTO_LIMIT = 7;
 
@@ -78,6 +75,7 @@ export function usePhotoLogging() {
   const services = useServices();
   const isSubmitting = useRef<boolean>(false);
   const editServingInfoRef = useRef<EditServingSizeRef>(null);
+  const photoLoggingBarcodeRef = useRef<PhotoLoggingBarcodeRef>(null);
 
   const routes = useRoute<RouteProp<ParamList, 'PhotoLoggingScreen'>>();
   const [isFetchingResponse, setFetchResponse] = useState<boolean | undefined>(
@@ -284,14 +282,11 @@ export function usePhotoLogging() {
   };
 
   useEffect(() => {
-    console.log('fetTargetMacro ===>');
     fetTargetMacro();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    console.log('fetchAchievedGoal');
-
     fetchAchievedGoal();
   }, [fetchAchievedGoal]);
 
@@ -339,20 +334,21 @@ export function usePhotoLogging() {
     isFetchingResponse,
     isOpenDatePicker,
     isPreparingLog,
+    macroInfo,
     meal,
     mealTimes,
+    newMacroInfo,
+    onCancel,
+    onCreateRecipePress,
     onLogSelectPress,
-    onUpdateMacros,
+    onTryAgain,
     onUpdateFoodItem,
+    onUpdateMacros,
     openDatePicker,
     passioAdvisorFoodInfo,
+    photoLoggingBarcodeRef,
     recognizePictureRemote,
     setDate,
     setMeal,
-    macroInfo,
-    newMacroInfo,
-    onCreateRecipePress,
-    onCancel,
-    onTryAgain,
   };
 }
