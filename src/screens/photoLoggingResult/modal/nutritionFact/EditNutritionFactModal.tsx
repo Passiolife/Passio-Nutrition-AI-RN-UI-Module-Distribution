@@ -7,33 +7,23 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import { BasicButton, Text } from '../../../components';
-import { PassioFoodIcon } from '../../../components/passio/PassioFoodIcon';
-import { PassioIDEntityType } from '@passiolife/nutritionai-react-native-sdk-v3';
-import { scaleHeight, scaleWidth } from '../../../utils';
-import { Branding } from '../../../contexts';
-import { PhotoLoggingResults } from '../usePhotoLogging';
-import { formatNumber } from '../../../utils/NumberUtils';
+import { BasicButton, Text } from '../../../../components';
+import { PassioFoodIcon } from '../../../../components/passio/PassioFoodIcon';
+import {
+  PassioFoodItem,
+  PassioIDEntityType,
+} from '@passiolife/nutritionai-react-native-sdk-v3';
+import { scaleHeight, scaleWidth } from '../../../../utils';
+import { Branding } from '../../../../contexts';
+import { formatNumber } from '../../../../utils/NumberUtils';
 import { useEditNutritionFact } from './useEditNutritionFactModal';
-import { ICONS } from '../../../assets';
+import { ICONS } from '../../../../assets';
 
 export interface EditNutritionFactProps {
-  calories?: number;
-  carbs?: number;
-  protein?: number;
-  fat?: number;
-  label?: string;
-  barcode?: string;
-  servingQty?: number;
-  weight?: number;
-  servingUnit?: string;
-  iconID?: string;
   onClose?: () => void;
-  onNext?: (result: PhotoLoggingResults) => void;
-  result: PhotoLoggingResults;
-  onHide?: () => void;
-  onBarcodeOpen?: () => void;
-  onShow?: () => void;
+  onDone?: (result: PassioFoodItem) => void;
+  result: PassioFoodItem;
+  openBarcodeScanner?: () => void;
 }
 
 export interface EditNutritionFactRef {
@@ -54,7 +44,6 @@ export const EditNutritionFact = forwardRef<
     proteinRef,
     carbsRef,
     macro,
-    servingQty,
     servingQtyRef,
     weightRef,
     nameRef,
@@ -233,7 +222,7 @@ export const EditNutritionFact = forwardRef<
       <View style={[styles.row, { marginTop: scaleHeight(16) }]}>
         {renderMacro({
           title: 'Serving',
-          value: formatNumber(servingQty) || 0,
+          value: formatNumber(servingInfo.servingQty) || 0,
           unit: '',
           storeRef: servingQtyRef,
         })}
@@ -262,7 +251,7 @@ export const EditNutritionFact = forwardRef<
           style={{ flex: 1, marginEnd: 8 }}
         />
         <BasicButton
-          text={'Next'}
+          text={'Done'}
           style={{ flex: 1, marginStart: 8 }}
           onPress={onUpdateNutritionUpdate}
         />

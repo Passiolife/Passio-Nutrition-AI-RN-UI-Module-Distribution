@@ -12,7 +12,7 @@ import { useServices } from '../../contexts';
 import { MealLabel } from '../../models';
 import { StackNavigationProp } from '@react-navigation/stack';
 import uuid4 from 'react-native-uuid';
-import { EditServingSizeRef } from './modal/EditServingSizeModal';
+import { EditServingSizeRef } from './modal/PhotoLoggingEditorModal';
 import { getMealLogsForDate } from '../../utils/DataServiceHelper';
 import { calculateDailyMacroNutrition } from '../dashbaord';
 import {

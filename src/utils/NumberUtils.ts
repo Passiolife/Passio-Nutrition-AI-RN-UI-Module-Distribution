@@ -5,13 +5,15 @@ export const NumberRound = (number?: number) => {
   return Math.round(number ?? 0);
 };
 
-export function formatNumber(num: number | undefined) {
-  if (num === undefined) {
+export function formatNumber(value: number | undefined | string) {
+  if (value === undefined) {
     return 0;
   }
-  if (num === 0) {
+  if (value === 0) {
     return 0;
   }
+
+  let num = Number(value);
 
   if (num) {
     if (!isFinite(num)) return num; // Handle non-finite numbers like Infinity, NaN

@@ -14,7 +14,7 @@ import {
 import FakeProgress from '../../components/progressBard/FakeProgress';
 import { Dropdown } from 'react-native-element-dropdown';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { EditServingSizeModal } from './modal/EditServingSizeModal';
+import { PhotoLoggingEditorModal } from './modal/PhotoLoggingEditorModal';
 import { dayFormatterPhotoLogging } from '../../utils';
 
 export const PhotoLoggingScreen = gestureHandlerRootHOC(() => {
@@ -173,7 +173,7 @@ export const PhotoLoggingScreen = gestureHandlerRootHOC(() => {
           passioAdvisorFoodInfoResult={passioAdvisorFoodInfo ?? []}
         />
       )}
-      <EditServingSizeModal
+      <PhotoLoggingEditorModal
         ref={editServingInfoRef}
         onUpdateFoodItem={onUpdateFoodItem}
       />

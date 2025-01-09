@@ -1,5 +1,5 @@
 import { useRef, useCallback } from 'react';
-import { useBranding } from '../../../contexts';
+import { useBranding } from '../../../../contexts';
 import { EditNutritionFactProps } from './EditNutritionFactModal';
 import {
   PassioFoodAmount,
@@ -11,7 +11,7 @@ import {
 } from '@passiolife/nutritionai-react-native-sdk-v3';
 import { Alert, TextInput } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { ParamList } from '../../../navigaitons';
+import { ParamList } from '../../../../navigaitons';
 
 export type NavigationProps = StackNavigationProp<
   ParamList,
@@ -21,30 +21,37 @@ export type NavigationProps = StackNavigationProp<
 export const useEditNutritionFact = (props: EditNutritionFactProps) => {
   const branding = useBranding();
 
-  const {
-    iconID,
-    label,
-    calories = 0,
-    fat = 0,
-    carbs = 0,
-    protein = 0,
-    servingQty = 1,
-    weight = 0,
-    servingUnit = 'serving',
-    barcode,
-    onClose,
-    onNext,
+  const result = props.result;
+  const nutrients = PassioSDK.getNutrientsOfPassioFoodItem(
     result,
-  } = props;
+    result.amount.weight
+  );
+  const passioAmount = props.result?.amount;
 
-  const caloriesRef = useRef(calories.toString());
-  const carbsRef = useRef(carbs.toString());
-  const proteinRef = useRef(protein.toString());
-  const fatRef = useRef(fat.toString());
-  const servingQtyRef = useRef(servingQty.toString());
-  const weightRef = useRef(weight.toString());
-  const servingUnitRef = useRef(servingUnit.toString());
-  const nameRef = useRef(label ?? '');
+  const calories = (nutrients?.calories?.value || '').toString();
+  const carbs = (nutrients?.carbs?.value || '').toString();
+  const protein = (nutrients?.protein?.value || '').toString();
+  const fat = (nutrients?.fat?.value || '').toString();
+  const barcode = result?.ingredients?.[0]?.metadata?.barcode;
+  const iconID = result?.iconId;
+  const name = result?.name || result?.ingredients?.[0].name || '';
+
+  const passioWeight = (passioAmount?.weight.value ?? '').toString();
+  const passioSelectedQuantity = (
+    passioAmount?.selectedQuantity ?? ''
+  ).toString();
+  const passioSelectedUnit = (passioAmount?.selectedUnit ?? '').toString();
+
+  const { onClose, onDone } = props;
+
+  const caloriesRef = useRef(calories);
+  const carbsRef = useRef(carbs);
+  const proteinRef = useRef(protein);
+  const fatRef = useRef(fat);
+  const servingQtyRef = useRef(passioWeight);
+  const weightRef = useRef(passioSelectedQuantity);
+  const servingUnitRef = useRef(passioSelectedUnit);
+  const nameRef = useRef(name ?? '');
   const barcodeRef = useRef(barcode ?? '');
   const barcodeTextInputRef = useRef<TextInput>(null);
 
@@ -74,14 +81,12 @@ export const useEditNutritionFact = (props: EditNutritionFactProps) => {
       return;
     }
 
-    let passioFoodItem: PassioFoodItem | undefined | null =
-      result.passioFoodItem;
+    let passioFoodItem: PassioFoodItem | undefined | null = result;
 
-    let ingredient: PassioIngredient | undefined =
-      result.passioFoodItem?.ingredients?.[0];
+    let ingredient: PassioIngredient | undefined = result?.ingredients?.[0];
 
     let servingUnits: ServingUnit[] | undefined =
-      result.passioFoodItem?.amount?.servingUnits?.filter(
+      result?.amount?.servingUnits?.filter(
         (i) => i?.unitName?.trim().toLowerCase() !== updatedUnit
       );
 
@@ -95,7 +100,7 @@ export const useEditNutritionFact = (props: EditNutritionFactProps) => {
     ];
 
     let servingSizes: ServingSize[] | undefined =
-      result.passioFoodItem?.amount?.servingSizes?.filter(
+      result?.amount?.servingSizes?.filter(
         (i) => i?.unitName?.trim().toLowerCase() !== updatedUnit
       );
 
@@ -169,19 +174,12 @@ export const useEditNutritionFact = (props: EditNutritionFactProps) => {
         ],
       };
 
-      onNext?.({
-        ...result,
-        passioFoodItem: passioFoodItem,
-        nutrients: PassioSDK.getNutrientsOfPassioFoodItem(passioFoodItem, {
-          unit: 'g',
-          value: updatedWeight,
-        }),
-      });
+      onDone?.(passioFoodItem);
     }
-  }, [onNext, result]);
+  }, [onDone, result]);
 
   const onBarcodePress = () => {
-    props.onBarcodeOpen?.();
+    props.openBarcodeScanner?.();
   };
 
   return {
@@ -192,7 +190,6 @@ export const useEditNutritionFact = (props: EditNutritionFactProps) => {
     fatRef,
     proteinRef,
     carbsRef,
-    servingQty,
     servingQtyRef,
     weightRef,
     servingUnitRef,
@@ -201,13 +198,14 @@ export const useEditNutritionFact = (props: EditNutritionFactProps) => {
     nameRef,
     barcodeRef,
     info: {
-      label,
-      barcode,
-      iconID,
+      label: name,
+      barcode: barcode,
+      iconID: iconID,
     },
     servingInfo: {
-      weight,
-      servingUnit,
+      weight: passioWeight,
+      servingUnit: passioSelectedUnit,
+      servingQty: passioSelectedQuantity,
     },
     macro: {
       calories,

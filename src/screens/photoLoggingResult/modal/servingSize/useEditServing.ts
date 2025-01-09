@@ -1,12 +1,12 @@
 import { useRef, useState, useCallback } from 'react';
 import { TextInput } from 'react-native';
-import { useBranding } from '../../../contexts';
-import { PhotoLoggingResults } from '../usePhotoLogging';
+import { useBranding } from '../../../../contexts';
+import { PhotoLoggingResults } from '../../usePhotoLogging';
 import {
   formatNumber,
   validateQuantityInput,
-} from '../../../utils/NumberUtils';
-import { updateSlider } from '../../../utils/V3Utils';
+} from '../../../../utils/NumberUtils';
+import { updateSlider } from '../../../../utils/V3Utils';
 import { EditServingSizeProps } from './EditServingSizeModal';
 import {
   PassioFoodAmount,
@@ -14,10 +14,8 @@ import {
   PassioSDK,
 } from '@passiolife/nutritionai-react-native-sdk-v3';
 import Slider from '@react-native-community/slider';
-import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { ParamList } from '../../../navigaitons';
-import { EditNutritionFactRef } from './EditNutritionFactModal';
+import { ParamList } from '../../../../navigaitons';
 
 interface Select {
   label: string;
@@ -29,27 +27,23 @@ export type NavigationProps = StackNavigationProp<
   'PhotoLoggingScreen'
 >;
 
-export const useEditServing = () => {
-  const navigation = useNavigation<NavigationProps>();
-  const [result, setResult] = useState<PhotoLoggingResults | undefined>(
-    undefined
-  );
-  const [isOpen, setOpen] = useState(false);
-  const [sliderConfig, setSliderConfig] = useState<number[]>([0, 100, 1]);
-  const [selectedUnit, setSelectedUnit] = useState('gram');
+export const useEditServing = (props: EditServingSizeProps) => {
+  const result = props.result;
+
+  const name = result.passioFoodItem?.name || '';
+  const iconID = result.passioFoodItem?.iconId;
+  const passioAmount = props.result.passioFoodItem?.amount;
   const qtyTextInputRef = useRef<TextInput>(null);
   const sliderRef = useRef<Slider>(null);
-  const editNutritionFactRef = useRef<EditNutritionFactRef>(null);
   const branding = useBranding();
-  const [weight, setWeight] = useState(0);
-  const [quantity, setQty] = useState(0);
-  const quantityRef = useRef(0);
-  const [editType, setEditType] = useState<
-    | 'serving'
-    | 'nutrient'
-    | 'nutrient_with_serving'
-    | 'edit-serving-to-nutrient'
-  >('serving');
+
+  const [selectedUnit, setSelectedUnit] = useState(passioAmount?.selectedUnit);
+  const [weight, setWeight] = useState(passioAmount?.weight?.value);
+  const [quantity, setQty] = useState(passioAmount?.selectedQuantity);
+  const quantityRef = useRef(passioAmount?.selectedQuantity);
+  const [sliderConfig, setSliderConfig] = useState<number[]>(
+    updateSlider(Number(passioAmount?.selectedQuantity))
+  );
 
   const update = useCallback(
     (qty: string, unit: string, isSlider?: boolean) => {
@@ -94,7 +88,7 @@ export const useEditServing = () => {
   /* when text input change or slider update */
   const handleQtyUpdate = useCallback(
     (qty: string, isSlider?: boolean) => {
-      update(validateQuantityInput(qty), selectedUnit, isSlider);
+      update(validateQuantityInput(qty), selectedUnit ?? 'gram', isSlider);
     },
     [selectedUnit, update]
   );
@@ -115,42 +109,6 @@ export const useEditServing = () => {
     [update]
   );
 
-  const openEditServingPopup = (item: PhotoLoggingResults) => {
-    const defaultWeight =
-      item.passioFoodItem?.amount?.weightGrams ||
-      item.foodDataInfo?.nutritionPreview?.weightQuantity ||
-      0;
-    const defaultQty =
-      item.passioFoodItem?.amount?.selectedQuantity ||
-      item.foodDataInfo?.nutritionPreview?.servingQuantity ||
-      0;
-
-    const unit =
-      item.passioFoodItem?.amount?.selectedUnit ||
-      item.foodDataInfo?.nutritionPreview?.servingUnit;
-    setSelectedUnit(unit ?? 'gram');
-    setWeight(defaultWeight);
-    setQty(defaultQty);
-    quantityRef.current = defaultQty;
-    setSliderConfig(updateSlider(Number(defaultQty)));
-    setOpen(true);
-    setResult(item);
-  };
-
-  const close = () => {
-    reset();
-    setOpen(false);
-  };
-
-  const onNutrientsClose = () => {
-    if (editType === 'edit-serving-to-nutrient') {
-      setEditType('serving');
-    } else {
-      reset();
-      setOpen(false);
-    }
-  };
-
   const servingSizes: Select[] =
     result?.passioFoodItem?.amount?.servingSizes?.map((item) => {
       const option: Select = {
@@ -168,10 +126,10 @@ export const useEditServing = () => {
       const amount: PassioFoodAmount = {
         ...passioFoodItem.amount,
         selectedQuantity: Number(quantityRef.current || 0),
-        selectedUnit: selectedUnit,
+        selectedUnit: selectedUnit ?? 'gram',
         weight: {
           unit: 'g',
-          value: weight,
+          value: weight ?? 0,
         },
         weightGrams: weight,
       };
@@ -202,72 +160,40 @@ export const useEditServing = () => {
           passioFoodItem.amount.weight
         ),
       } as PhotoLoggingResults;
-      setResult(photoLogging);
       return photoLogging;
     } else {
       return undefined;
     }
   };
 
-  const handleDoneClick = (props: EditServingSizeProps) => {
+  const handleDoneClick = () => {
     const updatedResult = updatePassioFoodItem();
     if (updatedResult) {
       props?.onUpdateFoodItem?.(updatedResult);
-      setOpen(false);
     }
   };
 
-  const reset = () => {
-    // setEditType('serving');
-    setResult(undefined);
-  };
-  const onEditServingBackPress = () => {
-    setEditType('nutrient');
-  };
-
-  const onBarcodeOpen = () => {
-    setOpen(false);
-    navigation.navigate('BarcodeScanScreen', {
-      type: 'general',
-      onBarcodeOnly: (item) => {
-        setOpen(true);
-        navigation.goBack();
-        setTimeout(() => {
-          editNutritionFactRef?.current?.barcode?.(item);
-        }, 500);
-      },
-      onClose: () => {
-        setOpen(true);
-        navigation.goBack();
-      },
-    });
+  const handleNutritionFactClick = () => {
+    const updatedResult = updatePassioFoodItem();
+    if (updatedResult) {
+      props?.openNutritionFactModificationPopup?.(updatedResult);
+    }
   };
 
   return {
     branding,
-    close,
-    onNutrientsClose,
-    editType,
-    handleDoneClick,
     handleQtyUpdate,
     handleServingChange,
-    isOpen,
-    onEditServingBackPress,
-    onBarcodeOpen,
-    editNutritionFactRef,
-    openEditServingPopup,
     qtyTextInputRef,
+    sliderRef,
     quantity,
-    quantityRef,
-    result,
     selectedUnit,
     servingSizes,
-    setEditType,
-    setOpen,
-    setResult,
-    sliderConfig,
-    sliderRef,
-    updatePassioFoodItem,
     weight,
+    sliderConfig,
+    handleDoneClick,
+    handleNutritionFactClick,
+    name,
+    iconID,
   };
 };
