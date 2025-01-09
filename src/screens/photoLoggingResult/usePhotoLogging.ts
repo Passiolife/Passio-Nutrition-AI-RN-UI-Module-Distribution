@@ -12,7 +12,7 @@ import { useServices } from '../../contexts';
 import { MealLabel } from '../../models';
 import { StackNavigationProp } from '@react-navigation/stack';
 import uuid4 from 'react-native-uuid';
-import { EditServingSizeRef } from './modal/PhotoLoggingEditorModal';
+import { PhotoLoggingBarcodeRef } from './modal/PhotoLoggingEditorModal';
 import { getMealLogsForDate } from '../../utils/DataServiceHelper';
 import { calculateDailyMacroNutrition } from '../dashbaord';
 import {
@@ -20,7 +20,8 @@ import {
   createRecipeUsingPassioFoodItem,
   sumOfAllPassioNutrients,
 } from '../../utils/V3Utils';
-import { PhotoLoggingBarcodeRef } from './modal/PhotoLoggingBarcodeModal';
+import { ItemAddedToDairyViewModalRef } from '../../components';
+import { EditServingSizeRef } from './modal/servingSize/EditServingSizeModal';
 
 export const PHOTO_LIMIT = 7;
 
@@ -75,6 +76,8 @@ export function usePhotoLogging() {
   const services = useServices();
   const isSubmitting = useRef<boolean>(false);
   const editServingInfoRef = useRef<EditServingSizeRef>(null);
+  const itemAddedToDairyViewModalRef =
+    useRef<ItemAddedToDairyViewModalRef>(null);
   const photoLoggingBarcodeRef = useRef<PhotoLoggingBarcodeRef>(null);
 
   const routes = useRoute<RouteProp<ParamList, 'PhotoLoggingScreen'>>();
@@ -238,15 +241,13 @@ export function usePhotoLogging() {
         });
       }
       setPreparingLog(false);
-      navigation.pop(1);
-      navigation.navigate('BottomNavigation', {
-        screen: 'MealLogScreen',
-      });
 
       isSubmitting.current = false;
+
+      itemAddedToDairyViewModalRef.current?.open();
     },
 
-    [isPreparingLog, date, meal, navigation, services.dataService]
+    [isPreparingLog, date, meal, services.dataService]
   );
 
   useEffect(() => {
@@ -322,8 +323,24 @@ export function usePhotoLogging() {
   };
 
   const onTryAgain = () => {
-    navigation.replace('TakePictureScreen', {
-      type: routes.params.type,
+    itemAddedToDairyViewModalRef?.current?.close();
+    setTimeout(() => {
+      navigation.replace('TakePictureScreen', {
+        type: 'camera',
+      });
+    }, 300);
+  };
+  const handleOnMorePress = () => {
+    itemAddedToDairyViewModalRef?.current?.close();
+    setTimeout(() => {
+      navigation.replace('TakePictureScreen', {
+        type: 'camera',
+      });
+    }, 300);
+  };
+  const handleOnDiaryPress = () => {
+    navigation.navigate('BottomNavigation', {
+      screen: 'MealLogScreen',
     });
   };
 
@@ -331,6 +348,7 @@ export function usePhotoLogging() {
     changeDate,
     date,
     editServingInfoRef,
+    itemAddedToDairyViewModalRef,
     isFetchingResponse,
     isOpenDatePicker,
     isPreparingLog,
@@ -340,6 +358,8 @@ export function usePhotoLogging() {
     newMacroInfo,
     onCancel,
     onCreateRecipePress,
+    handleOnMorePress,
+    handleOnDiaryPress,
     onLogSelectPress,
     onTryAgain,
     onUpdateFoodItem,

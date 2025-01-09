@@ -8,6 +8,7 @@ import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
 import {
   BackNavigation,
   DatePicker,
+  ItemAddedToDairyViewModal,
   MacrosProgressView,
   Text,
 } from '../../components';
@@ -22,6 +23,7 @@ export const PhotoLoggingScreen = gestureHandlerRootHOC(() => {
     changeDate,
     date,
     editServingInfoRef,
+    itemAddedToDairyViewModalRef,
     isFetchingResponse,
     isOpenDatePicker,
     isPreparingLog,
@@ -31,6 +33,8 @@ export const PhotoLoggingScreen = gestureHandlerRootHOC(() => {
     newMacroInfo,
     onCancel,
     onCreateRecipePress,
+    handleOnDiaryPress,
+    handleOnMorePress,
     onLogSelectPress,
     onTryAgain,
     onUpdateFoodItem,
@@ -176,6 +180,13 @@ export const PhotoLoggingScreen = gestureHandlerRootHOC(() => {
       <PhotoLoggingEditorModal
         ref={editServingInfoRef}
         onUpdateFoodItem={onUpdateFoodItem}
+      />
+      <ItemAddedToDairyViewModal
+        ref={itemAddedToDairyViewModalRef}
+        action="Add More"
+        note="View your diary or add more"
+        onViewDiaryPress={handleOnDiaryPress}
+        onContinuePress={handleOnMorePress}
       />
       <DatePicker
         isDatePickerVisible={isOpenDatePicker}

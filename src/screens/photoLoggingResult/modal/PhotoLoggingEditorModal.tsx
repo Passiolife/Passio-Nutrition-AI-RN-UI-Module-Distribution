@@ -9,17 +9,17 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { EditServingSizeModal } from './servingSize/EditServingSizeModal';
 import { PassioSDK } from '@passiolife/nutritionai-react-native-sdk-v3';
 
-export interface EditServingSizeProps {
+interface EditServingSizeProps {
   onUpdateFoodItem?: (photoLoggingResults: PhotoLoggingResults) => void;
   openNutritionFactFromServing?: (result: PhotoLoggingResults) => void;
 }
 
-export interface EditServingSizeRef {
+export interface PhotoLoggingBarcodeRef {
   open: (result: PhotoLoggingResults) => void;
   openNutritionFact: (result: PhotoLoggingResults) => void;
 }
 export const PhotoLoggingEditorModal = forwardRef<
-  EditServingSizeRef,
+  PhotoLoggingBarcodeRef,
   EditServingSizeProps
 >((props, ref) => {
   const {

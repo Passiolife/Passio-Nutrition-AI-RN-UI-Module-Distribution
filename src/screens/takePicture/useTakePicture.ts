@@ -30,9 +30,15 @@ export function useTakePicture() {
         images: imgs,
         logToDate: route.params.logToDate,
         logToMeal: route.params.logToMeal,
+        type: route.params.type,
       });
     },
-    [navigation, route.params.logToDate, route.params.logToMeal]
+    [
+      navigation,
+      route.params.logToDate,
+      route.params.logToMeal,
+      route.params.type,
+    ]
   );
 
   return {
