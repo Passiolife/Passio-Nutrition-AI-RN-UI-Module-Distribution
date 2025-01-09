@@ -90,15 +90,22 @@ export const EditServingSizeModal = forwardRef<
             {bottom}
           </Text>
         </View>
-        <View>
-          <TouchableOpacity onPress={handleNutritionFactClick}>
-            <Image
-              source={ICONS.editGreyIc}
-              resizeMode="contain"
-              style={{ height: 24, width: 24 }}
-            />
-          </TouchableOpacity>
-        </View>
+        {result.resultType === 'barcode' && (
+          <View>
+            <TouchableOpacity
+              onPress={handleNutritionFactClick}
+              style={{
+                padding: 12,
+              }}
+            >
+              <Image
+                source={ICONS.editGreyIc}
+                resizeMode="contain"
+                style={{ height: 16, width: 16 }}
+              />
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
       <Text size={'_16px'} weight={'600'} style={styles.servingSizeTitle}>
         Serving Size
