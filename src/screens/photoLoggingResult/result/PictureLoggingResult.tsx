@@ -80,9 +80,7 @@ export const PictureLoggingResult = ({
             marginVertical: scaleHeight(16),
           }}
         >
-          {
-            'Sorry, we could not find any matches. Please try again, scan the nutrition facts'
-          }
+          {'Sorry, we could not find any matches. Please try again'}
         </Text>
       </View>
     );
