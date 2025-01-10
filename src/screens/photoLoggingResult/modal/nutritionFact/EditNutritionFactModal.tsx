@@ -257,7 +257,7 @@ export const EditNutritionFact = forwardRef<
           style={{ flex: 1, marginEnd: 8 }}
         />
         <BasicButton
-          text={'Done'}
+          text={'Save'}
           style={{ flex: 1, marginStart: 8 }}
           onPress={onUpdateNutritionUpdate}
         />
