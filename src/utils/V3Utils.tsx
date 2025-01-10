@@ -351,7 +351,10 @@ export const sumOfAllPassioNutrients = (data: PassioNutrients[]) => {
       let keys = key as NutrientType;
       if (nutrient[keys] && keys !== 'weight') {
         if (!summedNutrients[keys]) {
-          summedNutrients[keys] = { ...nutrient[keys] };
+          summedNutrients[keys] = {
+            unit: (nutrient[keys] as UnitMass)?.unit ?? '',
+            value: (nutrient[keys] as UnitMass)?.value ?? 0,
+          };
         } else {
           summedNutrients[keys]!.value += nutrient[keys]!.value;
         }

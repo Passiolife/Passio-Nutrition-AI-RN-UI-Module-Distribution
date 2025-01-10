@@ -6,7 +6,7 @@ import { Text } from '../../../components/texts/Text';
 import { BasicButton } from '../../../components';
 import { FlatList } from 'react-native-gesture-handler';
 import { PictureLoggingResultItemView } from './PictureLoggingResultItemView';
-import { PhotoLoggingResults } from '../usePhotoLogging';
+import type { PhotoLoggingResults } from '../usePhotoLogging';
 import { scaleHeight, scaleWidth } from '../../../utils';
 import { formatNumber } from '../../../utils/NumberUtils';
 

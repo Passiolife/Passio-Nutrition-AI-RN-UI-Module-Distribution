@@ -1,6 +1,6 @@
 import { useRef, useCallback } from 'react';
 import { useBranding } from '../../../../contexts';
-import { EditNutritionFactProps } from './EditNutritionFactModal';
+import type { EditNutritionFactProps } from './EditNutritionFactModal';
 import {
   PassioFoodAmount,
   PassioFoodItem,
@@ -10,8 +10,8 @@ import {
   ServingUnit,
 } from '@passiolife/nutritionai-react-native-sdk-v3';
 import { Alert, TextInput } from 'react-native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { ParamList } from '../../../../navigaitons';
+import type { StackNavigationProp } from '@react-navigation/stack';
+import type { ParamList } from '../../../../navigaitons';
 
 export type NavigationProps = StackNavigationProp<
   ParamList,

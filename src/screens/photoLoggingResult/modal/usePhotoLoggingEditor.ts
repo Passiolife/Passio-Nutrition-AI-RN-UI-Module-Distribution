@@ -1,10 +1,10 @@
 import { useRef, useState } from 'react';
 import { useBranding } from '../../../contexts';
-import { PhotoLoggingResults } from '../usePhotoLogging';
+import type { PhotoLoggingResults } from '../usePhotoLogging';
 import { useNavigation } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { ParamList } from '../../../navigaitons';
-import { EditNutritionFactRef } from './nutritionFact/EditNutritionFactModal';
+import type { StackNavigationProp } from '@react-navigation/stack';
+import type { ParamList } from '../../../navigaitons';
+import type { EditNutritionFactRef } from './nutritionFact/EditNutritionFactModal';
 
 export type PhotoLoggingEditType =
   | 'nutrient'

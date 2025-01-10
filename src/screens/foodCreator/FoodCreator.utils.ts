@@ -292,14 +292,6 @@ export const createCustomFoodUsingNutritionFact = (
     });
   }
 
-  if (facts.dietaryFiber) {
-    nutrients.push({
-      id: 'fiber',
-      amount: facts.dietaryFiber,
-      unit: nutrientUnits.fiber,
-    });
-  }
-
   if (facts.sodium) {
     nutrients.push({
       id: 'sodium',

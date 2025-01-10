@@ -9,10 +9,10 @@ import {
 } from '@passiolife/nutritionai-react-native-sdk-v3';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { useServices } from '../../contexts';
-import { MealLabel } from '../../models';
-import { StackNavigationProp } from '@react-navigation/stack';
+import type { MealLabel } from '../../models';
+import type { StackNavigationProp } from '@react-navigation/stack';
 import uuid4 from 'react-native-uuid';
-import { PhotoLoggingBarcodeRef } from './modal/PhotoLoggingEditorModal';
+import type { PhotoLoggingBarcodeRef } from './modal/PhotoLoggingEditorModal';
 import { getMealLogsForDate } from '../../utils/DataServiceHelper';
 import { calculateDailyMacroNutrition } from '../dashbaord';
 import {
@@ -21,8 +21,8 @@ import {
   isMissingNutrition,
   sumOfAllPassioNutrients,
 } from '../../utils/V3Utils';
-import { ItemAddedToDairyViewModalRef } from '../../components';
-import { EditServingSizeRef } from './modal/servingSize/EditServingSizeModal';
+import type { ItemAddedToDairyViewModalRef } from '../../components';
+import type { EditServingSizeRef } from './modal/servingSize/EditServingSizeModal';
 
 export const PHOTO_LIMIT = 7;
 

@@ -1,21 +1,21 @@
 import { useRef, useState, useCallback } from 'react';
-import { TextInput } from 'react-native';
+import type { TextInput } from 'react-native';
 import { useBranding } from '../../../../contexts';
-import { PhotoLoggingResults } from '../../usePhotoLogging';
+import type { PhotoLoggingResults } from '../../usePhotoLogging';
 import {
   formatNumber,
   validateQuantityInput,
 } from '../../../../utils/NumberUtils';
 import { updateSlider } from '../../../../utils/V3Utils';
-import { EditServingSizeProps } from './EditServingSizeModal';
+import type { EditServingSizeProps } from './EditServingSizeModal';
 import {
   PassioFoodAmount,
   PassioFoodItem,
   PassioSDK,
 } from '@passiolife/nutritionai-react-native-sdk-v3';
-import Slider from '@react-native-community/slider';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { ParamList } from '../../../../navigaitons';
+import type Slider from '@react-native-community/slider';
+import type { StackNavigationProp } from '@react-navigation/stack';
+import type { ParamList } from '../../../../navigaitons';
 
 interface Select {
   label: string;

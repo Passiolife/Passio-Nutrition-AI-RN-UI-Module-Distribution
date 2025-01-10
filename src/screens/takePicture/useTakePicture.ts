@@ -1,7 +1,7 @@
 import type { ParamList } from '../../navigaitons';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import { useCallback, useRef } from 'react';
-import { type PassioAdvisorFoodInfo } from '@passiolife/nutritionai-react-native-sdk-v3';
+import type { PassioAdvisorFoodInfo } from '@passiolife/nutritionai-react-native-sdk-v3';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import type { TakePictureRef } from './views/TakePicture';
 import type { SelectPhotosRef } from './views/SelectPhotos';

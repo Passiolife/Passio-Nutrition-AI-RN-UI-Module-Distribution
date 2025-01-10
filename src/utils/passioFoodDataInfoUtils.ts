@@ -1,4 +1,4 @@
-import {
+import type {
   PassioAdvisorFoodInfo,
   PassioFoodItem,
 } from '@passiolife/nutritionai-react-native-sdk-v3';
@@ -8,7 +8,7 @@ import {
   convertPassioFoodItemToFoodLog,
   updateQuantityOfFoodLog,
 } from './V3Utils';
-import { PhotoLoggingResults } from '../screens/photoLoggingResult/usePhotoLogging';
+import type { PhotoLoggingResults } from '../screens/photoLoggingResult/usePhotoLogging';
 import RNFS from 'react-native-fs';
 import { generateCustomNutritionFactID } from '../screens/foodCreator/FoodCreator.utils';
 import { Platform } from 'react-native';

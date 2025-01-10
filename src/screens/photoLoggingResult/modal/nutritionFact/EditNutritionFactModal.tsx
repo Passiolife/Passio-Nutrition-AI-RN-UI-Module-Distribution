@@ -14,7 +14,7 @@ import {
   PassioSDK,
 } from '@passiolife/nutritionai-react-native-sdk-v3';
 import { scaleHeight, scaleWidth } from '../../../../utils';
-import { Branding } from '../../../../contexts';
+import type { Branding } from '../../../../contexts';
 import { formatNumber } from '../../../../utils/NumberUtils';
 import { useEditNutritionFact } from './useEditNutritionFactModal';
 import { ICONS } from '../../../../assets';

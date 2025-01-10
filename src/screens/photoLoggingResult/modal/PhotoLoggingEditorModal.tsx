@@ -1,8 +1,8 @@
 import React, { forwardRef, useImperativeHandle } from 'react';
 import { Alert, Modal, StyleSheet, View } from 'react-native';
 import { scaleHeight, scaleWidth } from '../../../utils';
-import { Branding } from '../../../contexts';
-import { PhotoLoggingResults } from '../usePhotoLogging';
+import type { Branding } from '../../../contexts';
+import type { PhotoLoggingResults } from '../usePhotoLogging';
 import { usePhotoLoggingEditor } from './usePhotoLoggingEditor';
 import { EditNutritionFact } from './nutritionFact/EditNutritionFactModal';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
