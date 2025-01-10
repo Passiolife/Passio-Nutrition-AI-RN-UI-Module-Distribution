@@ -24,6 +24,7 @@ import type { PassioIngredient } from '@passiolife/nutritionai-react-native-sdk-
 import type { QuickSuggestion } from 'src/models/QuickSuggestion';
 import type { DefaultNutrients } from '../screens/foodCreator/views/OtherNutritionFacts';
 import { CUSTOM_USER_RECIPE__PREFIX } from '../screens/foodCreator/FoodCreator.utils';
+import { PhotoLoggingResults } from 'src/screens/photoLoggingResult/usePhotoLogging';
 
 export const convertPassioFoodItemToFoodLog = (
   item: PassioFoodItem,
@@ -430,4 +431,31 @@ export const createRecipeUsingPassioFoodItem = (data: PassioFoodItem[]) => {
   };
 
   return passioFoodItem;
+};
+
+export const isMissingNutrition = (item?: PassioFoodItem | null) => {
+  if (!item) {
+    return true;
+  }
+
+  const qty = item?.amount?.selectedQuantity;
+  const selectedUnit = item?.amount?.selectedUnit;
+  const weight = item?.amount?.weight?.value;
+  const ingredients = item?.ingredients?.[0];
+
+  const calories = ingredients?.referenceNutrients?.calories;
+  const carbs = ingredients?.referenceNutrients?.carbs;
+  const protein = ingredients?.referenceNutrients?.protein;
+  const fat = ingredients?.referenceNutrients?.fat;
+
+  return (
+    !qty ||
+    !selectedUnit ||
+    !weight ||
+    !ingredients ||
+    !calories ||
+    !carbs ||
+    !protein ||
+    !fat
+  );
 };

@@ -1,6 +1,6 @@
 import React, { forwardRef, useImperativeHandle } from 'react';
-import { Modal, StyleSheet, View } from 'react-native';
-import { scaleHeight, scaleWidth, screenHeight } from '../../../utils';
+import { Alert, Modal, StyleSheet, View } from 'react-native';
+import { scaleHeight, scaleWidth } from '../../../utils';
 import { Branding } from '../../../contexts';
 import { PhotoLoggingResults } from '../usePhotoLogging';
 import { usePhotoLoggingEditor } from './usePhotoLoggingEditor';
@@ -8,6 +8,7 @@ import { EditNutritionFact } from './nutritionFact/EditNutritionFactModal';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { EditServingSizeModal } from './servingSize/EditServingSizeModal';
 import { PassioSDK } from '@passiolife/nutritionai-react-native-sdk-v3';
+import { isMissingNutrition } from '../../../utils/V3Utils';
 
 interface EditServingSizeProps {
   onUpdateFoodItem?: (photoLoggingResults: PhotoLoggingResults) => void;
@@ -38,12 +39,16 @@ export const PhotoLoggingEditorModal = forwardRef<
 
   useImperativeHandle(ref, () => ({
     open: (item) => {
-      if (item.resultType === 'nutritionFacts') {
-        setEditType('nutrient');
+      if (item.passioFoodItem) {
+        if (isMissingNutrition(item.passioFoodItem)) {
+          setEditType('nutrient');
+        } else {
+          setEditType('serving');
+        }
+        openEditServingPopup(item);
       } else {
-        setEditType('serving');
+        Alert.alert('Item not found');
       }
-      openEditServingPopup(item);
     },
     openNutritionFact: (item) => {
       setEditType('nutrient');

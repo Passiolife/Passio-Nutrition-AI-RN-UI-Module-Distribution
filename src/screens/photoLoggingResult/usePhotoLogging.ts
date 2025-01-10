@@ -18,6 +18,7 @@ import { calculateDailyMacroNutrition } from '../dashbaord';
 import {
   convertPassioFoodItemToFoodLog,
   createRecipeUsingPassioFoodItem,
+  isMissingNutrition,
   sumOfAllPassioNutrients,
 } from '../../utils/V3Utils';
 import { ItemAddedToDairyViewModalRef } from '../../components';
@@ -194,8 +195,17 @@ export function usePhotoLogging() {
                   }
                   info.push({
                     ...advisorFoodInfo,
-                    isSelected: true,
-                    passioFoodItem: passioFoodItem ?? undefined,
+                    isSelected: !isMissingNutrition(passioFoodItem),
+                    passioFoodItem: passioFoodItem
+                      ? {
+                          ...passioFoodItem,
+                          name: passioFoodItem?.name
+                            ? passioFoodItem.name
+                            : advisorFoodInfo.resultType === 'nutritionFacts'
+                              ? 'Scanned Nutrition Label'
+                              : '',
+                        }
+                      : undefined,
                     uuID: uuid4.v4() as unknown as string,
                     assets: item,
                     nutrients: passioFoodItem
@@ -268,7 +278,10 @@ export function usePhotoLogging() {
       if (prev === null) return null;
       return prev?.map((i) => {
         if (i.uuID === result.uuID) {
-          return result;
+          return {
+            ...result,
+            isSelected: true, // obv user intend to update means they want to add in meal.
+          };
         } else {
           return i;
         }

@@ -102,17 +102,11 @@ export const PictureLoggingResult = ({
           const foodDataInfo = item.foodDataInfo;
           return (
             <PictureLoggingResultItemView
-              foodName={
-                item.passioFoodItem?.name ||
-                item?.foodDataInfo?.foodName ||
-                item?.recognisedName ||
-                (item.resultType === 'nutritionFacts'
-                  ? SCANNED_NUTRITION_LABEL
-                  : '')
-              }
+              foodName={item.passioFoodItem?.name ?? ''}
               imageName={item.passioFoodItem?.iconId || foodDataInfo?.iconID}
               type={item.resultType}
               assets={item.assets}
+              foodItem={item.passioFoodItem}
               calories={item?.nutrients?.calories?.value}
               carbs={item?.nutrients?.carbs?.value}
               fat={item?.nutrients?.fat?.value}

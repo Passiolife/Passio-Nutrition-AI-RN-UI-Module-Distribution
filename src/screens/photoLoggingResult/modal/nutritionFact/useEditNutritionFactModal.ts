@@ -171,7 +171,7 @@ export const useEditNutritionFact = (props: EditNutritionFactProps) => {
     const updatedUnit = servingUnitRef.current.trim().toLowerCase();
 
     if (!updatedQty || updatedQty <= 0) {
-      Alert.alert('Please enter valid qty');
+      Alert.alert('Please enter valid serving');
       return;
     }
 

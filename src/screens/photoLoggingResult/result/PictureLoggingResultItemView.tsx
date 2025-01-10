@@ -7,13 +7,16 @@ import {
   View,
 } from 'react-native';
 import {
+  PassioFoodItem,
   PassioFoodResultType,
   PassioIDEntityType,
 } from '@passiolife/nutritionai-react-native-sdk-v3';
 import { PassioFoodIcon } from '../../../components/passio/PassioFoodIcon';
-import { BasicButton, Text } from '../../../components';
 import { formatNumber } from '../../../utils/NumberUtils';
 import { scaleWidth } from '../../../utils';
+import { isMissingNutrition } from '../../../utils/V3Utils';
+import { ICONS } from '../../../assets';
+import { Text } from '../../../components';
 
 interface Props {
   imageName?: string;
@@ -30,6 +33,7 @@ interface Props {
   protein?: number;
   carbs?: number;
   type?: PassioFoodResultType;
+  foodItem?: PassioFoodItem;
 }
 
 export const PictureLoggingResultItemView = (props: Props) => {
@@ -41,13 +45,10 @@ export const PictureLoggingResultItemView = (props: Props) => {
     bottom,
     onEditServingInfo,
     onEditNutritionFact,
+    foodItem,
   } = props;
 
-  const isInvalidNutritionFact =
-    props.calories === undefined ||
-    props.carbs === undefined ||
-    props.fat === undefined ||
-    props.protein === undefined;
+  const isInvalidNutritionFact = foodItem ? isMissingNutrition(foodItem) : true;
 
   return (
     <View
@@ -95,7 +96,9 @@ export const PictureLoggingResultItemView = (props: Props) => {
               size="_14px"
               style={[styles.bottom, styles.secondaryText]}
             >
-              {isInvalidNutritionFact ? 'This item will not log' : bottom}
+              {isInvalidNutritionFact
+                ? 'Data missing, item will not be logged'
+                : bottom}
             </Text>
           </View>
         </View>
@@ -143,18 +146,18 @@ export const PictureLoggingResultItemView = (props: Props) => {
       </TouchableOpacity>
       {isInvalidNutritionFact ? (
         <>
-          <BasicButton
-            text="Edit Nutrition"
-            onPress={() => {
-              onEditNutritionFact();
-            }}
+          <TouchableOpacity
+            onPress={onEditNutritionFact}
             style={{
-              minHeight: 0,
-              paddingHorizontal: scaleWidth(4),
-              marginHorizontal: scaleWidth(4),
+              padding: 12,
             }}
-            textSize={12}
-          />
+          >
+            <Image
+              source={ICONS.editGreyIc}
+              resizeMode="contain"
+              style={{ height: 16, width: 16 }}
+            />
+          </TouchableOpacity>
         </>
       ) : (
         <TouchableOpacity onPress={onFoodLogSelect} style={styles.radioPress}>

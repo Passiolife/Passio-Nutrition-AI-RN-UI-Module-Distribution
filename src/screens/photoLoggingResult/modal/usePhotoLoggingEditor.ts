@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { ParamList } from '../../../navigaitons';
 import { EditNutritionFactRef } from './nutritionFact/EditNutritionFactModal';
+import { isMissingNutrition } from '../../../utils/V3Utils';
 
 export type PhotoLoggingEditType =
   | 'nutrient'
@@ -27,11 +28,6 @@ export const usePhotoLoggingEditor = () => {
   const [editType, setEditType] = useState<PhotoLoggingEditType>('serving');
 
   const openEditServingPopup = (item: PhotoLoggingResults) => {
-    if (item.resultType === 'nutritionFacts') {
-      setEditType('nutrient');
-    } else {
-      setEditType('serving');
-    }
     setOpen(true);
     setResult(item);
   };
