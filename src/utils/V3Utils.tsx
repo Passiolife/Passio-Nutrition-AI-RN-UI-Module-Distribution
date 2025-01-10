@@ -24,7 +24,6 @@ import type { PassioIngredient } from '@passiolife/nutritionai-react-native-sdk-
 import type { QuickSuggestion } from 'src/models/QuickSuggestion';
 import type { DefaultNutrients } from '../screens/foodCreator/views/OtherNutritionFacts';
 import { CUSTOM_USER_RECIPE__PREFIX } from '../screens/foodCreator/FoodCreator.utils';
-import { PhotoLoggingResults } from 'src/screens/photoLoggingResult/usePhotoLogging';
 
 export const convertPassioFoodItemToFoodLog = (
   item: PassioFoodItem,

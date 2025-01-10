@@ -5,7 +5,6 @@ import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { ParamList } from '../../../navigaitons';
 import { EditNutritionFactRef } from './nutritionFact/EditNutritionFactModal';
-import { isMissingNutrition } from '../../../utils/V3Utils';
 
 export type PhotoLoggingEditType =
   | 'nutrient'
