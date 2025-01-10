@@ -9,7 +9,10 @@ import {
   Platform,
 } from 'react-native';
 import { BasicButton, Text } from '../../../../components';
-import { PassioFoodItem } from '@passiolife/nutritionai-react-native-sdk-v3';
+import {
+  PassioFoodItem,
+  PassioSDK,
+} from '@passiolife/nutritionai-react-native-sdk-v3';
 import { scaleHeight, scaleWidth } from '../../../../utils';
 import { Branding } from '../../../../contexts';
 import { formatNumber } from '../../../../utils/NumberUtils';
@@ -49,12 +52,89 @@ export const EditNutritionFact = forwardRef<
     barcodeRef,
     barcodeTextInputRef,
     servingUnitRef,
+    caloriesTextInputRef,
+    carbsTextInputRef,
+    nameTextInputRef,
+    fatTextInputRef,
+    proteinTextInputRef,
+    servingQtyTextInputRef,
+    selectedUnitTextInputRef,
+    weightTextInputRef,
   } = useEditNutritionFact(props);
   const styles = customStyles(branding);
 
+  const addMissingDataFromBarcode = async (barcode: string) => {
+    const foodItem = await PassioSDK.fetchFoodItemForProductCode(barcode);
+    if (foodItem) {
+      const nutrients = PassioSDK.getNutrientsOfPassioFoodItem(
+        foodItem,
+        foodItem?.amount.weight
+      );
+
+      if (nutrients.calories && caloriesRef.current.trim().length === 0) {
+        caloriesTextInputRef?.current?.setNativeProps?.({
+          text: formatNumber(nutrients?.calories?.value)?.toString(),
+        });
+      }
+
+      if (nutrients.carbs && carbsRef.current.trim().length === 0) {
+        carbsTextInputRef?.current?.setNativeProps?.({
+          text: formatNumber(nutrients?.carbs?.value)?.toString(),
+        });
+      }
+
+      if (nutrients.protein && proteinRef.current.trim().length === 0) {
+        proteinTextInputRef?.current?.setNativeProps?.({
+          text: formatNumber(nutrients?.protein?.value)?.toString(),
+        });
+      }
+
+      if (nutrients.fat && fatRef.current.trim().length === 0) {
+        fatTextInputRef?.current?.setNativeProps?.({
+          text: formatNumber(nutrients?.fat?.value)?.toString(),
+        });
+      }
+
+      if (
+        foodItem.amount.selectedUnit &&
+        servingUnitRef.current.trim().length === 0
+      ) {
+        selectedUnitTextInputRef?.current?.setNativeProps?.({
+          text: foodItem?.amount?.selectedUnit,
+        });
+      }
+
+      if (
+        foodItem?.amount.weight?.value &&
+        (weightRef.current.trim().length === 0 || weightRef?.current === '0')
+      ) {
+        weightTextInputRef?.current?.setNativeProps?.({
+          text: formatNumber(foodItem?.amount?.weight?.value)?.toString(),
+        });
+      }
+
+      if (
+        foodItem?.amount?.selectedQuantity &&
+        (servingQtyRef.current.trim().length === 0 ||
+          servingQtyRef?.current === '0')
+      ) {
+        servingQtyTextInputRef?.current?.setNativeProps?.({
+          text: formatNumber(foodItem?.amount?.selectedQuantity)?.toString(),
+        });
+      }
+
+      if (foodItem?.name && nameRef.current.trim().length === 0) {
+        nameTextInputRef?.current?.setNativeProps?.({
+          text: foodItem.name ?? '',
+        });
+      }
+    }
+  };
+
   useImperativeHandle(ref, () => ({
-    barcode: (item) => {
+    barcode: async (item) => {
       barcodeRef.current = item;
+      addMissingDataFromBarcode(item);
       barcodeTextInputRef?.current?.setNativeProps?.({ text: item });
     },
   }));
@@ -67,12 +147,14 @@ export const EditNutritionFact = forwardRef<
     keyboardType = 'numeric',
     alignSelf = 'center',
     storeRef,
+    textInput,
   }: {
     title: string;
     unit: string;
     value: number | string;
     flex?: number;
     keyboardType?: KeyboardType;
+    textInput: React.RefObject<TextInput>;
     alignSelf?: 'auto' | 'center' | 'left' | 'right' | 'justify' | undefined;
     storeRef: React.MutableRefObject<string>;
   }) => {
@@ -93,6 +175,7 @@ export const EditNutritionFact = forwardRef<
               keyboardType={keyboardType}
               returnKeyLabel="Done"
               returnKeyType="done"
+              ref={textInput}
               style={{
                 paddingStart: 4,
                 margin: 0,
@@ -185,6 +268,7 @@ export const EditNutritionFact = forwardRef<
         >
           <TextInput
             defaultValue={info.label}
+            ref={nameTextInputRef}
             style={[styles.input, styles.inputNutritionFact]}
             onBlur={(e) => (nameRef.current = e.nativeEvent.text)}
             onSubmitEditing={(e) => (nameRef.current = e.nativeEvent.text)}
@@ -201,24 +285,28 @@ export const EditNutritionFact = forwardRef<
           value: formatNumber(macro.calories) || 0,
           unit: 'cal',
           storeRef: caloriesRef,
+          textInput: caloriesTextInputRef,
         })}
         {renderMacro({
           title: 'Carbs',
           value: formatNumber(macro.carbs) || 0,
           unit: 'g',
           storeRef: carbsRef,
+          textInput: carbsTextInputRef,
         })}
         {renderMacro({
           title: 'Protein',
           value: formatNumber(macro.protein) || 0,
           unit: 'g',
           storeRef: proteinRef,
+          textInput: proteinTextInputRef,
         })}
         {renderMacro({
           title: 'Fat',
           value: formatNumber(macro.fat) || 0,
           unit: 'g',
           storeRef: fatRef,
+          textInput: fatTextInputRef,
         })}
       </View>
 
@@ -231,12 +319,14 @@ export const EditNutritionFact = forwardRef<
           value: formatNumber(servingInfo.servingQty) || 0,
           unit: '',
           storeRef: servingQtyRef,
+          textInput: servingQtyTextInputRef,
         })}
         {renderMacro({
           title: 'Weight',
           value: formatNumber(servingInfo.weight) || 0,
           unit: 'g',
           storeRef: weightRef,
+          textInput: weightTextInputRef,
         })}
         {renderMacro({
           title: 'Unit',
@@ -246,6 +336,7 @@ export const EditNutritionFact = forwardRef<
           unit: '',
           flex: 2,
           storeRef: servingUnitRef,
+          textInput: selectedUnitTextInputRef,
         })}
       </View>
 

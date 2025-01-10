@@ -54,6 +54,14 @@ export const useEditNutritionFact = (props: EditNutritionFactProps) => {
   const nameRef = useRef(name ?? '');
   const barcodeRef = useRef(barcode ?? '');
   const barcodeTextInputRef = useRef<TextInput>(null);
+  const nameTextInputRef = useRef<TextInput>(null);
+  const caloriesTextInputRef = useRef<TextInput>(null);
+  const carbsTextInputRef = useRef<TextInput>(null);
+  const fatTextInputRef = useRef<TextInput>(null);
+  const proteinTextInputRef = useRef<TextInput>(null);
+  const servingQtyTextInputRef = useRef<TextInput>(null);
+  const selectedUnitTextInputRef = useRef<TextInput>(null);
+  const weightTextInputRef = useRef<TextInput>(null);
 
   const onUpdatePassioFoodItem = useCallback(() => {
     const updatedQty = Number(servingQtyRef.current || 0);
@@ -230,5 +238,13 @@ export const useEditNutritionFact = (props: EditNutritionFactProps) => {
       protein,
       fat,
     },
+    nameTextInputRef,
+    caloriesTextInputRef,
+    carbsTextInputRef,
+    fatTextInputRef,
+    proteinTextInputRef,
+    servingQtyTextInputRef,
+    selectedUnitTextInputRef,
+    weightTextInputRef,
   };
 };
