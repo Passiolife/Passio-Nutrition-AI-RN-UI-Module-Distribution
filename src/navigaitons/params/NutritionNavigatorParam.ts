@@ -117,6 +117,10 @@ export interface PhotoLoggingScreenProps {
   logToMeal?: MealLabel | undefined;
   type: 'picture' | 'camera';
 }
+export interface NutritionFactScanScreenProps {
+  logToDate?: Date | undefined;
+  logToMeal?: MealLabel | undefined;
+}
 
 export type ParamList = {
   MealLogScreen: MealLogScreenProps;
@@ -151,4 +155,5 @@ export type ParamList = {
   MyFoodsScreen: MyFoodsScreenNavProps;
   BarcodeScanScreen: BarcodeScanScreenNavProps;
   PhotoLoggingScreen: PhotoLoggingScreenProps;
+  NutritionFactScanScreen: NutritionFactScanScreenProps;
 };

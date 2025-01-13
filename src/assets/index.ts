@@ -97,6 +97,7 @@ export const ICONS = {
   CaptureIcon: require('./icons/capture.png'),
   flash: require('./icons/flash.png'),
   recipe: require('./icons/recipe.png'),
+  no_nutrition: require('./icons/nutriiton_label.png'),
 
   menuFav: require('./icons/meni_favorites.png'),
   menuAIAdviosr: require('./icons/menu_ai_adviosr.png'),

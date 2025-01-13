@@ -47,6 +47,7 @@ export * from './recipeOptions';
 export * from './usages';
 export * from './backNavigations/BackOnly';
 export * from './itemAddedToDairy/ItemAddedToDairy';
+export * from './nutritionNoFound/NutritionNotFoundModal';
 
 import ActionSheet from './actionSheets/ActionSheet';
 export { ActionSheet };

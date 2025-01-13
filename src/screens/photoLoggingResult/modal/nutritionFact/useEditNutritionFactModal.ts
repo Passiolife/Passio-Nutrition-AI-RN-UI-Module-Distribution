@@ -24,7 +24,7 @@ export const useEditNutritionFact = (props: EditNutritionFactProps) => {
   const result = props.result;
   const nutrients = PassioSDK.getNutrientsOfPassioFoodItem(
     result,
-    result.amount.weight
+    result?.amount?.weight ?? 100
   );
   const passioAmount = props.result?.amount;
 

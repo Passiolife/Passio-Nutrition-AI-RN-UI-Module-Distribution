@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, ViewStyle } from 'react-native';
 import Animated, {
   Easing,
   useAnimatedStyle,
@@ -17,11 +17,13 @@ interface ProgressBarProps {
   data: [];
   loading: boolean;
   isNutritionLabelProgress?: boolean;
+  style?: ViewStyle;
 }
 
 const FakeProgress = ({
   data,
   loading,
+  style,
   isNutritionLabelProgress = false,
 }: ProgressBarProps) => {
   const INITIAL_LOADING_TIME = isNutritionLabelProgress
@@ -99,7 +101,7 @@ const FakeProgress = ({
   if (hide) return null;
 
   return (
-    <View style={styles.bottomModal}>
+    <View style={[styles.bottomModal, style]}>
       <View style={styles.progressBarView}>
         <Animated.View style={[styles.barStyle, animWidthStyle]} />
       </View>
