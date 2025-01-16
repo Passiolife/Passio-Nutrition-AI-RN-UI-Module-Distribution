@@ -26,6 +26,7 @@ export const NutritionFactScanScreen = () => {
     nutritionNotFoundModalRef,
     onViewDiaryPress,
     setType,
+    onCancelPress,
   } = useNutritionFactsScanner();
   const animatedIndex = useSharedValue<number>(0);
   const branding = useBranding();
@@ -68,6 +69,7 @@ export const NutritionFactScanScreen = () => {
       <PhotoLoggingEditorModal
         ref={editNutritionFactRef}
         onUpdateFoodItem={onUpdateFoodItem}
+        onCancelPress={onCancelPress}
       />
       <ItemAddedToDairyViewModal
         ref={itemAddedToDairyViewModalRef}

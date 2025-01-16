@@ -13,6 +13,7 @@ import { isMissingNutrition } from '../../../utils/V3Utils';
 interface EditServingSizeProps {
   onUpdateFoodItem?: (photoLoggingResults: PhotoLoggingResults) => void;
   openNutritionFactFromServing?: (result: PhotoLoggingResults) => void;
+  onCancelPress?: () => void;
 }
 
 export interface PhotoLoggingBarcodeRef {
@@ -116,7 +117,7 @@ export const PhotoLoggingEditorModal = forwardRef<
             ),
           });
         }}
-        onClose={handleNutritionFactCloseClick}
+        onClose={props?.onCancelPress || handleNutritionFactCloseClick}
       />
     );
   };

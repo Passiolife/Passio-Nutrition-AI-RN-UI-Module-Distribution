@@ -20,10 +20,8 @@ import { QuickScanLogButtonView } from '../../views/QuickScanLogButtonView';
 import { useBarcodeFoodScan } from './useBarcodeFoodScan';
 import { BarcodeNotDetect } from './BarcodeNotDetect';
 
-interface Props {
-  onTakePhoto: () => void;
-}
-export const BarcodeFoodScan = ({ onTakePhoto }: Props) => {
+interface Props {}
+export const BarcodeFoodScan = ({}: Props) => {
   const {
     alternatives,
     isLodgedFood,
@@ -36,6 +34,7 @@ export const BarcodeFoodScan = ({ onTakePhoto }: Props) => {
     onViewDiaryPress,
     resetScanning,
     setStopScan,
+    onTakePhoto,
   } = useBarcodeFoodScan();
 
   const info = false;

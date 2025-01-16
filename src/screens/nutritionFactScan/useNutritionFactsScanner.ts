@@ -7,7 +7,7 @@ import {
   ItemAddedToDairyViewModalRef,
   NutritionNotFoundModalRef,
 } from '../../components';
-import { useNavigation } from '@react-navigation/native';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { ParamList } from '../../navigaitons';
 import { isMissingNutrition } from '../../utils/V3Utils';
@@ -21,6 +21,8 @@ export type NutritionFactsScannerProps = StackNavigationProp<
 
 export const useNutritionFactsScanner = () => {
   const navigation = useNavigation<NutritionFactsScannerProps>();
+  const { params } =
+    useRoute<RouteProp<ParamList, 'NutritionFactScanScreen'>>();
   const [type, setType] = useState<NutritionFactScreenType>('camera');
   const editNutritionFactRef = useRef<PhotoLoggingBarcodeRef>(null);
   const itemAddedToDairyViewModalRef =
@@ -62,7 +64,10 @@ export const useNutritionFactsScanner = () => {
   };
 
   const onUpdateFoodItem = (result: PhotoLoggingResults) => {
-    itemAddedToDairyViewModalRef?.current?.open();
+    if (result.passioFoodItem) {
+      params.onSaveLog?.(result.passioFoodItem);
+      navigation.goBack();
+    }
   };
 
   const onViewDiaryPress = () => {
@@ -70,6 +75,9 @@ export const useNutritionFactsScanner = () => {
     navigation.navigate('BottomNavigation', {
       screen: 'MealLogScreen',
     });
+  };
+  const onCancelPress = () => {
+    navigation.goBack();
   };
   const onTryAgain = () => {
     nutritionNotFoundModalRef?.current?.close();
@@ -87,14 +95,27 @@ export const useNutritionFactsScanner = () => {
             unit: 'g',
             value: 100,
           },
-          selectedUnit: 'g',
-          selectedQuantity: 1,
+          selectedUnit: 'gram',
+          servingSizes: [
+            {
+              quantity: 100,
+              unitName: 'gram',
+            },
+          ],
+          servingUnits: [
+            {
+              unit: 'gram',
+              value: 100,
+              unitName: 'gram',
+            },
+          ],
+          selectedQuantity: 100,
         },
         refCode: '',
         name: '',
         iconId: '',
         ingredientWeight: {
-          unit: 'g',
+          unit: 'gram',
           value: 100,
         },
         id: '',
@@ -113,6 +134,7 @@ export const useNutritionFactsScanner = () => {
     nutritionNotFoundModalRef,
     onEnterManually,
     onViewDiaryPress,
+    onCancelPress,
     setType,
     url,
     type,

@@ -258,6 +258,15 @@ export const useBarcodeFoodScan = () => {
     }
   }, [foodDetectEvents, getQuickResults, isStopScan]);
 
+  const onTakePhoto = () => {
+    onContinueScanningPress();
+    navigation.navigate('NutritionFactScanScreen', {
+      onSaveLog: (item) => {
+        onSavedLog(convertPassioFoodItemToFoodLog(item, undefined, undefined));
+      },
+    });
+  };
+
   return {
     alternatives,
     isLodgedFood,
@@ -270,5 +279,6 @@ export const useBarcodeFoodScan = () => {
     onViewDiaryPress,
     resetScanning,
     setStopScan,
+    onTakePhoto,
   };
 };

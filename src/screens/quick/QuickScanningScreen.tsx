@@ -45,12 +45,6 @@ export const QuickScanningScreen = gestureHandlerRootHOC(() => {
     setTimeout(init, 300);
   }, []);
 
-  const onTakePhoto = () => {
-    navigation.replace('TakePictureScreen', {
-      type: 'camera',
-    });
-  };
-
   return (
     <View style={styles.container}>
       <View style={{ flex: 1 }}>
@@ -70,9 +64,7 @@ export const QuickScanningScreen = gestureHandlerRootHOC(() => {
         </View>
       </View>
       {mode === 'Visual' && !info && <VisualFoodScan />}
-      {mode === 'Barcode' && !info && (
-        <BarcodeFoodScan onTakePhoto={onTakePhoto} />
-      )}
+      {mode === 'Barcode' && !info && <BarcodeFoodScan />}
       {mode === 'NutritionFact' && !info && <NutritionFactScan />}
     </View>
   );
