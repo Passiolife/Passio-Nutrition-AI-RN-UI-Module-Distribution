@@ -29,6 +29,7 @@ import { convertPassioFoodItemToFoodLog } from '../../../../utils/V3Utils';
 import type { ScanningScreenNavigationProps } from '../../QuickScanningScreen';
 import { convertDateToDBFormat } from '../../../../utils/DateFormatter';
 import { ItemAddedToDairyViewModalRef } from '../../../../components';
+import { getCustomFoodUUID } from '../../../../screens/foodCreator/FoodCreator.utils';
 
 export const useBarcodeFoodScan = () => {
   const services = useServices();
@@ -267,7 +268,18 @@ export const useBarcodeFoodScan = () => {
     onContinueScanningPress();
     navigation.navigate('NutritionFactScanScreen', {
       onSaveLog: (item) => {
-        onSavedLog(convertPassioFoodItemToFoodLog(item, undefined, undefined));
+        const foodRecord = convertPassioFoodItemToFoodLog(
+          item,
+          undefined,
+          undefined
+        );
+        const uuid: string = getCustomFoodUUID();
+        services.dataService.saveCustomFood({
+          ...foodRecord,
+          uuid: uuid,
+          barcode: foodRecord?.foodItems?.[0]?.barcode,
+        });
+        onSavedLog(foodRecord);
       },
     });
   };

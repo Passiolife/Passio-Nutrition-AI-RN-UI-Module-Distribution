@@ -466,23 +466,28 @@ export const createBlankPassioFoodITem = () => {
   const passioAmount: PassioFoodAmount = {
     weight: {
       unit: 'g',
-      value: 100,
+      value: 13,
     },
-    selectedUnit: 'gram',
+    selectedUnit: 'serving',
     servingSizes: [
       {
-        quantity: 100,
-        unitName: 'gram',
+        quantity: 1,
+        unitName: 'serving',
       },
     ],
     servingUnits: [
       {
-        unit: 'gram',
+        unit: 'g',
         value: 100,
         unitName: 'gram',
       },
+      {
+        unit: 'g',
+        value: 13,
+        unitName: 'serving',
+      },
     ],
-    selectedQuantity: 100,
+    selectedQuantity: 1,
   };
   const item: PassioFoodItem = {
     amount: passioAmount,
@@ -501,6 +506,14 @@ export const createBlankPassioFoodITem = () => {
         weight: passioAmount.weight,
         referenceNutrients: {
           weight: passioAmount.weight,
+          calories: {
+            unit: 'kcal',
+            value: 10,
+          },
+          fat: {
+            unit: 'g',
+            value: 1,
+          },
         },
       },
     ],

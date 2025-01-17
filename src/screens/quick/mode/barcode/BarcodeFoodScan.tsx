@@ -87,6 +87,17 @@ export const BarcodeFoodScan = ({}: Props) => {
           {passioQuickResults === null ? (
             <BottomSheetView>
               <QuickScanningLoadingView text="Place your barcode within the frame." />
+              <TouchableOpacity
+                onPress={onTakePhoto}
+                style={{ alignItems: 'center', padding: 16, marginTop: 16 }}
+              >
+                <Text>
+                  No barcode? Take a picture of{' '}
+                  <Text weight="600" color="primaryColor">
+                    Nutrition Facts
+                  </Text>
+                </Text>
+              </TouchableOpacity>
               <View style={{ height: 120, width: 100 }} />
             </BottomSheetView>
           ) : null}

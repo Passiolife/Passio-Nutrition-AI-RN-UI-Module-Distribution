@@ -4,12 +4,13 @@ import {
   BackNavigation,
   ItemAddedToDairyViewModal,
   NutritionNotFoundModal,
+  Text,
 } from '../../components';
 import { Image, StyleSheet, View } from 'react-native';
 import { TakePicture } from '../takePicture/views/TakePicture';
 import { useSharedValue } from 'react-native-reanimated';
 import { Branding, useBranding } from '../../contexts';
-import { scaleHeight, screenHeight } from '../../utils';
+import { scaleHeight } from '../../utils';
 import FakeProgress from '../../components/progressBard/FakeProgress';
 import { PhotoLoggingEditorModal } from '../photoLoggingResult/modal/PhotoLoggingEditorModal';
 
@@ -35,7 +36,12 @@ export const NutritionFactScanScreen = () => {
   const renderImage = () => {
     return (
       <View style={{ flex: 1, marginTop: scaleHeight(24) }}>
-        <Image style={styles.image} source={{ uri: url }} />
+        <Image
+          style={styles.image}
+          source={{ uri: url }}
+          resizeMethod="resize"
+          resizeMode="cover"
+        />
         <FakeProgress
           data={[]}
           style={{
@@ -43,6 +49,7 @@ export const NutritionFactScanScreen = () => {
             top: 0,
             marginTop: scaleHeight(24),
           }}
+          title="Analyzing Photo..."
           loading={type === 'scanning'}
           isNutritionLabelProgress={true}
         />
@@ -52,7 +59,7 @@ export const NutritionFactScanScreen = () => {
 
   return (
     <View style={{ flex: 1 }}>
-      <BackNavigation />
+      <BackNavigation title={url ? 'Photo Preview' : 'Barcode Scan'} />
       {(() => {
         switch (type) {
           case 'camera':
@@ -68,6 +75,19 @@ export const NutritionFactScanScreen = () => {
       })()}
       <PhotoLoggingEditorModal
         ref={editNutritionFactRef}
+        nutritionFactButtonName="Save & Log"
+        nutritionFactNote={
+          <Text weight="400" size="_14px">
+            Logging this item will create a custom food. You can edit this item
+            from your
+            <Text weight="700" size="_14px">
+              {' My Foods '}
+            </Text>
+            <Text weight="400" size="_14px">
+              list
+            </Text>
+          </Text>
+        }
         onUpdateFoodItem={onUpdateFoodItem}
         onCancelPress={onCancelPress}
       />
@@ -94,7 +114,7 @@ const customStyle = ({}: Branding) => {
     image: {
       backgroundColor: 'black',
       borderRadius: 20,
-      height: scaleHeight(screenHeight / 2),
+      height: scaleHeight(500),
       marginHorizontal: 20,
       resizeMode: 'contain',
     },

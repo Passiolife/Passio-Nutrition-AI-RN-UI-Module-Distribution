@@ -39,6 +39,7 @@ interface Props {
   recognizePictureRemote: (images: string[]) => void;
   animatedIndex: SharedValue<number>;
   isMultiple?: boolean;
+  isClose?: boolean;
 }
 
 export interface TakePictureRef {
@@ -199,7 +200,13 @@ export const TakePicture = React.forwardRef<TakePictureRef, Props>(
     }
 
     return (
-      <SafeAreaView style={{ flex: 1, justifyContent: 'flex-end' }}>
+      <SafeAreaView
+        style={{
+          flex: 1,
+          justifyContent: 'flex-end',
+          backgroundColor: 'black',
+        }}
+      >
         <Camera
           style={{
             position: 'absolute',
@@ -326,7 +333,7 @@ export const TakePicture = React.forwardRef<TakePictureRef, Props>(
             />
           )}
         </View>
-        {!isMultiple && (
+        {/* {!isMultiple && (
           <TouchableOpacity
             onPress={onCancelPress}
             style={{
@@ -343,7 +350,7 @@ export const TakePicture = React.forwardRef<TakePictureRef, Props>(
               }}
             />
           </TouchableOpacity>
-        )}
+        )} */}
       </SafeAreaView>
     );
   }

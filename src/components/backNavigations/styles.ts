@@ -34,13 +34,13 @@ const headerStyle = ({ header }: Branding, insets: EdgeInsets) => {
     imgBgStyle: {
       borderRadius: 0,
       shadowColor: '#00000029',
-      shadowOpacity: 1,
+      shadowOpacity: 0.5,
       shadowOffset: {
         width: 1.5,
         height: 1,
       },
-      shadowRadius: 2.85,
-      elevation: 8,
+      shadowRadius: 1.0,
+      elevation: 4,
     },
     headerBottom: {},
     backIcon: {

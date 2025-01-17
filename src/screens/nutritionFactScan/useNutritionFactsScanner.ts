@@ -68,10 +68,6 @@ export const useNutritionFactsScanner = () => {
 
   const onUpdateFoodItem = (result: PhotoLoggingResults) => {
     if (result.passioFoodItem) {
-      console.log(
-        'result.passioFoodItem',
-        JSON.stringify(result.passioFoodItem)
-      );
       params.onSaveLog?.(result.passioFoodItem);
       navigation.goBack();
     }

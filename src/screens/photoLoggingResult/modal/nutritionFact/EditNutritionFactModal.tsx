@@ -25,6 +25,8 @@ export interface EditNutritionFactProps {
   result: PassioFoodItem;
   openBarcodeScanner?: (result: PassioFoodItem) => void;
   assets?: string;
+  button?: string;
+  note?: string | React.ReactElement;
 }
 
 export interface EditNutritionFactRef {
@@ -62,6 +64,8 @@ export const EditNutritionFact = forwardRef<
     weightTextInputRef,
   } = useEditNutritionFact(props);
   const styles = customStyles(branding);
+
+  const { button = 'Save', note } = props;
 
   const addMissingDataFromBarcode = async (barcode: string) => {
     const foodItem = await PassioSDK.fetchFoodItemForProductCode(barcode);
@@ -244,6 +248,15 @@ export const EditNutritionFact = forwardRef<
       <Text size={'_20px'} weight={'700'} style={styles.title}>
         Edit Nutrition Facts
       </Text>
+      {note ? (
+        <Text
+          weight="400"
+          size="_14px"
+          style={{ textAlign: 'center', marginBottom: scaleHeight(16) }}
+        >
+          {note}
+        </Text>
+      ) : null}
       <View style={[styles.container]}>
         <View style={styles.imageContainer}>
           <Image
@@ -348,7 +361,7 @@ export const EditNutritionFact = forwardRef<
           style={{ flex: 1, marginEnd: 8 }}
         />
         <BasicButton
-          text={'Save'}
+          text={button}
           style={{ flex: 1, marginStart: 8 }}
           onPress={onUpdateNutritionUpdate}
         />

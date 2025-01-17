@@ -14,6 +14,8 @@ interface EditServingSizeProps {
   onUpdateFoodItem?: (photoLoggingResults: PhotoLoggingResults) => void;
   openNutritionFactFromServing?: (result: PhotoLoggingResults) => void;
   onCancelPress?: () => void;
+  nutritionFactButtonName?: string;
+  nutritionFactNote?: JSX.Element;
 }
 
 export interface PhotoLoggingBarcodeRef {
@@ -96,6 +98,8 @@ export const PhotoLoggingEditorModal = forwardRef<
         result={result.passioFoodItem}
         ref={editNutritionFactRef}
         assets={result.assets}
+        button={props.nutritionFactButtonName}
+        note={props.nutritionFactNote}
         onDone={(updatedResult) => {
           props?.onUpdateFoodItem?.({
             ...result,

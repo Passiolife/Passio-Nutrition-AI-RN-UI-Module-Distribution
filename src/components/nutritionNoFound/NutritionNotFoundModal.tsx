@@ -24,7 +24,7 @@ export const NutritionNotFoundModal = forwardRef<
   const {
     onTryAgain,
     onEnterManually,
-    title = 'Failed To Analyze Image',
+    title = 'No Nutrition Facts Label Found',
     action = 'Enter Manually',
     note = 'Please try again or enter manually',
   } = props;
@@ -49,7 +49,6 @@ export const NutritionNotFoundModal = forwardRef<
         <View style={{ flex: 1 }} />
         <Card style={styles.container}>
           <View style={styles.contentContainer}>
-            <Image source={ICONS.addedToDiary} style={styles.icon} />
             <Text weight="700" size="_20px" style={styles.title}>
               {title}
             </Text>
@@ -89,6 +88,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: 'white',
     alignContent: 'center',
+    paddingHorizontal: scaleWidth(4),
     marginHorizontal: scaleWidth(16),
   },
   contentContainer: {
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
     marginVertical: 12,
   },
   title: {
-    marginVertical: 3,
+    marginTop: 24,
     textAlign: 'center',
   },
   description: {
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 4,
   },
   modalContainer: {
-    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    backgroundColor: 'rgba(114, 114, 114, 0.6)',
     flex: 1,
   },
   flex1: {

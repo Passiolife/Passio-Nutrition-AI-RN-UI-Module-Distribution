@@ -18,12 +18,14 @@ interface ProgressBarProps {
   loading: boolean;
   isNutritionLabelProgress?: boolean;
   style?: ViewStyle;
+  title?: string;
 }
 
 const FakeProgress = ({
   data,
   loading,
   style,
+  title = 'Generating results...',
   isNutritionLabelProgress = false,
 }: ProgressBarProps) => {
   const INITIAL_LOADING_TIME = isNutritionLabelProgress
@@ -105,7 +107,7 @@ const FakeProgress = ({
       <View style={styles.progressBarView}>
         <Animated.View style={[styles.barStyle, animWidthStyle]} />
       </View>
-      <Text style={styles.topSpace}>Generating results...</Text>
+      <Text style={styles.topSpace}>{title}</Text>
     </View>
   );
 };
