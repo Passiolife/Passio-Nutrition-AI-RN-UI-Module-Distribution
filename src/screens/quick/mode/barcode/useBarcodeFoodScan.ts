@@ -254,9 +254,11 @@ export const useBarcodeFoodScan = () => {
           undefined,
           undefined
         );
-        const foodRecord = foodRecords?.[0];
+        let foodRecord = foodRecords?.[0];
         if (foodRecord) {
           const uuid: string = getCustomFoodUUID();
+          foodRecord.refCode = uuid;
+          foodRecord.refCustomFoodID = uuid;
           services.dataService.saveCustomFood({
             ...foodRecord,
             uuid: uuid,
