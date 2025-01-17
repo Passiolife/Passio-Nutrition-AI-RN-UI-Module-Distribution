@@ -24,6 +24,7 @@ export type TextColor =
   | 'gray500'
   | 'border'
   | 'error'
+  | 'tab'
   | 'calories';
 export type TextSize =
   | 'small'
@@ -110,6 +111,7 @@ export const Text = React.forwardRef(
       gray300: gray300,
       white: white,
       error: error,
+      tab: '#6B7280',
     };
 
     const {

@@ -49,7 +49,7 @@ export const dateFormatter = (date: Date) => {
   return `${dayName}, ${getMonth} ${getDay} ${getYear}`;
 };
 export const dayFormatterPhotoLogging = (date: Date) => {
-  return DateTime.fromJSDate(date).toFormat('dd/MM/yyyy');
+  return DateTime.fromJSDate(date).toFormat('dd/MM/yyyy HH:MM');
 };
 
 //converted date to 'dd'T'HH:mm:ss'Z'' format

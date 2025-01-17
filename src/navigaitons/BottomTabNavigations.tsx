@@ -79,7 +79,7 @@ export const bottomTabStyle = ({
       paddingHorizontal: 8,
       height: scaleHeight(24),
       width: scaleWidth(24),
-      tintColor: border,
+      tintColor: '#9CA3AF',
     },
     tabItemText: {},
     addPlusContainer: {

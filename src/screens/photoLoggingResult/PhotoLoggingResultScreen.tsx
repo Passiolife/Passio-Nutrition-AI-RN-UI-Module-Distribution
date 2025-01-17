@@ -83,7 +83,7 @@ export const PhotoLoggingScreen = gestureHandlerRootHOC(() => {
             style={{ flex: 1, marginHorizontal: 12 }}
           >
             <Text color="secondaryText" size="_14px" weight="500">
-              Timestamp
+              Date
             </Text>
             <Text
               style={{
@@ -191,6 +191,7 @@ export const PhotoLoggingScreen = gestureHandlerRootHOC(() => {
       <DatePicker
         isDatePickerVisible={isOpenDatePicker}
         handleConfirm={changeDate}
+        mode="datetime"
         hideDatePicker={() => openDatePicker(false)}
         selectedDate={date}
       />
