@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { DetectionCameraView } from '@passiolife/nutritionai-react-native-sdk-v3';
 import { QuickScanningActionView } from './views';
-import { useNavigation } from '@react-navigation/native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 import ScanSVG from '../../components/svgs/scan';
 import { BarcodeFoodScan } from './mode/barcode/BarcodeFoodScan';
 import { VisualFoodScan } from './mode/visual/VisualFoodScan';
@@ -37,6 +37,8 @@ export const QuickScanningScreen = gestureHandlerRootHOC(() => {
   const navigation = useNavigation<ScreenNavigationProps>();
   const [level, setLevel] = useState<PassioCameraZoomLevel>();
 
+  const isFocused = useIsFocused();
+
   useEffect(() => {
     const init = async () => {
       const passioCameraZoomLevel = await PassioSDK.getMinMaxCameraZoomLevel();
@@ -47,22 +49,24 @@ export const QuickScanningScreen = gestureHandlerRootHOC(() => {
 
   return (
     <View style={styles.container}>
-      <View style={{ flex: 1 }}>
-        <QuickScanningActionView
-          onClosedPressed={() => navigation.goBack()}
-          onInfoPress={() => setInfo((i) => !i)}
-        />
+      {isFocused && (
         <View style={{ flex: 1 }}>
-          <DetectionCameraView
-            style={styles.cameraView}
-            volumeDetectionMode="none"
+          <QuickScanningActionView
+            onClosedPressed={() => navigation.goBack()}
+            onInfoPress={() => setInfo((i) => !i)}
           />
-          {/* {!info && <ScanningModeSelector mode={mode} setMode={setMode} />} */}
-          {!info && <ScanSVG />}
-          {!info && level && <ZoomIndicator mode={mode} level={level} />}
-          {info && <QuickScanInfo onOkPress={() => setInfo(false)} />}
+          <View style={{ flex: 1 }}>
+            <DetectionCameraView
+              style={styles.cameraView}
+              volumeDetectionMode="none"
+            />
+            {/* {!info && <ScanningModeSelector mode={mode} setMode={setMode} />} */}
+            {!info && <ScanSVG />}
+            {!info && level && <ZoomIndicator mode={mode} level={level} />}
+            {info && <QuickScanInfo onOkPress={() => setInfo(false)} />}
+          </View>
         </View>
-      </View>
+      )}
       {mode === 'Visual' && !info && <VisualFoodScan />}
       {mode === 'Barcode' && !info && <BarcodeFoodScan />}
       {mode === 'NutritionFact' && !info && <NutritionFactScan />}

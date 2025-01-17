@@ -2,6 +2,7 @@ import React from 'react';
 import { useNutritionFactsScanner } from './useNutritionFactsScanner';
 import {
   BackNavigation,
+  BasicButton,
   ItemAddedToDairyViewModal,
   NutritionNotFoundModal,
   Text,
@@ -10,7 +11,7 @@ import { Image, StyleSheet, View } from 'react-native';
 import { TakePicture } from '../takePicture/views/TakePicture';
 import { useSharedValue } from 'react-native-reanimated';
 import { Branding, useBranding } from '../../contexts';
-import { scaleHeight } from '../../utils';
+import { scaleHeight, scaleWidth } from '../../utils';
 import FakeProgress from '../../components/progressBard/FakeProgress';
 import { PhotoLoggingEditorModal } from '../photoLoggingResult/modal/PhotoLoggingEditorModal';
 
@@ -28,6 +29,7 @@ export const NutritionFactScanScreen = () => {
     onViewDiaryPress,
     setType,
     onCancelPress,
+    initializeCamera,
   } = useNutritionFactsScanner();
   const animatedIndex = useSharedValue<number>(0);
   const branding = useBranding();
@@ -38,7 +40,7 @@ export const NutritionFactScanScreen = () => {
       <View style={{ flex: 1, marginTop: scaleHeight(24) }}>
         <Image
           style={styles.image}
-          source={{ uri: url }}
+          source={{ uri: `file://${url}` }}
           resizeMethod="resize"
           resizeMode="cover"
         />
@@ -53,6 +55,15 @@ export const NutritionFactScanScreen = () => {
           loading={type === 'scanning'}
           isNutritionLabelProgress={true}
         />
+        <BasicButton
+          text="Cancel"
+          onPress={onCancelPress}
+          style={{
+            marginVertical: 9,
+            maxWidth: scaleWidth(150),
+            alignSelf: 'center',
+          }}
+        />
       </View>
     );
   };
@@ -64,10 +75,14 @@ export const NutritionFactScanScreen = () => {
         switch (type) {
           case 'camera':
             return (
-              <TakePicture
-                recognizePictureRemote={recognizePictureRemote}
-                animatedIndex={animatedIndex}
-              />
+              <>
+                {initializeCamera && (
+                  <TakePicture
+                    recognizePictureRemote={recognizePictureRemote}
+                    animatedIndex={animatedIndex}
+                  />
+                )}
+              </>
             );
           default:
             return renderImage();

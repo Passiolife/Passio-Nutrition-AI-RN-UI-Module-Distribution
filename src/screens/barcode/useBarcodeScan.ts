@@ -28,6 +28,7 @@ export const useBarcodeScan = () => {
     useState<BarcodeCustomResult | null>(null);
   const [isLoading, setLoading] = useState<boolean>(true);
   const [customFoods, setCustomFood] = useState<CustomFood[]>();
+
   const type = params.type ?? 'customFood';
 
   const getQuickResults = useCallback(
@@ -176,20 +177,16 @@ export const useBarcodeScan = () => {
 
   useEffect(() => {
     let backHandler: NativeEventSubscription | undefined;
-    if (params.type === 'general') {
-      const backAction = () => {
-        params?.onClose?.();
-        return false;
-      };
-      backHandler = BackHandler.addEventListener(
-        'hardwareBackPress',
-        backAction
-      );
-    }
+    const backAction = () => {
+      params?.onClose?.();
+      return false;
+    };
+    backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
     return () => {
       if (backHandler) {
         backHandler.remove();
       }
+      params?.onClose?.();
     }; // Cleanup the listener
   }, [params]);
 

@@ -16,19 +16,13 @@ export const BarcodeScanScreen = () => {
     type,
     resetScanning,
     onCreateCustomWithoutBarcodePress,
-    params,
     onViewExistingPress,
   } = useBarcodeScan();
 
   return (
     <View style={styles.container}>
       {type === 'general' ? (
-        <BackNavigation
-          title="Photo Logging"
-          onBackArrowPress={() => {
-            params?.onClose?.();
-          }}
-        />
+        <BackNavigation title="Photo Logging" />
       ) : (
         <BackNavigation title="Food Creator" />
       )}

@@ -1,6 +1,6 @@
 import { PassioSDK } from '@passiolife/nutritionai-react-native-sdk-v3';
-import { useRef, useState } from 'react';
-import { Alert } from 'react-native';
+import { useRef, useState, useEffect } from 'react';
+import { Alert, Platform } from 'react-native';
 import type { PhotoLoggingBarcodeRef } from '../photoLoggingResult/modal/PhotoLoggingEditorModal';
 import type { PhotoLoggingResults } from '../photoLoggingResult/usePhotoLogging';
 import type {
@@ -33,6 +33,7 @@ export const useNutritionFactsScanner = () => {
   const nutritionNotFoundModalRef = useRef<NutritionNotFoundModalRef>(null);
 
   const [url, setURL] = useState<string | undefined>(undefined);
+  const [initializeCamera, setInitializeCamera] = useState(false);
 
   const recognizePictureRemote = async (assets: string[]) => {
     try {
@@ -104,6 +105,16 @@ export const useNutritionFactsScanner = () => {
       resultType: 'nutritionFacts',
     });
   };
+
+  useEffect(() => {
+    // This operation is necessary to handle two camera instances: one is released in the barcode screen, and the other is initialized in this screen. These steps are essential to avoid reinitializing the camera.
+    setTimeout(
+      () => {
+        setInitializeCamera(true);
+      },
+      Platform.OS === 'ios' ? 500 : 2000
+    );
+  }, []);
   return {
     recognizePictureRemote,
     editNutritionFactRef,
@@ -117,5 +128,6 @@ export const useNutritionFactsScanner = () => {
     setType,
     url,
     type,
+    initializeCamera,
   };
 };

@@ -522,10 +522,6 @@ export const getLatestWeightDB = async (): Promise<Weight | null> => {
          ORDER BY ${ROW_DAY} DESC
          LIMIT 1;`
       );
-      console.log(
-        'convertResultToWeights(results)?.[0] || null==========================',
-        convertResultToWeights(results)?.[0] || null
-      );
       resolve(convertResultToWeights(results)?.[0] || null);
     } catch (error) {
       console.error(`Failed to get weight logs ${error}`);
