@@ -3,6 +3,7 @@ import { Image, Modal, StyleSheet, View } from 'react-native';
 
 import { BasicButton, Card, Text } from '../../components';
 import { ICONS } from '../../assets';
+import { scaleHeight, scaleWidth } from '../../utils';
 interface Props {
   onViewDiaryPress?: () => void;
   onContinuePress?: () => void;
@@ -76,7 +77,9 @@ const styles = StyleSheet.create({
     position: 'absolute',
     backgroundColor: 'white',
     bottom: 40,
-    paddingVertical: 8,
+    paddingVertical: scaleHeight(16),
+    paddingHorizontal: scaleHeight(8),
+    borderRadius: scaleHeight(16),
     right: 8,
     left: 8,
   },
@@ -89,8 +92,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   icon: {
-    height: 24,
-    width: 24,
+    height: scaleHeight(36),
+    width: scaleWidth(36),
     marginVertical: 12,
   },
   title: {
@@ -112,7 +115,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 4,
   },
   modalContainer: {
-    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    backgroundColor: 'rgba(107, 114, 128, 0.75)',
     flex: 1,
   },
   flex1: {

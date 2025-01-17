@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 4,
   },
   modalContainer: {
-    backgroundColor: 'rgba(114, 114, 114, 0.6)',
+    backgroundColor: 'rgba(107, 114, 128, 0.75)',
     flex: 1,
   },
   flex1: {

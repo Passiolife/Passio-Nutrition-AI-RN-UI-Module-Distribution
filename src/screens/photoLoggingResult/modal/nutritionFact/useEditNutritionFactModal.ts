@@ -12,6 +12,7 @@ import {
 import { Alert, TextInput } from 'react-native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import type { ParamList } from '../../../../navigaitons';
+import { isMissingNutrition } from '../../../../utils/V3Utils';
 
 export type NavigationProps = StackNavigationProp<
   ParamList,
@@ -193,7 +194,22 @@ export const useEditNutritionFact = (props: EditNutritionFactProps) => {
       return;
     }
 
+    if (!nameRef.current || nameRef.current.length <= 0) {
+      Alert.alert('Please enter food name');
+      return;
+    }
+
+    if (barcodeRef.current.length >= 0) {
+      // check custom food already exist for this barcode.
+    }
+
     const updatedResult = onUpdatePassioFoodItem();
+
+    if (isMissingNutrition(updatedResult)) {
+      Alert.alert('Please enter valid macros');
+      return;
+    }
+
     if (updatedResult) {
       onDone?.(updatedResult);
     }

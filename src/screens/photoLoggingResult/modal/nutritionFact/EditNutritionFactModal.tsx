@@ -178,6 +178,7 @@ export const EditNutritionFact = forwardRef<
             <TextInput
               keyboardType={keyboardType}
               returnKeyLabel="Done"
+              placeholderTextColor={branding.secondaryText}
               returnKeyType="done"
               ref={textInput}
               style={{
@@ -234,15 +235,16 @@ export const EditNutritionFact = forwardRef<
           ref={barcodeTextInputRef}
           defaultValue={info.barcode}
           style={[styles.flex1, styles.inputNutritionFact]}
+          placeholderTextColor={branding.secondaryText}
           placeholder="Enter barcode"
           onBlur={(e) => {
             if (Platform.OS === 'ios') {
-              nameRef.current = e.nativeEvent.text;
+              barcodeRef.current = e.nativeEvent.text;
             }
           }}
           onSubmitEditing={(e) => {
             if (Platform.OS === 'ios') {
-              nameRef.current = e.nativeEvent.text;
+              barcodeRef.current = e.nativeEvent.text;
             }
           }}
           onChangeText={(e) => {
@@ -308,6 +310,8 @@ export const EditNutritionFact = forwardRef<
           <TextInput
             defaultValue={info.label}
             ref={nameTextInputRef}
+            placeholder="Enter food name"
+            placeholderTextColor={branding.secondaryText}
             style={[styles.input, styles.inputNutritionFact]}
             onBlur={(e) => {
               if (Platform.OS === 'ios') {
@@ -331,7 +335,7 @@ export const EditNutritionFact = forwardRef<
       <Text size={'_16px'} weight={'600'} style={styles.servingSizeTitle}>
         Nutrition Facts
       </Text>
-      <View style={[styles.row, { marginTop: scaleHeight(16) }]}>
+      <View style={[styles.row, { marginTop: scaleHeight(0) }]}>
         {renderMacro({
           title: 'Calories',
           value: formatNumber(macro.calories) || 0,
@@ -365,7 +369,7 @@ export const EditNutritionFact = forwardRef<
       <Text size={'_16px'} weight={'600'} style={styles.servingSizeTitle}>
         Portions
       </Text>
-      <View style={[styles.row, { marginTop: scaleHeight(16) }]}>
+      <View style={[styles.row, { marginTop: scaleHeight(0) }]}>
         {renderMacro({
           title: 'Serving',
           value: formatNumber(servingInfo.servingQty) || 0,

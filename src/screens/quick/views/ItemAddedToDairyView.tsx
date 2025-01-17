@@ -3,6 +3,7 @@ import { Image, StyleSheet, View } from 'react-native';
 
 import { BasicButton, Card, Text } from '../../../components';
 import { ICONS } from '../../../assets';
+import { scaleHeight } from '../../../utils';
 interface Props {
   onViewDiaryPress?: () => void;
   onContinueScanningPress?: () => void;
@@ -48,7 +49,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     backgroundColor: 'white',
     bottom: 40,
-    paddingVertical: 8,
+    paddingVertical: scaleHeight(18),
+    paddingHorizontal: scaleHeight(18),
     right: 8,
     left: 8,
   },
