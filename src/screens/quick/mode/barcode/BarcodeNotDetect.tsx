@@ -17,7 +17,7 @@ export const BarcodeNotDetect = ({ onTakePhoto, onCancelPress }: Props) => {
         <View style={styles.contentContainer}>
           <Image source={ICONS.barcodeNotFound} style={styles.icon} />
           <Text weight="700" size="_20px" style={styles.title}>
-            Barcode Missing Data
+            Barcode Not Recognized
           </Text>
           <Text color="gray500" weight="400" style={styles.description}>
             Try taking photos of the nutrition facts label.

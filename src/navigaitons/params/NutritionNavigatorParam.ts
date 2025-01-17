@@ -122,6 +122,7 @@ export interface NutritionFactScanScreenProps {
   logToDate?: Date | undefined;
   logToMeal?: MealLabel | undefined;
   onSaveLog?: (result: PhotoLoggingResults) => void;
+  barcode?: string;
 }
 
 export type ParamList = {
