@@ -190,7 +190,7 @@ const homeScreenStyle = ({ backgroundColor }: Branding) =>
       color: COLORS.white,
     },
     scrollViewStyle: {
-      paddingHorizontal: scaleWidth(12),
+      paddingHorizontal: scaleWidth(16),
       zIndex: 10,
     },
     macroContainer: {},
@@ -246,7 +246,7 @@ const homeScreenStyle = ({ backgroundColor }: Branding) =>
     },
     widgetsContainer: {
       flexDirection: 'row',
-      gap: 10,
+      gap: scaleWidth(16),
       marginTop: scaleHeight(8),
     },
   });

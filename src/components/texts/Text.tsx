@@ -70,7 +70,7 @@ const sizeMap = {
   medium: 14,
   normal: 12,
   small: 8,
-  title: 17,
+  title: scaledSize(16),
   secondlyTitle: 14,
 };
 
