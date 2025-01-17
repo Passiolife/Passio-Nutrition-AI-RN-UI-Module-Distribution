@@ -33,6 +33,7 @@ export type ScanningScreenNavigationProps = StackNavigationProp<
 
 export const QuickScanningScreen = gestureHandlerRootHOC(() => {
   const [info, setInfo] = useState(false);
+  const [initializeCamera, setInitializeCamera] = useState(true);
   const [mode] = useState<ScanningMode>('Barcode');
   const navigation = useNavigation<ScreenNavigationProps>();
   const [level, setLevel] = useState<PassioCameraZoomLevel>();
@@ -47,26 +48,32 @@ export const QuickScanningScreen = gestureHandlerRootHOC(() => {
     setTimeout(init, 300);
   }, []);
 
+  useEffect(() => {
+    setInitializeCamera(isFocused);
+  }, [isFocused]);
+
   return (
     <View style={styles.container}>
-      {isFocused && (
+      <View style={{ flex: 1 }}>
+        <QuickScanningActionView
+          onClosedPressed={() => navigation.goBack()}
+          onInfoPress={() => setInfo((i) => !i)}
+        />
         <View style={{ flex: 1 }}>
-          <QuickScanningActionView
-            onClosedPressed={() => navigation.goBack()}
-            onInfoPress={() => setInfo((i) => !i)}
-          />
-          <View style={{ flex: 1 }}>
+          {initializeCamera ? (
             <DetectionCameraView
               style={styles.cameraView}
               volumeDetectionMode="none"
             />
-            {/* {!info && <ScanningModeSelector mode={mode} setMode={setMode} />} */}
-            {!info && <ScanSVG />}
-            {!info && level && <ZoomIndicator mode={mode} level={level} />}
-            {info && <QuickScanInfo onOkPress={() => setInfo(false)} />}
-          </View>
+          ) : (
+            <View style={styles.cameraView} />
+          )}
+          {/* {!info && <ScanningModeSelector mode={mode} setMode={setMode} />} */}
+          {!info && <ScanSVG />}
+          {!info && level && <ZoomIndicator mode={mode} level={level} />}
+          {info && <QuickScanInfo onOkPress={() => setInfo(false)} />}
         </View>
-      )}
+      </View>
       {mode === 'Visual' && !info && <VisualFoodScan />}
       {mode === 'Barcode' && !info && <BarcodeFoodScan />}
       {mode === 'NutritionFact' && !info && <NutritionFactScan />}

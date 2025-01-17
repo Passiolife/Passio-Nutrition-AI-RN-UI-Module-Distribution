@@ -3,7 +3,7 @@ import { Image, StyleSheet, View } from 'react-native';
 
 import { BasicButton, Card, Text } from '../../../../components';
 import { ICONS } from '../../../../assets';
-import { screenHeight } from '../../../../utils';
+import { scaleHeight } from '../../../../utils';
 
 interface Props {
   onTakePhoto?: () => void;
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 0,
     right: 0,
-    top: screenHeight / 3,
+    bottom: scaleHeight(16),
     alignItems: 'center',
     alignContent: 'center',
     alignSelf: 'center',

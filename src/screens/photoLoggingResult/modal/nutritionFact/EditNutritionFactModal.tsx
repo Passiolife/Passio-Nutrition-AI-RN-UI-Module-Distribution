@@ -189,8 +189,21 @@ export const EditNutritionFact = forwardRef<
                 paddingVertical: scaleHeight(12),
               }}
               defaultValue={`${value}`}
-              onBlur={(e) => (storeRef.current = e.nativeEvent.text)}
-              onSubmitEditing={(e) => (storeRef.current = e.nativeEvent.text)}
+              onBlur={(e) => {
+                if (Platform.OS === 'ios') {
+                  storeRef.current = e.nativeEvent.text;
+                }
+              }}
+              onSubmitEditing={(e) => {
+                if (Platform.OS === 'ios') {
+                  storeRef.current = e.nativeEvent.text;
+                }
+              }}
+              onChangeText={(e) => {
+                if (Platform.OS === 'android') {
+                  storeRef.current = e;
+                }
+              }}
             />
             <Text
               weight="400"
@@ -221,9 +234,22 @@ export const EditNutritionFact = forwardRef<
           ref={barcodeTextInputRef}
           defaultValue={info.barcode}
           style={[styles.flex1, styles.inputNutritionFact]}
-          onBlur={(e) => (barcodeRef.current = e.nativeEvent.text)}
           placeholder="Enter barcode"
-          onSubmitEditing={(e) => (barcodeRef.current = e.nativeEvent.text)}
+          onBlur={(e) => {
+            if (Platform.OS === 'ios') {
+              nameRef.current = e.nativeEvent.text;
+            }
+          }}
+          onSubmitEditing={(e) => {
+            if (Platform.OS === 'ios') {
+              nameRef.current = e.nativeEvent.text;
+            }
+          }}
+          onChangeText={(e) => {
+            if (Platform.OS === 'android') {
+              barcodeRef.current = e;
+            }
+          }}
         />
         <TouchableOpacity
           onPress={onBarcodePress}
@@ -283,8 +309,21 @@ export const EditNutritionFact = forwardRef<
             defaultValue={info.label}
             ref={nameTextInputRef}
             style={[styles.input, styles.inputNutritionFact]}
-            onBlur={(e) => (nameRef.current = e.nativeEvent.text)}
-            onSubmitEditing={(e) => (nameRef.current = e.nativeEvent.text)}
+            onBlur={(e) => {
+              if (Platform.OS === 'ios') {
+                nameRef.current = e.nativeEvent.text;
+              }
+            }}
+            onSubmitEditing={(e) => {
+              if (Platform.OS === 'ios') {
+                nameRef.current = e.nativeEvent.text;
+              }
+            }}
+            onChangeText={(e) => {
+              if (Platform.OS === 'android') {
+                nameRef.current = e;
+              }
+            }}
           />
           {renderBarcode()}
         </View>

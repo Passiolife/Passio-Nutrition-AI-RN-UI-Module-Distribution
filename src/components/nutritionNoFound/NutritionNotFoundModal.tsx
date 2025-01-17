@@ -64,12 +64,14 @@ export const NutritionNotFoundModal = forwardRef<
             }}
           />
           <View style={styles.buttonContainer}>
-            <BasicButton
-              secondary
-              onPress={onTryAgain}
-              style={styles.button}
-              text={'Try Again'}
-            />
+            {onTryAgain && (
+              <BasicButton
+                secondary
+                onPress={onTryAgain}
+                style={styles.button}
+                text={'Try Again'}
+              />
+            )}
             <BasicButton
               text={action}
               onPress={onEnterManually}

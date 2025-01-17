@@ -31,6 +31,7 @@ export const useNutritionFactsScanner = () => {
   const itemAddedToDairyViewModalRef =
     useRef<ItemAddedToDairyViewModalRef>(null);
   const nutritionNotFoundModalRef = useRef<NutritionNotFoundModalRef>(null);
+  const introductionNutritionModalRef = useRef<NutritionNotFoundModalRef>(null);
 
   const [url, setURL] = useState<string | undefined>(undefined);
   const [initializeCamera, setInitializeCamera] = useState(false);
@@ -115,11 +116,22 @@ export const useNutritionFactsScanner = () => {
       Platform.OS === 'ios' ? 500 : 2000
     );
   }, []);
+
+  const onOkayPress = () => {
+    introductionNutritionModalRef.current?.close();
+  };
+
+  useEffect(() => {
+    introductionNutritionModalRef?.current?.open();
+  }, []);
+
   return {
     recognizePictureRemote,
     editNutritionFactRef,
     onUpdateFoodItem,
     itemAddedToDairyViewModalRef,
+    introductionNutritionModalRef,
+    onOkayPress,
     onTryAgain,
     nutritionNotFoundModalRef,
     onEnterManually,

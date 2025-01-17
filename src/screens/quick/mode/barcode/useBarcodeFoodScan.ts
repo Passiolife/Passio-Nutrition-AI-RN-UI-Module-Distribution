@@ -23,7 +23,6 @@ import {
 } from '@passiolife/nutritionai-react-native-sdk-v3';
 import {
   getBarcodeResult,
-  getDetectionCandidate,
   getPassioIDAttribute,
 } from '../../../../utils/QuickResultUtils';
 import { convertPassioFoodItemToFoodLog } from '../../../../utils/V3Utils';
@@ -48,10 +47,6 @@ export const useBarcodeFoodScan = () => {
   const [isLodgedFood, setLoggedFood] = useState<boolean>(false);
   const [passioQuickResults, setPassioQuickResults] =
     useState<QuickResult | null>(null);
-
-  const [alternatives, setPassioAlternatives] = useState<QuickResult[] | null>(
-    []
-  );
 
   const [foodDetectEvents, setFoodDetectionEvent] =
     useState<FoodDetectionEvent | null>(null);
@@ -224,11 +219,9 @@ export const useBarcodeFoodScan = () => {
         const { candidates } = detection;
 
         if (candidates) {
-          const detectedCandidate = candidates.detectedCandidates?.[0];
           let attribute: QuickResult | null = await getQuickResults(
             candidates.barcodeCandidates?.[0]
           );
-
           /** Now Check attribute and alternative */
 
           if (
@@ -237,20 +230,6 @@ export const useBarcodeFoodScan = () => {
           ) {
             setPassioQuickResults(attribute);
             passioQuickResultRef.current = attribute;
-
-            /** Alternative */
-            const alternative =
-              detectedCandidate?.alternatives &&
-              detectedCandidate.alternatives.length > 0
-                ? detectedCandidate.alternatives
-                : candidates.detectedCandidates;
-
-            const candidateAlternatives = alternative
-              .map(getDetectionCandidate)
-              .filter(
-                (item) => item?.passioID !== attribute?.passioID
-              ) as QuickResult[];
-            setPassioAlternatives(candidateAlternatives);
           }
         }
       }
@@ -290,7 +269,6 @@ export const useBarcodeFoodScan = () => {
   };
 
   return {
-    alternatives,
     isLodgedFood,
     isStopScan,
     itemAddedToDairyViewModalRef,

@@ -23,6 +23,8 @@ export const NutritionFactScanScreen = () => {
     onUpdateFoodItem,
     editNutritionFactRef,
     itemAddedToDairyViewModalRef,
+    introductionNutritionModalRef,
+    onOkayPress,
     onEnterManually,
     onTryAgain,
     nutritionNotFoundModalRef,
@@ -119,6 +121,13 @@ export const NutritionFactScanScreen = () => {
         ref={nutritionNotFoundModalRef}
         onTryAgain={onTryAgain}
         onEnterManually={onEnterManually}
+      />
+      <NutritionNotFoundModal
+        ref={introductionNutritionModalRef}
+        title="Capture Nutrition Facts Label"
+        note="Capture a photo of the entire Nutrition Facts Label"
+        onEnterManually={onOkayPress}
+        action="Ok"
       />
     </View>
   );

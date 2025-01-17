@@ -1,20 +1,10 @@
-import React, { useMemo } from 'react';
-import {
-  Dimensions,
-  FlatList,
-  Platform,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import React from 'react';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import { QuickScanningLoadingView, QuickScanningResultView } from '../../views';
 
-import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
-import { scaleHeight, screenHeight } from '../../../../utils';
+import { scaleWidth, screenHeight } from '../../../../utils';
 import { ItemAddedToDairyViewModal, Text } from '../../../../components';
-import { useBranding } from '../../../../contexts';
-import AlternateFoodLogView from '../../../../components/alternatives/alternativesItem';
 import { QuickScanLogButtonView } from '../../views/QuickScanLogButtonView';
 import { useBarcodeFoodScan } from './useBarcodeFoodScan';
 import { BarcodeNotDetect } from './BarcodeNotDetect';
@@ -22,9 +12,7 @@ import { BarcodeNotDetect } from './BarcodeNotDetect';
 interface Props {}
 export const BarcodeFoodScan = ({}: Props) => {
   const {
-    alternatives,
     isLodgedFood,
-    isStopScan,
     itemAddedToDairyViewModalRef,
     passioQuickResults,
     onContinueScanningPress,
@@ -33,18 +21,10 @@ export const BarcodeFoodScan = ({}: Props) => {
     onOpenFoodLogEditor,
     onViewDiaryPress,
     resetScanning,
-    setStopScan,
     onTakePhoto,
   } = useBarcodeFoodScan();
 
   const info = false;
-
-  const branding = useBranding();
-
-  const snapPoints = useMemo(
-    () => [scaleHeight(Platform.OS === 'android' ? 260 : 260)],
-    []
-  );
 
   if (passioQuickResults && passioQuickResults.passioIDAttributes == null) {
     return (
@@ -68,24 +48,9 @@ export const BarcodeFoodScan = ({}: Props) => {
   return (
     <>
       {!isLodgedFood && !info && (
-        <BottomSheet
-          enablePanDownToClose={false}
-          onClose={() => {}}
-          index={isLodgedFood ? -1 : 0}
-          enableDynamicSizing
-          onChange={(index) => {
-            if (alternatives && alternatives?.length > 0) {
-              setStopScan(index === 1);
-            }
-          }}
-          snapPoints={snapPoints}
-          handleIndicatorStyle={{
-            backgroundColor: branding.border,
-          }}
-          backgroundStyle={styles.bottomSheetChildrenContainer}
-        >
+        <View style={styles.bottomSheetChildrenContainer}>
           {passioQuickResults === null ? (
-            <BottomSheetView>
+            <>
               <QuickScanningLoadingView text="Place your barcode within the frame." />
               <TouchableOpacity
                 onPress={onTakePhoto}
@@ -98,68 +63,32 @@ export const BarcodeFoodScan = ({}: Props) => {
                   </Text>
                 </Text>
               </TouchableOpacity>
-              <View style={{ height: 120, width: 100 }} />
-            </BottomSheetView>
+              <View style={{ height: 39, width: 100 }} />
+            </>
           ) : null}
 
-          <>
-            {passioQuickResults !== undefined && passioQuickResults !== null ? (
-              <BottomSheetView>
-                <Text weight="400" size="_14px" style={styles.pullTray}>
-                  {!isStopScan && alternatives && alternatives?.length > 0
-                    ? ' Pull tray up to see more options. '
-                    : ''}
-                </Text>
-                <QuickScanningResultView
-                  result={passioQuickResults}
-                  onOpenFoodLogEditor={onOpenFoodLogEditor}
-                  onFoodLog={onLogFoodPress}
-                  onClear={resetScanning}
+          {passioQuickResults !== undefined && passioQuickResults !== null ? (
+            <>
+              <QuickScanningResultView
+                result={passioQuickResults}
+                onOpenFoodLogEditor={onOpenFoodLogEditor}
+                onFoodLog={onLogFoodPress}
+                onClear={resetScanning}
+              />
+              {isLodgedFood === false && !info && passioQuickResults ? (
+                <QuickScanLogButtonView
+                  onOpenFoodLogEditor={() =>
+                    onOpenFoodLogEditor(passioQuickResults)
+                  }
+                  onSaveFoodLog={() => onLogFoodPress(passioQuickResults)}
+                  onFoodSearchManuallyPress={onFoodSearchManuallyPress}
+                  hideSearch
                 />
-                {alternatives && alternatives?.length > 0 && (
-                  <Text
-                    style={{
-                      marginTop: 16,
-                      marginBottom: 8,
-                      marginHorizontal: 16,
-                    }}
-                    size="_14px"
-                    weight="600"
-                  >
-                    Alternatives
-                  </Text>
-                )}
-                <FlatList
-                  data={alternatives ?? []}
-                  style={{ maxHeight: Dimensions.get('window').height - 100 }}
-                  bounces={false}
-                  renderItem={({ item }) => (
-                    <TouchableOpacity
-                      testID="testAlternateFoodLogItem"
-                      onPress={() => onOpenFoodLogEditor(item)}
-                    >
-                      <AlternateFoodLogView
-                        alternate={item}
-                        onLogPress={onLogFoodPress}
-                      />
-                    </TouchableOpacity>
-                  )}
-                />
-                <View style={{ height: 140, width: 100 }} />
-              </BottomSheetView>
-            ) : null}
-          </>
-        </BottomSheet>
+              ) : null}
+            </>
+          ) : null}
+        </View>
       )}
-
-      {isLodgedFood === false && !info && passioQuickResults ? (
-        <QuickScanLogButtonView
-          onOpenFoodLogEditor={() => onOpenFoodLogEditor(passioQuickResults)}
-          onSaveFoodLog={() => onLogFoodPress(passioQuickResults)}
-          onFoodSearchManuallyPress={onFoodSearchManuallyPress}
-          hideSearch
-        />
-      ) : null}
 
       <ItemAddedToDairyViewModal
         onContinuePress={onContinueScanningPress}
@@ -174,9 +103,12 @@ export const BarcodeFoodScan = ({}: Props) => {
 
 const styles = StyleSheet.create({
   bottomSheetChildrenContainer: {
-    flex: 1,
-  },
-  pullTray: {
-    alignSelf: 'center',
+    backgroundColor: 'white',
+    borderTopEndRadius: scaleWidth(16),
+    borderTopLeftRadius: scaleWidth(16),
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
   },
 });
