@@ -50,7 +50,18 @@ export const useNutritionFactsScanner = () => {
           nutritionNotFoundModalRef?.current?.open();
         } else {
           editNutritionFactRef?.current?.openNutritionFact({
-            passioFoodItem: item,
+            passioFoodItem: {
+              ...item,
+              ingredients: item.ingredients?.map((i) => {
+                return {
+                  ...i,
+                  metadata: {
+                    ...i.metadata,
+                    barcode: i.metadata?.barcode ?? params.barcode,
+                  },
+                };
+              }),
+            },
             uuID: '',
             portionSize: '',
             weightGrams: item.amount.weight.value,
@@ -91,7 +102,7 @@ export const useNutritionFactsScanner = () => {
   };
   const onEnterManually = () => {
     nutritionNotFoundModalRef?.current?.close();
-    const passioFoodItem = createBlankPassioFoodITem();
+    const passioFoodItem = createBlankPassioFoodITem(params.barcode);
     editNutritionFactRef?.current?.open({
       uuID: '',
       portionSize: '',

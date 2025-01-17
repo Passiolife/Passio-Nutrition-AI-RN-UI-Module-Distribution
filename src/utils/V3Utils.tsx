@@ -462,7 +462,7 @@ export const isMissingNutrition = (item?: PassioFoodItem | null) => {
   );
 };
 
-export const createBlankPassioFoodITem = () => {
+export const createBlankPassioFoodITem = (barcode?: string) => {
   const passioAmount: PassioFoodAmount = {
     weight: {
       unit: 'g',
@@ -503,6 +503,9 @@ export const createBlankPassioFoodITem = () => {
         name: '',
         id: '',
         iconId: '',
+        metadata: {
+          barcode: barcode,
+        },
         weight: passioAmount.weight,
         referenceNutrients: {
           weight: passioAmount.weight,

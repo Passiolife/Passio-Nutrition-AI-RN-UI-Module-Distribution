@@ -35,6 +35,7 @@ export const useBarcodeFoodScan = () => {
   const services = useServices();
   const navigation = useNavigation<ScanningScreenNavigationProps>();
   const passioQuickResultRef = useRef<QuickResult | null>(null);
+  const barcodeRef = useRef<string | undefined>(undefined);
   const isSubmitting = useRef<boolean>(false);
 
   const { params } = useRoute<RouteProp<ParamList, 'ScanningScreen'>>();
@@ -169,6 +170,7 @@ export const useBarcodeFoodScan = () => {
     setFoodDetectionEvent(null);
     setPassioQuickResults(null);
     passioQuickResultRef.current = null;
+    barcodeRef.current = undefined;
     itemAddedToDairyViewModalRef?.current?.close();
   };
   const onViewDiaryPress = () => {
@@ -201,6 +203,7 @@ export const useBarcodeFoodScan = () => {
           ) {
             return;
           }
+          barcodeRef.current = barcode;
 
           setFoodDetectionEvent(detection);
         }
@@ -245,8 +248,11 @@ export const useBarcodeFoodScan = () => {
   }, [foodDetectEvents, getQuickResults, isStopScan]);
 
   const onTakePhoto = () => {
+    const barcode = barcodeRef?.current;
     onContinueScanningPress();
+
     navigation.navigate('NutritionFactScanScreen', {
+      barcode: barcode,
       onSaveLog: async (item) => {
         const foodRecords = await createFoodLogUsingFoodDataInfo(
           [item],
