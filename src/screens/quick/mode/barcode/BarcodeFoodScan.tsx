@@ -12,10 +12,9 @@ import { QuickScanningLoadingView, QuickScanningResultView } from '../../views';
 
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 import { scaleHeight, screenHeight } from '../../../../utils';
-import { Text } from '../../../../components';
+import { ItemAddedToDairyViewModal, Text } from '../../../../components';
 import { useBranding } from '../../../../contexts';
 import AlternateFoodLogView from '../../../../components/alternatives/alternativesItem';
-import { ItemAddedToDairyView } from '../../views/ItemAddedToDairyView';
 import { QuickScanLogButtonView } from '../../views/QuickScanLogButtonView';
 import { useBarcodeFoodScan } from './useBarcodeFoodScan';
 import { BarcodeNotDetect } from './BarcodeNotDetect';
@@ -26,6 +25,7 @@ export const BarcodeFoodScan = ({}: Props) => {
     alternatives,
     isLodgedFood,
     isStopScan,
+    itemAddedToDairyViewModalRef,
     passioQuickResults,
     onContinueScanningPress,
     onFoodSearchManuallyPress,
@@ -150,12 +150,13 @@ export const BarcodeFoodScan = ({}: Props) => {
         />
       ) : null}
 
-      {isLodgedFood && (
-        <ItemAddedToDairyView
-          onContinueScanningPress={onContinueScanningPress}
-          onViewDiaryPress={onViewDiaryPress}
-        />
-      )}
+      <ItemAddedToDairyViewModal
+        onContinuePress={onContinueScanningPress}
+        ref={itemAddedToDairyViewModalRef}
+        onViewDiaryPress={onViewDiaryPress}
+        action="Add More"
+        note="View your diary or add more"
+      />
     </>
   );
 };

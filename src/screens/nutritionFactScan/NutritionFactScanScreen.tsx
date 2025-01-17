@@ -89,7 +89,7 @@ export const NutritionFactScanScreen = () => {
   );
 };
 
-const customStyle = ({ white, indigo50 }: Branding) => {
+const customStyle = ({}: Branding) => {
   return StyleSheet.create({
     image: {
       backgroundColor: 'black',

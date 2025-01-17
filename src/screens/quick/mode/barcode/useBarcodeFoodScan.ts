@@ -28,6 +28,7 @@ import {
 import { convertPassioFoodItemToFoodLog } from '../../../../utils/V3Utils';
 import type { ScanningScreenNavigationProps } from '../../QuickScanningScreen';
 import { convertDateToDBFormat } from '../../../../utils/DateFormatter';
+import { ItemAddedToDairyViewModalRef } from '../../../../components';
 
 export const useBarcodeFoodScan = () => {
   const services = useServices();
@@ -40,6 +41,8 @@ export const useBarcodeFoodScan = () => {
   const meal = getMealLog(date, params.logToMeal);
 
   const [isStopScan, setStopScan] = useState<boolean>(false);
+  const itemAddedToDairyViewModalRef =
+    useRef<ItemAddedToDairyViewModalRef>(null);
   const [isLodgedFood, setLoggedFood] = useState<boolean>(false);
   const [passioQuickResults, setPassioQuickResults] =
     useState<QuickResult | null>(null);
@@ -92,6 +95,7 @@ export const useBarcodeFoodScan = () => {
       setStopScan(true);
       setLoggedFood(true);
       isSubmitting.current = false;
+      itemAddedToDairyViewModalRef?.current?.open();
     },
     [services.dataService]
   );
@@ -168,6 +172,7 @@ export const useBarcodeFoodScan = () => {
     setFoodDetectionEvent(null);
     setPassioQuickResults(null);
     passioQuickResultRef.current = null;
+    itemAddedToDairyViewModalRef?.current?.close();
   };
   const onViewDiaryPress = () => {
     navigation.pop(1);
@@ -271,6 +276,7 @@ export const useBarcodeFoodScan = () => {
     alternatives,
     isLodgedFood,
     isStopScan,
+    itemAddedToDairyViewModalRef,
     passioQuickResults,
     onContinueScanningPress,
     onFoodSearchManuallyPress,

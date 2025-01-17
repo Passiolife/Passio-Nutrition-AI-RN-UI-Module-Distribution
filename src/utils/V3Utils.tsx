@@ -461,3 +461,49 @@ export const isMissingNutrition = (item?: PassioFoodItem | null) => {
     !fat
   );
 };
+
+export const createBlankPassioFoodITem = () => {
+  const passioAmount: PassioFoodAmount = {
+    weight: {
+      unit: 'g',
+      value: 100,
+    },
+    selectedUnit: 'gram',
+    servingSizes: [
+      {
+        quantity: 100,
+        unitName: 'gram',
+      },
+    ],
+    servingUnits: [
+      {
+        unit: 'gram',
+        value: 100,
+        unitName: 'gram',
+      },
+    ],
+    selectedQuantity: 100,
+  };
+  const item: PassioFoodItem = {
+    amount: passioAmount,
+    name: '',
+    iconId: '',
+    refCode: '',
+    ingredientWeight: passioAmount.weight,
+    id: '',
+    ingredients: [
+      {
+        amount: passioAmount,
+        refCode: '',
+        name: '',
+        id: '',
+        iconId: '',
+        weight: passioAmount.weight,
+        referenceNutrients: {
+          weight: passioAmount.weight,
+        },
+      },
+    ],
+  };
+  return item;
+};

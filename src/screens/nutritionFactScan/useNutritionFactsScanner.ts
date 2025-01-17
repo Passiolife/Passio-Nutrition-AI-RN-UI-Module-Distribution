@@ -1,16 +1,19 @@
 import { PassioSDK } from '@passiolife/nutritionai-react-native-sdk-v3';
 import { useRef, useState } from 'react';
 import { Alert } from 'react-native';
-import { PhotoLoggingBarcodeRef } from '../photoLoggingResult/modal/PhotoLoggingEditorModal';
-import { PhotoLoggingResults } from '../photoLoggingResult/usePhotoLogging';
-import {
+import type { PhotoLoggingBarcodeRef } from '../photoLoggingResult/modal/PhotoLoggingEditorModal';
+import type { PhotoLoggingResults } from '../photoLoggingResult/usePhotoLogging';
+import type {
   ItemAddedToDairyViewModalRef,
   NutritionNotFoundModalRef,
 } from '../../components';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { ParamList } from '../../navigaitons';
-import { isMissingNutrition } from '../../utils/V3Utils';
+import type { StackNavigationProp } from '@react-navigation/stack';
+import type { ParamList } from '../../navigaitons';
+import {
+  createBlankPassioFoodITem,
+  isMissingNutrition,
+} from '../../utils/V3Utils';
 
 export type NutritionFactScreenType = 'camera' | 'scanning' | 'scanned';
 
@@ -65,6 +68,10 @@ export const useNutritionFactsScanner = () => {
 
   const onUpdateFoodItem = (result: PhotoLoggingResults) => {
     if (result.passioFoodItem) {
+      console.log(
+        'result.passioFoodItem',
+        JSON.stringify(result.passioFoodItem)
+      );
       params.onSaveLog?.(result.passioFoodItem);
       navigation.goBack();
     }
@@ -85,41 +92,16 @@ export const useNutritionFactsScanner = () => {
   };
   const onEnterManually = () => {
     nutritionNotFoundModalRef?.current?.close();
+    const passioFoodItem = createBlankPassioFoodITem();
     editNutritionFactRef?.current?.open({
       uuID: '',
       portionSize: '',
       weightGrams: 0,
-      passioFoodItem: {
-        amount: {
-          weight: {
-            unit: 'g',
-            value: 100,
-          },
-          selectedUnit: 'gram',
-          servingSizes: [
-            {
-              quantity: 100,
-              unitName: 'gram',
-            },
-          ],
-          servingUnits: [
-            {
-              unit: 'gram',
-              value: 100,
-              unitName: 'gram',
-            },
-          ],
-          selectedQuantity: 100,
-        },
-        refCode: '',
-        name: '',
-        iconId: '',
-        ingredientWeight: {
-          unit: 'gram',
-          value: 100,
-        },
-        id: '',
-      },
+      passioFoodItem: passioFoodItem,
+      nutrients: PassioSDK.getNutrientsOfPassioFoodItem(
+        passioFoodItem,
+        passioFoodItem.amount.weight
+      ),
       recognisedName: '',
       assets: url,
       resultType: 'nutritionFacts',

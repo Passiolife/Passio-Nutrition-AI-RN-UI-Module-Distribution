@@ -22,7 +22,7 @@ import type {
 } from '../../models';
 import type { FavoritesScreenProps } from '../../screens/myFavoritess';
 import type { VoiceLoggingScreenProps } from '../../screens/voiceLogging';
-import { PassioFoodItem } from '@passiolife/nutritionai-react-native-sdk-v3';
+import type { PassioFoodItem } from '@passiolife/nutritionai-react-native-sdk-v3';
 
 export type Module =
   | 'QuickScan'
