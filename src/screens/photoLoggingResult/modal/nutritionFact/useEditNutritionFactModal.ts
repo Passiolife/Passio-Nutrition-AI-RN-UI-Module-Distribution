@@ -48,8 +48,8 @@ export const useEditNutritionFact = (props: EditNutritionFactProps) => {
   const carbsRef = useRef(carbs);
   const proteinRef = useRef(protein);
   const fatRef = useRef(fat);
-  const servingQtyRef = useRef(passioWeight);
-  const weightRef = useRef(passioSelectedQuantity);
+  const servingQtyRef = useRef(passioSelectedQuantity);
+  const weightRef = useRef(passioWeight);
   const servingUnitRef = useRef(passioSelectedUnit);
   const nameRef = useRef(name ?? '');
   const barcodeRef = useRef(barcode ?? '');

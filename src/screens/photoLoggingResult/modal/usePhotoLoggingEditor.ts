@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import type { ParamList } from '../../../navigaitons';
 import type { EditNutritionFactRef } from './nutritionFact/EditNutritionFactModal';
-import { BarcodeCustomResult } from 'src/models';
+import type { BarcodeCustomResult } from '../../../models';
 import { createFoodLogByCustomFood } from '../../../screens/foodCreator/FoodCreator.utils';
 import { convertPassioFoodItemToFoodLog } from '../../../utils/V3Utils';
 

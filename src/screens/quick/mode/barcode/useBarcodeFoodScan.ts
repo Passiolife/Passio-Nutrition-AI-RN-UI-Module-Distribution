@@ -13,6 +13,7 @@ import {
   recordAnalyticsFoodLogs,
   getLogToDate,
   getMealLog,
+  createFoodLogUsingFoodDataInfo,
 } from '../../../../utils';
 import {
   PassioSDK,
@@ -28,7 +29,7 @@ import {
 import { convertPassioFoodItemToFoodLog } from '../../../../utils/V3Utils';
 import type { ScanningScreenNavigationProps } from '../../QuickScanningScreen';
 import { convertDateToDBFormat } from '../../../../utils/DateFormatter';
-import { ItemAddedToDairyViewModalRef } from '../../../../components';
+import type { ItemAddedToDairyViewModalRef } from '../../../../components';
 import { getCustomFoodUUID } from '../../../../screens/foodCreator/FoodCreator.utils';
 
 export const useBarcodeFoodScan = () => {
@@ -267,19 +268,23 @@ export const useBarcodeFoodScan = () => {
   const onTakePhoto = () => {
     onContinueScanningPress();
     navigation.navigate('NutritionFactScanScreen', {
-      onSaveLog: (item) => {
-        const foodRecord = convertPassioFoodItemToFoodLog(
-          item,
+      onSaveLog: async (item) => {
+        const foodRecords = await createFoodLogUsingFoodDataInfo(
+          [item],
+          services,
           undefined,
           undefined
         );
-        const uuid: string = getCustomFoodUUID();
-        services.dataService.saveCustomFood({
-          ...foodRecord,
-          uuid: uuid,
-          barcode: foodRecord?.foodItems?.[0]?.barcode,
-        });
-        onSavedLog(foodRecord);
+        const foodRecord = foodRecords?.[0];
+        if (foodRecord) {
+          const uuid: string = getCustomFoodUUID();
+          services.dataService.saveCustomFood({
+            ...foodRecord,
+            uuid: uuid,
+            barcode: foodRecord?.foodItems?.[0]?.barcode,
+          });
+          onSavedLog(foodRecord);
+        }
       },
     });
   };

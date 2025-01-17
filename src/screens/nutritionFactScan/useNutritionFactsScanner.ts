@@ -40,10 +40,11 @@ export const useNutritionFactsScanner = () => {
       const scannedURL = assets?.[0]?.replace('file://', '');
       setURL(scannedURL ?? undefined);
       const item = await PassioSDK.recognizeNutritionFactsRemote(
-        scannedURL ?? ''
+        scannedURL ?? '',
+        'RES_512'
       );
       if (item) {
-        if (isMissingNutrition()) {
+        if (isMissingNutrition(item)) {
           nutritionNotFoundModalRef?.current?.open();
         } else {
           editNutritionFactRef?.current?.openNutritionFact({
@@ -68,7 +69,7 @@ export const useNutritionFactsScanner = () => {
 
   const onUpdateFoodItem = (result: PhotoLoggingResults) => {
     if (result.passioFoodItem) {
-      params.onSaveLog?.(result.passioFoodItem);
+      params.onSaveLog?.(result);
       navigation.goBack();
     }
   };

@@ -22,7 +22,7 @@ import type {
 } from '../../models';
 import type { FavoritesScreenProps } from '../../screens/myFavoritess';
 import type { VoiceLoggingScreenProps } from '../../screens/voiceLogging';
-import type { PassioFoodItem } from '@passiolife/nutritionai-react-native-sdk-v3';
+import type { PhotoLoggingResults } from '../../screens/photoLoggingResult/usePhotoLogging';
 
 export type Module =
   | 'QuickScan'
@@ -121,7 +121,7 @@ export interface PhotoLoggingScreenProps {
 export interface NutritionFactScanScreenProps {
   logToDate?: Date | undefined;
   logToMeal?: MealLabel | undefined;
-  onSaveLog?: (passioFoodItem: PassioFoodItem) => void;
+  onSaveLog?: (result: PhotoLoggingResults) => void;
 }
 
 export type ParamList = {
