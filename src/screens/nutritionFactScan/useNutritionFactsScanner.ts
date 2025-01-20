@@ -14,6 +14,7 @@ import {
   createBlankPassioFoodITem,
   isMissingNutrition,
 } from '../../utils/V3Utils';
+import { SCANNED_NUTRITION_LABEL } from '../photoLoggingResult/result/PictureLoggingResult';
 
 export type NutritionFactScreenType = 'camera' | 'scanning' | 'scanned';
 
@@ -52,6 +53,7 @@ export const useNutritionFactsScanner = () => {
           editNutritionFactRef?.current?.openNutritionFact({
             passioFoodItem: {
               ...item,
+              name: item.name || SCANNED_NUTRITION_LABEL,
               ingredients: item.ingredients?.map((i) => {
                 return {
                   ...i,
