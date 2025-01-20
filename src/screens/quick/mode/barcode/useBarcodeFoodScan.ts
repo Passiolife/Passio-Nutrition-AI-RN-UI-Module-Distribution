@@ -261,7 +261,7 @@ export const useBarcodeFoodScan = () => {
           undefined
         );
         let foodRecord = foodRecords?.[0];
-        if (foodRecord) {
+        if (foodRecord && !item.customFood) {
           const uuid: string = getCustomFoodUUID();
           foodRecord.refCode = uuid;
           foodRecord.refCustomFoodID = uuid;

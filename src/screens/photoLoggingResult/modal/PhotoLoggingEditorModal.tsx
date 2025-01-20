@@ -10,8 +10,12 @@ import { EditServingSizeModal } from './servingSize/EditServingSizeModal';
 import { PassioSDK } from '@passiolife/nutritionai-react-native-sdk-v3';
 import { isMissingNutrition } from '../../../utils/V3Utils';
 
+export type PhotoLoggingType = 'serving' | 'nutritionFact';
 interface EditServingSizeProps {
-  onUpdateFoodItem?: (photoLoggingResults: PhotoLoggingResults) => void;
+  onUpdateFoodItem?: (
+    photoLoggingResults: PhotoLoggingResults,
+    from: PhotoLoggingType
+  ) => void;
   openNutritionFactFromServing?: (result: PhotoLoggingResults) => void;
   onCancelPress?: () => void;
   nutritionFactButtonName?: string;
@@ -77,7 +81,7 @@ export const PhotoLoggingEditorModal = forwardRef<
       <EditServingSizeModal
         result={result}
         onUpdateFoodItem={(item) => {
-          props.onUpdateFoodItem?.(item);
+          props.onUpdateFoodItem?.(item, 'serving');
           releaseEditor();
         }}
         openNutritionFactModificationPopup={(item) => {
@@ -97,18 +101,23 @@ export const PhotoLoggingEditorModal = forwardRef<
       <EditNutritionFact
         result={result.passioFoodItem}
         ref={editNutritionFactRef}
+        isCustomFoodAlreadyAdded={result.customFood !== undefined}
         assets={result.assets}
         button={props.nutritionFactButtonName}
         note={props.nutritionFactNote}
-        onDone={(updatedResult) => {
-          props?.onUpdateFoodItem?.({
-            ...result,
-            passioFoodItem: updatedResult,
-            nutrients: PassioSDK.getNutrientsOfPassioFoodItem(
-              updatedResult,
-              updatedResult.amount.weight
-            ),
-          });
+        onDone={(updatedResult, customFood) => {
+          props?.onUpdateFoodItem?.(
+            {
+              ...result,
+              passioFoodItem: updatedResult,
+              nutrients: PassioSDK.getNutrientsOfPassioFoodItem(
+                updatedResult,
+                updatedResult.amount.weight
+              ),
+              customFood: customFood,
+            },
+            'nutritionFact'
+          );
           releaseEditor();
         }}
         openBarcodeScanner={(updatedResult) => {

@@ -218,10 +218,6 @@ export const useEditNutritionFact = (props: EditNutritionFactProps) => {
       return;
     }
 
-    if (barcodeRef.current.length >= 0) {
-      // check custom food already exist for this barcode.
-    }
-
     const updatedResult = onUpdatePassioFoodItem();
 
     if (isMissingNutrition(updatedResult)) {
@@ -232,10 +228,6 @@ export const useEditNutritionFact = (props: EditNutritionFactProps) => {
     const existedCustomFood = customFoods?.find(
       (i) => i.barcode === barcodeRef.current
     );
-
-    if (existedCustomFood) {
-      Alert.alert('This barcode already exist in custom food');
-    }
 
     if (updatedResult) {
       onDone?.(updatedResult, existedCustomFood);
@@ -384,6 +376,7 @@ export const useEditNutritionFact = (props: EditNutritionFactProps) => {
     isErrorName,
     setErrorName,
     handleBarcodeScanResult,
+    isCustomFoodAlreadyAdded: props.isCustomFoodAlreadyAdded,
     isInvalid:
       isErrorCalories ||
       isErrorCarbs ||

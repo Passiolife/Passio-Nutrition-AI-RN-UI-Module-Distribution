@@ -9,10 +9,7 @@ import {
   Platform,
 } from 'react-native';
 import { BasicButton, Text } from '../../../../components';
-import {
-  PassioFoodItem,
-  PassioSDK,
-} from '@passiolife/nutritionai-react-native-sdk-v3';
+import { PassioFoodItem } from '@passiolife/nutritionai-react-native-sdk-v3';
 import { scaleHeight, scaleWidth } from '../../../../utils';
 import type { Branding } from '../../../../contexts';
 import { formatNumber } from '../../../../utils/NumberUtils';
@@ -29,6 +26,7 @@ export interface EditNutritionFactProps {
   assets?: string;
   button?: string;
   note?: string | React.ReactElement;
+  isCustomFoodAlreadyAdded?: boolean;
 }
 
 export interface EditNutritionFactRef {
@@ -82,6 +80,7 @@ export const EditNutritionFact = forwardRef<
     isErrorName,
     isInvalid,
     handleBarcodeScanResult,
+    isCustomFoodAlreadyAdded,
   } = useEditNutritionFact(props);
   const styles = customStyles(branding);
 
@@ -397,7 +396,7 @@ export const EditNutritionFact = forwardRef<
           style={{ flex: 1, marginEnd: 8 }}
         />
         <BasicButton
-          text={button}
+          text={isCustomFoodAlreadyAdded ? 'Update' : button}
           disabled={isInvalid}
           style={[
             { flex: 1, marginStart: 8 },

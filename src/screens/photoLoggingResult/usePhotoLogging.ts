@@ -9,10 +9,13 @@ import {
 } from '@passiolife/nutritionai-react-native-sdk-v3';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { useServices } from '../../contexts';
-import type { MealLabel } from '../../models';
+import type { CustomFood, MealLabel } from '../../models';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import uuid4 from 'react-native-uuid';
-import type { PhotoLoggingBarcodeRef } from './modal/PhotoLoggingEditorModal';
+import type {
+  PhotoLoggingBarcodeRef,
+  PhotoLoggingType,
+} from './modal/PhotoLoggingEditorModal';
 import { getMealLogsForDate } from '../../utils/DataServiceHelper';
 import { calculateDailyMacroNutrition } from '../dashbaord';
 import {
@@ -23,6 +26,7 @@ import {
 } from '../../utils/V3Utils';
 import type { ItemAddedToDairyViewModalRef } from '../../components';
 import type { EditServingSizeRef } from './modal/servingSize/EditServingSizeModal';
+import { getCustomFoodUUID } from '../foodCreator/FoodCreator.utils';
 
 export const PHOTO_LIMIT = 7;
 
@@ -32,6 +36,7 @@ export interface PhotoLoggingResults extends PassioAdvisorFoodInfo {
   uuID: string;
   nutrients?: PassioNutrients;
   assets?: string;
+  customFood?: CustomFood;
 }
 export interface MacroInfo {
   targetCalories?: number;
@@ -273,13 +278,34 @@ export function usePhotoLogging() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [routes.params.images]);
 
-  const onUpdateFoodItem = (result: PhotoLoggingResults) => {
+  const onUpdateFoodItem = async (
+    result: PhotoLoggingResults,
+    type: PhotoLoggingType
+  ) => {
+    let customFood = result.customFood;
+    if (type === 'nutritionFact' && !result.customFood) {
+      const uuid: string = getCustomFoodUUID();
+      const foodRecords = await createFoodLogUsingFoodDataInfo(
+        [result],
+        services,
+        undefined,
+        undefined
+      );
+      let foodRecord = foodRecords?.[0];
+      customFood = {
+        ...foodRecord,
+        uuid: uuid,
+        barcode: result.passioFoodItem?.ingredients?.[0]?.metadata?.barcode,
+      };
+      await services.dataService.saveCustomFood(customFood);
+    }
     setPassioAdvisorFoodInfo((prev) => {
       if (prev === null) return null;
       return prev?.map((i) => {
         if (i.uuID === result.uuID) {
           return {
             ...result,
+            customFood: customFood,
             isSelected: true, // obv user intend to update means they want to add in meal.
           };
         } else {
