@@ -18,7 +18,7 @@ import type { Branding } from '../../../../contexts';
 import { formatNumber } from '../../../../utils/NumberUtils';
 import { useEditNutritionFact } from './useEditNutritionFactModal';
 import { ICONS } from '../../../../assets';
-import { inValidInput } from '../../../../utils/V3Utils';
+import { inValidNumberInput } from '../../../../utils/V3Utils';
 import { CustomFood } from '../../../../models';
 
 export interface EditNutritionFactProps {
@@ -81,89 +81,16 @@ export const EditNutritionFact = forwardRef<
     setErrorName,
     isErrorName,
     isInvalid,
+    handleBarcodeScanResult,
   } = useEditNutritionFact(props);
   const styles = customStyles(branding);
 
   const { button = 'Save', note } = props;
 
-  const addMissingDataFromBarcode = async (barcode: string) => {
-    const foodItem = await PassioSDK.fetchFoodItemForProductCode(barcode);
-    if (foodItem) {
-      const nutrients = PassioSDK.getNutrientsOfPassioFoodItem(
-        foodItem,
-        foodItem?.amount.weight
-      );
-
-      if (
-        nutrients.calories &&
-        caloriesRef.current &&
-        caloriesRef.current.trim().length === 0
-      ) {
-        caloriesTextInputRef?.current?.setNativeProps?.({
-          text: nutrients?.calories
-            ? formatNumber(nutrients?.calories?.value)?.toString()
-            : '',
-        });
-      }
-
-      if (nutrients.carbs && carbsRef.current.trim().length === 0) {
-        carbsTextInputRef?.current?.setNativeProps?.({
-          text: formatNumber(nutrients?.carbs?.value)?.toString(),
-        });
-      }
-
-      if (nutrients.protein && proteinRef.current.trim().length === 0) {
-        proteinTextInputRef?.current?.setNativeProps?.({
-          text: formatNumber(nutrients?.protein?.value)?.toString(),
-        });
-      }
-
-      if (nutrients.fat && fatRef.current.trim().length === 0) {
-        fatTextInputRef?.current?.setNativeProps?.({
-          text: formatNumber(nutrients?.fat?.value)?.toString(),
-        });
-      }
-
-      if (
-        foodItem.amount.selectedUnit &&
-        servingUnitRef.current.trim().length === 0
-      ) {
-        selectedUnitTextInputRef?.current?.setNativeProps?.({
-          text: foodItem?.amount?.selectedUnit,
-        });
-      }
-
-      if (
-        foodItem?.amount.weight?.value &&
-        (weightRef.current.trim().length === 0 || weightRef?.current === '0')
-      ) {
-        weightTextInputRef?.current?.setNativeProps?.({
-          text: formatNumber(foodItem?.amount?.weight?.value)?.toString(),
-        });
-      }
-
-      if (
-        foodItem?.amount?.selectedQuantity &&
-        (servingQtyRef.current.trim().length === 0 ||
-          servingQtyRef?.current === '0')
-      ) {
-        servingQtyTextInputRef?.current?.setNativeProps?.({
-          text: formatNumber(foodItem?.amount?.selectedQuantity)?.toString(),
-        });
-      }
-
-      if (foodItem?.name && nameRef.current.trim().length === 0) {
-        nameTextInputRef?.current?.setNativeProps?.({
-          text: foodItem.name ?? '',
-        });
-      }
-    }
-  };
-
   useImperativeHandle(ref, () => ({
     barcode: async (item) => {
       barcodeRef.current = item;
-      addMissingDataFromBarcode(item);
+      handleBarcodeScanResult(item);
       barcodeTextInputRef?.current?.setNativeProps?.({ text: item });
     },
   }));
@@ -229,7 +156,7 @@ export const EditNutritionFact = forwardRef<
                 if (Platform.OS === 'ios') {
                   storeRef.current = e.nativeEvent.text;
                   if (setErrorState) {
-                    setErrorState(inValidInput(e.nativeEvent.text));
+                    setErrorState(inValidNumberInput(e.nativeEvent.text));
                   }
                 }
               }}
@@ -237,7 +164,7 @@ export const EditNutritionFact = forwardRef<
                 if (Platform.OS === 'ios') {
                   storeRef.current = e.nativeEvent.text;
                   if (setErrorState) {
-                    setErrorState(inValidInput(e.nativeEvent.text));
+                    setErrorState(inValidNumberInput(e.nativeEvent.text));
                   }
                 }
               }}
@@ -245,7 +172,7 @@ export const EditNutritionFact = forwardRef<
                 if (Platform.OS === 'android') {
                   storeRef.current = e;
                   if (setErrorState) {
-                    setErrorState(inValidInput(e));
+                    setErrorState(inValidNumberInput(e));
                   }
                 }
               }}

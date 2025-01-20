@@ -12,7 +12,12 @@ import {
 import { Alert, TextInput } from 'react-native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import type { ParamList } from '../../../../navigaitons';
-import { isMissingNutrition } from '../../../../utils/V3Utils';
+import {
+  convertNumberInput,
+  inValidNumberInput,
+  isMissingNutrition,
+} from '../../../../utils/V3Utils';
+import { formatNumber } from '../../../../utils/NumberUtils';
 
 export type NavigationProps = StackNavigationProp<
   ParamList,
@@ -77,13 +82,15 @@ export const useEditNutritionFact = (props: EditNutritionFactProps) => {
   const weightTextInputRef = useRef<TextInput>(null);
 
   const onUpdatePassioFoodItem = useCallback(() => {
-    const updatedQty = Number(servingQtyRef.current || 0);
-    const updatedWeight = Number(weightRef.current || 0);
-    const updatedCalories = Number(caloriesRef.current || 0);
-    const updatedCarbs = Number(carbsRef.current || 0);
-    const updatedProtein = Number(proteinRef.current || 0);
-    const updatedFat = Number(fatRef.current || 0);
+    const updatedQty = convertNumberInput(servingQtyRef.current);
+    const updatedWeight = convertNumberInput(weightRef.current);
     const updatedUnit = servingUnitRef.current.trim().toLowerCase();
+
+    const updatedCalories = convertNumberInput(caloriesRef.current);
+    const updatedCarbs = convertNumberInput(carbsRef.current);
+    const updatedProtein = convertNumberInput(proteinRef.current);
+    const updatedFat = convertNumberInput(fatRef.current);
+
     const updatedName = nameRef.current;
     const updatedBarcode = barcodeRef.current;
 
@@ -237,9 +244,87 @@ export const useEditNutritionFact = (props: EditNutritionFactProps) => {
 
   const onBarcodePress = () => {
     const updatedResult = onUpdatePassioFoodItem();
-
     if (updatedResult) {
       props.openBarcodeScanner?.(updatedResult);
+    }
+  };
+
+  const handleBarcodeScanResult = async (scannedBarcode: string) => {
+    const foodItem =
+      await PassioSDK.fetchFoodItemForProductCode(scannedBarcode);
+    if (foodItem) {
+      const newNutrients = PassioSDK.getNutrientsOfPassioFoodItem(
+        foodItem,
+        foodItem?.amount.weight
+      );
+
+      if (caloriesRef.current && caloriesRef.current.trim().length === 0) {
+        const cal = (newNutrients?.calories?.value ?? '').toString();
+        setErrorCalories(inValidNumberInput(cal));
+        caloriesTextInputRef?.current?.setNativeProps?.({
+          text: formatNumber(cal)?.toString(),
+        });
+      }
+
+      if (carbsRef.current.trim().length === 0) {
+        const newCarbs = (newNutrients?.carbs?.value ?? '').toString();
+        setErrorCarbs(inValidNumberInput(newCarbs));
+        carbsTextInputRef?.current?.setNativeProps?.({
+          text: formatNumber(newCarbs)?.toString(),
+        });
+      }
+
+      if (proteinRef.current.trim().length === 0) {
+        const newProtein = (newNutrients?.protein?.value ?? '').toString();
+        setErrorProtein(inValidNumberInput(newProtein));
+        proteinTextInputRef?.current?.setNativeProps?.({
+          text: formatNumber(newProtein)?.toString(),
+        });
+      }
+
+      if (fatRef.current.trim().length === 0) {
+        const newFat = (newNutrients?.fat?.value ?? '').toString();
+        setErrorFat(inValidNumberInput(newFat));
+        fatTextInputRef?.current?.setNativeProps?.({
+          text: formatNumber(newFat)?.toString(),
+        });
+      }
+
+      if (servingUnitRef.current.trim().length === 0) {
+        const newUnit = foodItem?.amount?.selectedUnit;
+        seErrorServingUnit(newUnit.length === 0);
+        selectedUnitTextInputRef?.current?.setNativeProps?.({
+          text: newUnit,
+        });
+      }
+
+      if (weightRef.current.trim().length === 0 || weightRef?.current === '0') {
+        const newWeight = foodItem?.amount?.weight?.value;
+        setErrorWeight(inValidNumberInput(newWeight.toString()));
+        weightTextInputRef?.current?.setNativeProps?.({
+          text: formatNumber(newWeight)?.toString(),
+        });
+      }
+
+      if (
+        servingQtyRef.current.trim().length === 0 ||
+        servingQtyRef?.current === '0'
+      ) {
+        const newQty = foodItem?.amount?.selectedQuantity;
+        setErrorQuantity(inValidNumberInput(newQty.toString()));
+        servingQtyTextInputRef?.current?.setNativeProps?.({
+          text: formatNumber(newQty)?.toString(),
+        });
+      }
+
+      if (nameRef.current.trim().length === 0) {
+        const newName = foodItem?.name;
+        setErrorName(newName.length === 0);
+
+        nameTextInputRef?.current?.setNativeProps?.({
+          text: newName ?? '',
+        });
+      }
     }
   };
 
@@ -298,6 +383,7 @@ export const useEditNutritionFact = (props: EditNutritionFactProps) => {
     seErrorServingUnit,
     isErrorName,
     setErrorName,
+    handleBarcodeScanResult,
     isInvalid:
       isErrorCalories ||
       isErrorCarbs ||

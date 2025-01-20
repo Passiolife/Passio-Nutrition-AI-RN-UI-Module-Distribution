@@ -7,7 +7,7 @@ export const NumberRound = (number?: number) => {
 
 export function formatNumber(value: number | undefined | string) {
   if (value === undefined) {
-    return 0;
+    return '';
   }
   if (value === 0) {
     return 0;
