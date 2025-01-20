@@ -1,5 +1,5 @@
-import { useRef, useCallback } from 'react';
-import { useBranding } from '../../../../contexts';
+import { useRef, useCallback, useState } from 'react';
+import { useBranding, useServices } from '../../../../contexts';
 import type { EditNutritionFactProps } from './EditNutritionFactModal';
 import {
   PassioFoodAmount,
@@ -21,14 +21,15 @@ export type NavigationProps = StackNavigationProp<
 
 export const useEditNutritionFact = (props: EditNutritionFactProps) => {
   const branding = useBranding();
+  const services = useServices();
 
   const result = props.result;
   const nutrients = PassioSDK.getNutrientsOfPassioFoodItem(
     result,
     result?.amount?.weight ?? 100
   );
-  const passioAmount = props.result?.amount;
 
+  const passioAmount = props.result?.amount;
   const calories = (nutrients?.calories?.value || '').toString();
   const carbs = (nutrients?.carbs?.value || '').toString();
   const protein = (nutrients?.protein?.value || '').toString();
@@ -36,12 +37,23 @@ export const useEditNutritionFact = (props: EditNutritionFactProps) => {
   const barcode = result?.ingredients?.[0]?.metadata?.barcode;
   const iconID = result?.iconId;
   const name = result?.name || result?.ingredients?.[0].name || '';
-
   const passioWeight = (passioAmount?.weight.value ?? '').toString();
   const passioSelectedQuantity = (
     passioAmount?.selectedQuantity ?? ''
   ).toString();
   const passioSelectedUnit = (passioAmount?.selectedUnit ?? '').toString();
+
+  const [isErrorName, setErrorName] = useState<boolean>(!name);
+  const [isErrorCalories, setErrorCalories] = useState<boolean>(!calories);
+  const [isErrorCarbs, setErrorCarbs] = useState<boolean>(!carbs);
+  const [isErrorProtein, setErrorProtein] = useState<boolean>(!protein);
+  const [isErrorFat, setErrorFat] = useState<boolean>(!fat);
+  const [isErrorWeight, setErrorWeight] = useState<boolean>(!passioWeight);
+  const [isErrorQuantity, setErrorQuantity] = useState<boolean>(
+    !passioSelectedQuantity
+  );
+  const [isErrorServingUnit, seErrorServingUnit] =
+    useState<boolean>(!passioSelectedUnit);
 
   const { onClose, onDone } = props;
 
@@ -174,7 +186,7 @@ export const useEditNutritionFact = (props: EditNutritionFactProps) => {
     }
   }, [result]);
 
-  const onUpdateNutritionUpdate = useCallback(() => {
+  const onUpdateNutritionUpdate = useCallback(async () => {
     const updatedQty = Number(servingQtyRef.current || 0);
     const updatedWeight = Number(weightRef.current || 0);
     const updatedUnit = servingUnitRef.current.trim().toLowerCase();
@@ -209,11 +221,19 @@ export const useEditNutritionFact = (props: EditNutritionFactProps) => {
       Alert.alert('Please enter valid macros');
       return;
     }
+    const customFoods = await services.dataService.getCustomFoodLogs();
+    const existedCustomFood = customFoods?.find(
+      (i) => i.barcode === barcodeRef.current
+    );
+
+    if (existedCustomFood) {
+      Alert.alert('This barcode already exist in custom food');
+    }
 
     if (updatedResult) {
-      onDone?.(updatedResult);
+      onDone?.(updatedResult, existedCustomFood);
     }
-  }, [onDone, onUpdatePassioFoodItem]);
+  }, [onDone, onUpdatePassioFoodItem, services.dataService]);
 
   const onBarcodePress = () => {
     const updatedResult = onUpdatePassioFoodItem();
@@ -262,5 +282,30 @@ export const useEditNutritionFact = (props: EditNutritionFactProps) => {
     servingQtyTextInputRef,
     selectedUnitTextInputRef,
     weightTextInputRef,
+    isErrorCalories,
+    setErrorCalories,
+    isErrorCarbs,
+    setErrorCarbs,
+    isErrorProtein,
+    setErrorProtein,
+    isErrorFat,
+    setErrorFat,
+    isErrorQuantity,
+    isErrorServingUnit,
+    isErrorWeight,
+    setErrorWeight,
+    setErrorQuantity,
+    seErrorServingUnit,
+    isErrorName,
+    setErrorName,
+    isInvalid:
+      isErrorCalories ||
+      isErrorCarbs ||
+      isErrorProtein ||
+      isErrorFat ||
+      isErrorServingUnit ||
+      isErrorName ||
+      isErrorWeight ||
+      isErrorQuantity,
   };
 };

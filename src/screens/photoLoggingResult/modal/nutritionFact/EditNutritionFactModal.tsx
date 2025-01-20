@@ -18,10 +18,12 @@ import type { Branding } from '../../../../contexts';
 import { formatNumber } from '../../../../utils/NumberUtils';
 import { useEditNutritionFact } from './useEditNutritionFactModal';
 import { ICONS } from '../../../../assets';
+import { inValidInput } from '../../../../utils/V3Utils';
+import { CustomFood } from '../../../../models';
 
 export interface EditNutritionFactProps {
   onClose?: () => void;
-  onDone?: (result: PassioFoodItem) => void;
+  onDone?: (result: PassioFoodItem, customFood?: CustomFood) => void;
   result: PassioFoodItem;
   openBarcodeScanner?: (result: PassioFoodItem) => void;
   assets?: string;
@@ -62,6 +64,23 @@ export const EditNutritionFact = forwardRef<
     servingQtyTextInputRef,
     selectedUnitTextInputRef,
     weightTextInputRef,
+    isErrorCalories,
+    setErrorCalories,
+    isErrorCarbs,
+    setErrorCarbs,
+    isErrorProtein,
+    setErrorProtein,
+    isErrorFat,
+    setErrorFat,
+    isErrorQuantity,
+    isErrorServingUnit,
+    isErrorWeight,
+    setErrorWeight,
+    setErrorQuantity,
+    seErrorServingUnit,
+    setErrorName,
+    isErrorName,
+    isInvalid,
   } = useEditNutritionFact(props);
   const styles = customStyles(branding);
 
@@ -75,9 +94,15 @@ export const EditNutritionFact = forwardRef<
         foodItem?.amount.weight
       );
 
-      if (nutrients.calories && caloriesRef.current.trim().length === 0) {
+      if (
+        nutrients.calories &&
+        caloriesRef.current &&
+        caloriesRef.current.trim().length === 0
+      ) {
         caloriesTextInputRef?.current?.setNativeProps?.({
-          text: formatNumber(nutrients?.calories?.value)?.toString(),
+          text: nutrients?.calories
+            ? formatNumber(nutrients?.calories?.value)?.toString()
+            : '',
         });
       }
 
@@ -152,14 +177,18 @@ export const EditNutritionFact = forwardRef<
     alignSelf = 'center',
     storeRef,
     textInput,
+    isError = false,
+    setErrorState,
   }: {
     title: string;
     unit: string;
-    value: number | string;
+    value?: number | string;
     flex?: number;
     keyboardType?: KeyboardType;
     textInput: React.RefObject<TextInput>;
     alignSelf?: 'auto' | 'center' | 'left' | 'right' | 'justify' | undefined;
+    isError?: boolean;
+    setErrorState?: React.Dispatch<React.SetStateAction<boolean>>;
     storeRef: React.MutableRefObject<string>;
   }) => {
     return (
@@ -173,7 +202,13 @@ export const EditNutritionFact = forwardRef<
         >
           {title}
         </Text>
-        <View style={[styles.input, { marginVertical: scaleHeight(8) }]}>
+        <View
+          style={[
+            styles.input,
+            isError && { borderColor: 'red' },
+            { marginVertical: scaleHeight(8) },
+          ]}
+        >
           <View style={[styles.row]}>
             <TextInput
               keyboardType={keyboardType}
@@ -189,20 +224,29 @@ export const EditNutritionFact = forwardRef<
                 textAlign: alignSelf,
                 paddingVertical: scaleHeight(12),
               }}
-              defaultValue={`${value}`}
+              defaultValue={`${value ?? ''}`}
               onBlur={(e) => {
                 if (Platform.OS === 'ios') {
                   storeRef.current = e.nativeEvent.text;
+                  if (setErrorState) {
+                    setErrorState(inValidInput(e.nativeEvent.text));
+                  }
                 }
               }}
               onSubmitEditing={(e) => {
                 if (Platform.OS === 'ios') {
                   storeRef.current = e.nativeEvent.text;
+                  if (setErrorState) {
+                    setErrorState(inValidInput(e.nativeEvent.text));
+                  }
                 }
               }}
               onChangeText={(e) => {
                 if (Platform.OS === 'android') {
                   storeRef.current = e;
+                  if (setErrorState) {
+                    setErrorState(inValidInput(e));
+                  }
                 }
               }}
             />
@@ -312,20 +356,27 @@ export const EditNutritionFact = forwardRef<
             ref={nameTextInputRef}
             placeholder="Enter food name"
             placeholderTextColor={branding.secondaryText}
-            style={[styles.input, styles.inputNutritionFact]}
+            style={[
+              styles.input,
+              styles.inputNutritionFact,
+              isErrorName && { borderColor: 'red' },
+            ]}
             onBlur={(e) => {
               if (Platform.OS === 'ios') {
                 nameRef.current = e.nativeEvent.text;
+                setErrorName(e.nativeEvent.text.length === 0);
               }
             }}
             onSubmitEditing={(e) => {
               if (Platform.OS === 'ios') {
                 nameRef.current = e.nativeEvent.text;
+                setErrorName(e.nativeEvent.text.length === 0);
               }
             }}
             onChangeText={(e) => {
               if (Platform.OS === 'android') {
                 nameRef.current = e;
+                setErrorName(e.length === 0);
               }
             }}
           />
@@ -338,31 +389,39 @@ export const EditNutritionFact = forwardRef<
       <View style={[styles.row, { marginTop: scaleHeight(0) }]}>
         {renderMacro({
           title: 'Calories',
-          value: formatNumber(macro.calories) || 0,
+          value: macro.calories ? formatNumber(macro.calories) || 0 : undefined,
           unit: 'cal',
           storeRef: caloriesRef,
           textInput: caloriesTextInputRef,
+          isError: isErrorCalories,
+          setErrorState: setErrorCalories,
         })}
         {renderMacro({
           title: 'Carbs',
-          value: formatNumber(macro.carbs) || 0,
+          value: macro.carbs ? formatNumber(macro.carbs) || 0 : '',
           unit: 'g',
           storeRef: carbsRef,
           textInput: carbsTextInputRef,
+          isError: isErrorCarbs,
+          setErrorState: setErrorCarbs,
         })}
         {renderMacro({
           title: 'Protein',
-          value: formatNumber(macro.protein) || 0,
+          value: macro.protein ? formatNumber(macro.protein) || 0 : '',
           unit: 'g',
           storeRef: proteinRef,
           textInput: proteinTextInputRef,
+          isError: isErrorProtein,
+          setErrorState: setErrorProtein,
         })}
         {renderMacro({
           title: 'Fat',
-          value: formatNumber(macro.fat) || 0,
+          value: macro.fat ? formatNumber(macro.fat) || 0 : '',
           unit: 'g',
           storeRef: fatRef,
           textInput: fatTextInputRef,
+          isError: isErrorFat,
+          setErrorState: setErrorFat,
         })}
       </View>
 
@@ -376,14 +435,10 @@ export const EditNutritionFact = forwardRef<
           unit: '',
           storeRef: servingQtyRef,
           textInput: servingQtyTextInputRef,
+          isError: isErrorQuantity,
+          setErrorState: setErrorQuantity,
         })}
-        {renderMacro({
-          title: 'Weight',
-          value: formatNumber(servingInfo.weight) || 0,
-          unit: 'g',
-          storeRef: weightRef,
-          textInput: weightTextInputRef,
-        })}
+
         {renderMacro({
           title: 'Unit',
           value: servingInfo.servingUnit,
@@ -393,6 +448,17 @@ export const EditNutritionFact = forwardRef<
           flex: 2,
           storeRef: servingUnitRef,
           textInput: selectedUnitTextInputRef,
+          isError: isErrorServingUnit,
+          setErrorState: seErrorServingUnit,
+        })}
+        {renderMacro({
+          title: 'Weight',
+          value: formatNumber(servingInfo.weight) || 0,
+          unit: 'g',
+          storeRef: weightRef,
+          textInput: weightTextInputRef,
+          isError: isErrorWeight,
+          setErrorState: setErrorWeight,
         })}
       </View>
 
@@ -405,7 +471,12 @@ export const EditNutritionFact = forwardRef<
         />
         <BasicButton
           text={button}
-          style={{ flex: 1, marginStart: 8 }}
+          disabled={isInvalid}
+          style={[
+            { flex: 1, marginStart: 8 },
+            isInvalid && { borderColor: branding.gray300 },
+            isInvalid && { backgroundColor: branding.gray300 },
+          ]}
           onPress={onUpdateNutritionUpdate}
         />
       </View>
