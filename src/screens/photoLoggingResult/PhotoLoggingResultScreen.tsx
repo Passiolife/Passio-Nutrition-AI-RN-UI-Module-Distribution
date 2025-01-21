@@ -17,12 +17,14 @@ import { Dropdown } from 'react-native-element-dropdown';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { PhotoLoggingEditorModal } from './modal/PhotoLoggingEditorModal';
 import { dayFormatterPhotoLogging } from '../../utils';
+import { CustomFoodCreatedModal } from './modal/CustomFoodCreatedModal';
 
 export const PhotoLoggingScreen = gestureHandlerRootHOC(() => {
   const {
     changeDate,
     date,
     editServingInfoRef,
+    customFoodCreatedModalRef,
     itemAddedToDairyViewModalRef,
     isFetchingResponse,
     isOpenDatePicker,
@@ -41,6 +43,7 @@ export const PhotoLoggingScreen = gestureHandlerRootHOC(() => {
     onUpdateMacros,
     openDatePicker,
     passioAdvisorFoodInfo,
+    resultStatus,
     setMeal,
   } = usePhotoLogging();
 
@@ -181,9 +184,11 @@ export const PhotoLoggingScreen = gestureHandlerRootHOC(() => {
         ref={editServingInfoRef}
         onUpdateFoodItem={onUpdateFoodItem}
       />
+      <CustomFoodCreatedModal ref={customFoodCreatedModalRef} />
       <ItemAddedToDairyViewModal
         ref={itemAddedToDairyViewModalRef}
-        action="Add More"
+        action={'Add More'}
+        title={resultStatus()}
         note="View your diary or add more"
         onViewDiaryPress={handleOnDiaryPress}
         onContinuePress={handleOnMorePress}

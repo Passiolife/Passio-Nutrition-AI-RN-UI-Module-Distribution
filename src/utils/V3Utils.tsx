@@ -520,6 +520,10 @@ export const convertNumberInput = (s?: string) => {
 
 export const inValidNumberInput = (s?: string) => {
   const input = convertNumberInput(s).toString();
+
+  if (s?.length === 0) {
+    return true;
+  }
   return input.length === 0 || !validateQuantityInput(input);
 };
 

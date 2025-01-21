@@ -155,7 +155,11 @@ export const EditNutritionFact = forwardRef<
                 if (Platform.OS === 'ios') {
                   storeRef.current = e.nativeEvent.text;
                   if (setErrorState) {
-                    setErrorState(inValidNumberInput(e.nativeEvent.text));
+                    if (keyboardType === 'default') {
+                      setErrorState(e.nativeEvent.text.length === 0);
+                    } else {
+                      setErrorState(inValidNumberInput(e.nativeEvent.text));
+                    }
                   }
                 }
               }}
@@ -163,7 +167,11 @@ export const EditNutritionFact = forwardRef<
                 if (Platform.OS === 'ios') {
                   storeRef.current = e.nativeEvent.text;
                   if (setErrorState) {
-                    setErrorState(inValidNumberInput(e.nativeEvent.text));
+                    if (keyboardType === 'default') {
+                      setErrorState(e.nativeEvent.text.length === 0);
+                    } else {
+                      setErrorState(inValidNumberInput(e.nativeEvent.text));
+                    }
                   }
                 }
               }}
@@ -171,7 +179,11 @@ export const EditNutritionFact = forwardRef<
                 if (Platform.OS === 'android') {
                   storeRef.current = e;
                   if (setErrorState) {
-                    setErrorState(inValidNumberInput(e));
+                    if (keyboardType === 'default') {
+                      setErrorState(e.length === 0);
+                    } else {
+                      setErrorState(inValidNumberInput(e));
+                    }
                   }
                 }
               }}

@@ -32,7 +32,6 @@ export const PictureLoggingResult = ({
   onEditServingInfo,
   onEditNutritionFact,
   onUpdateMacros,
-  onCreateRecipePress,
   onLogSelect,
   onTryAgain,
   onCancel,
@@ -130,11 +129,11 @@ export const PictureLoggingResult = ({
             secondary
             enable={selectedCount > 0}
             onPress={() => {
-              onCreateRecipePress(advisorFoodInfo ?? []);
+              onTryAgain?.();
             }}
             disabled={isPreparingLog}
             style={styles.buttonTryAgain}
-            text={'Create Recipe'}
+            text={'Try Again'}
           />
           <BasicButton
             onPress={() => {

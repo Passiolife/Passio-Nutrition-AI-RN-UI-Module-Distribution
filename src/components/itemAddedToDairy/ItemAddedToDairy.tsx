@@ -9,6 +9,7 @@ interface Props {
   onContinuePress?: () => void;
   action?: string;
   note?: string;
+  title?: string;
 }
 
 export interface ItemAddedToDairyViewModalRef {
@@ -23,6 +24,7 @@ export const ItemAddedToDairyViewModal = forwardRef<
   const {
     onViewDiaryPress,
     onContinuePress,
+    title = 'Item Added To Diary',
     action = 'Continue Scanning',
     note = 'View your diary or add more',
   } = props;
@@ -48,7 +50,7 @@ export const ItemAddedToDairyViewModal = forwardRef<
           <View style={styles.contentContainer}>
             <Image source={ICONS.addedToDiary} style={styles.icon} />
             <Text weight="700" size="_20px" style={styles.title}>
-              Item Added To Diary
+              {title}
             </Text>
             <Text style={styles.description}>{note}</Text>
           </View>

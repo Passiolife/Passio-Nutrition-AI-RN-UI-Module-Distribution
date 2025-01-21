@@ -18,6 +18,7 @@ import {
   isMissingNutrition,
 } from '../../../../utils/V3Utils';
 import { formatNumber } from '../../../../utils/NumberUtils';
+import { CustomFood } from '../../../../models';
 
 export type NavigationProps = StackNavigationProp<
   ParamList,
@@ -224,10 +225,14 @@ export const useEditNutritionFact = (props: EditNutritionFactProps) => {
       Alert.alert('Please enter valid macros');
       return;
     }
-    const customFoods = await services.dataService.getCustomFoodLogs();
-    const existedCustomFood = customFoods?.find(
-      (i) => i.barcode === barcodeRef.current
-    );
+
+    let existedCustomFood: CustomFood | undefined = undefined;
+    if (barcodeRef.current.length > 0) {
+      const customFoods = await services.dataService.getCustomFoodLogs();
+      existedCustomFood = customFoods?.find(
+        (i) => i.barcode === barcodeRef.current
+      );
+    }
 
     if (updatedResult) {
       onDone?.(updatedResult, existedCustomFood);

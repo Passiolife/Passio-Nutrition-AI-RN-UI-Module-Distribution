@@ -28,6 +28,7 @@ import {
 import type { ItemAddedToDairyViewModalRef } from '../../components';
 import type { EditServingSizeRef } from './modal/servingSize/EditServingSizeModal';
 import { getCustomFoodUUID } from '../foodCreator/FoodCreator.utils';
+import { CustomFoodCreatedModalRef } from './modal/CustomFoodCreatedModal';
 
 export const PHOTO_LIMIT = 7;
 
@@ -38,6 +39,7 @@ export interface PhotoLoggingResults extends PassioAdvisorFoodInfo {
   nutrients?: PassioNutrients;
   assets?: string;
   customFood?: CustomFood;
+  isCustomFoodCreated?: boolean;
 }
 export interface MacroInfo {
   targetCalories?: number;
@@ -84,6 +86,7 @@ export function usePhotoLogging() {
   const services = useServices();
   const isSubmitting = useRef<boolean>(false);
   const editServingInfoRef = useRef<EditServingSizeRef>(null);
+  const customFoodCreatedModalRef = useRef<CustomFoodCreatedModalRef>(null);
   const itemAddedToDairyViewModalRef =
     useRef<ItemAddedToDairyViewModalRef>(null);
   const photoLoggingBarcodeRef = useRef<PhotoLoggingBarcodeRef>(null);
@@ -305,6 +308,7 @@ export function usePhotoLogging() {
     type: PhotoLoggingType
   ) => {
     let customFood = result.customFood;
+    let isCustomFoodCreated = false;
 
     if (type === 'nutritionFact' && !result.customFood) {
       const uuid: string = getCustomFoodUUID();
@@ -321,6 +325,8 @@ export function usePhotoLogging() {
         barcode: result.passioFoodItem?.ingredients?.[0]?.metadata?.barcode,
       };
       await services.dataService.saveCustomFood(customFood);
+      isCustomFoodCreated = true;
+      customFoodCreatedModalRef?.current?.open();
     }
 
     setPassioAdvisorFoodInfo((prev) => {
@@ -331,6 +337,7 @@ export function usePhotoLogging() {
             ...result,
             customFood: customFood,
             isSelected: true, // obv user intend to update means they want to add in meal.
+            isCustomFoodCreated: isCustomFoodCreated,
           };
         } else {
           return i;
@@ -410,10 +417,25 @@ export function usePhotoLogging() {
     });
   };
 
+  const resultStatus = () => {
+    const countOfSelectedFood =
+      passioAdvisorFoodInfo?.filter((i) => i.isSelected).length ?? 0;
+
+    const countOfCustomFood =
+      passioAdvisorFoodInfo?.filter((i) => i.isCustomFoodCreated).length ?? 0;
+
+    if (countOfSelectedFood > 0) {
+      return `${countOfSelectedFood} Items Added To Diary\n${countOfCustomFood} Custom Food Created`;
+    } else {
+      return `${countOfSelectedFood} Items Added To Diary`;
+    }
+  };
+
   return {
     changeDate,
     date,
     editServingInfoRef,
+    customFoodCreatedModalRef,
     itemAddedToDairyViewModalRef,
     isFetchingResponse,
     isOpenDatePicker,
@@ -436,5 +458,6 @@ export function usePhotoLogging() {
     recognizePictureRemote,
     setDate,
     setMeal,
+    resultStatus,
   };
 }
