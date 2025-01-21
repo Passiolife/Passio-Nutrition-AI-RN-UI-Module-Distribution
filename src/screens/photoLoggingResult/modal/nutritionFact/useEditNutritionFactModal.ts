@@ -35,10 +35,10 @@ export const useEditNutritionFact = (props: EditNutritionFactProps) => {
   );
 
   const passioAmount = props.result?.amount;
-  const calories = (nutrients?.calories?.value || '').toString();
-  const carbs = (nutrients?.carbs?.value || '').toString();
-  const protein = (nutrients?.protein?.value || '').toString();
-  const fat = (nutrients?.fat?.value || '').toString();
+  const calories = (nutrients?.calories?.value ?? '').toString();
+  const carbs = (nutrients?.carbs?.value ?? '').toString();
+  const protein = (nutrients?.protein?.value ?? '').toString();
+  const fat = (nutrients?.fat?.value ?? '').toString();
   const barcode = result?.ingredients?.[0]?.metadata?.barcode;
   const iconID = result?.iconId;
   const name = result?.name || result?.ingredients?.[0].name || '';

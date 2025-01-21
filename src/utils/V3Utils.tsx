@@ -523,7 +523,9 @@ export const inValidNumberInput = (s?: string) => {
   return input.length === 0 || !validateQuantityInput(input);
 };
 
-export const createPassioFoodItemFromCustomFood = (customFood: CustomFood) => {
+export const createPassioFoodItemFromCustomFood = (
+  customFood: CustomFood
+): PassioFoodItem => {
   const passioAmount: PassioFoodAmount = {
     weight: {
       unit: customFood?.computedWeight?.unit ?? 'g',
@@ -541,7 +543,7 @@ export const createPassioFoodItemFromCustomFood = (customFood: CustomFood) => {
     servingUnits:
       customFood?.servingUnits?.map((i) => {
         return {
-          unit: i.unit,
+          unit: 'g',
           value: i.mass,
           unitName: i.unit,
         };
@@ -556,20 +558,23 @@ export const createPassioFoodItemFromCustomFood = (customFood: CustomFood) => {
 
   const item: PassioFoodItem = {
     amount: passioAmount,
-    name: '',
-    iconId: '',
-    refCode: '',
+    name: customFood?.name ?? '',
+    iconId: customFood?.iconID ?? '',
+    refCode: customFood?.uuid,
     ingredientWeight: passioAmount.weight,
-    id: '',
+    id: customFood?.refCustomFoodID ?? '',
     ingredients: [
       {
         amount: passioAmount,
         refCode: customFood?.uuid ?? '',
-        name: '',
-        id: '',
-        iconId: '',
+        name: customFood?.name ?? '',
+        id: customFood?.refCustomFoodID ?? '',
+        iconId: customFood?.iconID ?? '',
         weight: passioAmount.weight,
         referenceNutrients: referenceNutrients,
+        metadata: {
+          barcode: customFood?.barcode,
+        },
       },
     ],
   };
@@ -589,5 +594,6 @@ const findNutrient = (
       value: n.amount,
     };
   });
+
   return result;
 };

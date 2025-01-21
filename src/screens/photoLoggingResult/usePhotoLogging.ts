@@ -20,6 +20,7 @@ import { getMealLogsForDate } from '../../utils/DataServiceHelper';
 import { calculateDailyMacroNutrition } from '../dashbaord';
 import {
   convertPassioFoodItemToFoodLog,
+  createPassioFoodItemFromCustomFood,
   createRecipeUsingPassioFoodItem,
   isMissingNutrition,
   sumOfAllPassioNutrients,
@@ -198,6 +199,26 @@ export function usePhotoLogging() {
                         ?.servingUnit
                     );
                   }
+
+                  const barcode =
+                    passioFoodItem?.ingredients?.[0]?.metadata?.barcode;
+
+                  let customFood;
+
+                  if (barcode) {
+                    const customFoods =
+                      await services.dataService.getCustomFoodLogs();
+                    customFood = customFoods?.find(
+                      (i) => i.barcode === barcode
+                    );
+
+                    // changed replace passio food item with founded custom food
+                    if (customFood) {
+                      passioFoodItem =
+                        createPassioFoodItemFromCustomFood(customFood);
+                    }
+                  }
+
                   info.push({
                     ...advisorFoodInfo,
                     isSelected: !isMissingNutrition(passioFoodItem),
@@ -213,6 +234,7 @@ export function usePhotoLogging() {
                       : undefined,
                     uuID: uuid4.v4() as unknown as string,
                     assets: item,
+                    customFood: customFood,
                     nutrients: passioFoodItem
                       ? PassioSDK.getNutrientsOfPassioFoodItem(
                           passioFoodItem,
@@ -232,7 +254,7 @@ export function usePhotoLogging() {
       } finally {
       }
     },
-    [isFetchingResponse]
+    [isFetchingResponse, services.dataService]
   );
 
   const onLogSelectPress = useCallback(
@@ -283,6 +305,7 @@ export function usePhotoLogging() {
     type: PhotoLoggingType
   ) => {
     let customFood = result.customFood;
+
     if (type === 'nutritionFact' && !result.customFood) {
       const uuid: string = getCustomFoodUUID();
       const foodRecords = await createFoodLogUsingFoodDataInfo(
@@ -299,6 +322,7 @@ export function usePhotoLogging() {
       };
       await services.dataService.saveCustomFood(customFood);
     }
+
     setPassioAdvisorFoodInfo((prev) => {
       if (prev === null) return null;
       return prev?.map((i) => {
