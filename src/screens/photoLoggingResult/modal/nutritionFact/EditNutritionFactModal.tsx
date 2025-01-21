@@ -9,14 +9,14 @@ import {
   Platform,
 } from 'react-native';
 import { BasicButton, Text } from '../../../../components';
-import { PassioFoodItem } from '@passiolife/nutritionai-react-native-sdk-v3';
+import type { PassioFoodItem } from '@passiolife/nutritionai-react-native-sdk-v3';
 import { scaleHeight, scaleWidth } from '../../../../utils';
 import type { Branding } from '../../../../contexts';
 import { formatNumber } from '../../../../utils/NumberUtils';
 import { useEditNutritionFact } from './useEditNutritionFactModal';
 import { ICONS } from '../../../../assets';
 import { inValidNumberInput } from '../../../../utils/V3Utils';
-import { CustomFood } from '../../../../models';
+import type { CustomFood } from '../../../../models';
 
 export interface EditNutritionFactProps {
   onClose?: () => void;

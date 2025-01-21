@@ -9,6 +9,7 @@ import {
   PassioFoodAmount,
 } from '@passiolife/nutritionai-react-native-sdk-v3';
 import type {
+  CustomFood,
   FoodItem,
   FoodLog,
   MealLabel,
@@ -520,4 +521,73 @@ export const convertNumberInput = (s?: string) => {
 export const inValidNumberInput = (s?: string) => {
   const input = convertNumberInput(s).toString();
   return input.length === 0 || !validateQuantityInput(input);
+};
+
+export const createPassioFoodItemFromCustomFood = (customFood: CustomFood) => {
+  const passioAmount: PassioFoodAmount = {
+    weight: {
+      unit: customFood?.computedWeight?.unit ?? 'g',
+      value: customFood?.computedWeight?.value ?? 10,
+    },
+    selectedUnit: customFood?.selectedUnit ?? 'gram',
+    selectedQuantity: customFood?.selectedQuantity ?? 10,
+    servingSizes:
+      customFood?.servingSizes?.map((i) => {
+        return {
+          quantity: i.quantity,
+          unitName: i.unit,
+        };
+      }) ?? [],
+    servingUnits:
+      customFood?.servingUnits?.map((i) => {
+        return {
+          unit: i.unit,
+          value: i.mass,
+          unitName: i.unit,
+        };
+      }) ?? [],
+  };
+
+  const nutrients = customFood?.foodItems?.[0]?.nutrients ?? [];
+  const referenceNutrients: PassioNutrients = {
+    ...findNutrient(nutrients, passioAmount.weight),
+    weight: passioAmount.weight,
+  };
+
+  const item: PassioFoodItem = {
+    amount: passioAmount,
+    name: '',
+    iconId: '',
+    refCode: '',
+    ingredientWeight: passioAmount.weight,
+    id: '',
+    ingredients: [
+      {
+        amount: passioAmount,
+        refCode: customFood?.uuid ?? '',
+        name: '',
+        id: '',
+        iconId: '',
+        weight: passioAmount.weight,
+        referenceNutrients: referenceNutrients,
+      },
+    ],
+  };
+  return item;
+};
+
+const findNutrient = (
+  nutrients: Nutrient[],
+  weight: UnitMass
+): PassioNutrients => {
+  const result: PassioNutrients = {
+    weight: weight,
+  };
+  nutrients.forEach((n) => {
+    result[n.id] = {
+      unit: n.unit,
+      value: n.amount,
+    };
+  });
+  return result;
 };

@@ -60,7 +60,7 @@ export const useEditServing = (props: EditServingSizeProps) => {
       }
 
       if (qty.length > 0) {
-        setWeight(formatNumber(defaultWeight * Number(qty)) ?? 0);
+        setWeight(Number(formatNumber(defaultWeight * Number(qty)) ?? 0 ?? 0));
       } else {
         setWeight(0);
       }
