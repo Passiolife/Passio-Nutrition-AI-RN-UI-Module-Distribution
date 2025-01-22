@@ -34,6 +34,7 @@ export function useFoodSearch() {
   const [loading, setLoading] = useState<boolean>(false);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [alternatives, setAlternative] = useState<string[]>([]);
+  const [isLegacySearch, setLegacySearch] = useState(false);
 
   const [results, setResults] = useState<PassioFoodDataInfo[]>([]);
   const [myFoodResult, setMyFoodResult] = useState<SearchMyFood[]>([]);
@@ -94,7 +95,7 @@ export function useFoodSearch() {
     async (val: string) => {
       if (val.length > 0) {
         setLoading(true);
-        const searchFoods = (await services?.otherService?.isLegacySearch?.())
+        const searchFoods = isLegacySearch
           ? await PassioSDK.searchForFood(val.trim().toLowerCase())
           : await PassioSDK.searchForFoodSemantic(val.trim().toLowerCase());
         setResults(searchFoods?.results ?? []);
@@ -105,7 +106,7 @@ export function useFoodSearch() {
       }
       setLoading(false);
     },
-    [cleanSearch, searchMyFood, services?.otherService]
+    [cleanSearch, isLegacySearch, searchMyFood]
   );
 
   const onSearchFood = async (q: string) => {
@@ -289,6 +290,12 @@ export function useFoodSearch() {
       cleanSearch();
     }
   }, [callSearchApi, debouncedSearchTerm, cleanSearch]);
+
+  useEffect(() => {
+    services?.otherService?.isLegacySearch?.()?.then((i) => {
+      setLegacySearch(i);
+    });
+  }, [services?.otherService]);
 
   return {
     alternatives,
