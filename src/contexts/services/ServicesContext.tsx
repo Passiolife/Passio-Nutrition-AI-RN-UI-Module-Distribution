@@ -9,7 +9,7 @@ export interface Services {
   otherService?: OtherService;
 }
 export interface OtherService {
-  isLegacySearch?: () => boolean;
+  isLegacySearch?: () => Promise<void>;
 }
 
 export interface ExternalServices {
