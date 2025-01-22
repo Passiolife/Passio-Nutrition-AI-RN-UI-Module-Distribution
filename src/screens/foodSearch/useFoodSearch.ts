@@ -94,7 +94,7 @@ export function useFoodSearch() {
     async (val: string) => {
       if (val.length > 0) {
         setLoading(true);
-        const searchFoods = services?.dataService?.isLegacySearch
+        const searchFoods = services?.otherService?.isLegacySearch?.()
           ? await PassioSDK.searchForFood(val.trim().toLowerCase())
           : await PassioSDK.searchForFoodSemantic(val.trim().toLowerCase());
         setResults(searchFoods?.results ?? []);
@@ -105,7 +105,7 @@ export function useFoodSearch() {
       }
       setLoading(false);
     },
-    [cleanSearch, searchMyFood, services.dataService.isLegacySearch]
+    [cleanSearch, searchMyFood, services?.otherService]
   );
 
   const onSearchFood = async (q: string) => {

@@ -42,5 +42,4 @@ export interface NutritionDataService {
   saveWeight: (weight: Weight) => Promise<void>;
   saveImage: (image: Image) => Promise<CustomImageID>;
   getImage: (id: CustomImageID) => Promise<Image | undefined | null>;
-  isLegacySearch?: () => boolean;
 }

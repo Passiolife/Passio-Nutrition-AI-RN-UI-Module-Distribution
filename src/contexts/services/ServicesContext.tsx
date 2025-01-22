@@ -6,10 +6,15 @@ import defaultServices from './data';
 export interface Services {
   dataService: NutritionDataService;
   analyticsService: AnalyticsService;
+  otherService?: OtherService;
+}
+export interface OtherService {
+  isLegacySearch?: () => boolean;
 }
 
 export interface ExternalServices {
   dataService?: NutritionDataService;
+  otherService?: OtherService;
   analyticsService?: AnalyticsService;
 }
 
