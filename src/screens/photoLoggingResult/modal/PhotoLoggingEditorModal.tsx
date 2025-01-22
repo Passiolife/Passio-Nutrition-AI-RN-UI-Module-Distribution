@@ -171,7 +171,7 @@ const customStyles = ({ border, white }: Branding) =>
       padding: scaleWidth(16),
       backgroundColor: white,
       marginVertical: 8,
-      marginHorizontal: scaleWidth(12),
+      marginHorizontal: scaleWidth(16),
       paddingVertical: 8,
       borderRadius: 8,
       shadowColor: '#00000029',

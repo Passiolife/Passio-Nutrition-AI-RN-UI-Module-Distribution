@@ -1,5 +1,4 @@
 import {
-  Image,
   TouchableOpacity,
   View,
   type ImageStyle,
@@ -12,7 +11,6 @@ import { PassioFoodIcon } from '../../../components/passio/PassioFoodIcon';
 import { PassioIDEntityType } from '@passiolife/nutritionai-react-native-sdk-v3/src/sdk/v2';
 import { Card, Text } from '../../../components';
 import type { QuickResult } from '../../../models';
-import { ICONS } from '../../../assets';
 
 interface Props {
   result: QuickResult;
@@ -55,24 +53,6 @@ export const QuickScanningResultView = React.memo((props: Props) => {
               </Text>
             )}
           </View>
-          <TouchableOpacity
-            style={{
-              alignSelf: 'center',
-            }}
-            onPress={() => {
-              props.onFoodLog(props.result);
-            }}
-          >
-            <Image
-              source={ICONS.newAddPlus}
-              style={{
-                height: 28,
-                width: 28,
-                alignSelf: 'center',
-                marginHorizontal: 16,
-              }}
-            />
-          </TouchableOpacity>
         </View>
       </TouchableOpacity>
     </Card>
@@ -81,8 +61,9 @@ export const QuickScanningResultView = React.memo((props: Props) => {
 
 // Scanning Result Styles....
 const scanningResultBaseContainerStyle: ViewStyle = {
-  marginHorizontal: 10,
+  marginHorizontal: 16,
   marginTop: 10,
+  marginBottom: 10,
 };
 
 const foodLogContainerStyle: ViewStyle = {
@@ -104,6 +85,4 @@ const foodLogImageStyle: ImageStyle = {
   height: 48,
 };
 
-const foodLogNameStyle: TextStyle = {
-  textTransform: 'capitalize',
-};
+const foodLogNameStyle: TextStyle = {};

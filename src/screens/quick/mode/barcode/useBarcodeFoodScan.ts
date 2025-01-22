@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import {
+  useIsFocused,
   useNavigation,
   useRoute,
   type RouteProp,
@@ -37,12 +38,12 @@ export const useBarcodeFoodScan = () => {
   const passioQuickResultRef = useRef<QuickResult | null>(null);
   const barcodeRef = useRef<string | undefined>(undefined);
   const isSubmitting = useRef<boolean>(false);
+  const isFocused = useIsFocused();
 
   const { params } = useRoute<RouteProp<ParamList, 'ScanningScreen'>>();
   const date = getLogToDate(params.logToDate, params.logToMeal);
   const meal = getMealLog(date, params.logToMeal);
 
-  const [isStopScan, setStopScan] = useState<boolean>(false);
   const itemAddedToDairyViewModalRef =
     useRef<ItemAddedToDairyViewModalRef>(null);
   const [isLodgedFood, setLoggedFood] = useState<boolean>(false);
@@ -74,7 +75,6 @@ export const useBarcodeFoodScan = () => {
     passioQuickResultRef.current = null;
     setFoodDetectionEvent(null);
     setPassioQuickResults(null);
-    setStopScan(false);
   }, []);
 
   const onSavedLog = useCallback(
@@ -90,7 +90,6 @@ export const useBarcodeFoodScan = () => {
         screen: ScreenType.quickScan,
         foodLog: item,
       });
-      setStopScan(true);
       setLoggedFood(true);
       isSubmitting.current = false;
       itemAddedToDairyViewModalRef?.current?.open();
@@ -116,15 +115,11 @@ export const useBarcodeFoodScan = () => {
         foodLog.meal = meal;
         foodLog.eventTimestamp = convertDateToDBFormat(date);
 
-        setStopScan(true);
         navigation.navigate('EditFoodLogScreen', {
           foodLog: foodLog,
           prevRouteName: 'QuickScan',
-          onCancelPress: () => {
-            setStopScan(false);
-          },
+          onCancelPress: () => {},
           onSaveLogPress: () => {
-            setStopScan(false);
             setLoggedFood(true);
           },
         });
@@ -140,15 +135,11 @@ export const useBarcodeFoodScan = () => {
 
       if (item) {
         const foodLog = convertPassioFoodItemToFoodLog(item, date, meal);
-        setStopScan(true);
         navigation.navigate('EditFoodLogScreen', {
           prevRouteName: 'QuickScan',
           foodLog: foodLog,
-          onCancelPress: () => {
-            setStopScan(false);
-          },
+          onCancelPress: () => {},
           onSaveLogPress: () => {
-            setStopScan(false);
             setLoggedFood(true);
           },
         });
@@ -168,7 +159,6 @@ export const useBarcodeFoodScan = () => {
 
   const onContinueScanningPress = () => {
     setLoggedFood(false);
-    setStopScan(false);
     setFoodDetectionEvent(null);
     setPassioQuickResults(null);
     passioQuickResultRef.current = null;
@@ -182,77 +172,9 @@ export const useBarcodeFoodScan = () => {
     });
   };
 
-  useEffect(() => {
-    const config: FoodDetectionConfig = {
-      detectBarcodes: true,
-      detectPackagedFood: false,
-      detectVisual: false,
-      volumeDetectionMode: 'none',
-    };
-    let subscription = PassioSDK.startFoodDetection(
-      config,
-      (detection: FoodDetectionEvent) => {
-        if (
-          detection &&
-          detection?.candidates?.barcodeCandidates &&
-          detection.candidates?.barcodeCandidates?.length > 0
-        ) {
-          const barcode = detection.candidates.barcodeCandidates?.[0]?.barcode;
-
-          if (
-            barcode !== undefined &&
-            barcode === passioQuickResultRef.current?.barcode
-          ) {
-            return;
-          }
-          barcodeRef.current = barcode;
-
-          setFoodDetectionEvent(detection);
-        }
-      }
-    );
-
-    return () => {
-      subscription?.remove();
-    };
-  }, []);
-
-  useEffect(() => {
-    const detection = foodDetectEvents;
-    async function init() {
-      if (detection) {
-        const { candidates } = detection;
-
-        if (candidates) {
-          let attribute: QuickResult | null = await getQuickResults(
-            candidates.barcodeCandidates?.[0]
-          );
-          /** Now Check attribute and alternative */
-
-          if (
-            attribute &&
-            attribute?.passioID !== passioQuickResultRef.current?.passioID
-          ) {
-            setPassioQuickResults(attribute);
-            passioQuickResultRef.current = attribute;
-          }
-        }
-      }
-    }
-
-    if (isStopScan === true) {
-      return;
-    }
-
-    if (detection) {
-      init();
-    }
-  }, [foodDetectEvents, getQuickResults, isStopScan]);
-
   const onTakePhoto = () => {
     const barcode = barcodeRef?.current;
     onContinueScanningPress();
-
     navigation.navigate('NutritionFactScanScreen', {
       barcode: barcode,
       onSaveLog: async (item) => {
@@ -278,9 +200,79 @@ export const useBarcodeFoodScan = () => {
     });
   };
 
+  useEffect(() => {
+    const detection = foodDetectEvents;
+    async function init() {
+      if (detection) {
+        const { candidates } = detection;
+
+        if (candidates) {
+          let attribute: QuickResult | null = await getQuickResults(
+            candidates.barcodeCandidates?.[0]
+          );
+          /** Now Check attribute and alternative */
+
+          if (attribute) {
+            setPassioQuickResults(attribute);
+            passioQuickResultRef.current = attribute;
+          }
+        }
+
+        barcodeRef.current =
+          detection.candidates?.barcodeCandidates?.[0]?.barcode;
+      }
+    }
+
+    if (detection) {
+      init();
+    }
+  }, [foodDetectEvents, getQuickResults]);
+
+  useEffect(() => {
+    const config: FoodDetectionConfig = {
+      detectBarcodes: true,
+      detectPackagedFood: false,
+      detectVisual: false,
+      volumeDetectionMode: 'none',
+    };
+
+    async function delay() {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+    }
+    const subscription = listener();
+
+    function listener() {
+      if (!isFocused) {
+        return null;
+      }
+      delay();
+      return PassioSDK.startFoodDetection(
+        config,
+        (detection: FoodDetectionEvent) => {
+          if (
+            detection &&
+            detection?.candidates?.barcodeCandidates &&
+            detection.candidates?.barcodeCandidates?.length > 0
+          ) {
+            const barcode =
+              detection.candidates.barcodeCandidates?.[0]?.barcode;
+
+            if (barcode !== undefined && barcode === barcodeRef?.current) {
+              return;
+            }
+            setFoodDetectionEvent(detection);
+          }
+        }
+      );
+    }
+
+    return () => {
+      subscription?.remove();
+    };
+  }, [isFocused]);
+
   return {
     isLodgedFood,
-    isStopScan,
     itemAddedToDairyViewModalRef,
     passioQuickResults,
     onContinueScanningPress,
@@ -289,7 +281,6 @@ export const useBarcodeFoodScan = () => {
     onOpenFoodLogEditor,
     onViewDiaryPress,
     resetScanning,
-    setStopScan,
     onTakePhoto,
   };
 };

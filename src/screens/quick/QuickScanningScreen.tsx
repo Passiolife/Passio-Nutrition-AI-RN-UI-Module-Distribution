@@ -33,7 +33,6 @@ export type ScanningScreenNavigationProps = StackNavigationProp<
 
 export const QuickScanningScreen = gestureHandlerRootHOC(() => {
   const [info, setInfo] = useState(false);
-  const [initializeCamera, setInitializeCamera] = useState(true);
   const [mode] = useState<ScanningMode>('Barcode');
   const navigation = useNavigation<ScreenNavigationProps>();
   const [level, setLevel] = useState<PassioCameraZoomLevel>();
@@ -48,10 +47,6 @@ export const QuickScanningScreen = gestureHandlerRootHOC(() => {
     setTimeout(init, 300);
   }, []);
 
-  useEffect(() => {
-    setInitializeCamera(isFocused);
-  }, [isFocused]);
-
   return (
     <View style={styles.container}>
       <View style={{ flex: 1 }}>
@@ -60,7 +55,7 @@ export const QuickScanningScreen = gestureHandlerRootHOC(() => {
           onInfoPress={() => setInfo((i) => !i)}
         />
         <View style={{ flex: 1 }}>
-          {initializeCamera ? (
+          {isFocused ? (
             <DetectionCameraView
               style={styles.cameraView}
               volumeDetectionMode="none"
