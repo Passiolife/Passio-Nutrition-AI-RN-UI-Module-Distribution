@@ -17,6 +17,7 @@ import { useEditNutritionFact } from './useEditNutritionFactModal';
 import { ICONS } from '../../../../assets';
 import { inValidNumberInput } from '../../../../utils/V3Utils';
 import type { CustomFood } from '../../../../models';
+import { Dropdown } from 'react-native-element-dropdown';
 
 export interface EditNutritionFactProps {
   onClose?: () => void;
@@ -48,6 +49,8 @@ export const EditNutritionFact = forwardRef<
     carbsRef,
     macro,
     servingQtyRef,
+    servingUnit,
+    setServingUnit,
     weightRef,
     nameRef,
     onBarcodePress,
@@ -60,22 +63,20 @@ export const EditNutritionFact = forwardRef<
     fatTextInputRef,
     proteinTextInputRef,
     servingQtyTextInputRef,
-    selectedUnitTextInputRef,
     weightTextInputRef,
     isErrorCalories,
     setErrorCalories,
     isErrorCarbs,
     setErrorCarbs,
+    servings,
     isErrorProtein,
     setErrorProtein,
     isErrorFat,
     setErrorFat,
     isErrorQuantity,
-    isErrorServingUnit,
     isErrorWeight,
     setErrorWeight,
     setErrorQuantity,
-    seErrorServingUnit,
     setErrorName,
     isErrorName,
     isInvalid,
@@ -367,28 +368,67 @@ export const EditNutritionFact = forwardRef<
         Portions
       </Text>
       <View style={[styles.row, { marginTop: scaleHeight(0) }]}>
-        {renderMacro({
-          title: 'Serving',
-          value: formatNumber(servingInfo.servingQty) || 0,
-          unit: '',
-          storeRef: servingQtyRef,
-          textInput: servingQtyTextInputRef,
-          isError: isErrorQuantity,
-          setErrorState: setErrorQuantity,
-        })}
+        {servingUnit !== 'gram' &&
+          renderMacro({
+            title: 'Serving',
+            value: formatNumber(servingInfo.servingQty) || 0,
+            unit: '',
+            storeRef: servingQtyRef,
+            textInput: servingQtyTextInputRef,
+            isError: isErrorQuantity,
+            setErrorState: setErrorQuantity,
+          })}
+        {/* <>
+          {servingUnit !== 'gram' &&
+            renderMacro({
+              title: 'Unit',
+              value: servingInfo.servingUnit,
+              keyboardType: 'default',
+              alignSelf: 'left',
+              unit: '',
+              flex: 2,
+              storeRef: servingUnitRef,
+              textInput: selectedUnitTextInputRef,
+              isError: isErrorServingUnit,
+              setErrorState: seErrorServingUnit,
+            })}
+        </> */}
+        <View style={{ flex: 2 }}>
+          <Text
+            adjustsFontSizeToFit
+            size="_14px"
+            weight="400"
+            color="secondaryText"
+            style={{ textAlign: 'center' }}
+          >
+            {'Unit'}
+          </Text>
+          <Dropdown
+            data={servings}
+            labelField={'label'}
+            value={servingUnit}
+            valueField={'value'}
+            itemTextStyle={{
+              textTransform: 'capitalize',
+            }}
+            selectedTextStyle={{
+              textTransform: 'capitalize',
+            }}
+            style={styles.dropDown}
+            onChange={(item) => {
+              if (item.value.toLowerCase() === 'gram') {
+                servingQtyTextInputRef?.current?.setNativeProps?.({
+                  text: weightRef?.current,
+                });
+                servingQtyRef.current = weightRef?.current;
+                setErrorQuantity(false);
+              }
 
-        {renderMacro({
-          title: 'Unit',
-          value: servingInfo.servingUnit,
-          keyboardType: 'default',
-          alignSelf: 'left',
-          unit: '',
-          flex: 2,
-          storeRef: servingUnitRef,
-          textInput: selectedUnitTextInputRef,
-          isError: isErrorServingUnit,
-          setErrorState: seErrorServingUnit,
-        })}
+              servingUnitRef.current = item.value;
+              setServingUnit(item.value);
+            }}
+          />
+        </View>
         {renderMacro({
           title: 'Weight',
           value: formatNumber(servingInfo.weight) || 0,
@@ -454,10 +494,10 @@ const customStyles = ({ border, white }: Branding) =>
       borderWidth: 1,
       marginHorizontal: scaleWidth(8),
       borderColor: border,
-      flex: 1,
       borderRadius: 8,
-      paddingVertical: 16,
+      marginVertical: scaleHeight(8),
       paddingHorizontal: 8,
+      paddingVertical: scaleHeight(8),
     },
     input: {
       borderColor: border,

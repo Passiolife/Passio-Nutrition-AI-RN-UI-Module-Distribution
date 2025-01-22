@@ -19,6 +19,7 @@ import {
 } from '../../../../utils/V3Utils';
 import { formatNumber } from '../../../../utils/NumberUtils';
 import type { CustomFood } from '../../../../models';
+import { Units } from '../../../../screens/foodCreator/data';
 
 export type NavigationProps = StackNavigationProp<
   ParamList,
@@ -62,7 +63,9 @@ export const useEditNutritionFact = (props: EditNutritionFactProps) => {
   const passioSelectedQuantity = (
     passioAmount?.selectedQuantity ?? ''
   ).toString();
-  const passioSelectedUnit = (passioAmount?.selectedUnit ?? '').toString();
+  const passioSelectedUnit = (
+    passioAmount?.selectedUnit ?? 'serving'
+  ).toString();
 
   const [isErrorName, setErrorName] = useState<boolean>(!name);
   const [isErrorCalories, setErrorCalories] = useState<boolean>(!calories);
@@ -85,6 +88,8 @@ export const useEditNutritionFact = (props: EditNutritionFactProps) => {
   const servingQtyRef = useRef(passioSelectedQuantity);
   const weightRef = useRef(passioWeight);
   const servingUnitRef = useRef(passioSelectedUnit);
+  const [servingUnit, setServingUnit] = useState<string>(passioSelectedUnit);
+
   const nameRef = useRef(name ?? '');
   const barcodeRef = useRef(barcode ?? '');
   const barcodeTextInputRef = useRef<TextInput>(null);
@@ -98,9 +103,12 @@ export const useEditNutritionFact = (props: EditNutritionFactProps) => {
   const weightTextInputRef = useRef<TextInput>(null);
 
   const onUpdatePassioFoodItem = useCallback(() => {
-    const updatedQty = convertNumberInput(servingQtyRef.current);
     const updatedWeight = convertNumberInput(weightRef.current);
     const updatedUnit = servingUnitRef.current.trim().toLowerCase();
+    const updatedQty =
+      updatedUnit === 'gram'
+        ? updatedWeight
+        : Number(convertNumberInput(servingQtyRef.current) || 0);
 
     const updatedCalories = convertNumberInput(caloriesRef.current);
     const updatedCarbs = convertNumberInput(carbsRef.current);
@@ -210,9 +218,13 @@ export const useEditNutritionFact = (props: EditNutritionFactProps) => {
   }, [result]);
 
   const onUpdateNutritionUpdate = useCallback(async () => {
-    const updatedQty = Number(servingQtyRef.current || 0);
-    const updatedWeight = Number(weightRef.current || 0);
     const updatedUnit = servingUnitRef.current.trim().toLowerCase();
+    const updatedWeight = Number(weightRef.current || 0);
+
+    const updatedQty =
+      updatedUnit === 'gram'
+        ? updatedWeight
+        : Number(servingQtyRef.current || 0);
 
     if (!updatedQty || updatedQty <= 0) {
       Alert.alert('Please enter valid serving');
@@ -340,6 +352,21 @@ export const useEditNutritionFact = (props: EditNutritionFactProps) => {
     }
   };
 
+  const allUnits = Units.map((item) => {
+    return {
+      label: item,
+      value: item,
+    };
+  }).filter((i) => i.value !== passioSelectedUnit);
+
+  const servings = [
+    {
+      label: passioSelectedUnit,
+      value: passioSelectedUnit,
+    },
+    ...allUnits,
+  ];
+
   return {
     onUpdateNutritionUpdate,
     branding,
@@ -388,11 +415,14 @@ export const useEditNutritionFact = (props: EditNutritionFactProps) => {
     isErrorFat,
     setErrorFat,
     isErrorQuantity,
+    setServingUnit,
+    servingUnit,
     isErrorServingUnit,
     isErrorWeight,
     setErrorWeight,
     setErrorQuantity,
     seErrorServingUnit,
+    servings,
     isErrorName,
     setErrorName,
     handleBarcodeScanResult,
