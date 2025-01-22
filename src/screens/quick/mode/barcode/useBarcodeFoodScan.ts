@@ -62,12 +62,12 @@ export const useBarcodeFoodScan = () => {
       }
 
       if (barcodeCandidate) {
-        return await getBarcodeResult(barcodeCandidate);
+        return await getBarcodeResult(services.dataService, barcodeCandidate);
       }
 
       return null;
     },
-    [passioQuickResultRef]
+    [services.dataService]
   );
 
   const resetScanning = useCallback(() => {
@@ -137,11 +137,13 @@ export const useBarcodeFoodScan = () => {
   const onOpenFoodLogEditor = useCallback(
     async (result: QuickResult) => {
       const item = await getPassioIDAttribute(result);
+
       if (item) {
+        const foodLog = convertPassioFoodItemToFoodLog(item, date, meal);
         setStopScan(true);
         navigation.navigate('EditFoodLogScreen', {
-          foodLog: convertPassioFoodItemToFoodLog(item, date, meal),
           prevRouteName: 'QuickScan',
+          foodLog: foodLog,
           onCancelPress: () => {
             setStopScan(false);
           },

@@ -38,12 +38,12 @@ export const useBarcodeScan = () => {
       }
 
       if (barcodeCandidate) {
-        return await getBarcodeResult(barcodeCandidate);
+        return await getBarcodeResult(services.dataService, barcodeCandidate);
       }
 
       return null;
     },
-    []
+    [services.dataService]
   );
 
   const actionTaken = useRef(false);

@@ -18,7 +18,7 @@ import {
   isMissingNutrition,
 } from '../../../../utils/V3Utils';
 import { formatNumber } from '../../../../utils/NumberUtils';
-import { CustomFood } from '../../../../models';
+import type { CustomFood } from '../../../../models';
 
 export type NavigationProps = StackNavigationProp<
   ParamList,
@@ -30,16 +30,31 @@ export const useEditNutritionFact = (props: EditNutritionFactProps) => {
   const services = useServices();
 
   const result = props.result;
+  const referenceNutrients = props.result?.ingredients?.[0].referenceNutrients;
   const nutrients = PassioSDK.getNutrientsOfPassioFoodItem(
     result,
     result?.amount?.weight ?? 100
   );
 
   const passioAmount = props.result?.amount;
-  const calories = (nutrients?.calories?.value ?? '').toString();
-  const carbs = (nutrients?.carbs?.value ?? '').toString();
-  const protein = (nutrients?.protein?.value ?? '').toString();
-  const fat = (nutrients?.fat?.value ?? '').toString();
+  const calories = (
+    referenceNutrients?.calories?.value
+      ? (nutrients?.calories?.value ?? '')
+      : ''
+  ).toString();
+
+  const carbs = (
+    referenceNutrients?.carbs?.value ? (nutrients?.carbs?.value ?? '') : ''
+  ).toString();
+
+  const protein = (
+    referenceNutrients?.protein?.value ? (nutrients?.protein?.value ?? '') : ''
+  ).toString();
+
+  const fat = (
+    referenceNutrients?.fat?.value ? (nutrients?.fat?.value ?? '') : ''
+  ).toString();
+
   const barcode = result?.ingredients?.[0]?.metadata?.barcode;
   const iconID = result?.iconId;
   const name = result?.name || result?.ingredients?.[0].name || '';
@@ -226,7 +241,7 @@ export const useEditNutritionFact = (props: EditNutritionFactProps) => {
       return;
     }
 
-    let existedCustomFood: CustomFood | undefined = undefined;
+    let existedCustomFood: CustomFood | undefined;
     if (barcodeRef.current.length > 0) {
       const customFoods = await services.dataService.getCustomFoodLogs();
       existedCustomFood = customFoods?.find(

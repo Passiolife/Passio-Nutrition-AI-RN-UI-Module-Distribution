@@ -115,7 +115,7 @@
   "devDependencies": {
     "@commitlint/cli": "^19.2.1",
     "@commitlint/config-conventional": "^19.1.0",
-    "@passiolife/nutritionai-react-native-sdk-v3": "3.2.3",
+    "@passiolife/nutritionai-react-native-sdk-v3": "3.2.4",
     "@react-native/eslint-config": "^0.73.2",
     "@release-it/conventional-changelog": "^8.0.1",
     "@testing-library/react-native": "^12.4.3",

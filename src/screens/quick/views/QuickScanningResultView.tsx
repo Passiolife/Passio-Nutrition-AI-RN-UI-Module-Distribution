@@ -35,8 +35,6 @@ export const QuickScanningResultView = React.memo((props: Props) => {
         <View style={foodLogContainerStyle}>
           <View style={foodLogImageContainerStyle}>
             <PassioFoodIcon
-              passioID={props.result.passioID}
-              imageName={props.result.passioID}
               iconID={props.result.passioID}
               style={foodLogImageStyle}
               entityType={PassioIDEntityType.item}

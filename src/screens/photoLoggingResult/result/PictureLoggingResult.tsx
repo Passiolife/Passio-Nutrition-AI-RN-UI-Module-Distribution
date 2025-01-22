@@ -127,7 +127,6 @@ export const PictureLoggingResult = ({
         <View style={styles.buttonContainer}>
           <BasicButton
             secondary
-            enable={selectedCount > 0}
             onPress={() => {
               onTryAgain?.();
             }}

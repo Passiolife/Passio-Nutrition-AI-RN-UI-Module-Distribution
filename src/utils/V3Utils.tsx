@@ -532,7 +532,7 @@ export const createPassioFoodItemFromCustomFood = (
 ): PassioFoodItem => {
   const passioAmount: PassioFoodAmount = {
     weight: {
-      unit: customFood?.computedWeight?.unit ?? 'g',
+      unit: 'g',
       value: customFood?.computedWeight?.value ?? 10,
     },
     selectedUnit: customFood?.selectedUnit ?? 'gram',

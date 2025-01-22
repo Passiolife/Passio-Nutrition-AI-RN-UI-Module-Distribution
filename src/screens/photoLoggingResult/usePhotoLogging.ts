@@ -28,7 +28,7 @@ import {
 import type { ItemAddedToDairyViewModalRef } from '../../components';
 import type { EditServingSizeRef } from './modal/servingSize/EditServingSizeModal';
 import { getCustomFoodUUID } from '../foodCreator/FoodCreator.utils';
-import { CustomFoodCreatedModalRef } from './modal/CustomFoodCreatedModal';
+import type { CustomFoodCreatedModalRef } from './modal/CustomFoodCreatedModal';
 
 export const PHOTO_LIMIT = 7;
 
