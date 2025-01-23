@@ -174,7 +174,7 @@ export const useBarcodeFoodScan = () => {
 
   const onTakePhoto = () => {
     const barcode = barcodeRef?.current;
-    onContinueScanningPress();
+    resetScanning();
     navigation.navigate('NutritionFactScanScreen', {
       barcode: barcode,
       onSaveLog: async (item) => {

@@ -473,14 +473,14 @@ export const createBlankPassioFoodITem = (barcode?: string) => {
     selectedUnit: 'gram',
     servingSizes: [
       {
-        quantity: 1,
+        quantity: 100,
         unitName: 'gram',
       },
     ],
     servingUnits: [
       {
         unit: 'g',
-        value: 100,
+        value: 1,
         unitName: 'gram',
       },
     ],

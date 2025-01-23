@@ -409,10 +409,10 @@ export const EditNutritionFact = forwardRef<
             value={servingUnit}
             valueField={'value'}
             itemTextStyle={{
-              textTransform: 'capitalize',
+              textAlign: 'center',
             }}
             selectedTextStyle={{
-              textTransform: 'capitalize',
+              textAlign: 'center',
             }}
             style={styles.dropDown}
             onChange={(item) => {
