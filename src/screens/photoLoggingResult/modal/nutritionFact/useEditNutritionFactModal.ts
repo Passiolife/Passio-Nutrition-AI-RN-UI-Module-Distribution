@@ -20,6 +20,7 @@ import {
 import { formatNumber } from '../../../../utils/NumberUtils';
 import type { CustomFood } from '../../../../models';
 import { Units } from '../../../../screens/foodCreator/data';
+import { getNutrientsOfPassioFoodItem } from '../../../../utils/';
 
 export type NavigationProps = StackNavigationProp<
   ParamList,
@@ -32,28 +33,34 @@ export const useEditNutritionFact = (props: EditNutritionFactProps) => {
 
   const result = props.result;
   const referenceNutrients = props.result?.ingredients?.[0].referenceNutrients;
-  const nutrients = PassioSDK.getNutrientsOfPassioFoodItem(
+  const nutrients = getNutrientsOfPassioFoodItem(
     result,
     result?.amount?.weight ?? 100
   );
 
   const passioAmount = props.result?.amount;
   const calories = (
-    referenceNutrients?.calories?.value
+    referenceNutrients?.calories?.value !== undefined
       ? (nutrients?.calories?.value ?? '')
       : ''
   ).toString();
 
   const carbs = (
-    referenceNutrients?.carbs?.value ? (nutrients?.carbs?.value ?? '') : ''
+    referenceNutrients?.carbs?.value !== undefined
+      ? (nutrients?.carbs?.value ?? '')
+      : ''
   ).toString();
 
   const protein = (
-    referenceNutrients?.protein?.value ? (nutrients?.protein?.value ?? '') : ''
+    referenceNutrients?.protein?.value !== undefined
+      ? (nutrients?.protein?.value ?? '')
+      : ''
   ).toString();
 
   const fat = (
-    referenceNutrients?.fat?.value ? (nutrients?.fat?.value ?? '') : ''
+    referenceNutrients?.fat?.value !== undefined
+      ? (nutrients?.fat?.value ?? '')
+      : ''
   ).toString();
 
   const barcode = result?.ingredients?.[0]?.metadata?.barcode;
@@ -122,13 +129,21 @@ export const useEditNutritionFact = (props: EditNutritionFactProps) => {
 
     let ingredient: PassioIngredient | undefined = result?.ingredients?.[0];
 
-    let servingUnits: ServingUnit[] | undefined =
-      result?.amount?.servingUnits?.filter(
-        (i) => i?.unitName?.trim().toLowerCase() !== updatedUnit
-      );
+    // Applied serving unit
+    let servingUnits: ServingUnit[] = [];
+    const defaultServingUnit: ServingUnit[] =
+      updatedUnit.toLowerCase() !== 'gram'
+        ? [
+            {
+              unit: 'g',
+              value: 1,
+              unitName: 'gram',
+            },
+          ]
+        : [];
 
     servingUnits = [
-      ...(servingUnits ?? []),
+      ...defaultServingUnit,
       {
         unit: 'g',
         unitName: updatedUnit,
@@ -136,13 +151,19 @@ export const useEditNutritionFact = (props: EditNutritionFactProps) => {
       },
     ];
 
-    let servingSizes: ServingSize[] | undefined =
-      result?.amount?.servingSizes?.filter(
-        (i) => i?.unitName?.trim().toLowerCase() !== updatedUnit
-      );
-
+    // Applied serving size
+    let servingSizes: ServingSize[] = [];
+    const defaultServingSize: ServingSize[] =
+      updatedUnit.toLowerCase() !== 'gram'
+        ? [
+            {
+              quantity: 100,
+              unitName: 'gram',
+            },
+          ]
+        : [];
     servingSizes = [
-      ...(servingSizes ?? []),
+      ...(defaultServingSize ?? []),
       {
         unitName: updatedUnit,
         quantity: 1,
@@ -182,6 +203,7 @@ export const useEditNutritionFact = (props: EditNutritionFactProps) => {
               ...amount,
             },
             referenceNutrients: {
+              ...ingredient.referenceNutrients,
               calories: {
                 unit: 'kcal',
                 value: updatedCalories,
@@ -277,7 +299,7 @@ export const useEditNutritionFact = (props: EditNutritionFactProps) => {
     const foodItem =
       await PassioSDK.fetchFoodItemForProductCode(scannedBarcode);
     if (foodItem) {
-      const newNutrients = PassioSDK.getNutrientsOfPassioFoodItem(
+      const newNutrients = getNutrientsOfPassioFoodItem(
         foodItem,
         foodItem?.amount.weight
       );

@@ -20,7 +20,7 @@ import type {
 } from '../models';
 import uuid4 from 'react-native-uuid';
 import { convertDateToDBFormat } from './DateFormatter';
-import { getMealLog } from '../utils';
+import { getMealLog, getNutrientsOfPassioFoodItem } from '../utils';
 import type { PassioIngredient } from '@passiolife/nutritionai-react-native-sdk-v3/src';
 import type { QuickSuggestion } from 'src/models/QuickSuggestion';
 import type { DefaultNutrients } from '../screens/foodCreator/views/OtherNutritionFacts';
@@ -114,7 +114,7 @@ function convertPassioIngredientToFoodItem(
       passioIngredient.amount?.weight.value;
   }
 
-  const nutrients = PassioSDK.getNutrientsOfPassioFoodItem(
+  const nutrients = getNutrientsOfPassioFoodItem(
     {
       ingredients: [passioIngredient],
       name: passioIngredient.name,
@@ -174,11 +174,13 @@ function nutrientV3(food: PassioNutrients): Nutrient[] {
     if (key === 'weight') {
     } else {
       const amount = food[key] as unknown as UnitMass;
-      nutrients.push({
-        id: key as NutrientType,
-        amount: amount.value,
-        unit: amount.unit,
-      });
+      if (amount?.value !== undefined) {
+        nutrients.push({
+          id: key,
+          amount: amount.value,
+          unit: amount.unit,
+        });
+      }
     }
   }
 

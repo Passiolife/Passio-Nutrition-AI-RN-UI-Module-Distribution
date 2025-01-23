@@ -19,9 +19,7 @@ export const useNutritionInformation = () => {
         i.id !== 'calories' &&
         i.id !== 'carbs' &&
         i.id !== 'fat' &&
-        i.id !== 'protein' &&
-        i.amount !== undefined &&
-        i.amount !== null
+        i.id !== 'protein'
     ),
     onInfoPress,
     isInfo,

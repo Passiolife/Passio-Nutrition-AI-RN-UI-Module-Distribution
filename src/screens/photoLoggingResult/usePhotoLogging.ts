@@ -1,6 +1,10 @@
 import type { ParamList } from '../../navigaitons';
 import { useCallback, useRef, useState, useEffect } from 'react';
-import { createFoodLogUsingFoodDataInfo, getMealLog } from '../../utils';
+import {
+  createFoodLogUsingFoodDataInfo,
+  getMealLog,
+  getNutrientsOfPassioFoodItem,
+} from '../../utils';
 import {
   PassioFoodItem,
   PassioNutrients,
@@ -239,7 +243,7 @@ export function usePhotoLogging() {
                     assets: item,
                     customFood: customFood,
                     nutrients: passioFoodItem
-                      ? PassioSDK.getNutrientsOfPassioFoodItem(
+                      ? getNutrientsOfPassioFoodItem(
                           passioFoodItem,
                           passioFoodItem?.amount.weight
                         )

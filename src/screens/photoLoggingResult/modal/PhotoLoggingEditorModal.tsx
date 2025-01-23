@@ -1,13 +1,16 @@
 import React, { forwardRef, useImperativeHandle } from 'react';
 import { Alert, Modal, StyleSheet, View } from 'react-native';
-import { scaleHeight, scaleWidth } from '../../../utils';
+import {
+  getNutrientsOfPassioFoodItem,
+  scaleHeight,
+  scaleWidth,
+} from '../../../utils';
 import type { Branding } from '../../../contexts';
 import type { PhotoLoggingResults } from '../usePhotoLogging';
 import { usePhotoLoggingEditor } from './usePhotoLoggingEditor';
 import { EditNutritionFact } from './nutritionFact/EditNutritionFactModal';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { EditServingSizeModal } from './servingSize/EditServingSizeModal';
-import { PassioSDK } from '@passiolife/nutritionai-react-native-sdk-v3';
 import { isMissingNutrition } from '../../../utils/V3Utils';
 
 export type PhotoLoggingType = 'serving' | 'nutritionFact';
@@ -110,7 +113,7 @@ export const PhotoLoggingEditorModal = forwardRef<
             {
               ...result,
               passioFoodItem: updatedResult,
-              nutrients: PassioSDK.getNutrientsOfPassioFoodItem(
+              nutrients: getNutrientsOfPassioFoodItem(
                 updatedResult,
                 updatedResult.amount.weight
               ),
@@ -124,7 +127,7 @@ export const PhotoLoggingEditorModal = forwardRef<
           handleBarcodeClick?.({
             ...result,
             passioFoodItem: updatedResult,
-            nutrients: PassioSDK.getNutrientsOfPassioFoodItem(
+            nutrients: getNutrientsOfPassioFoodItem(
               updatedResult,
               updatedResult.amount.weight
             ),

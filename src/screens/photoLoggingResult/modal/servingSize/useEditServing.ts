@@ -8,14 +8,17 @@ import {
 } from '../../../../utils/NumberUtils';
 import { updateSlider } from '../../../../utils/V3Utils';
 import type { EditServingSizeProps } from './EditServingSizeModal';
-import {
+import type {
   PassioFoodAmount,
   PassioFoodItem,
-  PassioSDK,
 } from '@passiolife/nutritionai-react-native-sdk-v3';
 import type Slider from '@react-native-community/slider';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import type { ParamList } from '../../../../navigaitons';
+import {
+  getNutrientsOfPassioFoodItem,
+  getNutrientsReferenceOfPassioFoodItem,
+} from '../../../../utils';
 
 interface Select {
   label: string;
@@ -145,7 +148,7 @@ export const useEditServing = (props: EditServingSizeProps) => {
             ...ingredients?.[0],
             amount,
             referenceNutrients:
-              PassioSDK.getNutrientsReferenceOfPassioFoodItem(passioFoodItem),
+              getNutrientsReferenceOfPassioFoodItem(passioFoodItem),
           },
         ],
       };
@@ -155,7 +158,7 @@ export const useEditServing = (props: EditServingSizeProps) => {
       const photoLogging = {
         ...result,
         passioFoodItem: passioFoodItem,
-        nutrients: PassioSDK.getNutrientsOfPassioFoodItem(
+        nutrients: getNutrientsOfPassioFoodItem(
           passioFoodItem,
           passioFoodItem.amount.weight
         ),
