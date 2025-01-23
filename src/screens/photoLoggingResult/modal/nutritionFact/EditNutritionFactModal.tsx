@@ -368,16 +368,15 @@ export const EditNutritionFact = forwardRef<
         Portions
       </Text>
       <View style={[styles.row, { marginTop: scaleHeight(0) }]}>
-        {servingUnit !== 'gram' &&
-          renderMacro({
-            title: 'Serving',
-            value: formatNumber(servingInfo.servingQty) || 0,
-            unit: '',
-            storeRef: servingQtyRef,
-            textInput: servingQtyTextInputRef,
-            isError: isErrorQuantity,
-            setErrorState: setErrorQuantity,
-          })}
+        {renderMacro({
+          title: 'Serving',
+          value: formatNumber(servingInfo.servingQty) || 0,
+          unit: '',
+          storeRef: servingQtyRef,
+          textInput: servingQtyTextInputRef,
+          isError: isErrorQuantity,
+          setErrorState: setErrorQuantity,
+        })}
         {/* <>
           {servingUnit !== 'gram' &&
             renderMacro({
@@ -416,28 +415,35 @@ export const EditNutritionFact = forwardRef<
             }}
             style={styles.dropDown}
             onChange={(item) => {
-              if (item.value.toLowerCase() === 'gram') {
+              setServingUnit(item.value);
+              servingUnitRef.current = item.value;
+              if (
+                item.value.toLowerCase() === 'gram' ||
+                item.value.toLowerCase() === 'ml'
+              ) {
+                weightTextInputRef?.current?.setNativeProps?.({
+                  text: formatNumber(weightRef?.current)?.toString(),
+                });
                 servingQtyTextInputRef?.current?.setNativeProps?.({
-                  text: weightRef?.current,
+                  text: formatNumber(weightRef?.current)?.toString(),
                 });
                 servingQtyRef.current = weightRef?.current;
-                setErrorQuantity(false);
+                setErrorWeight(false);
               }
-
-              servingUnitRef.current = item.value;
-              setServingUnit(item.value);
             }}
           />
         </View>
-        {renderMacro({
-          title: 'Weight',
-          value: formatNumber(servingInfo.weight) || 0,
-          unit: 'g',
-          storeRef: weightRef,
-          textInput: weightTextInputRef,
-          isError: isErrorWeight,
-          setErrorState: setErrorWeight,
-        })}
+        {servingUnit !== 'gram' &&
+          servingUnit !== 'ml' &&
+          renderMacro({
+            title: 'Weight',
+            value: formatNumber(servingInfo.weight) || 0,
+            unit: 'g',
+            storeRef: weightRef,
+            textInput: weightTextInputRef,
+            isError: isErrorWeight,
+            setErrorState: setErrorWeight,
+          })}
       </View>
 
       <View style={styles.buttonContainer}>
@@ -497,7 +503,7 @@ const customStyles = ({ border, white }: Branding) =>
       borderRadius: 8,
       marginVertical: scaleHeight(8),
       paddingHorizontal: 8,
-      paddingVertical: scaleHeight(8),
+      paddingVertical: scaleHeight(10),
     },
     input: {
       borderColor: border,

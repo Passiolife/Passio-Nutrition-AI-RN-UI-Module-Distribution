@@ -110,12 +110,13 @@ export const useEditNutritionFact = (props: EditNutritionFactProps) => {
   const weightTextInputRef = useRef<TextInput>(null);
 
   const onUpdatePassioFoodItem = useCallback(() => {
-    const updatedWeight = convertNumberInput(weightRef.current);
+    const updatedQty = convertNumberInput(servingQtyRef.current);
     const updatedUnit = servingUnitRef.current.trim().toLowerCase();
-    const updatedQty =
-      updatedUnit === 'gram'
-        ? updatedWeight
-        : Number(convertNumberInput(servingQtyRef.current) || 0);
+
+    const updatedWeight =
+      updatedUnit === 'gram' || updatedUnit === 'ml'
+        ? updatedQty
+        : Number(convertNumberInput(weightRef.current) || 0);
 
     const updatedCalories = convertNumberInput(caloriesRef.current);
     const updatedCarbs = convertNumberInput(carbsRef.current);
@@ -241,12 +242,12 @@ export const useEditNutritionFact = (props: EditNutritionFactProps) => {
 
   const onUpdateNutritionUpdate = useCallback(async () => {
     const updatedUnit = servingUnitRef.current.trim().toLowerCase();
-    const updatedWeight = Number(weightRef.current || 0);
+    const updatedQty = Number(servingQtyRef.current || 0);
 
-    const updatedQty =
-      updatedUnit === 'gram'
-        ? updatedWeight
-        : Number(servingQtyRef.current || 0);
+    const updatedWeight =
+      updatedUnit === 'gram' || updatedUnit === 'ml'
+        ? updatedQty
+        : Number(weightRef.current || 0);
 
     if (!updatedQty || updatedQty <= 0) {
       Alert.alert('Please enter valid serving');
