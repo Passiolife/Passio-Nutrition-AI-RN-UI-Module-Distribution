@@ -42,6 +42,7 @@ export const PictureLoggingResultItemView = (props: Props) => {
     imageName,
     onFoodLogSelect,
     isSelected,
+    type,
     bottom,
     onEditServingInfo,
     onEditNutritionFact,
@@ -146,18 +147,20 @@ export const PictureLoggingResultItemView = (props: Props) => {
       </TouchableOpacity>
       {isInvalidNutritionFact ? (
         <>
-          <TouchableOpacity
-            onPress={onEditNutritionFact}
-            style={{
-              padding: 12,
-            }}
-          >
-            <Image
-              source={ICONS.editGreyIc}
-              resizeMode="contain"
-              style={{ height: 16, width: 16 }}
-            />
-          </TouchableOpacity>
+          {type !== 'foodItem' && (
+            <TouchableOpacity
+              onPress={onEditNutritionFact}
+              style={{
+                padding: 12,
+              }}
+            >
+              <Image
+                source={ICONS.editGreyIc}
+                resizeMode="contain"
+                style={{ height: 16, width: 16 }}
+              />
+            </TouchableOpacity>
+          )}
         </>
       ) : (
         <TouchableOpacity onPress={onFoodLogSelect} style={styles.radioPress}>

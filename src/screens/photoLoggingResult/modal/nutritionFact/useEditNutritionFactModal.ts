@@ -1,5 +1,5 @@
 import { useRef, useCallback, useState } from 'react';
-import { useBranding, useServices } from '../../../../contexts';
+import { useBranding } from '../../../../contexts';
 import type { EditNutritionFactProps } from './EditNutritionFactModal';
 import {
   PassioFoodAmount,
@@ -29,7 +29,6 @@ export type NavigationProps = StackNavigationProp<
 
 export const useEditNutritionFact = (props: EditNutritionFactProps) => {
   const branding = useBranding();
-  const services = useServices();
 
   const result = props.result;
   const referenceNutrients = props.result?.ingredients?.[0].referenceNutrients;
@@ -277,17 +276,17 @@ export const useEditNutritionFact = (props: EditNutritionFactProps) => {
     }
 
     let existedCustomFood: CustomFood | undefined;
-    if (barcodeRef.current.length > 0) {
-      const customFoods = await services.dataService.getCustomFoodLogs();
-      existedCustomFood = customFoods?.find(
-        (i) => i.barcode === barcodeRef.current
-      );
-    }
+    // if (barcodeRef.current.length > 0) {
+    //   const customFoods = await services.dataService.getCustomFoodLogs();
+    //   existedCustomFood = customFoods?.find(
+    //     (i) => i.barcode === barcodeRef.current
+    //   );
+    // }
 
     if (updatedResult) {
       onDone?.(updatedResult, existedCustomFood);
     }
-  }, [onDone, onUpdatePassioFoodItem, services.dataService]);
+  }, [onDone, onUpdatePassioFoodItem]);
 
   const onBarcodePress = () => {
     const updatedResult = onUpdatePassioFoodItem();

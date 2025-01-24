@@ -108,7 +108,7 @@ export const PhotoLoggingEditorModal = forwardRef<
         assets={result.assets}
         button={props.nutritionFactButtonName}
         note={props.nutritionFactNote}
-        onDone={(updatedResult, customFood) => {
+        onDone={(updatedResult) => {
           props?.onUpdateFoodItem?.(
             {
               ...result,
@@ -117,7 +117,6 @@ export const PhotoLoggingEditorModal = forwardRef<
                 updatedResult,
                 updatedResult.amount.weight
               ),
-              customFood: customFood,
             },
             'nutritionFact'
           );
