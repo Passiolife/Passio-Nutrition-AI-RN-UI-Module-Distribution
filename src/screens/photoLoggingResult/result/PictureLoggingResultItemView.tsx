@@ -42,7 +42,6 @@ export const PictureLoggingResultItemView = (props: Props) => {
     imageName,
     onFoodLogSelect,
     isSelected,
-    type,
     bottom,
     onEditServingInfo,
     onEditNutritionFact,
