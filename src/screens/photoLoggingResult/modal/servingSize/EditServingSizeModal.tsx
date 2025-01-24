@@ -108,18 +108,20 @@ export const EditServingSizeModal = forwardRef<
           </Text>
         </View>
         <View>
-          <TouchableOpacity
-            onPress={handleNutritionFactClick}
-            style={{
-              padding: 12,
-            }}
-          >
-            <Image
-              source={ICONS.editGreyIc}
-              resizeMode="contain"
-              style={{ height: 16, width: 16 }}
-            />
-          </TouchableOpacity>
+          {result.resultType !== 'foodItem' ? (
+            <TouchableOpacity
+              onPress={handleNutritionFactClick}
+              style={{
+                padding: 12,
+              }}
+            >
+              <Image
+                source={ICONS.editGreyIc}
+                resizeMode="contain"
+                style={{ height: 16, width: 16 }}
+              />
+            </TouchableOpacity>
+          ) : null}
         </View>
       </View>
       <Text size={'_16px'} weight={'600'} style={styles.servingSizeTitle}>

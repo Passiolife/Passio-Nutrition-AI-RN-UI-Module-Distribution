@@ -99,7 +99,7 @@ export const PictureLoggingResult = ({
           const foodDataInfo = item.foodDataInfo;
           return (
             <PictureLoggingResultItemView
-              foodName={item.passioFoodItem?.name ?? ''}
+              foodName={item.resultType ?? ''}
               imageName={item.passioFoodItem?.iconId || foodDataInfo?.iconID}
               type={item.resultType}
               assets={item.assets}
