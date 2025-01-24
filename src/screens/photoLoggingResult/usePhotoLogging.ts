@@ -365,10 +365,6 @@ export function usePhotoLogging() {
   }, []);
 
   useEffect(() => {
-    fetchAchievedGoal();
-  }, [fetchAchievedGoal]);
-
-  useEffect(() => {
     updateMacroOnSelection(passioAdvisorFoodInfo ?? []);
   }, [passioAdvisorFoodInfo, updateMacroOnSelection]);
 

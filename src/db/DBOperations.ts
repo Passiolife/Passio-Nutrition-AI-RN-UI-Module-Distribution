@@ -203,7 +203,9 @@ export const getImage = async (
       );
       resolve(convertResultToImage(results)?.[0]);
     } catch (error) {
-      console.error(`Failed to get image  ${error} ========= ${id}`);
+      console.warn(
+        `Failed to get image  ${JSON.stringify(error)} ========= ${id}`
+      );
       reject(`Failed to get image ${error} ========= ${id}`);
       throw error;
     }
