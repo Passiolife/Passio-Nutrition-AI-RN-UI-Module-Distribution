@@ -18,7 +18,6 @@ import {
   isMissingNutrition,
 } from '../../../../utils/V3Utils';
 import { formatNumber } from '../../../../utils/NumberUtils';
-import type { CustomFood } from '../../../../models';
 import { Units } from '../../../../screens/foodCreator/data';
 import { getNutrientsOfPassioFoodItem } from '../../../../utils/';
 
@@ -239,6 +238,30 @@ export const useEditNutritionFact = (props: EditNutritionFactProps) => {
     }
   }, [result]);
 
+  const isSamePreviousValue = useCallback(() => {
+    return (
+      nameRef.current === name &&
+      barcodeRef.current === barcode &&
+      caloriesRef.current === calories &&
+      carbsRef.current === carbs &&
+      proteinRef.current === protein &&
+      fatRef.current === fat &&
+      servingQtyRef.current === passioSelectedQuantity &&
+      weightRef.current === passioWeight &&
+      servingUnitRef.current === passioSelectedUnit
+    );
+  }, [
+    barcode,
+    calories,
+    carbs,
+    fat,
+    name,
+    passioSelectedQuantity,
+    passioSelectedUnit,
+    passioWeight,
+    protein,
+  ]);
+
   const onUpdateNutritionUpdate = useCallback(async () => {
     const updatedUnit = servingUnitRef.current.trim().toLowerCase();
     const updatedQty = Number(servingQtyRef.current || 0);
@@ -275,18 +298,10 @@ export const useEditNutritionFact = (props: EditNutritionFactProps) => {
       return;
     }
 
-    let existedCustomFood: CustomFood | undefined;
-    // if (barcodeRef.current.length > 0) {
-    //   const customFoods = await services.dataService.getCustomFoodLogs();
-    //   existedCustomFood = customFoods?.find(
-    //     (i) => i.barcode === barcodeRef.current
-    //   );
-    // }
-
     if (updatedResult) {
-      onDone?.(updatedResult, existedCustomFood);
+      onDone?.(updatedResult, isSamePreviousValue());
     }
-  }, [onDone, onUpdatePassioFoodItem]);
+  }, [isSamePreviousValue, onDone, onUpdatePassioFoodItem]);
 
   const onBarcodePress = () => {
     const updatedResult = onUpdatePassioFoodItem();

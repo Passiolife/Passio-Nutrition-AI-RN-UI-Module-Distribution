@@ -16,12 +16,11 @@ import { formatNumber } from '../../../../utils/NumberUtils';
 import { useEditNutritionFact } from './useEditNutritionFactModal';
 import { ICONS } from '../../../../assets';
 import { inValidNumberInput } from '../../../../utils/V3Utils';
-import type { CustomFood } from '../../../../models';
 import { Dropdown } from 'react-native-element-dropdown';
 
 export interface EditNutritionFactProps {
   onClose?: () => void;
-  onDone?: (result: PassioFoodItem, customFood?: CustomFood) => void;
+  onDone?: (result: PassioFoodItem, isSameValue?: boolean) => void;
   result: PassioFoodItem;
   openBarcodeScanner?: (result: PassioFoodItem) => void;
   assets?: string;
@@ -217,6 +216,7 @@ export const EditNutritionFact = forwardRef<
         <TextInput
           ref={barcodeTextInputRef}
           defaultValue={info.barcode}
+          editable={false}
           style={[styles.flex1, styles.inputNutritionFact]}
           placeholderTextColor={branding.secondaryText}
           placeholder="Enter barcode"

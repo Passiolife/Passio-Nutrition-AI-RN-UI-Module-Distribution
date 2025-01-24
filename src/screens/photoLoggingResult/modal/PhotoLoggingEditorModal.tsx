@@ -17,7 +17,8 @@ export type PhotoLoggingType = 'serving' | 'nutritionFact';
 interface EditServingSizeProps {
   onUpdateFoodItem?: (
     photoLoggingResults: PhotoLoggingResults,
-    from: PhotoLoggingType
+    from: PhotoLoggingType,
+    isSamePreviousValue?: boolean
   ) => void;
   openNutritionFactFromServing?: (result: PhotoLoggingResults) => void;
   onCancelPress?: () => void;
@@ -108,7 +109,7 @@ export const PhotoLoggingEditorModal = forwardRef<
         assets={result.assets}
         button={props.nutritionFactButtonName}
         note={props.nutritionFactNote}
-        onDone={(updatedResult) => {
+        onDone={(updatedResult, isSamePreviousValue) => {
           props?.onUpdateFoodItem?.(
             {
               ...result,
@@ -118,7 +119,8 @@ export const PhotoLoggingEditorModal = forwardRef<
                 updatedResult.amount.weight
               ),
             },
-            'nutritionFact'
+            'nutritionFact',
+            isSamePreviousValue
           );
           releaseEditor();
         }}

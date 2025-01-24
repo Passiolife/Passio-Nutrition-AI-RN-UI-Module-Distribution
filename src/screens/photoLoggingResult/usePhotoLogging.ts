@@ -208,7 +208,7 @@ export function usePhotoLogging() {
                   const barcode =
                     passioFoodItem?.ingredients?.[0]?.metadata?.barcode;
 
-                  let customFood;
+                  let customFood: CustomFood | undefined;
 
                   if (barcode) {
                     const customFoods =
@@ -224,29 +224,51 @@ export function usePhotoLogging() {
                     }
                   }
 
-                  info.push({
-                    ...advisorFoodInfo,
-                    isSelected: !isMissingNutrition(passioFoodItem),
-                    passioFoodItem: passioFoodItem
-                      ? {
-                          ...passioFoodItem,
-                          name: passioFoodItem?.name
-                            ? passioFoodItem.name
-                            : advisorFoodInfo.resultType === 'nutritionFacts'
-                              ? 'Scanned Nutrition Label'
-                              : '',
-                        }
-                      : undefined,
-                    uuID: uuid4.v4() as unknown as string,
-                    assets: item,
-                    customFood: customFood,
-                    nutrients: passioFoodItem
-                      ? getNutrientsOfPassioFoodItem(
-                          passioFoodItem,
-                          passioFoodItem?.amount.weight
-                        )
-                      : undefined,
-                  });
+                  const isCustomFoodAlreadyExist =
+                    info.find(
+                      (i) =>
+                        i.customFood &&
+                        customFood?.uuid &&
+                        i.customFood?.uuid === customFood?.uuid
+                    ) !== undefined;
+
+                  const isBarcode =
+                    info.find(
+                      (i) =>
+                        i.resultType === 'barcode' &&
+                        barcode &&
+                        i.passioFoodItem?.ingredients?.[0]?.metadata?.barcode &&
+                        i.passioFoodItem?.ingredients?.[0]?.metadata?.barcode &&
+                        i.passioFoodItem?.ingredients?.[0]?.metadata
+                          ?.barcode === barcode
+                    ) !== undefined;
+
+                  if (!isCustomFoodAlreadyExist && !isBarcode) {
+                    info.push({
+                      ...advisorFoodInfo,
+                      isSelected: !isMissingNutrition(passioFoodItem),
+                      passioFoodItem: passioFoodItem
+                        ? {
+                            ...passioFoodItem,
+                            name: passioFoodItem?.name
+                              ? passioFoodItem.name
+                              : advisorFoodInfo.resultType === 'nutritionFacts'
+                                ? 'Scanned Nutrition Label'
+                                : '',
+                          }
+                        : undefined,
+                      uuID: uuid4.v4() as unknown as string,
+                      assets: item,
+                      customFood: customFood,
+                      isCustomFoodCreated: customFood !== undefined,
+                      nutrients: passioFoodItem
+                        ? getNutrientsOfPassioFoodItem(
+                            passioFoodItem,
+                            passioFoodItem?.amount.weight
+                          )
+                        : undefined,
+                    });
+                  }
                 })
               );
             }
@@ -307,30 +329,39 @@ export function usePhotoLogging() {
 
   const onUpdateFoodItem = async (
     result: PhotoLoggingResults,
-    type: PhotoLoggingType
+    type: PhotoLoggingType,
+    isSamePreviousValue?: boolean
   ) => {
     let customFood = result.customFood;
-    let isCustomFoodCreated = false;
+    let isCustomFoodCreated = result.isCustomFoodCreated ?? false;
 
     if (type === 'nutritionFact') {
-      const uuid: string = customFood?.uuid ?? getCustomFoodUUID();
-      const foodRecords = await createFoodLogUsingFoodDataInfo(
-        [result],
-        services,
-        undefined,
-        undefined
-      );
-      let foodRecord = foodRecords?.[0];
-      customFood = {
-        ...foodRecord,
-        uuid: uuid,
-        refCustomFoodID: uuid,
-        barcode: result.passioFoodItem?.ingredients?.[0]?.metadata?.barcode,
-      };
-      await services.dataService.saveCustomFood(customFood);
-      isCustomFoodCreated = true;
-      if (!result.isCustomFoodCreated) {
-        customFoodCreatedModalRef?.current?.open();
+      // Editing nutrition facts of a barcode result creates a new user food.
+      // If the user changes any of the original data, and clicks “Save”,
+      // a new user food is created and the “A Custom Food Has Been Created” message is shown. Then,
+      // the user is returned to the “Your Results” screen with the user food being shown in the list of results
+
+      if (isSamePreviousValue && result.resultType === 'barcode') {
+      } else {
+        const uuid: string = customFood?.uuid ?? getCustomFoodUUID();
+        const foodRecords = await createFoodLogUsingFoodDataInfo(
+          [result],
+          services,
+          undefined,
+          undefined
+        );
+        let foodRecord = foodRecords?.[0];
+        customFood = {
+          ...foodRecord,
+          uuid: uuid,
+          refCustomFoodID: uuid,
+          barcode: result.passioFoodItem?.ingredients?.[0]?.metadata?.barcode,
+        };
+        await services.dataService.saveCustomFood(customFood);
+        isCustomFoodCreated = true;
+        if (!result.isCustomFoodCreated) {
+          customFoodCreatedModalRef?.current?.open();
+        }
       }
     }
 
