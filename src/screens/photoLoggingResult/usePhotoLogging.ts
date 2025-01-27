@@ -108,6 +108,7 @@ export function usePhotoLogging() {
   const [newMacroInfo, setNewMacroInfo] = useState<MacroInfo | undefined>(
     undefined
   );
+  const [newCustomFoodCount, setNewCustomFoodCount] = useState<number>(0);
 
   const fetTargetMacro = useCallback(async () => {
     const profile = await services.dataService.getNutritionProfile();
@@ -292,6 +293,26 @@ export function usePhotoLogging() {
 
       isSubmitting.current = false;
 
+      const unCreatedCustomFoods = selected.filter(
+        (i) =>
+          i.resultType === 'nutritionFacts' &&
+          !i.customFood &&
+          !i.isCustomFoodCreated
+      );
+
+      const customFoods = await createFoodLogUsingFoodDataInfo(
+        unCreatedCustomFoods,
+        services,
+        date,
+        meal
+      );
+
+      for (const item of customFoods) {
+        await services.dataService.saveCustomFood({
+          ...item,
+        });
+      }
+      setNewCustomFoodCount(customFoods.length);
       itemAddedToDairyViewModalRef.current?.open();
     },
 
@@ -434,11 +455,8 @@ export function usePhotoLogging() {
     const countOfSelectedFood =
       passioAdvisorFoodInfo?.filter((i) => i.isSelected).length ?? 0;
 
-    const countOfCustomFood =
-      passioAdvisorFoodInfo?.filter((i) => i.isCustomFoodCreated).length ?? 0;
-
-    if (countOfSelectedFood > 0) {
-      return `${countOfSelectedFood} Items Added To Diary\n${countOfCustomFood} Custom Food Created`;
+    if (newCustomFoodCount > 0) {
+      return `${countOfSelectedFood} Items Added To Diary\n${newCustomFoodCount} Custom Food Created`;
     } else {
       return `${countOfSelectedFood} Items Added To Diary`;
     }
