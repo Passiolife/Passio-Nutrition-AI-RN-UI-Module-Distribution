@@ -41,7 +41,7 @@ export const CustomFoodBarcodeDetect = ({
             onPress={onViewExistingPress}
             style={styles.button}
             small
-            text={'View Existing Item'}
+            text={'Use Existing Item'}
           />
         </View>
         <View style={styles.buttonContainer}>

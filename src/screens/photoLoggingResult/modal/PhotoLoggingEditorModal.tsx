@@ -11,7 +11,10 @@ import { usePhotoLoggingEditor } from './usePhotoLoggingEditor';
 import { EditNutritionFact } from './nutritionFact/EditNutritionFactModal';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { EditServingSizeModal } from './servingSize/EditServingSizeModal';
-import { isMissingNutrition } from '../../../utils/V3Utils';
+import {
+  createPassioFoodItemFromCustomFood,
+  isMissingNutrition,
+} from '../../../utils/V3Utils';
 
 export type PhotoLoggingType = 'serving' | 'nutritionFact';
 interface EditServingSizeProps {
@@ -109,6 +112,30 @@ export const PhotoLoggingEditorModal = forwardRef<
         assets={result.assets}
         button={props.nutritionFactButtonName}
         note={props.nutritionFactNote}
+        onCustomFoodOverwrite={(customFood) => {
+          const passioFoodItem = createPassioFoodItemFromCustomFood(customFood);
+          if (result) {
+            setResult(() => ({
+              ...result,
+              passioFoodItem: passioFoodItem,
+              customFood: customFood,
+              isCustomFoodCreated: true,
+              nutrients: getNutrientsOfPassioFoodItem(
+                passioFoodItem,
+                passioFoodItem.amount.weight
+              ),
+            }));
+          }
+        }}
+        onPassioFoodItemOverwrite={(item) => {
+          if (result) {
+            setResult(() => ({
+              ...result,
+              passioFoodItem: item,
+              nutrients: getNutrientsOfPassioFoodItem(item, item.amount.weight),
+            }));
+          }
+        }}
         onDone={(updatedResult, isSamePreviousValue) => {
           props?.onUpdateFoodItem?.(
             {

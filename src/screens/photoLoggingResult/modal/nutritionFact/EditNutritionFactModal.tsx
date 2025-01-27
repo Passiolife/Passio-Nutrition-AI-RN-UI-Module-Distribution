@@ -17,12 +17,15 @@ import { useEditNutritionFact } from './useEditNutritionFactModal';
 import { ICONS } from '../../../../assets';
 import { inValidNumberInput } from '../../../../utils/V3Utils';
 import { Dropdown } from 'react-native-element-dropdown';
+import type { CustomFood } from '../../../../models';
 
 export interface EditNutritionFactProps {
   onClose?: () => void;
   onDone?: (result: PassioFoodItem, isSameValue?: boolean) => void;
   result: PassioFoodItem;
   openBarcodeScanner?: (result: PassioFoodItem) => void;
+  onCustomFoodOverwrite?: (result: CustomFood) => void;
+  onPassioFoodItemOverwrite?: (result: PassioFoodItem) => void;
   assets?: string;
   button?: string;
   note?: string | React.ReactElement;
@@ -30,7 +33,11 @@ export interface EditNutritionFactProps {
 }
 
 export interface EditNutritionFactRef {
-  barcode: (barcode: string) => void;
+  barcode: (
+    barcode: string,
+    customFood?: CustomFood,
+    passioFoodItem?: PassioFoodItem | null
+  ) => void;
 }
 export const EditNutritionFact = forwardRef<
   EditNutritionFactRef,
@@ -87,10 +94,16 @@ export const EditNutritionFact = forwardRef<
   const { button = 'Save', note } = props;
 
   useImperativeHandle(ref, () => ({
-    barcode: async (item) => {
-      barcodeRef.current = item;
-      handleBarcodeScanResult(item);
-      barcodeTextInputRef?.current?.setNativeProps?.({ text: item });
+    barcode: async (item, customFood, passioFoodItem) => {
+      if (customFood) {
+        props?.onCustomFoodOverwrite?.(customFood);
+      } else if (passioFoodItem) {
+        props?.onPassioFoodItemOverwrite?.(passioFoodItem);
+      } else {
+        barcodeRef.current = item;
+        handleBarcodeScanResult(item);
+        barcodeTextInputRef?.current?.setNativeProps?.({ text: item });
+      }
     },
   }));
 

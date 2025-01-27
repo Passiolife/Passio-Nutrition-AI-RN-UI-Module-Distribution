@@ -5,9 +5,8 @@ import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import type { ParamList } from '../../../navigaitons';
 import type { EditNutritionFactRef } from './nutritionFact/EditNutritionFactModal';
-import type { BarcodeCustomResult } from '../../../models';
-import { createFoodLogByCustomFood } from '../../../screens/foodCreator/FoodCreator.utils';
-import { convertPassioFoodItemToFoodLog } from '../../../utils/V3Utils';
+import type { CustomFood } from '../../../models';
+import type { PassioFoodItem } from '@passiolife/nutritionai-react-native-sdk-v3';
 
 export type PhotoLoggingEditType =
   | 'nutrient'
@@ -24,6 +23,7 @@ export const usePhotoLoggingEditor = () => {
   const [result, setResult] = useState<PhotoLoggingResults | undefined>(
     undefined
   );
+
   const [isOpen, setOpen] = useState(false);
   const editNutritionFactRef = useRef<EditNutritionFactRef>(null);
   const branding = useBranding();
@@ -42,11 +42,19 @@ export const usePhotoLoggingEditor = () => {
     }
   };
 
-  const applyBarcode = (barcode?: string) => {
+  const applyBarcode = (
+    barcode?: string,
+    customFood?: CustomFood,
+    passioFoodItem?: PassioFoodItem | null
+  ) => {
     setOpen(true);
     navigation.goBack();
     setTimeout(() => {
-      editNutritionFactRef?.current?.barcode?.(barcode || '');
+      editNutritionFactRef?.current?.barcode?.(
+        barcode || '',
+        customFood,
+        passioFoodItem
+      );
     }, 500);
   };
 
@@ -55,16 +63,12 @@ export const usePhotoLoggingEditor = () => {
     setOpen(false);
 
     navigation.navigate('BarcodeScanScreen', {
-      onViewExistingItem: (item) => {
-        if (item?.customFood) {
-          // If the user clicks on the "View Food Item", they're navigated to the food details screen of that custom food.
-          // Might be in this case they navigate to the new create food detail screen.
-          onNavigateToEditFoodScreen(item);
-        } else {
-          // custom food doesn't exist
-          // . If the user clicks on the "View Food Item", they're navigated to the food details screen of that food item
-          onNavigateToEditFoodScreen(item);
-        }
+      onViewExistingItem: async (item) => {
+        applyBarcode(
+          item?.customFood ? '' : item?.barcode,
+          item?.customFood,
+          item?.passioIDAttributes
+        );
       },
       onBarcodePress: (item) => {
         applyBarcode(item?.customFood ? '' : item?.barcode);
@@ -76,34 +80,6 @@ export const usePhotoLoggingEditor = () => {
         setOpen(true);
       },
     });
-  };
-
-  const onNavigateToEditFoodScreen = (item?: BarcodeCustomResult) => {
-    if (item?.customFood) {
-      navigation.push('EditFoodLogScreen', {
-        foodLog: createFoodLogByCustomFood(
-          item.customFood,
-          undefined,
-          undefined
-        ),
-        customFood: item.customFood,
-        prevRouteName: 'ExistedBarcode',
-        onSaveLogPress: () => {},
-      });
-    } else {
-      if (item?.passioIDAttributes) {
-        const barcodeFoodLog = convertPassioFoodItemToFoodLog(
-          item.passioIDAttributes,
-          undefined,
-          undefined
-        );
-        navigation.push('EditFoodLogScreen', {
-          foodLog: barcodeFoodLog,
-          prevRouteName: 'Barcode',
-          onSaveLogPress: () => {},
-        });
-      }
-    }
   };
 
   const releaseEditor = () => {

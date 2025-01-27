@@ -135,25 +135,6 @@ export function usePhotoLogging() {
     }
   }, [services.dataService]);
 
-  // const fetchAchievedGoal = useCallback(async () => {
-  //   const mealLogs = await getMealLogsForDate(date, services);
-  //   const foodLogs = mealLogs.filter((i) => i.meal === meal);
-
-  //   const data = calculateDailyMacroNutrition(foodLogs);
-
-  //   setMacroInfo((item) => {
-  //     let prevMacro = item || {};
-  //     let updatedMacro: MacroInfo = {
-  //       ...prevMacro,
-  //       calories: data.amountOfCalories,
-  //       carbs: data.amountOfCarbs,
-  //       fat: data.amountOfFat,
-  //       protein: data.amountOfProtein,
-  //     };
-  //     return updatedMacro;
-  //   });
-  // }, [date, meal, services]);
-
   const updateMacroOnSelection = useCallback(
     async (result: PhotoLoggingResults[]) => {
       const nutrients: PassioNutrients[] = result
