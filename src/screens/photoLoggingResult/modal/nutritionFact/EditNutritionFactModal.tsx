@@ -18,6 +18,7 @@ import { ICONS } from '../../../../assets';
 import { inValidNumberInput } from '../../../../utils/V3Utils';
 import { Dropdown } from 'react-native-element-dropdown';
 import type { CustomFood } from '../../../../models';
+import { PassioFoodIcon } from '../../../../components/passio/PassioFoodIcon';
 
 export interface EditNutritionFactProps {
   onClose?: () => void;
@@ -283,19 +284,23 @@ export const EditNutritionFact = forwardRef<
       ) : null}
       <View style={[styles.container]}>
         <View style={styles.imageContainer}>
-          <Image
-            resizeMode="cover"
-            resizeMethod="resize"
-            style={styles.image}
-            source={{
-              uri: Image.resolveAssetSource({
-                uri:
-                  Platform.OS === 'android'
-                    ? `${'file://' + props.assets}`
-                    : props.assets,
-              }).uri,
-            }}
-          />
+          {props.result.iconId ? (
+            <PassioFoodIcon iconID={props.result.iconId} style={styles.image} />
+          ) : (
+            <Image
+              resizeMode="cover"
+              resizeMethod="resize"
+              style={styles.image}
+              source={{
+                uri: Image.resolveAssetSource({
+                  uri:
+                    Platform.OS === 'android'
+                      ? `${'file://' + props.assets}`
+                      : props.assets,
+                }).uri,
+              }}
+            />
+          )}
         </View>
         <View
           style={{
