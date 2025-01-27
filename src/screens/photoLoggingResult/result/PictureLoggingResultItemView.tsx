@@ -87,7 +87,12 @@ export const PictureLoggingResultItemView = (props: Props) => {
               flex: 1,
             }}
           >
-            <Text weight="600" size="_14px" style={styles.text}>
+            <Text
+              weight="600"
+              size="_14px"
+              style={styles.text}
+              numberOfLines={1}
+            >
               {isInvalidNutritionFact ? 'Nutrition Facts Incomplete' : foodName}
             </Text>
             <Text
@@ -243,6 +248,7 @@ const styles = StyleSheet.create({
     marginStart: 8,
     marginVertical: 2,
     marginRight: 10,
+    flex: 1,
   },
   bottom: {
     marginStart: 8,

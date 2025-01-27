@@ -96,11 +96,10 @@ export const PictureLoggingResult = ({
         showsVerticalScrollIndicator={false}
         ListEmptyComponent={renderNoDataFound}
         renderItem={({ item }) => {
-          const foodDataInfo = item.foodDataInfo;
           return (
             <PictureLoggingResultItemView
-              foodName={item.foodDataInfo?.foodName ?? ''}
-              imageName={item.passioFoodItem?.iconId || foodDataInfo?.iconID}
+              foodName={item.passioFoodItem?.name ?? ''}
+              imageName={item.passioFoodItem?.iconId}
               type={item.resultType}
               assets={item.assets}
               foodItem={item.passioFoodItem}
