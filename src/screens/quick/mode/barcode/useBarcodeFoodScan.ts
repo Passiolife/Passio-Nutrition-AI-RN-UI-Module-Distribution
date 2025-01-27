@@ -185,13 +185,15 @@ export const useBarcodeFoodScan = () => {
           undefined
         );
         let foodRecord = foodRecords?.[0];
-        if (foodRecord && !item.customFood) {
-          const uuid: string = getCustomFoodUUID();
-          foodRecord.refCode = uuid;
-          foodRecord.refCustomFoodID = uuid;
+        const customFood = item.customFood;
+        if (foodRecord) {
+          const customFoodUUID: string =
+            customFood?.uuid || getCustomFoodUUID();
+          foodRecord.refCode = customFoodUUID;
+          foodRecord.refCustomFoodID = customFoodUUID;
           services.dataService.saveCustomFood({
             ...foodRecord,
-            uuid: uuid,
+            uuid: customFoodUUID,
             barcode: foodRecord?.foodItems?.[0]?.barcode,
           });
           onSavedLog(foodRecord);

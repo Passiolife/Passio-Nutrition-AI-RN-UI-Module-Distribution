@@ -132,6 +132,8 @@ export const PhotoLoggingEditorModal = forwardRef<
             setResult(() => ({
               ...result,
               passioFoodItem: item,
+              customFood: undefined,
+              isCustomFoodCreated: false,
               nutrients: getNutrientsOfPassioFoodItem(item, item.amount.weight),
             }));
           }

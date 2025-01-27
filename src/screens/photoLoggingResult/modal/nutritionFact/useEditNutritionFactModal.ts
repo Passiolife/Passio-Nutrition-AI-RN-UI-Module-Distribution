@@ -1,11 +1,10 @@
-import { useRef, useCallback, useState } from 'react';
+import { useRef, useCallback, useState, useEffect } from 'react';
 import { useBranding } from '../../../../contexts';
 import type { EditNutritionFactProps } from './EditNutritionFactModal';
 import {
   PassioFoodAmount,
   PassioFoodItem,
   PassioIngredient,
-  PassioSDK,
   ServingSize,
   ServingUnit,
 } from '@passiolife/nutritionai-react-native-sdk-v3';
@@ -14,10 +13,8 @@ import type { StackNavigationProp } from '@react-navigation/stack';
 import type { ParamList } from '../../../../navigaitons';
 import {
   convertNumberInput,
-  inValidNumberInput,
   isMissingNutrition,
 } from '../../../../utils/V3Utils';
-import { formatNumber } from '../../../../utils/NumberUtils';
 import { Units } from '../../../../screens/foodCreator/data';
 import { getNutrientsOfPassioFoodItem } from '../../../../utils/';
 
@@ -29,74 +26,33 @@ export type NavigationProps = StackNavigationProp<
 export const useEditNutritionFact = (props: EditNutritionFactProps) => {
   const branding = useBranding();
 
-  const result = props.result;
-  const referenceNutrients = props.result?.ingredients?.[0].referenceNutrients;
-  const nutrients = getNutrientsOfPassioFoodItem(
-    result,
-    result?.amount?.weight ?? 100
-  );
+  const [_result, setResult] = useState(props.result);
+  const [servingUnit, setServingUnit] = useState<string>();
 
-  const passioAmount = props.result?.amount;
-  const calories = (
-    referenceNutrients?.calories?.value !== undefined
-      ? (nutrients?.calories?.value ?? '')
-      : ''
-  ).toString();
+  //References
+  const caloriesRef = useRef<string | undefined>();
+  const iconIDRef = useRef<string | undefined>();
+  const carbsRef = useRef<string | undefined>();
+  const proteinRef = useRef<string | undefined>();
+  const fatRef = useRef<string | undefined>();
+  const servingQtyRef = useRef<string | undefined>();
+  const weightRef = useRef<string | undefined>();
+  const servingUnitRef = useRef<string>('gram');
+  const nameRef = useRef<string | undefined>();
+  const barcodeRef = useRef<string | undefined>();
 
-  const carbs = (
-    referenceNutrients?.carbs?.value !== undefined
-      ? (nutrients?.carbs?.value ?? '')
-      : ''
-  ).toString();
-
-  const protein = (
-    referenceNutrients?.protein?.value !== undefined
-      ? (nutrients?.protein?.value ?? '')
-      : ''
-  ).toString();
-
-  const fat = (
-    referenceNutrients?.fat?.value !== undefined
-      ? (nutrients?.fat?.value ?? '')
-      : ''
-  ).toString();
-
-  const barcode = result?.ingredients?.[0]?.metadata?.barcode;
-  const iconID = result?.iconId;
-  const name = result?.name || result?.ingredients?.[0].name || '';
-  const passioWeight = (passioAmount?.weight.value ?? '').toString();
-  const passioSelectedQuantity = (
-    passioAmount?.selectedQuantity ?? ''
-  ).toString();
-  const passioSelectedUnit = (
-    passioAmount?.selectedUnit ?? 'serving'
-  ).toString();
-
-  const [isErrorName, setErrorName] = useState<boolean>(!name);
-  const [isErrorCalories, setErrorCalories] = useState<boolean>(!calories);
-  const [isErrorCarbs, setErrorCarbs] = useState<boolean>(!carbs);
-  const [isErrorProtein, setErrorProtein] = useState<boolean>(!protein);
-  const [isErrorFat, setErrorFat] = useState<boolean>(!fat);
-  const [isErrorWeight, setErrorWeight] = useState<boolean>(!passioWeight);
-  const [isErrorQuantity, setErrorQuantity] = useState<boolean>(
-    !passioSelectedQuantity
-  );
-  const [isErrorServingUnit, seErrorServingUnit] =
-    useState<boolean>(!passioSelectedUnit);
-
+  //Error handle
+  const [isErrorName, setErrorName] = useState<boolean>();
+  const [isErrorCalories, setErrorCalories] = useState<boolean>();
+  const [isErrorCarbs, setErrorCarbs] = useState<boolean>();
+  const [isErrorProtein, setErrorProtein] = useState<boolean>();
+  const [isErrorFat, setErrorFat] = useState<boolean>();
+  const [isErrorWeight, setErrorWeight] = useState<boolean>();
+  const [isErrorQuantity, setErrorQuantity] = useState<boolean>();
+  const [isErrorServingUnit, seErrorServingUnit] = useState<boolean>();
   const { onClose, onDone } = props;
 
-  const caloriesRef = useRef(calories);
-  const carbsRef = useRef(carbs);
-  const proteinRef = useRef(protein);
-  const fatRef = useRef(fat);
-  const servingQtyRef = useRef(passioSelectedQuantity);
-  const weightRef = useRef(passioWeight);
-  const servingUnitRef = useRef(passioSelectedUnit);
-  const [servingUnit, setServingUnit] = useState<string>(passioSelectedUnit);
-
-  const nameRef = useRef(name ?? '');
-  const barcodeRef = useRef(barcode ?? '');
+  //Text input references
   const barcodeTextInputRef = useRef<TextInput>(null);
   const nameTextInputRef = useRef<TextInput>(null);
   const caloriesTextInputRef = useRef<TextInput>(null);
@@ -107,10 +63,106 @@ export const useEditNutritionFact = (props: EditNutritionFactProps) => {
   const selectedUnitTextInputRef = useRef<TextInput>(null);
   const weightTextInputRef = useRef<TextInput>(null);
 
+  const getPredefineValues = useCallback((passioResult: PassioFoodItem) => {
+    const passioAmount = passioResult.amount;
+    const referenceNutrients =
+      passioResult?.ingredients?.[0].referenceNutrients;
+    const nutrients = getNutrientsOfPassioFoodItem(
+      passioResult,
+      passioResult?.amount?.weight ?? 100
+    );
+
+    const name =
+      passioResult?.name || passioResult?.ingredients?.[0].name || '';
+
+    const barcode = passioResult?.ingredients?.[0]?.metadata?.barcode;
+    const iconID = passioResult?.iconId;
+    const passioWeight = (passioAmount?.weight.value ?? '').toString();
+    const passioSelectedQuantity = (
+      passioAmount?.selectedQuantity ?? ''
+    ).toString();
+    const passioSelectedUnit = (
+      passioAmount?.selectedUnit ?? 'serving'
+    ).toString();
+
+    const calories = (
+      referenceNutrients?.calories?.value !== undefined
+        ? (nutrients?.calories?.value ?? '')
+        : ''
+    ).toString();
+
+    const carbs = (
+      referenceNutrients?.carbs?.value !== undefined
+        ? (nutrients?.carbs?.value ?? '')
+        : ''
+    ).toString();
+
+    const protein = (
+      referenceNutrients?.protein?.value !== undefined
+        ? (nutrients?.protein?.value ?? '')
+        : ''
+    ).toString();
+
+    const fat = (
+      referenceNutrients?.fat?.value !== undefined
+        ? (nutrients?.fat?.value ?? '')
+        : ''
+    ).toString();
+
+    return {
+      calories: calories,
+      carbs: carbs,
+      protein: protein,
+      fat: fat,
+      name: name,
+      weight: passioWeight,
+      qty: passioSelectedQuantity,
+      unit: passioSelectedUnit,
+      barcode: barcode,
+      iconID: iconID,
+    };
+  }, []);
+
+  useEffect(() => {
+    const passioResult = props.result;
+    setResult(passioResult);
+    const {
+      name,
+      calories,
+      fat,
+      protein,
+      barcode,
+      carbs,
+      iconID,
+      qty,
+      unit,
+      weight,
+    } = getPredefineValues(props.result);
+
+    nameRef.current = name;
+    caloriesRef.current = calories;
+    carbsRef.current = carbs;
+    fatRef.current = fat;
+    proteinRef.current = protein;
+    barcodeRef.current = barcode;
+    weightRef.current = weight;
+    servingQtyRef.current = qty;
+    servingUnitRef.current = unit;
+    iconIDRef.current = iconID;
+    setServingUnit(unit);
+    setErrorName(!name);
+    setErrorCalories(!calories);
+    setErrorCarbs(!carbs);
+    setErrorFat(!fat);
+    setErrorProtein(!protein);
+    seErrorServingUnit(!unit);
+    setErrorWeight(!weight);
+    setErrorQuantity(!qty);
+  }, [getPredefineValues, props.result]);
+
   const onUpdatePassioFoodItem = useCallback(() => {
     const updatedQty = convertNumberInput(servingQtyRef.current);
-    const updatedUnit = servingUnitRef.current.trim().toLowerCase();
-
+    const updatedUnit = servingUnitRef?.current?.trim().toLowerCase();
     const updatedWeight =
       updatedUnit === 'gram' || updatedUnit === 'ml'
         ? updatedQty
@@ -120,18 +172,18 @@ export const useEditNutritionFact = (props: EditNutritionFactProps) => {
     const updatedCarbs = convertNumberInput(carbsRef.current);
     const updatedProtein = convertNumberInput(proteinRef.current);
     const updatedFat = convertNumberInput(fatRef.current);
-
     const updatedName = nameRef.current;
     const updatedBarcode = barcodeRef.current;
 
-    let passioFoodItem: PassioFoodItem | undefined | null = result;
+    let passioFoodItem: PassioFoodItem | undefined | null = props.result ?? {};
 
-    let ingredient: PassioIngredient | undefined = result?.ingredients?.[0];
+    let ingredient: PassioIngredient | undefined =
+      props.result?.ingredients?.[0];
 
     // Applied serving unit
     let servingUnits: ServingUnit[] = [];
     const defaultServingUnit: ServingUnit[] =
-      updatedUnit.toLowerCase() !== 'gram'
+      updatedUnit?.toLowerCase?.() !== 'gram'
         ? [
             {
               unit: 'g',
@@ -184,7 +236,7 @@ export const useEditNutritionFact = (props: EditNutritionFactProps) => {
 
       passioFoodItem = {
         ...passioFoodItem,
-        name: updatedName,
+        name: updatedName ?? '',
         amount: {
           ...passioFoodItem.amount,
           ...amount,
@@ -192,7 +244,7 @@ export const useEditNutritionFact = (props: EditNutritionFactProps) => {
         ingredients: [
           {
             ...ingredient,
-            name: updatedName,
+            name: updatedName ?? '',
             metadata: {
               ...ingredient.metadata,
               barcode: updatedBarcode,
@@ -236,9 +288,11 @@ export const useEditNutritionFact = (props: EditNutritionFactProps) => {
     } else {
       return passioFoodItem;
     }
-  }, [result]);
+  }, [props.result]);
 
   const isSamePreviousValue = useCallback(() => {
+    const { name, calories, fat, protein, barcode, carbs, qty, unit, weight } =
+      getPredefineValues(props.result);
     return (
       nameRef.current === name &&
       barcodeRef.current === barcode &&
@@ -246,24 +300,14 @@ export const useEditNutritionFact = (props: EditNutritionFactProps) => {
       carbsRef.current === carbs &&
       proteinRef.current === protein &&
       fatRef.current === fat &&
-      servingQtyRef.current === passioSelectedQuantity &&
-      weightRef.current === passioWeight &&
-      servingUnitRef.current === passioSelectedUnit
+      servingQtyRef.current === qty &&
+      weightRef.current === weight &&
+      servingUnitRef.current === unit
     );
-  }, [
-    barcode,
-    calories,
-    carbs,
-    fat,
-    name,
-    passioSelectedQuantity,
-    passioSelectedUnit,
-    passioWeight,
-    protein,
-  ]);
+  }, [getPredefineValues, props.result]);
 
   const onUpdateNutritionUpdate = useCallback(async () => {
-    const updatedUnit = servingUnitRef.current.trim().toLowerCase();
+    const updatedUnit = servingUnitRef?.current?.trim().toLowerCase();
     const updatedQty = Number(servingQtyRef.current || 0);
 
     const updatedWeight =
@@ -310,83 +354,8 @@ export const useEditNutritionFact = (props: EditNutritionFactProps) => {
     }
   };
 
-  const handleBarcodeScanResult = async (scannedBarcode: string) => {
-    const foodItem =
-      await PassioSDK.fetchFoodItemForProductCode(scannedBarcode);
-    if (foodItem) {
-      const newNutrients = getNutrientsOfPassioFoodItem(
-        foodItem,
-        foodItem?.amount.weight
-      );
-
-      if (caloriesRef.current && caloriesRef.current.trim().length === 0) {
-        const cal = (newNutrients?.calories?.value ?? '').toString();
-        setErrorCalories(inValidNumberInput(cal));
-        caloriesTextInputRef?.current?.setNativeProps?.({
-          text: formatNumber(cal)?.toString(),
-        });
-      }
-
-      if (carbsRef.current.trim().length === 0) {
-        const newCarbs = (newNutrients?.carbs?.value ?? '').toString();
-        setErrorCarbs(inValidNumberInput(newCarbs));
-        carbsTextInputRef?.current?.setNativeProps?.({
-          text: formatNumber(newCarbs)?.toString(),
-        });
-      }
-
-      if (proteinRef.current.trim().length === 0) {
-        const newProtein = (newNutrients?.protein?.value ?? '').toString();
-        setErrorProtein(inValidNumberInput(newProtein));
-        proteinTextInputRef?.current?.setNativeProps?.({
-          text: formatNumber(newProtein)?.toString(),
-        });
-      }
-
-      if (fatRef.current.trim().length === 0) {
-        const newFat = (newNutrients?.fat?.value ?? '').toString();
-        setErrorFat(inValidNumberInput(newFat));
-        fatTextInputRef?.current?.setNativeProps?.({
-          text: formatNumber(newFat)?.toString(),
-        });
-      }
-
-      if (servingUnitRef.current.trim().length === 0) {
-        const newUnit = foodItem?.amount?.selectedUnit;
-        seErrorServingUnit(newUnit.length === 0);
-        selectedUnitTextInputRef?.current?.setNativeProps?.({
-          text: newUnit,
-        });
-      }
-
-      if (weightRef.current.trim().length === 0 || weightRef?.current === '0') {
-        const newWeight = foodItem?.amount?.weight?.value;
-        setErrorWeight(inValidNumberInput(newWeight.toString()));
-        weightTextInputRef?.current?.setNativeProps?.({
-          text: formatNumber(newWeight)?.toString(),
-        });
-      }
-
-      if (
-        servingQtyRef.current.trim().length === 0 ||
-        servingQtyRef?.current === '0'
-      ) {
-        const newQty = foodItem?.amount?.selectedQuantity;
-        setErrorQuantity(inValidNumberInput(newQty.toString()));
-        servingQtyTextInputRef?.current?.setNativeProps?.({
-          text: formatNumber(newQty)?.toString(),
-        });
-      }
-
-      if (nameRef.current.trim().length === 0) {
-        const newName = foodItem?.name;
-        setErrorName(newName.length === 0);
-
-        nameTextInputRef?.current?.setNativeProps?.({
-          text: newName ?? '',
-        });
-      }
-    }
+  const handleBarcodeScanResult = async (barcode: string) => {
+    barcodeRef.current = barcode;
   };
 
   const allUnits = Units.map((item) => {
@@ -394,12 +363,12 @@ export const useEditNutritionFact = (props: EditNutritionFactProps) => {
       label: item,
       value: item,
     };
-  }).filter((i) => i.value !== passioSelectedUnit);
+  }).filter((i) => i.value !== servingUnitRef.current);
 
   const servings = [
     {
-      label: passioSelectedUnit,
-      value: passioSelectedUnit,
+      label: servingUnitRef.current,
+      value: servingUnitRef.current,
     },
     ...allUnits,
   ];
@@ -420,20 +389,20 @@ export const useEditNutritionFact = (props: EditNutritionFactProps) => {
     nameRef,
     barcodeRef,
     info: {
-      label: name,
-      barcode: barcode,
-      iconID: iconID,
+      label: nameRef.current,
+      barcode: barcodeRef.current,
+      iconID: iconIDRef.current,
     },
     servingInfo: {
-      weight: passioWeight,
-      servingUnit: passioSelectedUnit,
-      servingQty: passioSelectedQuantity,
+      weight: weightRef.current,
+      servingUnit: servingUnitRef.current,
+      servingQty: servingQtyRef.current,
     },
     macro: {
-      calories,
-      carbs,
-      protein,
-      fat,
+      calories: caloriesRef.current,
+      carbs: carbsRef.current,
+      protein: proteinRef.current,
+      fat: fatRef.current,
     },
     nameTextInputRef,
     caloriesTextInputRef,

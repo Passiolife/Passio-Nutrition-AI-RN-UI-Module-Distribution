@@ -47,7 +47,6 @@ export const usePhotoLoggingEditor = () => {
     customFood?: CustomFood,
     passioFoodItem?: PassioFoodItem | null
   ) => {
-    setOpen(true);
     navigation.goBack();
     setTimeout(() => {
       editNutritionFactRef?.current?.barcode?.(
@@ -55,6 +54,7 @@ export const usePhotoLoggingEditor = () => {
         customFood,
         passioFoodItem
       );
+      setOpen(true);
     }, 500);
   };
 
