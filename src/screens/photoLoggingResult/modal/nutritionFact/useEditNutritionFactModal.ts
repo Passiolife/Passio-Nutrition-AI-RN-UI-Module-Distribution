@@ -1,10 +1,12 @@
 import { useRef, useCallback, useState, useEffect } from 'react';
 import { useBranding } from '../../../../contexts';
 import type { EditNutritionFactProps } from './EditNutritionFactModal';
-import {
-  PassioFoodAmount,
+import type {
   PassioFoodItem,
   PassioIngredient,
+} from '@passiolife/nutritionai-react-native-sdk-v3';
+import type {
+  PassioFoodAmount,
   ServingSize,
   ServingUnit,
 } from '@passiolife/nutritionai-react-native-sdk-v3';

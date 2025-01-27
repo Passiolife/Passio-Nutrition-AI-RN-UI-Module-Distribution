@@ -127,8 +127,8 @@ export const EditNutritionFact = forwardRef<
     textInput: React.RefObject<TextInput>;
     alignSelf?: 'auto' | 'center' | 'left' | 'right' | 'justify' | undefined;
     isError?: boolean;
-    setErrorState?: React.Dispatch<React.SetStateAction<boolean>>;
-    storeRef: React.MutableRefObject<string>;
+    setErrorState?: React.Dispatch<React.SetStateAction<boolean | undefined>>;
+    storeRef: React.MutableRefObject<string | undefined>;
   }) => {
     return (
       <View style={{ flex: flex, marginHorizontal: scaleWidth(6) }}>
