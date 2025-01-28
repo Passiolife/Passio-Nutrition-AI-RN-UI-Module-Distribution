@@ -297,7 +297,8 @@ export function usePhotoLogging() {
         (i) =>
           i.resultType === 'nutritionFacts' &&
           !i.customFood &&
-          !i.isCustomFoodCreated
+          !i.isCustomFoodCreated &&
+          i.isSelected
       );
 
       const customFoods = await createFoodLogUsingFoodDataInfo(

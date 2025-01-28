@@ -12,12 +12,12 @@ import {
 import type { StackNavigationProp } from '@react-navigation/stack';
 import type { ImagePickerType, ParamList } from '../../navigaitons';
 import {
-  createFoodLogByCustomFood,
   createFoodLogUsingFoodCreator,
   CUSTOM_USER_FOOD_PREFIX,
   CUSTOM_USER_NUTRITION_FACT__PREFIX,
   generateCustomID,
   generateCustomNutritionFactID,
+  getCustomFoodUUID,
 } from './FoodCreator.utils';
 import type {
   BarcodeCustomResult,
@@ -117,27 +117,27 @@ export const useFoodCreator = () => {
 
   const onNavigateToEditFoodScreen = (item?: BarcodeCustomResult) => {
     if (item?.customFood) {
-      navigation.push('EditFoodLogScreen', {
-        foodLog: createFoodLogByCustomFood(
-          item.customFood,
-          params.logToDate,
-          params.logToMeal
-        ),
-        customFood: item.customFood,
-        prevRouteName: 'ExistedBarcode',
-        onSaveLogPress: () => {},
+      navigation.pop(1);
+      navigation.replace('FoodCreatorScreen', {
+        foodLog: item?.customFood,
+        from: 'MyFood',
       });
     } else {
       if (item?.passioIDAttributes) {
-        const barcodeFoodLog = convertPassioFoodItemToFoodLog(
-          item.passioIDAttributes,
-          undefined,
-          undefined
-        );
-        navigation.push('EditFoodLogScreen', {
-          foodLog: barcodeFoodLog,
-          prevRouteName: 'Barcode',
-          onSaveLogPress: () => {},
+        navigation.pop(1);
+        navigation.replace('FoodCreatorScreen', {
+          foodLog: {
+            ...convertPassioFoodItemToFoodLog(
+              item?.passioIDAttributes,
+              undefined,
+              undefined
+            ),
+            uuid: getCustomFoodUUID(),
+            barcode:
+              item.barcode ??
+              item.passioIDAttributes?.ingredients?.[0]?.metadata?.barcode,
+          },
+          from: 'MyFood',
         });
       }
     }
