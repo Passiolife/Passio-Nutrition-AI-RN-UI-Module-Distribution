@@ -18,6 +18,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { PhotoLoggingEditorModal } from './modal/PhotoLoggingEditorModal';
 import { dayFormatterPhotoLogging } from '../../utils';
 import { CustomFoodCreatedModal } from './modal/CustomFoodCreatedModal';
+import { isMissingNutrition } from '../../utils/V3Utils';
 
 export const PhotoLoggingScreen = gestureHandlerRootHOC(() => {
   const {
@@ -173,7 +174,11 @@ export const PhotoLoggingScreen = gestureHandlerRootHOC(() => {
             if (item.resultType === 'no-result') {
               onSearchManually(item);
             } else {
-              editServingInfoRef.current?.open?.(item);
+              if (isMissingNutrition(item.passioFoodItem)) {
+                editServingInfoRef.current?.openNutritionFact?.(item);
+              } else {
+                editServingInfoRef.current?.open?.(item);
+              }
             }
           }}
           onEditNutritionFact={(item) => {

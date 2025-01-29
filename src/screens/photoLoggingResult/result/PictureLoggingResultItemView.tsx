@@ -98,7 +98,9 @@ export const PictureLoggingResultItemView = (props: Props) => {
               {isInvalidNutritionFact
                 ? type === 'no-result'
                   ? 'Image Not Recognized'
-                  : 'Nutrition Facts Incomplete'
+                  : type === 'barcode'
+                    ? 'Barcode Not Found'
+                    : 'Nutrition Facts Incomplete'
                 : foodName}
             </Text>
             <Text
@@ -110,7 +112,9 @@ export const PictureLoggingResultItemView = (props: Props) => {
               {type === 'no-result'
                 ? 'item will not be logged, search manually'
                 : isInvalidNutritionFact
-                  ? 'Data missing, item will not be logged'
+                  ? type === 'barcode'
+                    ? 'em will not be logged, edit data manually'
+                    : 'Data missing, item will not be logged'
                   : bottom}
             </Text>
           </View>
