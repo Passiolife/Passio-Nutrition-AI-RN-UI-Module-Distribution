@@ -7,13 +7,14 @@ import {
 } from '../../utils';
 import {
   PassioFoodItem,
+  PassioFoodResultType,
   PassioNutrients,
   PassioSDK,
   type PassioAdvisorFoodInfo,
 } from '@passiolife/nutritionai-react-native-sdk-v3';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { useServices } from '../../contexts';
-import type { CustomFood, MealLabel } from '../../models';
+import type { CustomFood, FoodLog, MealLabel } from '../../models';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import uuid4 from 'react-native-uuid';
 import type {
@@ -22,6 +23,7 @@ import type {
 } from './modal/PhotoLoggingEditorModal';
 import {
   convertPassioFoodItemToFoodLog,
+  createBlankPassioFoodITem,
   createPassioFoodItemFromCustomFood,
   createRecipeUsingPassioFoodItem,
   isMissingNutrition,
@@ -34,7 +36,9 @@ import type { CustomFoodCreatedModalRef } from './modal/CustomFoodCreatedModal';
 
 export const PHOTO_LIMIT = 7;
 
-export interface PhotoLoggingResults extends PassioAdvisorFoodInfo {
+export type PhotoLoggingResultsType = PassioFoodResultType | 'no-result';
+export interface PhotoLoggingResults
+  extends Omit<PassioAdvisorFoodInfo, 'resultType'> {
   isSelected?: boolean;
   passioFoodItem?: PassioFoodItem;
   uuID: string;
@@ -42,6 +46,7 @@ export interface PhotoLoggingResults extends PassioAdvisorFoodInfo {
   assets?: string;
   customFood?: CustomFood;
   isCustomFoodCreated?: boolean;
+  resultType?: PhotoLoggingResultsType;
 }
 export interface MacroInfo {
   targetCalories?: number;
@@ -171,7 +176,7 @@ export function usePhotoLogging() {
             const result = await PassioSDK.recognizeImageRemote(
               item.replace('file://', '') ?? ''
             );
-            if (result) {
+            if (result && result.length) {
               await Promise.all(
                 result.map(async (advisorFoodInfo) => {
                   let passioFoodItem: PassioFoodItem | undefined | null;
@@ -253,6 +258,22 @@ export function usePhotoLogging() {
                   }
                 })
               );
+            } else {
+              const blankPassio = createBlankPassioFoodITem();
+              info.push({
+                isSelected: false,
+                passioFoodItem: blankPassio,
+                uuID: uuid4.v4() as unknown as string,
+                assets: item,
+                nutrients: getNutrientsOfPassioFoodItem(
+                  blankPassio,
+                  blankPassio?.amount.weight
+                ),
+                portionSize: '',
+                weightGrams: 0,
+                recognisedName: '',
+                resultType: 'no-result',
+              });
             }
           })
         );
@@ -452,6 +473,52 @@ export function usePhotoLogging() {
     });
   };
 
+  const overrideFoodLog = (foodLog: FoodLog, result: PhotoLoggingResults) => {
+    setPassioAdvisorFoodInfo((s) => {
+      return (
+        s?.map((o) => {
+          if (o.uuID === result.uuID) {
+            const passioItem = createPassioFoodItemFromCustomFood(foodLog);
+            return {
+              ...o,
+              passioFoodItem: passioItem,
+              resultType: 'barcode',
+              nutrients: getNutrientsOfPassioFoodItem(
+                passioItem,
+                passioItem.amount.weight
+              ),
+            };
+          } else {
+            return o;
+          }
+        }) ?? []
+      );
+    });
+  };
+
+  const onSearchManually = (item: PhotoLoggingResults) => {
+    navigation.navigate('FoodSearchScreen', {
+      from: 'Ingredient',
+      onSaveData(foodLog) {
+        overrideFoodLog(foodLog, item);
+        navigation.goBack();
+      },
+
+      onEditFoodData(searchFoodLog) {
+        overrideFoodLog(searchFoodLog, item);
+        navigation.goBack();
+        // navigation.push('EditFoodLogScreen', {
+        //   foodLog: searchFoodLog,
+        //   prevRouteName: 'Ingredient',
+        //   onSaveLogPress: (foodLog) => {
+        //     overrideFoodLog(foodLog, item);
+        //     navigation.goBack();
+        //   },
+        // });
+      },
+    });
+  };
+
   const resultStatus = () => {
     const countOfSelectedFood =
       passioAdvisorFoodInfo?.filter((i) => i.isSelected).length ?? 0;
@@ -483,6 +550,7 @@ export function usePhotoLogging() {
     onLogSelectPress,
     onTryAgain,
     onUpdateFoodItem,
+    onSearchManually,
     onUpdateMacros,
     openDatePicker,
     passioAdvisorFoodInfo,

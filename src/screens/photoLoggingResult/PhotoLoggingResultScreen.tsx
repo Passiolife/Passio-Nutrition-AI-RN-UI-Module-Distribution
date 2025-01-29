@@ -36,6 +36,7 @@ export const PhotoLoggingScreen = gestureHandlerRootHOC(() => {
     onCancel,
     onCreateRecipePress,
     handleOnDiaryPress,
+    onSearchManually,
     handleOnMorePress,
     onLogSelectPress,
     onTryAgain,
@@ -169,10 +170,18 @@ export const PhotoLoggingScreen = gestureHandlerRootHOC(() => {
           onCreateRecipePress={onCreateRecipePress}
           onUpdateMacros={onUpdateMacros}
           onEditServingInfo={(item) => {
-            editServingInfoRef.current?.open?.(item);
+            if (item.resultType === 'no-result') {
+              onSearchManually(item);
+            } else {
+              editServingInfoRef.current?.open?.(item);
+            }
           }}
           onEditNutritionFact={(item) => {
-            editServingInfoRef.current?.openNutritionFact?.(item);
+            if (item.resultType === 'no-result') {
+              onSearchManually(item);
+            } else {
+              editServingInfoRef.current?.openNutritionFact?.(item);
+            }
           }}
           onCancel={onCancel}
           onTryAgain={onTryAgain}

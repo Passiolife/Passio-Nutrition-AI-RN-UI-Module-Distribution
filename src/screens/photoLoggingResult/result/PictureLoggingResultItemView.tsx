@@ -8,7 +8,6 @@ import {
 } from 'react-native';
 import {
   PassioFoodItem,
-  PassioFoodResultType,
   PassioIDEntityType,
 } from '@passiolife/nutritionai-react-native-sdk-v3';
 import { PassioFoodIcon } from '../../../components/passio/PassioFoodIcon';
@@ -17,6 +16,7 @@ import { scaleWidth } from '../../../utils';
 import { isMissingNutrition } from '../../../utils/V3Utils';
 import { ICONS } from '../../../assets';
 import { Text } from '../../../components';
+import type { PhotoLoggingResultsType } from '../usePhotoLogging';
 
 interface Props {
   imageName?: string;
@@ -24,6 +24,7 @@ interface Props {
   foodName: string;
   bottom: string;
   onFoodLogEditor?: () => void;
+  onSearchManually?: () => void;
   onFoodLogSelect: () => void;
   onEditServingInfo: () => void;
   onEditNutritionFact: () => void;
@@ -32,7 +33,7 @@ interface Props {
   fat?: number;
   protein?: number;
   carbs?: number;
-  type?: PassioFoodResultType;
+  type?: PhotoLoggingResultsType;
   foodItem?: PassioFoodItem;
 }
 
@@ -46,6 +47,7 @@ export const PictureLoggingResultItemView = (props: Props) => {
     onEditServingInfo,
     onEditNutritionFact,
     foodItem,
+    type,
   } = props;
 
   const isInvalidNutritionFact = foodItem ? isMissingNutrition(foodItem) : true;
@@ -93,7 +95,11 @@ export const PictureLoggingResultItemView = (props: Props) => {
               style={styles.text}
               numberOfLines={1}
             >
-              {isInvalidNutritionFact ? 'Nutrition Facts Incomplete' : foodName}
+              {isInvalidNutritionFact
+                ? type === 'no-result'
+                  ? 'Image Not Recognized'
+                  : 'Nutrition Facts Incomplete'
+                : foodName}
             </Text>
             <Text
               weight="400"
@@ -101,9 +107,11 @@ export const PictureLoggingResultItemView = (props: Props) => {
               size="_14px"
               style={[styles.bottom, styles.secondaryText]}
             >
-              {isInvalidNutritionFact
-                ? 'Data missing, item will not be logged'
-                : bottom}
+              {type === 'no-result'
+                ? 'item will not be logged, search manually'
+                : isInvalidNutritionFact
+                  ? 'Data missing, item will not be logged'
+                  : bottom}
             </Text>
           </View>
         </View>
@@ -158,8 +166,9 @@ export const PictureLoggingResultItemView = (props: Props) => {
             }}
           >
             <Image
-              source={ICONS.editGreyIc}
+              source={type === 'no-result' ? ICONS.search : ICONS.editGreyIc}
               resizeMode="contain"
+              tintColor={'rgba(156, 163, 175, 1)'}
               style={{ height: 16, width: 16 }}
             />
           </TouchableOpacity>
