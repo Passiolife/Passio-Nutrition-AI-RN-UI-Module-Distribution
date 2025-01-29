@@ -47,6 +47,7 @@ export interface PhotoLoggingResults
   customFood?: CustomFood;
   isCustomFoodCreated?: boolean;
   resultType?: PhotoLoggingResultsType;
+  productCode?: string;
 }
 export interface MacroInfo {
   targetCalories?: number;
@@ -243,7 +244,7 @@ export function usePhotoLogging() {
                                 ? 'Scanned Nutrition Label'
                                 : '',
                           }
-                        : undefined,
+                        : createBlankPassioFoodITem(barcode), // if passio food item
                       uuID: uuid4.v4() as unknown as string,
                       assets: item,
                       customFood: customFood,
