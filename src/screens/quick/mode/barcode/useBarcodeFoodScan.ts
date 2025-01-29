@@ -174,6 +174,7 @@ export const useBarcodeFoodScan = () => {
 
   const onTakePhoto = () => {
     const barcode = barcodeRef?.current;
+    PassioSDK.stopCamera();
     resetScanning();
     navigation.navigate('NutritionFactScanScreen', {
       barcode: barcode,

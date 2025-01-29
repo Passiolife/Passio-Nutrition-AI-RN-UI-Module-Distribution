@@ -125,7 +125,7 @@ export const useNutritionFactsScanner = () => {
       () => {
         setInitializeCamera(true);
       },
-      Platform.OS === 'ios' ? 500 : 2000
+      Platform.OS === 'ios' ? 100 : 100
     );
   }, []);
 
