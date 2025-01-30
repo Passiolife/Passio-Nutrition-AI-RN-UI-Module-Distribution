@@ -181,6 +181,7 @@ export function usePhotoLogging() {
               await Promise.all(
                 result.map(async (advisorFoodInfo) => {
                   let passioFoodItem: PassioFoodItem | undefined | null;
+
                   if (advisorFoodInfo.packagedFoodItem) {
                     passioFoodItem = advisorFoodInfo.packagedFoodItem;
                   } else if (advisorFoodInfo.foodDataInfo) {
@@ -195,6 +196,8 @@ export function usePhotoLogging() {
 
                   const barcode =
                     passioFoodItem?.ingredients?.[0]?.metadata?.barcode;
+
+                  // Note add productCode Here
 
                   let customFood: CustomFood | undefined;
 
@@ -231,30 +234,30 @@ export function usePhotoLogging() {
                           ?.barcode === barcode
                     ) !== undefined;
 
+                  if (!passioFoodItem) {
+                    passioFoodItem = createBlankPassioFoodITem();
+                  }
+
                   if (!isCustomFoodAlreadyExist && !isBarcode) {
                     info.push({
                       ...advisorFoodInfo,
                       isSelected: !isMissingNutrition(passioFoodItem),
-                      passioFoodItem: passioFoodItem
-                        ? {
-                            ...passioFoodItem,
-                            name: passioFoodItem?.name
-                              ? passioFoodItem.name
-                              : advisorFoodInfo.resultType === 'nutritionFacts'
-                                ? 'Scanned Nutrition Label'
-                                : '',
-                          }
-                        : createBlankPassioFoodITem(barcode), // if passio food item
+                      passioFoodItem: {
+                        ...passioFoodItem,
+                        name: passioFoodItem?.name
+                          ? passioFoodItem.name
+                          : advisorFoodInfo.resultType === 'nutritionFacts'
+                            ? 'Scanned Nutrition Label'
+                            : '',
+                      }, // if passio food item
                       uuID: uuid4.v4() as unknown as string,
                       assets: item,
                       customFood: customFood,
                       isCustomFoodCreated: customFood !== undefined,
-                      nutrients: passioFoodItem
-                        ? getNutrientsOfPassioFoodItem(
-                            passioFoodItem,
-                            passioFoodItem?.amount.weight
-                          )
-                        : undefined,
+                      nutrients: getNutrientsOfPassioFoodItem(
+                        passioFoodItem,
+                        passioFoodItem?.amount.weight
+                      ),
                     });
                   }
                 })
