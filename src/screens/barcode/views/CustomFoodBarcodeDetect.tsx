@@ -13,7 +13,6 @@ interface Props {
 
 export const CustomFoodBarcodeDetect = ({
   onCreateCustomWithoutBarcodePress,
-  onCancelPress,
   onViewExistingPress,
 }: Props) => {
   return (
@@ -26,30 +25,23 @@ export const CustomFoodBarcodeDetect = ({
           </Text>
           <Text color="gray500" weight="400" style={styles.description}>
             This barcode matches an existing item in your custom food list. You
-            can use the existing item, or create a new food without the barcode
+            can Import data from existing item, or create a new Item without the
+            barcode
           </Text>
         </View>
         <View style={styles.buttonContainers}>
           <BasicButton
-            onPress={onCancelPress}
-            style={styles.button}
-            small
-            text={'Cancel'}
-            secondary
-          />
-          <BasicButton
             onPress={onViewExistingPress}
             style={styles.button}
             small
-            text={'Use Existing Item'}
+            text={'Import Existing Data'}
           />
-        </View>
-        <View style={styles.buttonContainer}>
           <BasicButton
             onPress={onCreateCustomWithoutBarcodePress}
             style={styles.button}
             small
-            text={'Create Custom Food Without Barcode'}
+            secondary
+            text={'Create New Item'}
           />
         </View>
       </Card>
@@ -118,7 +110,7 @@ const styles = StyleSheet.create({
   },
   button: {
     flex: 1,
-    marginHorizontal: 4,
+    marginHorizontal: 2,
   },
 });
 

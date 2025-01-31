@@ -1,4 +1,4 @@
-import React, { forwardRef, useImperativeHandle } from 'react';
+import React, { forwardRef, useImperativeHandle, useRef } from 'react';
 import { Alert, Modal, StyleSheet, View } from 'react-native';
 import {
   getNutrientsOfPassioFoodItem,
@@ -51,9 +51,14 @@ export const PhotoLoggingEditorModal = forwardRef<
     releaseEditor,
   } = usePhotoLoggingEditor();
 
+  const originalPhotoLoggingResultRef = useRef<PhotoLoggingResults | null>(
+    null
+  );
+
   useImperativeHandle(ref, () => ({
     open: (item) => {
       if (item.passioFoodItem) {
+        originalPhotoLoggingResultRef.current = item;
         if (isMissingNutrition(item.passioFoodItem)) {
           setEditType('nutrient');
         } else {
@@ -163,7 +168,17 @@ export const PhotoLoggingEditorModal = forwardRef<
             ),
           });
         }}
-        onClose={props?.onCancelPress || handleNutritionFactCloseClick}
+        onClose={() => {
+          if (props.onCancelPress) {
+            props?.onCancelPress?.();
+          } else {
+            if (originalPhotoLoggingResultRef.current) {
+              // On Cancel result with original one as we changed the whole result in this modal.
+              setResult(originalPhotoLoggingResultRef.current);
+            }
+            handleNutritionFactCloseClick();
+          }
+        }}
       />
     );
   };

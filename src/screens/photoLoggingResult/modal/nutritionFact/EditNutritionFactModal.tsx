@@ -467,7 +467,9 @@ export const EditNutritionFact = forwardRef<
       <View style={styles.buttonContainer}>
         <BasicButton
           text={'Cancel'}
-          onPress={onClose}
+          onPress={() => {
+            onClose?.();
+          }}
           secondary
           style={{ flex: 1, marginEnd: 8 }}
         />

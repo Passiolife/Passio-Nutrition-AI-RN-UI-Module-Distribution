@@ -15,10 +15,12 @@ import type { StackNavigationProp } from '@react-navigation/stack';
 import type { ParamList } from '../../../../navigaitons';
 import {
   convertNumberInput,
+  createPassioFoodItemFromCustomFood,
   isMissingNutrition,
 } from '../../../../utils/V3Utils';
 import { Units } from '../../../../screens/foodCreator/data';
 import { getNutrientsOfPassioFoodItem } from '../../../../utils/';
+import { CustomFood } from '../../../../models';
 
 export type NavigationProps = StackNavigationProp<
   ParamList,
@@ -27,6 +29,8 @@ export type NavigationProps = StackNavigationProp<
 
 export const useEditNutritionFact = (props: EditNutritionFactProps) => {
   const branding = useBranding();
+
+  const oldResultRef = props.result;
 
   const [_result, setResult] = useState(props.result);
   const [servingUnit, setServingUnit] = useState<string>();
@@ -434,6 +438,7 @@ export const useEditNutritionFact = (props: EditNutritionFactProps) => {
     isErrorName,
     setErrorName,
     handleBarcodeScanResult,
+    oldResultRef,
     isCustomFoodAlreadyAdded: props.isCustomFoodAlreadyAdded,
     isInvalid:
       isErrorCalories ||
