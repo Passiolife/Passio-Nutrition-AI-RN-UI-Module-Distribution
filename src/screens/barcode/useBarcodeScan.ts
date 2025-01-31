@@ -15,6 +15,7 @@ import { useServices } from '../../contexts';
 import type { ParamList } from '../../navigaitons';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { BackHandler, NativeEventSubscription } from 'react-native';
+import { createPassioFoodItemFromCustomFood } from '../../utils/V3Utils';
 
 export const useBarcodeScan = () => {
   const barcodeRef = useRef<string | undefined>(undefined);
@@ -160,7 +161,33 @@ export const useBarcodeScan = () => {
 
   const onCreateCustomWithoutBarcodePress = () => {
     if (quickResult) {
-      params?.onCreateFoodAnyWay?.(quickResult);
+      let passioFoodItem = quickResult.passioIDAttributes;
+
+      if (!passioFoodItem && quickResult.customFood) {
+        passioFoodItem = createPassioFoodItemFromCustomFood(
+          quickResult.customFood
+        );
+      }
+
+      params?.onCreateFoodAnyWay?.({
+        ...quickResult,
+        barcode: undefined,
+        customFood: undefined,
+        passioIDAttributes: passioFoodItem
+          ? {
+              ...passioFoodItem,
+              ingredients: passioFoodItem?.ingredients?.map((o) => {
+                return {
+                  ...o,
+                  metadata: {
+                    ...o.metadata,
+                    barcode: undefined,
+                  },
+                };
+              }),
+            }
+          : undefined,
+      });
     }
   };
   const onViewExistingPress = () => {

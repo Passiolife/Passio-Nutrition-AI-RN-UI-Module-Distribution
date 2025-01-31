@@ -16,6 +16,7 @@ export const BarcodeScanScreen = () => {
     type,
     resetScanning,
     onCreateCustomWithoutBarcodePress,
+    onBarcodePress,
     onViewExistingPress,
   } = useBarcodeScan();
 
@@ -40,9 +41,7 @@ export const BarcodeScanScreen = () => {
         quickResult.passioIDAttributes && (
           <BarcodeDetect
             onCancelPress={resetScanning}
-            onCreateCustomWithoutBarcodePress={
-              onCreateCustomWithoutBarcodePress
-            }
+            onCreateCustomWithoutBarcodePress={onBarcodePress}
             onViewExistingPress={onViewExistingPress}
           />
         )}

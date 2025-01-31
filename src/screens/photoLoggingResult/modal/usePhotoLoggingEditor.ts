@@ -74,7 +74,7 @@ export const usePhotoLoggingEditor = () => {
         applyBarcode(item?.customFood ? '' : item?.barcode);
       },
       onCreateFoodAnyWay: (item) => {
-        applyBarcode(item?.customFood ? '' : item?.barcode);
+        applyBarcode(item?.barcode, item?.customFood, item?.passioIDAttributes);
       },
       onClose: () => {
         setOpen(true);

@@ -113,7 +113,7 @@ export const PictureLoggingResultItemView = (props: Props) => {
                 ? 'item will not be logged, search manually'
                 : isInvalidNutritionFact
                   ? type === 'barcode'
-                    ? 'em will not be logged, edit data manually'
+                    ? 'item will not be logged, edit data manually'
                     : 'Data missing, item will not be logged'
                   : bottom}
             </Text>

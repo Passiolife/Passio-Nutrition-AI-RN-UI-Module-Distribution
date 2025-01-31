@@ -31,6 +31,7 @@ import type { ScanningScreenNavigationProps } from '../../QuickScanningScreen';
 import { convertDateToDBFormat } from '../../../../utils/DateFormatter';
 import type { ItemAddedToDairyViewModalRef } from '../../../../components';
 import { getCustomFoodUUID } from '../../../../screens/foodCreator/FoodCreator.utils';
+import { Platform } from 'react-native';
 
 export const useBarcodeFoodScan = () => {
   const services = useServices();
@@ -174,7 +175,9 @@ export const useBarcodeFoodScan = () => {
 
   const onTakePhoto = () => {
     const barcode = barcodeRef?.current;
-    PassioSDK.stopCamera();
+    if (Platform.OS === 'android') {
+      PassioSDK.stopCamera();
+    }
     resetScanning();
     navigation.navigate('NutritionFactScanScreen', {
       barcode: barcode,
@@ -236,7 +239,6 @@ export const useBarcodeFoodScan = () => {
       detectBarcodes: true,
       detectPackagedFood: false,
       detectVisual: false,
-      volumeDetectionMode: 'none',
     };
 
     async function delay() {

@@ -198,7 +198,8 @@ export function usePhotoLogging() {
                   }
 
                   const barcode =
-                    passioFoodItem?.ingredients?.[0]?.metadata?.barcode;
+                    passioFoodItem?.ingredients?.[0]?.metadata?.barcode ??
+                    advisorFoodInfo?.productCode;
 
                   // Note add productCode Here
 
@@ -238,7 +239,7 @@ export function usePhotoLogging() {
                     ) !== undefined;
 
                   if (!passioFoodItem) {
-                    passioFoodItem = createBlankPassioFoodITem();
+                    passioFoodItem = createBlankPassioFoodITem(barcode);
                   }
 
                   if (!isCustomFoodAlreadyExist && !isBarcode) {

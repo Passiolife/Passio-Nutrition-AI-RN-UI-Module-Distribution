@@ -170,6 +170,8 @@ export const useFoodCreator = () => {
         if (item?.customFood) {
           //If they click on "Create Custom Food Without Barcode", the barcode value is left as empty in the Food Creator screen.
           setBarcode('');
+        } else if (item?.passioIDAttributes) {
+          onNavigateToEditFoodScreen(item);
         } else {
           // custom food doesn't exist
           // If they click on "Create Custom Food Anyway", the barcode value is imported into the Food Creator screen.

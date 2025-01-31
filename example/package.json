@@ -18,7 +18,7 @@
   "dependencies": {
     "@gorhom/bottom-sheet": "^4.6.1",
     "@notifee/react-native": "^7.8.2",
-    "@passiolife/nutritionai-react-native-sdk-v3": "3.2.4",
+    "@passiolife/nutritionai-react-native-sdk-v3": "https://github.com/Passiolife/NutritionAI-React-Native-SDK-v3.git#03dc1f22274df84f6f244cb4d1969fee84e6c82e",
     "@react-native-async-storage/async-storage": "^1.21.0",
     "@react-native-community/datetimepicker": "^7.6.3",
     "@react-native-community/slider": "^4.5.0",
