@@ -108,8 +108,11 @@ export function usePhotoLogging() {
     PhotoLoggingResults[] | null
   >(null);
   const [isOpenDatePicker, openDatePicker] = useState(false);
-  const [date, setDate] = useState(routes.params.logToDate ?? new Date());
-  const [meal, setMeal] = useState<MealLabel>(getMealLog(date, undefined));
+  const defaultDate = routes.params.logToDate ?? new Date();
+  const [date, setDate] = useState(defaultDate);
+  const [meal, setMeal] = useState<MealLabel>(
+    getMealLog(defaultDate, undefined)
+  );
   const [macroInfo, setMacroInfo] = useState<MacroInfo | undefined>(undefined);
   const [newMacroInfo, setNewMacroInfo] = useState<MacroInfo | undefined>(
     undefined
@@ -561,6 +564,7 @@ export function usePhotoLogging() {
     photoLoggingBarcodeRef,
     recognizePictureRemote,
     setDate,
+    defaultDate,
     setMeal,
     resultStatus,
   };

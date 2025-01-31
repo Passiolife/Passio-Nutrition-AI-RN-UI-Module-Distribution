@@ -35,6 +35,7 @@ export const PhotoLoggingScreen = gestureHandlerRootHOC(() => {
     mealTimes,
     newMacroInfo,
     onCancel,
+    defaultDate,
     onCreateRecipePress,
     handleOnDiaryPress,
     onSearchManually,
@@ -62,7 +63,7 @@ export const PhotoLoggingScreen = gestureHandlerRootHOC(() => {
           }}
         >
           <View style={{ flex: 1, marginHorizontal: 12 }}>
-            <Text color="secondaryText" size="_14px" weight="500">
+            <Text color="secondaryText" size="_12px" weight="500">
               Meal Time
             </Text>
             <Dropdown
@@ -78,6 +79,16 @@ export const PhotoLoggingScreen = gestureHandlerRootHOC(() => {
                 borderRadius: 8,
                 paddingHorizontal: 8,
               }}
+              itemTextStyle={{
+                fontSize: 12,
+              }}
+              placeholderStyle={{
+                fontSize: 12,
+              }}
+              selectedTextStyle={{
+                fontSize: 12,
+                fontWeight: '500',
+              }}
               onChange={(value) => {
                 setMeal(value.value);
               }}
@@ -85,22 +96,23 @@ export const PhotoLoggingScreen = gestureHandlerRootHOC(() => {
           </View>
           <TouchableOpacity
             onPress={() => openDatePicker(true)}
-            style={{ flex: 1, marginHorizontal: 12 }}
+            style={{ flex: 1, marginHorizontal: 0 }}
           >
-            <Text color="secondaryText" size="_14px" weight="500">
+            <Text color="secondaryText" size="_12px" weight="500">
               Date
             </Text>
             <Text
               style={{
                 borderWidth: 1,
                 marginVertical: 4,
+                fontSize: 12,
                 borderColor: branding.border,
-                paddingVertical: 12,
+                paddingVertical: 14,
                 borderRadius: 8,
                 paddingHorizontal: 8,
               }}
             >
-              {dayFormatterPhotoLogging(date)}
+              {dayFormatterPhotoLogging(date, defaultDate)}
             </Text>
           </TouchableOpacity>
         </View>

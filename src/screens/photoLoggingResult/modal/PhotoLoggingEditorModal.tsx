@@ -144,18 +144,21 @@ export const PhotoLoggingEditorModal = forwardRef<
           }
         }}
         onDone={(updatedResult, isSamePreviousValue) => {
-          props?.onUpdateFoodItem?.(
-            {
-              ...result,
-              passioFoodItem: updatedResult,
-              nutrients: getNutrientsOfPassioFoodItem(
-                updatedResult,
-                updatedResult.amount.weight
-              ),
-            },
-            'nutritionFact',
-            isSamePreviousValue
-          );
+          if (!isSamePreviousValue) {
+            props?.onUpdateFoodItem?.(
+              {
+                ...result,
+                passioFoodItem: updatedResult,
+                nutrients: getNutrientsOfPassioFoodItem(
+                  updatedResult,
+                  updatedResult.amount.weight
+                ),
+              },
+              'nutritionFact',
+              isSamePreviousValue
+            );
+          }
+
           releaseEditor();
         }}
         openBarcodeScanner={(updatedResult) => {

@@ -15,12 +15,10 @@ import type { StackNavigationProp } from '@react-navigation/stack';
 import type { ParamList } from '../../../../navigaitons';
 import {
   convertNumberInput,
-  createPassioFoodItemFromCustomFood,
   isMissingNutrition,
 } from '../../../../utils/V3Utils';
 import { Units } from '../../../../screens/foodCreator/data';
 import { getNutrientsOfPassioFoodItem } from '../../../../utils/';
-import { CustomFood } from '../../../../models';
 
 export type NavigationProps = StackNavigationProp<
   ParamList,
