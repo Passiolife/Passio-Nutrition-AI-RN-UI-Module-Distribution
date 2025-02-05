@@ -218,6 +218,7 @@ export const TakePicture = React.forwardRef<TakePictureRef, Props>(
           photoQualityBalance="balanced"
           device={device}
           isActive={true}
+          outputOrientation="portrait"
           ref={camera}
           photo={true}
         />
