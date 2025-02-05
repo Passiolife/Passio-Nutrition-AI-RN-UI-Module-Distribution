@@ -26,6 +26,7 @@ interface EditServingSizeProps {
   openNutritionFactFromServing?: (result: PhotoLoggingResults) => void;
   onCancelPress?: () => void;
   nutritionFactButtonName?: string;
+  updateButtonName?: string;
   nutritionFactNote?: JSX.Element;
 }
 
@@ -116,6 +117,7 @@ export const PhotoLoggingEditorModal = forwardRef<
         isCustomFoodAlreadyAdded={result.customFood !== undefined}
         assets={result.assets}
         button={props.nutritionFactButtonName}
+        updateButtonName={props.updateButtonName}
         note={props.nutritionFactNote}
         onCustomFoodOverwrite={(customFood) => {
           const passioFoodItem = createPassioFoodItemFromCustomFood(customFood);

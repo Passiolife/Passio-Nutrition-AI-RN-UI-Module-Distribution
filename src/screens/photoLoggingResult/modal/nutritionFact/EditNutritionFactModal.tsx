@@ -29,6 +29,7 @@ export interface EditNutritionFactProps {
   onPassioFoodItemOverwrite?: (result: PassioFoodItem) => void;
   assets?: string;
   button?: string;
+  updateButtonName?: string;
   note?: string | React.ReactElement;
   isCustomFoodAlreadyAdded?: boolean;
 }
@@ -92,7 +93,7 @@ export const EditNutritionFact = forwardRef<
   } = useEditNutritionFact(props);
   const styles = customStyles(branding);
 
-  const { button = 'Save', note } = props;
+  const { button = 'Save', updateButtonName = 'Update', note } = props;
 
   useImperativeHandle(ref, () => ({
     barcode: async (item, customFood, passioFoodItem) => {
@@ -474,7 +475,9 @@ export const EditNutritionFact = forwardRef<
           style={{ flex: 1, marginEnd: 8 }}
         />
         <BasicButton
-          text={isCustomFoodAlreadyAdded ? 'Update' : button}
+          text={
+            isCustomFoodAlreadyAdded ? updateButtonName || 'Update' : button
+          }
           disabled={isInvalid}
           style={[
             { flex: 1, marginStart: 8 },

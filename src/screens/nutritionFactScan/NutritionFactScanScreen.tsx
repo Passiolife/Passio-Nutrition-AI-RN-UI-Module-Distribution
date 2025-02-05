@@ -93,6 +93,7 @@ export const NutritionFactScanScreen = () => {
       <PhotoLoggingEditorModal
         ref={editNutritionFactRef}
         nutritionFactButtonName="Save & Log"
+        updateButtonName="Update & Log"
         nutritionFactNote={
           <Text weight="400" size="_14px">
             Logging this item will create a custom food. You can edit this item
