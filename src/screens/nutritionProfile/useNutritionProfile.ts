@@ -43,7 +43,7 @@ export function useNutritionProfile() {
 
   /* Personal information */
   const [name, setName] = useState<string | undefined>();
-  const [age, setAge] = useState<number | undefined>(undefined);
+  const [age, setAge] = useState<string | undefined>(undefined);
   const [gender, setGender] = useState<GenderType | undefined>();
   const [height, setHeight] = useState<number | undefined>(undefined);
   const [weight, setWeight] = useState<string | undefined>(undefined);
@@ -57,9 +57,9 @@ export function useNutritionProfile() {
   >(ActivityLevelType.active);
   const [dietPlan, setDietPlan] = useState<string | undefined>(undefined);
   const [targetWater, setTargetWater] = useState<string | undefined>(undefined);
-  const [caloriesDeficit, setCaloriesDeficit] = useState<CaloriesDeficit>(
-    CaloriesDeficit.maintainWeight
-  );
+  const [caloriesDeficit, setCaloriesDeficit] = useState<
+    CaloriesDeficit | undefined
+  >(CaloriesDeficit.maintainWeight);
 
   /* Macros */
   const [calories, setCalories] = useState<string | null>(null);
@@ -109,7 +109,7 @@ export function useNutritionProfile() {
       height ?? 0,
       Number(convertedWeight),
       gender ?? 'male',
-      activityLevel ?? ActivityLevelType.active
+      activityLevel
     ).toFixed(2);
     setCalories(() => {
       const data =
@@ -131,12 +131,7 @@ export function useNutritionProfile() {
       _height: number | undefined,
       _gender: GenderType | undefined
     ) => {
-      if (
-        _activityLevel === undefined ||
-        _age === null ||
-        _height === undefined ||
-        _gender === undefined
-      )
+      if (_age === null || _height === undefined || _gender === undefined)
         return;
       // Convert height and weight in metric unit system
       const convertedWeight = getDBConvertedWeight(Number(_weight));
@@ -155,17 +150,16 @@ export function useNutritionProfile() {
 
   const isValidProfile = useCallback(() => {
     return (
-      activityLevel !== undefined &&
       height !== undefined &&
       weight !== undefined &&
       gender !== undefined &&
       age != null
     );
-  }, [activityLevel, age, gender, height, weight]);
+  }, [age, gender, height, weight]);
 
   const handleAgeChange = useCallback(
     (changedAge: string) => {
-      setAge(changedAge.length > 0 ? Number(changedAge) : undefined);
+      setAge(changedAge.length > 0 ? Number(changedAge).toString() : undefined);
       handleBMRChange(
         activityLevel,
         Number(changedAge),
@@ -190,7 +184,6 @@ export function useNutritionProfile() {
 
   const handleHeightChange = (updatedHeight: number) => {
     setHeight(updatedHeight);
-    if (activityLevel == null) return;
     handleBMRChange(
       activityLevel,
       Number(age),
@@ -211,7 +204,6 @@ export function useNutritionProfile() {
   const handleWeightChange = useCallback(
     (updatedWeight: string) => {
       setWeight(updatedWeight);
-      if (activityLevel == null) return;
       handleBMRChange(
         activityLevel,
         Number(age),
@@ -235,6 +227,22 @@ export function useNutritionProfile() {
   );
 
   const onSavePress = () => {
+    if (name === undefined) {
+      setName('');
+    }
+
+    if (age === undefined) {
+      setAge('');
+    }
+
+    if (weight === undefined) {
+      setWeight('');
+    }
+
+    if (weight === undefined || name === undefined || age === undefined) {
+      return;
+    }
+
     if (
       activityLevel !== undefined &&
       height !== undefined &&
@@ -304,54 +312,66 @@ export function useNutritionProfile() {
         setUnitWeight(profile?.unitsWeight ?? defaultUnitSystem);
         setWeight((_currentWeight) => {
           const weightUnit = profile?.unitsWeight ?? 0;
-          let updatedWeight = profile?.weight + '';
+          let updatedWeight = profile?.weight;
           if (updatedWeight && weightUnit === UnitSystem.IMPERIAL) {
             const lbs = convertKGToPounds(Number(updatedWeight));
             if (!isNaN(lbs)) {
-              updatedWeight = Number(lbs)?.toFixed(2);
+              updatedWeight = Number(Number(lbs)?.toFixed(2));
             }
           }
-          return updatedWeight?.toString();
+
+          if (updatedWeight === undefined) {
+            return undefined;
+          } else {
+            return updatedWeight?.toString();
+          }
         });
 
         setTargetWeight(() => {
           const weightUnit = profile?.unitsWeight ?? 0;
-          let updatedWeight = profile?.targetWeight?.toString() ?? '';
+          let updatedWeight = profile?.targetWeight;
           if (updatedWeight && weightUnit === UnitSystem.IMPERIAL) {
             const lbs = convertKGToPounds(Number(updatedWeight));
             if (!isNaN(lbs)) {
-              updatedWeight = Number(lbs)?.toFixed(2);
+              updatedWeight = Number(Number(lbs)?.toFixed(2));
             }
           }
-          return updatedWeight;
+
+          if (updatedWeight === undefined) {
+            return undefined;
+          } else {
+            return updatedWeight?.toString();
+          }
         });
         setTargetWater(() => {
           const weightUnit = profile?.unitsWeight ?? 0;
-          let updatedWeight = profile?.targetWater?.toString() ?? '';
+          let updatedWeight = profile?.targetWater;
           if (updatedWeight && weightUnit === UnitSystem.IMPERIAL) {
             const lbs = convertMlToOg(Number(updatedWeight));
             if (!isNaN(lbs)) {
-              updatedWeight = Number(lbs)?.toFixed(2);
+              updatedWeight = Number(Number(lbs)?.toFixed(2));
             }
           }
-          return updatedWeight;
+          if (updatedWeight === undefined) {
+            return undefined;
+          } else {
+            return updatedWeight?.toString();
+          }
         });
 
-        setName(profile?.name ?? '');
+        setName(profile?.name);
 
         if (nutritionProfileRef.current === undefined) {
           setHeight(profile?.height ?? 0);
           setGender(profile?.gender ?? 'male');
-          setAge(profile?.age);
+          setAge(profile?.age ? profile?.age.toString() : undefined);
           setCalories(String(profile?.caloriesTarget));
           setCarbs(String(profile?.carbsPercentage));
           setProtein(String(profile?.proteinPercentage));
           setFat(String(profile?.fatPercentage));
           setActivityLevel(profile?.activityLevel);
           setDietPlan(profile?.mealPlan);
-          setCaloriesDeficit(
-            profile?.caloriesDeficit ?? CaloriesDeficit.maintainWeight
-          );
+          setCaloriesDeficit(profile?.caloriesDeficit);
           nutritionProfileRef.current = profile;
         }
       });

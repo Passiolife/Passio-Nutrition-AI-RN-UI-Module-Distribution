@@ -86,7 +86,7 @@ const mealLogScreenStyle = ({ backgroundColor }: Branding) =>
 
     scrollViewStyle: {
       flex: 1,
-      paddingHorizontal: scaleWidth(12),
+      paddingHorizontal: scaleWidth(16),
     },
 
     headerDate: {

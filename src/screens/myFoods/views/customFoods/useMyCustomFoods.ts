@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useBranding, useServices } from '../../../../contexts';
 import type { CustomFood, FoodLog } from '../../../../models';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
@@ -10,6 +10,7 @@ export const useMyCustomFoods = () => {
   const branding = useBranding();
   const services = useServices();
   const navigation = useNavigation<ScreenNavigationProps>();
+  const isSubmitting = useRef<boolean>(false);
 
   const [customFoods, setCustomFood] = useState<CustomFood[]>();
   const isFocused = useIsFocused();
@@ -51,10 +52,15 @@ export const useMyCustomFoods = () => {
   };
 
   const onLogPress = async (food: CustomFood) => {
+    if (isSubmitting.current) {
+      return;
+    }
+    isSubmitting.current = true;
     const log: FoodLog = getFoodLog(food);
     log.refCustomFoodID = food.uuid;
     await services.dataService.saveFoodLog(log);
     ShowToast('Added your food into ' + log.meal);
+    isSubmitting.current = false;
   };
 
   const onFoodDetailPress = (customFood: CustomFood) => {

@@ -1,4 +1,17 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.reactnativenutritionux">
 
+    <!-- Specify packages your app queries -->
+    <queries>
+        <!-- To query a specific package by name -->
+        <package android:name="com.google.android.googlequicksearchbox" />
+        
+        <!-- To query for intents your app might use -->
+        <intent>
+            <action android:name="android.speech.RecognitionService" />
+        </intent>
+    </queries>
+
+    <!-- Other manifest entries like application, activities, etc. go here -->
+
 </manifest>

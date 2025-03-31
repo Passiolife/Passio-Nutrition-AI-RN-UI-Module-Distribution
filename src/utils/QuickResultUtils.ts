@@ -1,19 +1,31 @@
+import type { NutritionDataService } from './../contexts/services/NutritionDataService';
 import {
+  PassioFoodItem,
   PassioSDK,
   type BarcodeCandidate,
   type DetectedCandidate,
   type PackagedFoodCode,
 } from '@passiolife/nutritionai-react-native-sdk-v3';
-import type { QuickResult } from '../models';
+import type { CustomFood, QuickResult } from '../models';
+import { createPassioFoodItemFromCustomFood } from './V3Utils';
 
-export const getBarcodeResult = async (barcodeCandidate?: BarcodeCandidate) => {
+export const getBarcodeResult = async (
+  services: NutritionDataService,
+  barcodeCandidate?: BarcodeCandidate
+) => {
   if (barcodeCandidate) {
-    const result = await PassioSDK.fetchFoodItemForProductCode(
-      barcodeCandidate.barcode
+    let customFood: CustomFood | undefined;
+    const customFoods = await services.getCustomFoodLogs();
+    customFood = customFoods?.find(
+      (i) => i.barcode === barcodeCandidate.barcode
     );
+    const result: PassioFoodItem | undefined | null = customFood
+      ? createPassioFoodItemFromCustomFood(customFood)
+      : await PassioSDK.fetchFoodItemForProductCode(barcodeCandidate.barcode);
+
     if (result) {
       const attribute: QuickResult = {
-        passioID: result.refCode ?? '',
+        passioID: result.iconId ?? '',
         name: result.name,
         passioIDAttributes: result,
         type: 'Barcode',

@@ -10,7 +10,7 @@ import {
 import { COLORS } from '../../../constants';
 import type { FoodLog, ServingUnit } from '../../../models';
 import { maxSliderValue, steps } from '../utils';
-import { useBranding } from '../../../contexts';
+import { Branding, useBranding } from '../../../contexts';
 import { content } from '../../../constants/Content';
 import { scaleHeight, scaleWidth } from '../../../utils';
 import { updateQuantityOfFoodLog } from '../../../utils/V3Utils';
@@ -21,7 +21,10 @@ interface Props {
 }
 
 const NewEditServingAmountView = ({ foodLog, onUpdateFoodLog }: Props) => {
-  const styles = stylesObj();
+  const branding = useBranding();
+  const { primaryColor, searchBody } = branding;
+
+  const styles = stylesObj(branding);
   const {
     servingUnits,
     selectedUnit,
@@ -73,7 +76,6 @@ const NewEditServingAmountView = ({ foodLog, onUpdateFoodLog }: Props) => {
     }
     onQuantityUpdate(1);
   };
-  const { primaryColor, searchBody } = useBranding();
 
   const onChangeText = (text: string) => {
     if (text && text.length > 0) {
@@ -139,7 +141,7 @@ const NewEditServingAmountView = ({ foodLog, onUpdateFoodLog }: Props) => {
   );
 };
 
-const stylesObj = () =>
+const stylesObj = ({ text, border }: Branding) =>
   StyleSheet.create({
     container: {
       marginTop: scaleHeight(12),
@@ -158,10 +160,10 @@ const stylesObj = () =>
       width: 22,
       marginHorizontal: 16,
       height: 22,
-      backgroundColor: COLORS.blue,
       justifyContent: 'center',
       alignItems: 'center',
       borderRadius: 50,
+      borderWidth: 1,
     },
     chevDown: {
       width: 10,
@@ -182,7 +184,9 @@ const stylesObj = () =>
       paddingVertical: scaleHeight(12),
       backgroundColor: 'transparent',
       textAlign: 'center',
+      borderColor: border,
       minWidth: scaleWidth(50),
+      color: text,
     },
     servingSizeBtn: {
       marginStart: 16,

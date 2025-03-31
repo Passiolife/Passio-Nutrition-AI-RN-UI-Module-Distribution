@@ -13,7 +13,6 @@ interface Props {
 
 export const BarcodeDetect = ({
   onCreateCustomWithoutBarcodePress,
-  onCancelPress,
   onViewExistingPress,
 }: Props) => {
   return (
@@ -22,35 +21,27 @@ export const BarcodeDetect = ({
         <View style={styles.contentContainer}>
           <Image source={ICONS.barcode} style={styles.icon} />
           <Text weight="700" size="_20px" style={styles.title}>
-            Barcode In System
+            Barcode Already In System
           </Text>
           <Text color="gray500" weight="400" style={styles.description}>
-            This barcode matches an existing item in our database. You can use
-            the data from the database, or continue with creating a custom
-            food..
+            This barcode matches an existing item in our database. You can
+            import data from an existing item, or use only the barcode with your
+            own custom data.
           </Text>
         </View>
         <View style={styles.buttonContainers}>
           <BasicButton
-            onPress={onCancelPress}
-            style={styles.button}
-            small
-            text={'Cancel'}
-            secondary
-          />
-          <BasicButton
             onPress={onViewExistingPress}
             style={styles.button}
             small
-            text={'View Existing Item'}
+            text={'Import Existing Data'}
           />
-        </View>
-        <View style={styles.buttonContainer}>
           <BasicButton
             onPress={onCreateCustomWithoutBarcodePress}
             style={styles.button}
             small
-            text={'Create Custom Food Anyway'}
+            secondary
+            text={'Use Barcode Only'}
           />
         </View>
       </Card>

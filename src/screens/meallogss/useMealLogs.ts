@@ -31,6 +31,7 @@ export function useMealLogs() {
   const [foodLogs, setFoodLogs] = useState<FoodLog[]>([]);
   const [date, setDate] = useState<Date>(params.defaultDate ?? new Date());
   const [isOpenDatePicker, openDatePicker] = useState(false);
+  const isSubmitting = useRef<boolean>(false);
 
   useEffect(() => {
     const initData = async () => {
@@ -69,6 +70,10 @@ export function useMealLogs() {
     quickSuggestion: QuickSuggestion,
     isOpenEditor: boolean
   ) {
+    if (isSubmitting.current) {
+      return;
+    }
+    isSubmitting.current = true;
     let foodLog = quickSuggestion.foodLog;
 
     if (foodLog === undefined && quickSuggestion.refCode) {
@@ -105,6 +110,7 @@ export function useMealLogs() {
       }
       bottomSheetModalRef.current?.snapToIndex(0);
     }
+    isSubmitting.current = false;
   }
 
   const changeDate = (updateDate: Date) => {

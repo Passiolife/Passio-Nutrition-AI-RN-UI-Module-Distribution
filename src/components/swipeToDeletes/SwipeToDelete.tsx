@@ -12,8 +12,9 @@ import {
   GestureHandlerRootView,
   Swipeable,
 } from 'react-native-gesture-handler';
-import { COLORS } from '../../constants';
 import { scaleHeight } from '../../utils';
+import type { Branding } from '../../contexts';
+import { useBranding } from '../../contexts';
 
 interface Props extends React.PropsWithChildren {
   onPressDelete: () => void;
@@ -30,6 +31,9 @@ export interface SwipeToDeleteRef {
 export const SwipeToDelete = React.forwardRef<SwipeToDeleteRef, Props>(
   (props: Props, ref: React.Ref<SwipeToDeleteRef>) => {
     const swipeReg = useRef<Swipeable | null>(null);
+
+    const branding = useBranding();
+    const styles = stylesObj(branding);
 
     useImperativeHandle(
       ref,
@@ -113,45 +117,46 @@ export const SwipeToDelete = React.forwardRef<SwipeToDeleteRef, Props>(
   }
 );
 
-const styles = StyleSheet.create({
-  swipeableContainer: {
-    ...Platform.select({
-      ios: {},
-      android: {
-        backgroundColor: 'transparent',
-        overflow: 'hidden',
-      },
-    }),
-  },
-  shadowContainer: {
-    flexDirection: 'row',
-    paddingVertical: 4,
-    alignItems: 'center',
-    backgroundColor: COLORS.white,
-    paddingHorizontal: 12,
-    justifyContent: 'space-between',
-  },
-  actionContainer: {
-    flexDirection: 'row',
-  },
-  swipeableBtnTxt: {
-    color: 'white',
-    fontWeight: '600',
-  },
-  swipeableButton: {
-    flex: 1,
-    minWidth: 85,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  editBtnBackgroundColor: {
-    backgroundColor: '#009aff',
-  },
-  deleteBtnBackgroundColor: {
-    backgroundColor: '#fd3c2f',
-    overflow: 'hidden',
-  },
-  editBtnBackground: {
-    backgroundColor: '#4F46E5',
-  },
-});
+const stylesObj = ({ primaryColor, error, card }: Branding) =>
+  StyleSheet.create({
+    swipeableContainer: {
+      ...Platform.select({
+        ios: {},
+        android: {
+          backgroundColor: 'transparent',
+          overflow: 'hidden',
+        },
+      }),
+    },
+    shadowContainer: {
+      flexDirection: 'row',
+      paddingVertical: 4,
+      alignItems: 'center',
+      backgroundColor: card,
+      paddingHorizontal: 12,
+      justifyContent: 'space-between',
+    },
+    actionContainer: {
+      flexDirection: 'row',
+    },
+    swipeableBtnTxt: {
+      color: 'white',
+      fontWeight: '600',
+    },
+    swipeableButton: {
+      flex: 1,
+      minWidth: 85,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    editBtnBackgroundColor: {
+      backgroundColor: primaryColor,
+    },
+    deleteBtnBackgroundColor: {
+      backgroundColor: error,
+      overflow: 'hidden',
+    },
+    editBtnBackground: {
+      backgroundColor: primaryColor,
+    },
+  });

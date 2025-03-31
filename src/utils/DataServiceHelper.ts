@@ -25,6 +25,9 @@ export async function getWeightForDate(date: Date, services: Services) {
     convertToNextMidnight(date)
   );
 }
+export async function getLatestWeight(services: Services) {
+  return await services.dataService.getLatestWeight();
+}
 
 export async function getMealLogsFormDateToDate(
   start: Date,

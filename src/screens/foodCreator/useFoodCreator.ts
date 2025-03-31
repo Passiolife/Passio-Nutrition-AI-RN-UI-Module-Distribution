@@ -12,14 +12,20 @@ import {
 import type { StackNavigationProp } from '@react-navigation/stack';
 import type { ImagePickerType, ParamList } from '../../navigaitons';
 import {
-  createFoodLogByCustomFood,
   createFoodLogUsingFoodCreator,
   CUSTOM_USER_FOOD_PREFIX,
   CUSTOM_USER_NUTRITION_FACT__PREFIX,
   generateCustomID,
   generateCustomNutritionFactID,
+  getCustomFoodUUID,
 } from './FoodCreator.utils';
-import type { BarcodeCustomResult, CustomFood, Image } from '../../models';
+import type {
+  BarcodeCustomResult,
+  CustomFood,
+  FoodItem,
+  Image,
+  Nutrient,
+} from '../../models';
 import { convertPassioFoodItemToFoodLog } from '../../utils/V3Utils';
 import RNFS from 'react-native-fs';
 import { Alert, Platform } from 'react-native';
@@ -30,13 +36,48 @@ export type ScanningScreenNavigationProps = StackNavigationProp<
   'FoodCreatorScreen'
 >;
 
+function formatNumber(num: number | undefined) {
+  if (num) {
+    if (!isFinite(num)) return num; // Handle non-finite numbers like Infinity, NaN
+    const trimmed = parseFloat(num.toFixed(3)); // Limit to 3 decimal places
+    return Number(trimmed.toString()); // Ensure no trailing zeroes
+  } else {
+    return undefined;
+  }
+}
+
+const convertFormateFoodLog = (
+  food: CustomFood | undefined
+): CustomFood | undefined => {
+  if (food) {
+    const foodItems: FoodItem[] = food.foodItems.map((i) => {
+      return {
+        ...i,
+        nutrients: i.nutrients.map((o) => {
+          const nutrient: Nutrient = {
+            ...o,
+            amount: formatNumber(o.amount) ?? 0,
+          };
+          return nutrient;
+        }),
+      };
+    });
+    return {
+      ...food,
+      foodItems: foodItems,
+    };
+  } else {
+    return food;
+  }
+};
+
 export const useFoodCreator = () => {
   const branding = useBranding();
   const services = useServices();
   const navigation = useNavigation<ScanningScreenNavigationProps>();
   const { params } = useRoute<RouteProp<ParamList, 'FoodCreatorScreen'>>();
   const [foodLog, _setCustomFood] = useState<CustomFood | undefined>(
-    params.foodLog
+    convertFormateFoodLog(params.foodLog)
   );
   const [barcode, setBarcode] = useState<string | undefined>(
     params.foodLog?.barcode
@@ -52,6 +93,7 @@ export const useFoodCreator = () => {
   );
   const [isImagePickerVisible, setImagePickerModalVisible] = useState(false);
   const [isDeleteButtonVisible, setDeleteButtonVisible] = useState(false);
+  const [isSubmitting, setSubmitting] = useState<boolean>(false);
 
   const otherNutritionFactsRef = useRef<OtherNutritionFactsRef>(null);
   const requireNutritionFactsRef = useRef<RequireNutritionFactsRef>(null);
@@ -75,27 +117,27 @@ export const useFoodCreator = () => {
 
   const onNavigateToEditFoodScreen = (item?: BarcodeCustomResult) => {
     if (item?.customFood) {
-      navigation.push('EditFoodLogScreen', {
-        foodLog: createFoodLogByCustomFood(
-          item.customFood,
-          params.logToDate,
-          params.logToMeal
-        ),
-        customFood: item.customFood,
-        prevRouteName: 'ExistedBarcode',
-        onSaveLogPress: () => {},
+      navigation.pop(1);
+      navigation.replace('FoodCreatorScreen', {
+        foodLog: item?.customFood,
+        from: 'MyFood',
       });
     } else {
       if (item?.passioIDAttributes) {
-        const barcodeFoodLog = convertPassioFoodItemToFoodLog(
-          item.passioIDAttributes,
-          undefined,
-          undefined
-        );
-        navigation.push('EditFoodLogScreen', {
-          foodLog: barcodeFoodLog,
-          prevRouteName: 'Barcode',
-          onSaveLogPress: () => {},
+        navigation.pop(1);
+        navigation.replace('FoodCreatorScreen', {
+          foodLog: {
+            ...convertPassioFoodItemToFoodLog(
+              item?.passioIDAttributes,
+              undefined,
+              undefined
+            ),
+            uuid: getCustomFoodUUID(),
+            barcode:
+              item.barcode ??
+              item.passioIDAttributes?.ingredients?.[0]?.metadata?.barcode,
+          },
+          from: 'MyFood',
         });
       }
     }
@@ -128,6 +170,8 @@ export const useFoodCreator = () => {
         if (item?.customFood) {
           //If they click on "Create Custom Food Without Barcode", the barcode value is left as empty in the Food Creator screen.
           setBarcode('');
+        } else if (item?.passioIDAttributes) {
+          onNavigateToEditFoodScreen(item);
         } else {
           // custom food doesn't exist
           // If they click on "Create Custom Food Anyway", the barcode value is imported into the Food Creator screen.
@@ -181,13 +225,16 @@ export const useFoodCreator = () => {
   };
 
   const onNutritionFactSave = async () => {
+    setSubmitting(true);
     const customFood = getCurrentFood();
     if (customFood) {
       await services.dataService.saveCustomFood(customFood);
       params.onSave?.(customFood);
     }
+    setSubmitting(false);
   };
   const onSavePress = async () => {
+    setSubmitting(true);
     const food = getCurrentFood();
     if (food) {
       await services.dataService.saveCustomFood(food);
@@ -224,6 +271,7 @@ export const useFoodCreator = () => {
         navigation.goBack();
       }
     }
+    setSubmitting(false);
   };
 
   const onEditImagePress = () => {
@@ -301,6 +349,7 @@ export const useFoodCreator = () => {
   return {
     branding,
     barcode,
+    isSubmitting,
     foodLog,
     isDeleteButtonVisible,
     image,

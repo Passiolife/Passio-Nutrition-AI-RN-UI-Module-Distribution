@@ -10,6 +10,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import { useBranding, type Branding } from '../../contexts';
+import { scaledSize } from '../../utils';
 
 export type TextColor =
   | 'text'
@@ -23,6 +24,7 @@ export type TextColor =
   | 'gray500'
   | 'border'
   | 'error'
+  | 'tab'
   | 'calories';
 export type TextSize =
   | 'small'
@@ -54,13 +56,13 @@ export interface TextProps extends RNTextProps {
 }
 
 const sizeMap = {
-  _12px: 12,
-  _14px: 14,
-  _15px: 15,
-  _16px: 16,
-  _18px: 18,
-  _20px: 20,
-  _24px: 24,
+  _12px: scaledSize(12),
+  _14px: scaledSize(14),
+  _15px: scaledSize(15),
+  _16px: scaledSize(16),
+  _18px: scaledSize(18),
+  _20px: scaledSize(20),
+  _24px: scaledSize(24),
   _28px: 28,
   _32px: 32,
   extra: 22,
@@ -68,7 +70,7 @@ const sizeMap = {
   medium: 14,
   normal: 12,
   small: 8,
-  title: 17,
+  title: scaledSize(16),
   secondlyTitle: 14,
 };
 
@@ -109,6 +111,7 @@ export const Text = React.forwardRef(
       gray300: gray300,
       white: white,
       error: error,
+      tab: '#6B7280',
     };
 
     const {

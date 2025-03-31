@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import type { Branding } from '../../contexts';
 
-export const takePictureStyle = ({}: Branding) =>
+export const takePictureStyle = ({ backgroundColor }: Branding) =>
   StyleSheet.create({
     bottomSheetChildrenContainer: {
       shadowColor: '#00000029',
@@ -15,13 +15,7 @@ export const takePictureStyle = ({}: Branding) =>
       flex: 1,
     },
     generatingResultLoading: {
-      justifyContent: 'center',
-      position: 'absolute',
-      top: 0,
-      bottom: 0,
-      left: 0,
-      right: 0,
-      alignItems: 'center',
-      zIndex: 10,
+      flex: 1,
+      backgroundColor: backgroundColor,
     },
   });

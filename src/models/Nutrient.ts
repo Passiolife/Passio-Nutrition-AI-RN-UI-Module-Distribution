@@ -16,10 +16,8 @@ export type NutrientType =
   | 'polyunsaturatedFat'
   | 'cholesterol'
   | 'sodium'
-  | 'fiber'
   | 'sugars'
   | 'satFat'
-  | 'sugarAdded'
   | 'vitaminD'
   | 'calcium'
   | 'iron'
@@ -61,10 +59,9 @@ export const nutrientUnits: Record<NutrientType, NutrientUnit> = {
   polyunsaturatedFat: 'g',
   cholesterol: 'mg',
   sodium: 'mg',
-  fiber: 'g',
   sugars: 'g',
-  sugarAdded: 'g',
-  vitaminD: 'mg',
+  sugarsAdded: 'g',
+  vitaminD: 'μg',
   calcium: 'mg',
   iron: 'mg',
   potassium: 'mg',
@@ -89,7 +86,6 @@ export const nutrientUnits: Record<NutrientType, NutrientUnit> = {
   fibers: 'g',
   chromium: 'μg',
   vitaminARAE: 'μg',
-  sugarsAdded: 'g',
   weight: 'g',
 };
 
@@ -104,9 +100,8 @@ export const nutrientName: Record<NutrientType, String> = {
   polyunsaturatedFat: 'Polyunsaturated Fat',
   cholesterol: 'Cholesterol',
   sodium: 'Sodium',
-  fiber: 'Dietary Fiber',
   sugars: 'Total Sugar',
-  sugarAdded: 'Added Sugar',
+  sugarsAdded: 'Added Sugar',
   vitaminD: 'Vitamin D',
   calcium: 'Calcium',
   iron: 'Iron',
@@ -131,7 +126,6 @@ export const nutrientName: Record<NutrientType, String> = {
   vitaminKDihydrophylloquinone: 'Vitamin K Dihydrophylloquinone',
   chromium: 'Chromium',
   fibers: 'Dietary Fibers',
-  sugarsAdded: 'Added Sugar',
   weight: 'weight',
   vitaminARAE: 'Vitamin A RAE',
 };
@@ -148,10 +142,8 @@ export const recommendedNutrient: Record<NutrientType, number> = {
   ['cholesterol']: 300,
   ['calcium']: 1000,
   ['sodium']: 2300,
-  ['fiber']: 28,
   ['fibers']: 28,
   ['sugars']: 50,
-  ['sugarAdded']: 0,
   ['sugarsAdded']: 0,
   ['vitaminD']: 20,
   ['iron']: 18,

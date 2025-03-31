@@ -4,8 +4,12 @@ import type { StackNavigationProp } from '@react-navigation/stack';
 import type { ParamList } from '../../navigaitons';
 import { RouteProp, useRoute } from '@react-navigation/native';
 
-export type MYFoodScreensType = 'Custom Foods' | 'Recipe';
-export const MYFoodScreens: MYFoodScreensType[] = ['Custom Foods', 'Recipe'];
+export type MYFoodScreensType = 'Custom' | 'Recipe' | 'Favorites';
+export const MYFoodScreens: MYFoodScreensType[] = [
+  'Custom',
+  'Recipe',
+  'Favorites',
+];
 export type ScreenNavigationProps = StackNavigationProp<
   ParamList,
   'MyFoodsScreen'

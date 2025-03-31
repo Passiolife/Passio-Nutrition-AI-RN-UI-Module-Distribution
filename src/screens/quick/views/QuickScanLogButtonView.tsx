@@ -62,14 +62,9 @@ export const QuickScanLogButtonView = ({
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
-    position: 'absolute',
     backgroundColor: 'white',
-    zIndex: 100,
-    bottom: 0,
     paddingVertical: 20,
     paddingHorizontal: 16,
-    right: 0,
-    left: 0,
   },
   icon: {
     height: 24,

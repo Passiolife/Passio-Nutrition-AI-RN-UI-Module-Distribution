@@ -1,4 +1,5 @@
 export interface Branding {
+  // Primary
   primaryColor: string;
   backgroundColor: string;
   text: string;
@@ -7,6 +8,10 @@ export interface Branding {
   white: string;
   black: string;
   border: string;
+  error: string;
+  header: string;
+  footer: string;
+  //Others
   gray500: string;
   gray300: string;
   indigo50: string;
@@ -17,5 +22,4 @@ export interface Branding {
   calories: string;
   fat: string;
   font: string;
-  error: string;
 }

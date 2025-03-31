@@ -115,7 +115,6 @@ android {
 dependencies {
   implementation "org.webkit:android-jsc-intl:+"
   // The version of react-native is set by the React Native Gradle Plugin
-  implementation files("$rootDir/../node_modules/@passiolife/nutritionai-react-native-sdk-v3/android/libs/passiolib-release.aar")
   implementation("com.facebook.react:react-android")
   implementation("com.facebook.react:flipper-integration")
 

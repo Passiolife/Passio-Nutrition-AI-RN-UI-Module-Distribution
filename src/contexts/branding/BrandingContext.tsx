@@ -5,10 +5,10 @@ import type { ExternalBranding } from './ExternalBranding';
 const defaultBranding: Branding = {
   primaryColor: 'rgba(79, 70, 229, 1)',
   text: 'rgba(17, 24, 39, 1)',
-  secondaryText: 'rgba(107, 114, 128, 1)',
+  secondaryText: '#6B7280',
   purple: 'rgba(79, 70, 229, 1)',
   font: 'Passio-Regular',
-  backgroundColor: 'rgba(249, 250, 251, 1)',
+  backgroundColor: '#F9FAFB',
   white: 'white',
   black: 'rgba(0, 0, 0, 1)',
   searchBody: 'rgba(242, 245, 251, 1)',
@@ -22,6 +22,8 @@ const defaultBranding: Branding = {
   indigo50: 'rgba(238, 242, 255, 1)',
   error: 'rgba(239, 68, 68, 1)',
   card: 'white',
+  header: 'white',
+  footer: 'white',
 };
 
 const BrandingContext = React.createContext(defaultBranding);

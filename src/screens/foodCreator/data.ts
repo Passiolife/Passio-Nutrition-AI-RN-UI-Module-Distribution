@@ -28,7 +28,7 @@ export const OtherNutrients: NutrientType[] = [
   'sodium',
   'fibers',
   'sugars',
-  'sugarAdded',
+  'sugarsAdded',
   'vitaminD',
   'calcium',
   'iron',

@@ -8,7 +8,7 @@ import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 import { scaleHeight } from '../../../../utils';
 import { useBranding } from '../../../../contexts';
 import { useNutritionFactScan } from './useNutritionFactScan';
-import QuickScanItemAddedToDiaryView from '../../views/QuickSacnItemAddedToDiaryView';
+import ItemAddedToDairyView from '../../views/ItemAddedToDairyView';
 
 export const NutritionFactScan = () => {
   const {
@@ -60,7 +60,7 @@ export const NutritionFactScan = () => {
       </BottomSheet>
 
       {isLodgedFood && (
-        <QuickScanItemAddedToDiaryView
+        <ItemAddedToDairyView
           onContinueScanningPress={onContinueScanningPress}
           onViewDiaryPress={onViewDiaryPress}
         />

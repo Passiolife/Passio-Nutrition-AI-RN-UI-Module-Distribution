@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useServices } from '../../../contexts';
 import type { FoodLog, MealLog } from '../../../models';
 import { getSuggestions } from '../../../utils/MealPlanUtils';
@@ -9,6 +9,7 @@ export function useSuggestion(logToDate: Date | undefined) {
   const services = useServices();
   const [suggestedMealLogs, setSuggestedMealLogs] = useState<MealLog[]>([]);
   const navigation = useNavigation<MealPlanScreenNavigationProps>();
+  const isSubmitting = useRef<boolean>(false);
 
   useEffect(() => {
     async function init() {
@@ -30,8 +31,13 @@ export function useSuggestion(logToDate: Date | undefined) {
   }, [logToDate]);
 
   const onAddFoodLog = async (foodLog: FoodLog) => {
+    if (isSubmitting.current) {
+      return;
+    }
+    isSubmitting.current = true;
     await services.dataService.saveFoodLog(foodLog);
     navigation.pop();
+    isSubmitting.current = false;
   };
 
   return {

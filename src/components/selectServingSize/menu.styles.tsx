@@ -2,10 +2,9 @@ import { StyleSheet } from 'react-native';
 import type { Branding } from '../../contexts';
 import { scaleHeight, scaleWidth } from '../../utils';
 
-const menuStyle = ({ white, border }: Branding) =>
+const menuStyle = ({ border, card }: Branding) =>
   StyleSheet.create({
     main: {
-      backgroundColor: white,
       borderColor: border,
       flexDirection: 'row',
       marginStart: 12,
@@ -24,7 +23,7 @@ const menuStyle = ({ white, border }: Branding) =>
       width: scaleWidth(20),
     },
     optionContainer: {
-      backgroundColor: white,
+      backgroundColor: card,
       paddingVertical: scaleHeight(16),
     },
     selected: {

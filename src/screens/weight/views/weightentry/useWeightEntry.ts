@@ -57,6 +57,20 @@ export const useWeightEntry = () => {
       updateTime !== undefined &&
       weight.length > 0
     ) {
+      const day = new Date(updateDate);
+      const time = new Date(updateTime);
+
+      // Create a new Date object that merges the date from "day" and the time from "time"
+      const mergedDateTime = new Date(
+        day.getFullYear(),
+        day.getMonth(),
+        day.getDate(),
+        time.getHours(),
+        time.getMinutes(),
+        time.getSeconds(),
+        time.getMilliseconds()
+      );
+
       let convertedWeight = Number(weight);
       if (isImperialWeight) {
         convertedWeight = Math.round(convertPoundsToKG(Number(weight)));
@@ -65,8 +79,8 @@ export const useWeightEntry = () => {
       service.dataService.saveWeight({
         weight: convertedWeight.toString(),
         uuid: params.weight?.uuid ?? (uuid4.v4() as string),
-        day: updateDate,
-        time: updateTime,
+        day: mergedDateTime.toISOString(),
+        time: mergedDateTime.toISOString(),
       });
       params.onSave();
       navigation.pop();

@@ -22,6 +22,7 @@ export interface FoodSearchScreenProp {
   logToDate?: Date | undefined;
   logToMeal?: MealLabel | undefined;
   onSaveData?: (item: FoodLog) => void;
+  onSavePassioFoodItem?: (item: PassioFoodItem) => void;
   onEditFoodData?: (item: FoodLog) => void;
   from: Module;
 }
