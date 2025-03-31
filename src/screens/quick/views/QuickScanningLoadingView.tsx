@@ -18,7 +18,7 @@ export const QuickScanningLoadingView = ({
         <Text weight="600" size="_15px">
           Scanning...
         </Text>
-        <Text weight="400" size="_14px">
+        <Text weight="400" size="_14px" style={{ paddingRight: 8 }}>
           {text}
         </Text>
       </View>

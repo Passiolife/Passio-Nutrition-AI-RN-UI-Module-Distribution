@@ -115,7 +115,7 @@ export const TabBar = React.memo((props: TabBarProps) => {
               weight="500"
               size="_15px"
               style={styles.tabItemText}
-              color={isFocused ? 'primaryColor' : 'gray300'}
+              color={isFocused ? 'primaryColor' : 'tab'}
             >
               {menu.title}
             </Text>

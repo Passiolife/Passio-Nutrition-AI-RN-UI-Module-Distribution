@@ -1,27 +1,26 @@
 import React, { useEffect, useState } from 'react';
-import {
-  type StyleProp,
-  StyleSheet,
-  View,
-  type ViewStyle,
-  TouchableOpacity,
-  Image,
-} from 'react-native';
+import { type StyleProp, StyleSheet, View, type ViewStyle } from 'react-native';
+
 import { COLORS } from '../../../constants';
 import { Text } from '../../../components/texts/Text';
-import type { PassioAdvisorFoodInfo } from '@passiolife/nutritionai-react-native-sdk-v3';
-import { PictureLoggingResultItemView } from './PictureLoggingResultItemView';
 import { BasicButton } from '../../../components';
 import { FlatList } from 'react-native-gesture-handler';
-import { ICONS } from '../../../assets';
-import type { PicturePassioAdvisorFoodInfo } from '../useTakePicture';
+import { PictureLoggingResultItemView } from './PictureLoggingResultItemView';
+import type { PhotoLoggingResults } from '../usePhotoLogging';
+import { scaleHeight, scaleWidth } from '../../../utils';
+import { formatNumber } from '../../../utils/NumberUtils';
+
+export const SCANNED_NUTRITION_LABEL = 'Scanned Nutrition Label';
 
 interface Props {
   style?: StyleProp<ViewStyle>;
-  passioAdvisorFoodInfoResult: Array<PicturePassioAdvisorFoodInfo>;
-  onRetake: () => void;
-  type: 'camera' | 'picture';
-  onLogSelect: (selected: PassioAdvisorFoodInfo[]) => void;
+  passioAdvisorFoodInfoResult: Array<PhotoLoggingResults>;
+  onLogSelect: (selected: PhotoLoggingResults[]) => void;
+  onCreateRecipePress: (selected: PhotoLoggingResults[]) => void;
+  onUpdateMacros: (selected: PhotoLoggingResults[]) => void;
+  onEditServingInfo: (selected: PhotoLoggingResults) => void;
+  onEditNutritionFact: (selected: PhotoLoggingResults) => void;
+  onTryAgain: () => void;
   onCancel: () => void;
   isPreparingLog: boolean;
 }
@@ -29,24 +28,26 @@ interface Props {
 export const PictureLoggingResult = ({
   style,
   passioAdvisorFoodInfoResult,
-  type,
   isPreparingLog,
-  onRetake,
+  onEditServingInfo,
+  onEditNutritionFact,
+  onUpdateMacros,
   onLogSelect,
+  onTryAgain,
   onCancel,
 }: Props) => {
   const [advisorFoodInfo, setPicturePassioAdvisorFoodInfo] = useState<
-    PicturePassioAdvisorFoodInfo[]
+    PhotoLoggingResults[]
   >([]);
 
   useEffect(() => {
     setPicturePassioAdvisorFoodInfo(passioAdvisorFoodInfoResult);
   }, [passioAdvisorFoodInfoResult]);
 
-  const onFoodSelect = (record: PicturePassioAdvisorFoodInfo) => {
-    setPicturePassioAdvisorFoodInfo((item) =>
-      item?.map((i) => {
-        if (i.recognisedName === record?.recognisedName) {
+  const onFoodSelect = (record: PhotoLoggingResults) => {
+    setPicturePassioAdvisorFoodInfo((item) => {
+      const updated = item?.map((i) => {
+        if (i.uuID === record?.uuID) {
           return {
             ...i,
             isSelected: !(i.isSelected ?? false),
@@ -54,25 +55,32 @@ export const PictureLoggingResult = ({
         } else {
           return i;
         }
-      })
-    );
-  };
-  const onClearPress = () => {
-    setPicturePassioAdvisorFoodInfo((item) => {
-      return item.map((o) => {
-        return {
-          ...o,
-          isSelected: false,
-        };
       });
+
+      onUpdateMacros?.(updated);
+      return updated;
     });
   };
-
   const renderNoDataFound = () => {
     return (
       <View style={styles.noDataFound}>
-        <Image source={ICONS.bottomMealPlan} />
-        <Text>{'No Result Found'}</Text>
+        <Text
+          style={{
+            fontWeight: '600',
+            textAlign: 'center',
+          }}
+        >
+          {'No Result Found'}
+        </Text>
+        <Text
+          style={{
+            textAlign: 'center',
+            marginHorizontal: scaleWidth(24),
+            marginVertical: scaleHeight(16),
+          }}
+        >
+          {'Sorry, we could not find any matches. Please try again'}
+        </Text>
       </View>
     );
   };
@@ -81,36 +89,6 @@ export const PictureLoggingResult = ({
 
   return (
     <View style={[styles.itemsContainer, style]}>
-      <View style={styles.clearBtnView}>
-        <TouchableOpacity onPress={onClearPress} style={styles.clearBtn}>
-          <Text size="_14px" weight="400" style={styles.clearBtnText}>
-            {selectedCount && selectedCount > 0 ? 'Clear' : ''}
-          </Text>
-        </TouchableOpacity>
-      </View>
-      {passioAdvisorFoodInfoResult.length > 0 && (
-        <Text
-          weight="700"
-          size="_20px"
-          color="text"
-          style={styles.quickSuggestionTextStyle}
-        >
-          {passioAdvisorFoodInfoResult.length === 0
-            ? 'No Result found'
-            : 'Your Results'}
-        </Text>
-      )}
-
-      {passioAdvisorFoodInfoResult.length > 0 && (
-        <Text
-          weight="400"
-          size="_14px"
-          color="text"
-          style={styles.noQuickSuggestionTitle}
-        >
-          Select the foods you would like to log
-        </Text>
-      )}
       <FlatList
         style={styles.list}
         data={advisorFoodInfo}
@@ -118,48 +96,48 @@ export const PictureLoggingResult = ({
         showsVerticalScrollIndicator={false}
         ListEmptyComponent={renderNoDataFound}
         renderItem={({ item }) => {
-          const foodDataInfo = item.foodDataInfo;
-          const npCalories =
-            item?.foodDataInfo?.nutritionPreview?.calories ?? 0;
-          const npWeightQuantity =
-            item?.foodDataInfo?.nutritionPreview?.weightQuantity ?? 0;
-          const ratio = npCalories / npWeightQuantity;
-          const advisorInfoWeightGram = item?.weightGrams ?? 0;
-          const calories = ratio * advisorInfoWeightGram;
-          const newCalories =
-            foodDataInfo?.nutritionPreview?.calories ?? calories;
-          // Update calculation for package food info
           return (
             <PictureLoggingResultItemView
-              foodName={item?.foodDataInfo?.foodName ?? item?.recognisedName}
-              imageName={foodDataInfo?.iconID}
-              bottom={`${item?.foodDataInfo?.nutritionPreview?.servingQuantity} ${item?.foodDataInfo?.nutritionPreview?.servingUnit} | ${Math.round(newCalories)} cal`}
+              foodName={item.passioFoodItem?.name ?? ''}
+              imageName={item.passioFoodItem?.iconId}
+              type={item.resultType}
+              assets={item.assets}
+              foodItem={item.passioFoodItem}
+              calories={item?.nutrients?.calories?.value}
+              carbs={item?.nutrients?.carbs?.value}
+              fat={item?.nutrients?.fat?.value}
+              protein={item?.nutrients?.protein?.value}
+              bottom={`${formatNumber(item.passioFoodItem?.amount.selectedQuantity) || item?.foodDataInfo?.nutritionPreview?.servingQuantity} ${item.passioFoodItem?.amount.selectedUnit || item?.foodDataInfo?.nutritionPreview?.servingUnit} (${Math.round((item.passioFoodItem?.amount.weight.value || item.foodDataInfo?.nutritionPreview?.weightQuantity) ?? 0)} g)`}
               onFoodLogSelect={() => {
                 onFoodSelect(item);
+              }}
+              onEditServingInfo={() => {
+                onEditServingInfo(item);
+              }}
+              onEditNutritionFact={() => {
+                onEditNutritionFact(item);
               }}
               isSelected={item.isSelected ?? false}
             />
           );
         }}
       />
-      {passioAdvisorFoodInfoResult.length > 0 ? (
+      {advisorFoodInfo?.length > 0 ? (
         <View style={styles.buttonContainer}>
           <BasicButton
             secondary
             onPress={() => {
-              if (type === 'camera') {
-                onRetake();
-              } else {
-                onCancel();
-              }
+              onTryAgain?.();
             }}
+            disabled={isPreparingLog}
             style={styles.buttonTryAgain}
-            text={type === 'camera' ? 'Retake' : 'Select Again'}
+            text={'Try Again'}
           />
           <BasicButton
             onPress={() => {
               onLogSelect(advisorFoodInfo ?? []);
             }}
+            disabled={isPreparingLog}
             style={styles.buttonLogSelected}
             isLoading={isPreparingLog}
             enable={selectedCount > 0}
@@ -170,14 +148,18 @@ export const PictureLoggingResult = ({
         <View style={styles.buttonContainer}>
           <BasicButton
             secondary
-            onPress={onCancel}
+            onPress={() => {
+              onCancel?.();
+            }}
             style={styles.buttonTryAgain}
             text={'Cancel'}
           />
           <BasicButton
-            onPress={onRetake}
+            onPress={() => {
+              onTryAgain?.();
+            }}
             style={styles.buttonLogSelected}
-            text={type === 'camera' ? 'Retake' : 'Select Image'}
+            text="Try Again"
           />
         </View>
       )}
@@ -187,7 +169,6 @@ export const PictureLoggingResult = ({
 
 const styles = StyleSheet.create({
   itemsContainer: {
-    backgroundColor: 'white',
     flex: 1,
   },
   footer: {},
@@ -199,9 +180,8 @@ const styles = StyleSheet.create({
     alignContent: 'center',
   },
   list: {
-    marginHorizontal: 16,
+    marginHorizontal: 8,
     marginBottom: 20,
-    marginTop: 16,
     flex: 1,
   },
   quickSuggestionTextStyle: {
@@ -224,7 +204,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: 'row',
-    marginBottom: 40,
+    marginBottom: 16,
   },
   buttonTryAgain: { flex: 1, marginStart: 16, marginEnd: 8 },
   buttonLogSelected: { flex: 1, marginEnd: 16, marginStart: 8 },

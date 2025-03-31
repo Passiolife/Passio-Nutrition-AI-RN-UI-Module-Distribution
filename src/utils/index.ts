@@ -1,5 +1,9 @@
-import { dateFormatter, timeFormatter } from './DateFormatter';
-export { dateFormatter, timeFormatter };
+import {
+  dateFormatter,
+  timeFormatter,
+  dayFormatterPhotoLogging,
+} from './DateFormatter';
+export { dateFormatter, timeFormatter, dayFormatterPhotoLogging };
 import {
   isToday,
   currentTimeStamp,
@@ -18,6 +22,7 @@ export * from './QuickResultUtils';
 export * from './ScaningUtils';
 export * from './quickSuggestionUtils';
 export * from './passioFoodDataInfoUtils';
+export * from './nutrition/Nutrients';
 export {
   isToday,
   currentTimeStamp,

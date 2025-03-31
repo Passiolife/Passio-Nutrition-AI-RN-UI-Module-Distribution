@@ -5,6 +5,7 @@ export const ic_right_white = require('./chev_right_white.png');
 export const chev_down = require('./chev_down.png');
 export const ICONS = {
   close: require('./icons/close.png'),
+  scanBarcode: require('./icons/scanbarcode.png'),
   back: require('./icons/back.png'),
   menu: require('./icons/menu.png'),
   camera: require('./icons/camera.png'),
@@ -95,7 +96,9 @@ export const ICONS = {
   CloseRed: require('./icons/close_red.png'),
   CaptureIcon: require('./icons/capture.png'),
   flash: require('./icons/flash.png'),
+  flashOff: require('./icons/flash_off.png'),
   recipe: require('./icons/recipe.png'),
+  no_nutrition: require('./icons/nutriiton_label.png'),
 
   menuFav: require('./icons/meni_favorites.png'),
   menuAIAdviosr: require('./icons/menu_ai_adviosr.png'),

@@ -48,20 +48,20 @@ const NutritionProgressCard = () => {
       </View>
       <MacrosProgressView
         calories={{
-          target: dailyTracker?.amountOfCalories ?? 0,
-          consumed: dailyTracker?.targetCalories ?? 0,
+          consumes: dailyTracker?.amountOfCalories ?? 0,
+          targeted: dailyTracker?.targetCalories ?? 0,
         }}
         carbs={{
-          target: dailyTracker?.amountOfCarbs ?? 0,
-          consumed: dailyTracker?.targetCarbs ?? 0,
+          consumes: dailyTracker?.amountOfCarbs ?? 0,
+          targeted: dailyTracker?.targetCarbs ?? 0,
         }}
         protein={{
-          target: dailyTracker?.amountOfProtein ?? 0,
-          consumed: dailyTracker?.targetProtein ?? 0,
+          consumes: dailyTracker?.amountOfProtein ?? 0,
+          targeted: dailyTracker?.targetProtein ?? 0,
         }}
         fat={{
-          target: dailyTracker?.amountOfFat ?? 0,
-          consumed: dailyTracker?.targetFat ?? 0,
+          consumes: dailyTracker?.amountOfFat ?? 0,
+          targeted: dailyTracker?.targetFat ?? 0,
         }}
       />
       <TouchableOpacity onPress={onNavigateToMealLogScreen}>

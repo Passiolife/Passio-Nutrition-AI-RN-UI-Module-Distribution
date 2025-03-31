@@ -20,7 +20,7 @@ export const COLORS = {
   grayscale: '#6E7191',
   grayscaleAsh: '#262338',
   grayscaleBody: '#4E4B66',
-  grayscaleLine: '#D1D5DB',
+  grayscaleLine: 'rgba(229, 231, 235, 1)',
   grayscaleInput: '#EFF0F6',
   grey9: '#D0D3DA',
   monochrome: '#6E7191',

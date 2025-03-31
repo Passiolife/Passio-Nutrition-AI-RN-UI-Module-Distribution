@@ -4,8 +4,12 @@ import {
   type PassioFoodItem,
   type PassioNutrients,
   type UnitMass,
+  ServingUnit as PassioServingUnit,
+  ServingSize as PassioServingSize,
+  PassioFoodAmount,
 } from '@passiolife/nutritionai-react-native-sdk-v3';
 import type {
+  CustomFood,
   FoodItem,
   FoodLog,
   MealLabel,
@@ -16,11 +20,12 @@ import type {
 } from '../models';
 import uuid4 from 'react-native-uuid';
 import { convertDateToDBFormat } from './DateFormatter';
-import { getMealLog } from '../utils';
+import { getMealLog, getNutrientsOfPassioFoodItem } from '../utils';
 import type { PassioIngredient } from '@passiolife/nutritionai-react-native-sdk-v3/src';
 import type { QuickSuggestion } from 'src/models/QuickSuggestion';
 import type { DefaultNutrients } from '../screens/foodCreator/views/OtherNutritionFacts';
 import { CUSTOM_USER_RECIPE__PREFIX } from '../screens/foodCreator/FoodCreator.utils';
+import { validateQuantityInput } from './NumberUtils';
 
 export const convertPassioFoodItemToFoodLog = (
   item: PassioFoodItem,
@@ -109,7 +114,7 @@ function convertPassioIngredientToFoodItem(
       passioIngredient.amount?.weight.value;
   }
 
-  const nutrients = PassioSDK.getNutrientsOfPassioFoodItem(
+  const nutrients = getNutrientsOfPassioFoodItem(
     {
       ingredients: [passioIngredient],
       name: passioIngredient.name,
@@ -169,11 +174,13 @@ function nutrientV3(food: PassioNutrients): Nutrient[] {
     if (key === 'weight') {
     } else {
       const amount = food[key] as unknown as UnitMass;
-      nutrients.push({
-        id: key as NutrientType,
-        amount: amount.value,
-        unit: amount.unit,
-      });
+      if (amount?.value !== undefined) {
+        nutrients.push({
+          id: key,
+          amount: amount.value,
+          unit: amount.unit,
+        });
+      }
     }
   }
 
@@ -309,3 +316,290 @@ export function sumNutrients(
     value: nutrientMap[label as NutrientType],
   }));
 }
+
+export function updateSlider(value: number): [number, number, number] {
+  let sliderStep: number;
+  let sliderMax: number;
+
+  if (value < 5) {
+    sliderStep = 0.5;
+    sliderMax = 4.5;
+  } else if (value <= 9) {
+    sliderStep = 1;
+    sliderMax = 9;
+  } else if (value <= 49) {
+    sliderStep = 1;
+    sliderMax = 49;
+  } else if (value <= 250) {
+    sliderMax = 250;
+    sliderStep = sliderMax / 50;
+  } else {
+    sliderMax = value;
+    sliderStep = sliderMax / 50;
+  }
+
+  // let sliderSteps = Math.floor(sliderMax / sliderStep) + 1;
+  if (sliderStep > 50) {
+    sliderStep = 50;
+  }
+
+  return [0, sliderMax, sliderStep]; // min, max, step
+}
+export const sumOfAllPassioNutrients = (data: PassioNutrients[]) => {
+  const summedNutrients: PassioNutrients = {
+    weight: { unit: 'g', value: 0 },
+  };
+
+  data.forEach((nutrient) => {
+    for (const key in nutrient) {
+      let keys = key as NutrientType;
+      if (nutrient[keys] && keys !== 'weight') {
+        if (!summedNutrients[keys]) {
+          summedNutrients[keys] = {
+            unit: (nutrient[keys] as UnitMass)?.unit ?? '',
+            value: (nutrient[keys] as UnitMass)?.value ?? 0,
+          };
+        } else {
+          summedNutrients[keys]!.value += nutrient[keys]!.value;
+        }
+      }
+      // disable
+    }
+  });
+
+  return summedNutrients;
+};
+export const createRecipeUsingPassioFoodItem = (data: PassioFoodItem[]) => {
+  const sum = data.reduce((acc, item) => acc + item.amount.weight.value, 0);
+  let servingSizes: PassioServingSize[] = [
+    {
+      unitName: 'serving',
+      quantity: 1,
+    },
+    {
+      unitName: 'gram',
+      quantity: sum,
+    },
+  ];
+
+  let servingUnits: PassioServingUnit[] = [
+    {
+      unitName: 'serving',
+      value: sum,
+      unit: 'g',
+    },
+    {
+      unitName: 'gram',
+      value: 1,
+      unit: 'g',
+    },
+  ];
+
+  let amount: PassioFoodAmount = {
+    selectedQuantity: 1,
+    selectedUnit: 'serving',
+    servingSizes: servingSizes,
+    servingUnits: servingUnits,
+    weight: {
+      unit: 'g',
+      value: sum,
+    },
+    weightGrams: sum,
+  };
+
+  let ingredients: PassioIngredient[] = [];
+
+  data.map((i) => {
+    if (i.ingredients) {
+      const ingredient: PassioIngredient = {
+        ...i.ingredients?.[0],
+        amount: i.amount,
+        iconId: i.iconId,
+        name: i.name,
+      };
+      if (ingredient) {
+        ingredients.push(ingredient);
+      }
+    }
+  });
+
+  const passioFoodItem: PassioFoodItem = {
+    amount: amount,
+    refCode: uuid4.v4() as unknown as string,
+    ingredientWeight: {
+      unit: 'g',
+      value: sum,
+    },
+    name: '',
+    ingredients: ingredients,
+    iconId: '',
+    id: uuid4.v4() as unknown as string,
+  };
+
+  return passioFoodItem;
+};
+
+export const isMissingNutrition = (item?: PassioFoodItem | null) => {
+  if (!item) {
+    return true;
+  }
+
+  const qty = item?.amount?.selectedQuantity;
+  const selectedUnit = item?.amount?.selectedUnit;
+  const weight = item?.amount?.weight?.value;
+  const ingredients = item?.ingredients?.[0];
+
+  const calories = ingredients?.referenceNutrients?.calories;
+  const carbs = ingredients?.referenceNutrients?.carbs;
+  const protein = ingredients?.referenceNutrients?.protein;
+  const fat = ingredients?.referenceNutrients?.fat;
+
+  return (
+    !qty ||
+    !selectedUnit ||
+    !weight ||
+    !ingredients ||
+    !calories ||
+    !carbs ||
+    !protein ||
+    !fat
+  );
+};
+
+export const createBlankPassioFoodITem = (barcode?: string) => {
+  const passioAmount: PassioFoodAmount = {
+    weight: {
+      unit: 'g',
+      value: 10,
+    },
+    selectedUnit: 'gram',
+    servingSizes: [
+      {
+        quantity: 100,
+        unitName: 'gram',
+      },
+    ],
+    servingUnits: [
+      {
+        unit: 'g',
+        value: 1,
+        unitName: 'gram',
+      },
+    ],
+    selectedQuantity: 10,
+  };
+  const item: PassioFoodItem = {
+    amount: passioAmount,
+    name: '',
+    iconId: '',
+    refCode: '',
+    ingredientWeight: passioAmount.weight,
+    id: '',
+    ingredients: [
+      {
+        amount: passioAmount,
+        refCode: '',
+        name: '',
+        id: '',
+        iconId: '',
+        metadata: {
+          barcode: barcode,
+        },
+        weight: passioAmount.weight,
+        referenceNutrients: {
+          weight: passioAmount.weight,
+        },
+      },
+    ],
+  };
+  return item;
+};
+
+export const convertNumberInput = (s?: string) => {
+  const input = (s ?? '').replaceAll(',', '.');
+  return Number(input);
+};
+
+export const inValidNumberInput = (s?: string) => {
+  const input = convertNumberInput(s).toString();
+
+  if (s?.length === 0) {
+    return true;
+  }
+  return input.length === 0 || !validateQuantityInput(input);
+};
+
+export const createPassioFoodItemFromCustomFood = (
+  customFood: CustomFood
+): PassioFoodItem => {
+  const passioAmount: PassioFoodAmount = {
+    weight: {
+      unit: 'g',
+      value: customFood?.computedWeight?.value ?? 10,
+    },
+    selectedUnit: customFood?.selectedUnit ?? 'gram',
+    selectedQuantity: customFood?.selectedQuantity ?? 10,
+    servingSizes:
+      customFood?.servingSizes?.map((i) => {
+        return {
+          quantity: i.quantity,
+          unitName: i.unit,
+        };
+      }) ?? [],
+    servingUnits:
+      customFood?.servingUnits?.map((i) => {
+        return {
+          unit: 'g',
+          value: i.mass,
+          unitName: i.unit,
+        };
+      }) ?? [],
+  };
+
+  const nutrients = customFood?.foodItems?.[0]?.nutrients ?? [];
+  const referenceNutrients: PassioNutrients = {
+    ...findNutrient(nutrients, passioAmount.weight),
+    weight: passioAmount.weight,
+  };
+
+  const item: PassioFoodItem = {
+    amount: passioAmount,
+    name: customFood?.name ?? '',
+    iconId: customFood?.iconID ?? '',
+    refCode: customFood?.uuid,
+    ingredientWeight: passioAmount.weight,
+    id: customFood?.refCustomFoodID ?? '',
+    ingredients: [
+      {
+        amount: passioAmount,
+        refCode: customFood?.uuid ?? '',
+        name: customFood?.name ?? '',
+        id: customFood?.refCustomFoodID ?? '',
+        iconId: customFood?.iconID ?? '',
+        weight: passioAmount.weight,
+        referenceNutrients: referenceNutrients,
+        metadata: {
+          barcode: customFood?.barcode,
+        },
+      },
+    ],
+  };
+  return item;
+};
+
+const findNutrient = (
+  nutrients: Nutrient[],
+  weight: UnitMass
+): PassioNutrients => {
+  const result: PassioNutrients = {
+    weight: weight,
+  };
+  nutrients.forEach((n) => {
+    result[n.id] = {
+      unit: n.unit,
+      value: n.amount,
+    };
+  });
+
+  return result;
+};

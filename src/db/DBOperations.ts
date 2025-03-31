@@ -203,7 +203,9 @@ export const getImage = async (
       );
       resolve(convertResultToImage(results)?.[0]);
     } catch (error) {
-      console.error(`Failed to get image  ${error} ========= ${id}`);
+      console.warn(
+        `Failed to get image  ${JSON.stringify(error)} ========= ${id}`
+      );
       reject(`Failed to get image ${error} ========= ${id}`);
       throw error;
     }
@@ -521,10 +523,6 @@ export const getLatestWeightDB = async (): Promise<Weight | null> => {
         `SELECT * FROM ${TABLE_WEIGHT}
          ORDER BY ${ROW_DAY} DESC
          LIMIT 1;`
-      );
-      console.log(
-        'convertResultToWeights(results)?.[0] || null==========================',
-        convertResultToWeights(results)?.[0] || null
       );
       resolve(convertResultToWeights(results)?.[0] || null);
     } catch (error) {

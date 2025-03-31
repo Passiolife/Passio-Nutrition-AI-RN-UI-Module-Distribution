@@ -25,3 +25,4 @@ export * from './foodCreator';
 export * from './myFoods';
 export * from './barcode';
 export * from './editRecipe';
+export * from './photoLoggingResult';

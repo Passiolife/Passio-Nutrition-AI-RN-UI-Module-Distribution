@@ -5,8 +5,8 @@ import styles from './styles';
 import { useBranding } from '../../contexts';
 
 interface MacroProgress {
-  target: number;
-  consumed: number;
+  consumes: number;
+  targeted: number;
 }
 
 interface MacrosProgressViewProps {
@@ -27,32 +27,32 @@ const MacrosProgressView = (props: MacrosProgressViewProps) => {
   return (
     <View style={styles.progressMainContainerStyle}>
       <CircularProgressNutritionTrackView
-        record={calories.target}
-        total={calories.consumed}
+        record={calories.consumes}
+        total={calories.targeted}
         stock={calColor}
         stock2={'rgba(120, 53, 15, 1)'}
         text={'Calories'}
       />
       <CircularProgressNutritionTrackView
-        record={carbs.target}
-        total={carbs.consumed}
+        record={carbs.consumes}
+        total={carbs.targeted}
         stock={cabColor}
         stock2={'rgba(12, 74, 110, 1)'}
         text={'Carbs'}
         unit="g"
       />
       <CircularProgressNutritionTrackView
-        record={protein.target}
-        total={protein.consumed}
+        record={protein.consumes}
+        total={protein.targeted}
         stock2={'rgba(6, 78, 59, 1)'}
         stock={protColor}
         unit="g"
         text={'Protein'}
       />
       <CircularProgressNutritionTrackView
-        record={fat.target}
+        record={fat.consumes}
         unit="g"
-        total={fat.consumed}
+        total={fat.targeted}
         stock2={'rgba(49, 46, 129, 1)'}
         stock={fatColor}
         text={'Fat'}

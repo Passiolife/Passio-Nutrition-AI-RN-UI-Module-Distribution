@@ -29,8 +29,10 @@ export const AdvisorScreenRoute = 'AdvisorScreen';
 export const ImagePickerScreenRoute = 'ImagePickerScreen';
 export const BarcodeScanScreenRoute = 'BarcodeScanScreen';
 export const EditRecipeScreenRoute = 'EditRecipeScreen';
+export const PhotoLoggingScreenRoute = 'PhotoLoggingScreen';
 export const FoodCreatorScreenRoute = 'FoodCreatorScreen';
 export const MyFoodsScreenRoute = 'MyFoodsScreen';
+export const NutritionFactScanScreenRoute = 'NutritionFactScanScreen';
 
 export const ROUTES = {
   NutritionProfileScreen: 'NutritionProfileScreen',
@@ -53,4 +55,5 @@ export const ROUTES = {
   MyFoodsScreen: 'MyFoodsScreen',
   BarcodeScanScreen: 'BarcodeScanScreen',
   EditRecipeScreen: 'EditRecipeScreen',
+  NutritionFactScanScreen: 'NutritionFactScanScreen',
 };

@@ -23,6 +23,7 @@ import {
   FoodCreatorScreen,
   BarcodeScanScreen,
   EditRecipeScreen,
+  PhotoLoggingScreen,
 } from '../screens';
 import {
   DashboardScreenRoute,
@@ -52,6 +53,8 @@ import {
   MyFoodsScreenRoute,
   FoodCreatorScreenRoute,
   EditRecipeScreenRoute,
+  PhotoLoggingScreenRoute,
+  NutritionFactScanScreenRoute,
 } from './Route';
 import MyPlanScreen from '../screens/myPlans/MyPlanScreen';
 import { HomeBottomNavigation } from './HomeBottomNavigations';
@@ -65,6 +68,7 @@ import WaterScreen from '../screens/water/WaterScreen';
 import { SettingScreen } from '../screens/setting/SettingScreen';
 import NutritionInformationScreen from '../screens/nutritionInformation/NutritionInformationScreen';
 import { AdvisorSessionProvider } from '../contexts/adviosr/AdviosrContext';
+import { NutritionFactScanScreen } from '../screens/nutritionFactScan/NutritionFactScanScreen';
 const Stack = createNativeStackNavigator();
 enableScreens();
 
@@ -144,6 +148,11 @@ export const NutritionNavigator = () => {
               options={{ headerShown: false }}
               name={FavoritesScreenRoute}
               component={MyFavoritesScreen}
+            />
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name={NutritionFactScanScreenRoute}
+              component={NutritionFactScanScreen}
             />
             <Stack.Screen
               options={{ headerShown: false }}
@@ -234,6 +243,11 @@ export const NutritionNavigator = () => {
               options={{ headerShown: false }}
               name={EditRecipeScreenRoute}
               component={EditRecipeScreen}
+            />
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name={PhotoLoggingScreenRoute}
+              component={PhotoLoggingScreen}
             />
           </Stack.Navigator>
         </NavigationContainer>

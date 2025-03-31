@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { DetectionCameraView } from '@passiolife/nutritionai-react-native-sdk-v3';
 import { QuickScanningActionView } from './views';
-import { useNavigation } from '@react-navigation/native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 import ScanSVG from '../../components/svgs/scan';
 import { BarcodeFoodScan } from './mode/barcode/BarcodeFoodScan';
 import { VisualFoodScan } from './mode/visual/VisualFoodScan';
@@ -37,6 +37,8 @@ export const QuickScanningScreen = gestureHandlerRootHOC(() => {
   const navigation = useNavigation<ScreenNavigationProps>();
   const [level, setLevel] = useState<PassioCameraZoomLevel>();
 
+  const isFocused = useIsFocused();
+
   useEffect(() => {
     const init = async () => {
       const passioCameraZoomLevel = await PassioSDK.getMinMaxCameraZoomLevel();
@@ -44,12 +46,6 @@ export const QuickScanningScreen = gestureHandlerRootHOC(() => {
     };
     setTimeout(init, 300);
   }, []);
-
-  const onTakePhoto = () => {
-    navigation.replace('TakePictureScreen', {
-      type: 'camera',
-    });
-  };
 
   return (
     <View style={styles.container}>
@@ -59,10 +55,14 @@ export const QuickScanningScreen = gestureHandlerRootHOC(() => {
           onInfoPress={() => setInfo((i) => !i)}
         />
         <View style={{ flex: 1 }}>
-          <DetectionCameraView
-            style={styles.cameraView}
-            volumeDetectionMode="none"
-          />
+          {isFocused ? (
+            <DetectionCameraView
+              style={styles.cameraView}
+              volumeDetectionMode="none"
+            />
+          ) : (
+            <View style={styles.cameraView} />
+          )}
           {/* {!info && <ScanningModeSelector mode={mode} setMode={setMode} />} */}
           {!info && <ScanSVG />}
           {!info && level && <ZoomIndicator mode={mode} level={level} />}
@@ -70,9 +70,7 @@ export const QuickScanningScreen = gestureHandlerRootHOC(() => {
         </View>
       </View>
       {mode === 'Visual' && !info && <VisualFoodScan />}
-      {mode === 'Barcode' && !info && (
-        <BarcodeFoodScan onTakePhoto={onTakePhoto} />
-      )}
+      {mode === 'Barcode' && !info && <BarcodeFoodScan />}
       {mode === 'NutritionFact' && !info && <NutritionFactScan />}
     </View>
   );

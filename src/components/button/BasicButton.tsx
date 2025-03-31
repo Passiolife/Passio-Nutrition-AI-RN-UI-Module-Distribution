@@ -22,6 +22,7 @@ interface Props {
   isDelete?: boolean;
   isLoading?: boolean;
   enable?: boolean;
+  textSize?: number;
   boarderColor?: string;
   textColor?: string;
   backgroundColor?: string;
@@ -34,6 +35,7 @@ export const BasicButton: React.FC<Props> = (props) => {
   const brandingContext = useBranding();
   const {
     text,
+    textSize,
     onPress,
     style,
     small = false,
@@ -123,7 +125,7 @@ export const BasicButton: React.FC<Props> = (props) => {
           />
         ) : (
           <Text
-            weight="600"
+            weight="500"
             size="_14px"
             style={[
               styles.text,
@@ -131,6 +133,7 @@ export const BasicButton: React.FC<Props> = (props) => {
               {
                 color: textColor ?? (secondary ? boarderColor : COLORS.white),
               },
+              textSize ? { fontSize: textSize } : {},
             ]}
           >
             {text}
@@ -149,6 +152,7 @@ const basicButtonStyle = ({ primaryColor }: Branding) =>
       paddingHorizontal: 16,
       minWidth: 100,
       flexDirection: 'row',
+      minHeight: scaleHeight(50),
     },
     text: {
       paddingVertical: scaleHeight(8),
