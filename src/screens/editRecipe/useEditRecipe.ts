@@ -139,6 +139,28 @@ export function useEditRecipe() {
         value: sum,
         unit: 'g',
       };
+      updatedFoodLog.selectedUnit = updatedFoodLog.selectedUnit ?? 'serving';
+      updatedFoodLog.selectedQuantity = value.selectedQuantity ?? 1;
+      updatedFoodLog.servingUnits = [
+        {
+          unit: 'serving',
+          mass: sum,
+        },
+        {
+          unit: 'gram',
+          mass: 1,
+        },
+      ];
+      updatedFoodLog.servingSizes = [
+        {
+          unit: 'serving',
+          quantity: value.selectedQuantity ?? 1,
+        },
+        {
+          unit: 'gram',
+          quantity: sum,
+        },
+      ];
       return updatedFoodLog;
     },
     []
@@ -221,16 +243,10 @@ export function useEditRecipe() {
   const onFindSearchPress = () => {
     navigation.push('FoodSearchScreen', {
       onSaveData: (item) => {
-        const foodItem = item.foodItems;
-        if (foodItem) {
-          addIngredient(foodItem);
-        }
-      },
-      onEditFoodData: (item) => {
+        const foodItem = item;
         if (item.foodItems.length > 1) {
           addIngredient(item.foodItems);
         } else {
-          const foodItem = item;
           if (foodItem) {
             navigation.push('EditIngredientScreen', {
               foodItem: {
@@ -246,6 +262,37 @@ export function useEditRecipe() {
                 entityType: 'user-food',
               },
               updateIngredient: (updatedIngredient) => {
+                navigation.goBack();
+                addIngredient([updatedIngredient]);
+              },
+            });
+          }
+        }
+        // if (foodItem) {
+        //   addIngredient(foodItem);
+        // }
+      },
+      onEditFoodData: (item) => {
+        const foodItem = item;
+        if (item.foodItems.length > 1) {
+          addIngredient(item.foodItems);
+        } else {
+          if (foodItem) {
+            navigation.push('EditIngredientScreen', {
+              foodItem: {
+                ...foodItem,
+                nutrients: mergeNutrients(
+                  item.foodItems?.flatMap((i) => i.nutrients)
+                ),
+                refCode: foodItem.refCode ?? '',
+                iconId: foodItem?.iconID ?? foodItem.foodItems[0].iconId,
+                computedWeight:
+                  foodItem.computedWeight ??
+                  foodItem.foodItems[0].computedWeight,
+                entityType: 'user-food',
+              },
+              updateIngredient: (updatedIngredient) => {
+                navigation.goBack();
                 addIngredient([updatedIngredient]);
               },
             });

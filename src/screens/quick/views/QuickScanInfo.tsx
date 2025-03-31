@@ -35,9 +35,9 @@ export const QuickScanInfo = ({ onOkPress }: Props) => {
             </Text>
           </View>
           <View style={styles.iconInfoContainer}>
-            {renderIcon('Whole Foods Mode', ICONS.modeVisual)}
+            {/* {renderIcon('Whole Foods Mode', ICONS.modeVisual)} */}
             {renderIcon('Barcode Mode', ICONS.modeBarcode)}
-            {renderIcon('Nutrition Facts Mode', ICONS.modeNutritionFact)}
+            {/* {renderIcon('Nutrition Facts Mode', ICONS.modeNutritionFact)} */}
           </View>
           <View style={styles.buttonContainer}>
             <BasicButton

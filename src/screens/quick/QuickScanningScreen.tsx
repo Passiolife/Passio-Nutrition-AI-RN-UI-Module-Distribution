@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { DetectionCameraView } from '@passiolife/nutritionai-react-native-sdk-v3';
 import { QuickScanningActionView } from './views';
-import { useNavigation } from '@react-navigation/native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 import ScanSVG from '../../components/svgs/scan';
 import { BarcodeFoodScan } from './mode/barcode/BarcodeFoodScan';
 import { VisualFoodScan } from './mode/visual/VisualFoodScan';
@@ -11,13 +11,13 @@ import {
   PassioSDK,
   PassioCameraZoomLevel,
 } from '@passiolife/nutritionai-react-native-sdk-v3';
-import ScanningModeSelector from './views/ScanningModeSelector';
 import ZoomIndicator from './views/ZoomIndicator';
 import type { MealLabel } from '../../models';
 import QuickScanInfo from './views/QuickScanInfo';
 import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import type { ParamList } from '../../navigaitons';
+import type { ScreenNavigationProps } from '../myFoods/useMyFoodScreen';
 
 export interface ScanningScreenProps {
   logToDate: Date | undefined;
@@ -33,9 +33,11 @@ export type ScanningScreenNavigationProps = StackNavigationProp<
 
 export const QuickScanningScreen = gestureHandlerRootHOC(() => {
   const [info, setInfo] = useState(false);
-  const [mode, setMode] = useState<ScanningMode>('Visual');
-  const navigation = useNavigation();
+  const [mode] = useState<ScanningMode>('Barcode');
+  const navigation = useNavigation<ScreenNavigationProps>();
   const [level, setLevel] = useState<PassioCameraZoomLevel>();
+
+  const isFocused = useIsFocused();
 
   useEffect(() => {
     const init = async () => {
@@ -53,22 +55,22 @@ export const QuickScanningScreen = gestureHandlerRootHOC(() => {
           onInfoPress={() => setInfo((i) => !i)}
         />
         <View style={{ flex: 1 }}>
-          <DetectionCameraView
-            style={styles.cameraView}
-            volumeDetectionMode="none"
-          />
-          {!info && <ScanningModeSelector mode={mode} setMode={setMode} />}
+          {isFocused ? (
+            <DetectionCameraView
+              style={styles.cameraView}
+              volumeDetectionMode="none"
+            />
+          ) : (
+            <View style={styles.cameraView} />
+          )}
+          {/* {!info && <ScanningModeSelector mode={mode} setMode={setMode} />} */}
           {!info && <ScanSVG />}
           {!info && level && <ZoomIndicator mode={mode} level={level} />}
           {info && <QuickScanInfo onOkPress={() => setInfo(false)} />}
         </View>
       </View>
       {mode === 'Visual' && !info && <VisualFoodScan />}
-      {mode === 'Barcode' && !info && (
-        <BarcodeFoodScan
-          onScanNutritionFacts={() => setMode('NutritionFact')}
-        />
-      )}
+      {mode === 'Barcode' && !info && <BarcodeFoodScan />}
       {mode === 'NutritionFact' && !info && <NutritionFactScan />}
     </View>
   );

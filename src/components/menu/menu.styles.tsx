@@ -2,11 +2,14 @@ import { StyleSheet } from 'react-native';
 import type { Branding } from '../../contexts';
 import { scaleHeight, scaleWidth, scaledSize } from '../../utils';
 
-const menuStyle = ({ white }: Branding) =>
+const menuStyle = ({ white, primaryColor }: Branding) =>
   StyleSheet.create({
     icon: {
       height: scaleHeight(20),
       width: scaleWidth(20),
+    },
+    iconColor: {
+      tintColor: primaryColor,
     },
     main: {
       paddingHorizontal: scaleWidth(16),

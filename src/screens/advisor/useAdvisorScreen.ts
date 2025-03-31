@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { useNutritionAdvisor } from '../../hooks';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
@@ -39,6 +39,7 @@ export const useAdvisorScreen = () => {
   const navigation = useNavigation<ScreenNavigationProps>();
   const route = useRoute<RouteProp<ParamList, 'AdvisorScreen'>>();
   const services = useServices();
+  const isSubmitting = useRef<boolean>(false);
 
   const onChangeTextInput = useCallback((val: string) => {
     setOptionShow(false);
@@ -95,6 +96,11 @@ export const useAdvisorScreen = () => {
     response: AdvisorResponse,
     selected: Selection[]
   ) => {
+    if (isSubmitting.current) {
+      return;
+    }
+    isSubmitting.current = true;
+
     makeResponseLoadingState(response.uuID, true);
     const logToDate = getLogToDate(
       route.params.logToDate,
@@ -109,7 +115,8 @@ export const useAdvisorScreen = () => {
       if (item.foodDataInfo) {
         const foodItem = await PassioSDK.fetchFoodItemForDataInfo(
           item.foodDataInfo,
-          item.weightGrams
+          item.foodDataInfo?.nutritionPreview?.servingQuantity,
+          item.foodDataInfo?.nutritionPreview?.servingUnit
         );
         if (foodItem) {
           let foodLog = createFoodLogUsingWeightGram(
@@ -147,6 +154,7 @@ export const useAdvisorScreen = () => {
         }
       });
     });
+    isSubmitting.current = false;
 
     ShowToast('Logged food');
   };

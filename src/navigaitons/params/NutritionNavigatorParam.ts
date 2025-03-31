@@ -21,10 +21,8 @@ import type {
   Weight,
 } from '../../models';
 import type { FavoritesScreenProps } from '../../screens/myFavoritess';
-import type {
-  TakePictureScreenProps,
-  VoiceLoggingScreenProps,
-} from '../../screens/voiceLogging';
+import type { VoiceLoggingScreenProps } from '../../screens/voiceLogging';
+import type { PhotoLoggingResults } from '../../screens/photoLoggingResult/usePhotoLogging';
 
 export type Module =
   | 'QuickScan'
@@ -48,6 +46,7 @@ export interface HomeBottom {
     | 'ProgressScreen'
     | 'MyPlanScreen'
     | 'Bank';
+  params?: any;
 }
 
 interface WaterEntryProp {
@@ -93,6 +92,9 @@ export interface BarcodeScanScreenNavProps {
   onCreateFoodAnyWay?: (result?: BarcodeCustomResult) => void;
   onViewExistingItem?: (result?: BarcodeCustomResult) => void;
   onBarcodePress?: (result?: BarcodeCustomResult) => void;
+  onBarcodeOnly?: (result: string) => void;
+  onClose?: () => void;
+  type?: 'customFood' | 'general';
 }
 export interface EditRecipeScreenProps {
   recipe: CustomRecipe;
@@ -100,6 +102,27 @@ export interface EditRecipeScreenProps {
   onSaveLogPress?: (recipe: CustomRecipe) => void;
   onDeleteLogPress?: (recipe: CustomRecipe) => void;
   onCancelPress?: () => void;
+}
+
+export interface TakePictureScreenProps {
+  logToDate?: Date | undefined;
+  logToMeal?: MealLabel | undefined;
+  type: 'picture' | 'camera';
+  isMultiple?: boolean;
+  images?: string[];
+}
+
+export interface PhotoLoggingScreenProps {
+  images?: string[];
+  logToDate?: Date | undefined;
+  logToMeal?: MealLabel | undefined;
+  type: 'picture' | 'camera';
+}
+export interface NutritionFactScanScreenProps {
+  logToDate?: Date | undefined;
+  logToMeal?: MealLabel | undefined;
+  onSaveLog?: (result: PhotoLoggingResults) => void;
+  barcode?: string;
 }
 
 export type ParamList = {
@@ -134,4 +157,6 @@ export type ParamList = {
   FoodCreatorScreen: FoodCreatorNavProps;
   MyFoodsScreen: MyFoodsScreenNavProps;
   BarcodeScanScreen: BarcodeScanScreenNavProps;
+  PhotoLoggingScreen: PhotoLoggingScreenProps;
+  NutritionFactScanScreen: NutritionFactScanScreenProps;
 };

@@ -15,7 +15,7 @@ import { scaleHeight } from '../../../../utils';
 import { Text } from '../../../../components';
 import { useBranding } from '../../../../contexts';
 import AlternateFoodLogView from '../../../../components/alternatives/alternativesItem';
-import { QuickScanItemAddedToDiaryView } from '../../views/QuickSacnItemAddedToDiaryView';
+import { ItemAddedToDairyView } from '../../views/ItemAddedToDairyView';
 import { QuickScanLogButtonView } from '../../views/QuickScanLogButtonView';
 import { useVisualFoodScan } from './useVisualFoodScan';
 
@@ -132,7 +132,7 @@ export const VisualFoodScan = () => {
       ) : null}
 
       {isLodgedFood && (
-        <QuickScanItemAddedToDiaryView
+        <ItemAddedToDairyView
           onContinueScanningPress={onContinueScanningPress}
           onViewDiaryPress={onViewDiaryPress}
         />

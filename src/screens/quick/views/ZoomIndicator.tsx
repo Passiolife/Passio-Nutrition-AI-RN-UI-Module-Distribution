@@ -53,15 +53,13 @@ const ZoomIndicator: React.FC<ZoomIndicatorProps> = ({ level, mode }) => {
         onPress={() => {
           setEnableTorch(!isEnableTorch);
         }}
-        style={[
-          { padding: 4 },
-          isEnableTorch && {
-            backgroundColor: 'rgba(79, 70, 229, 1)',
-            borderRadius: 16,
-          },
-        ]}
+        style={[{ padding: 4 }]}
       >
-        <Image source={ICONS.flash} style={styles.icon} />
+        <Image
+          source={isEnableTorch ? ICONS.flashOff : ICONS.flash}
+          resizeMode="contain"
+          style={styles.icon}
+        />
       </TouchableOpacity>
     </View>
   );

@@ -54,9 +54,10 @@ export const EditFoodLogScreen = () => {
     isFavorite,
     isHideFavorite,
     isHideMealTime,
+    isSubmitting,
     isHideTimeStamp,
     isOpenDatePicker,
-    onEditCustomRecipePress,
+    onEditIngredientPress,
     onCancelPress,
     onCreateCustomFood,
     onDateChangePress,
@@ -71,6 +72,7 @@ export const EditFoodLogScreen = () => {
     onUpdateFavoritePress,
     onUpdateFoodLog,
     openDatePicker,
+    onEditCustomRecipePress,
   } = useEditFoodLog();
   const styles = editFoodLogStyle(branding);
 
@@ -87,9 +89,11 @@ export const EditFoodLogScreen = () => {
               >
                 <Image
                   source={ICONS.editGreyIc}
+                  resizeMethod="resize"
+                  resizeMode="contain"
                   style={{
-                    width: scaleWidth(20),
-                    height: scaleHeight(20),
+                    width: scaleWidth(24),
+                    height: scaleHeight(24),
                     marginEnd: 32,
                   }}
                 />
@@ -105,10 +109,12 @@ export const EditFoodLogScreen = () => {
           <LogInformationView
             iconID={foodLog.iconID}
             foodItems={foodLog.foodItems}
-            longName={foodLog.longName}
             isOpenFood={foodLog.isOpenFood}
             onMoreDetailPress={onMoreDetailPress}
             name={foodLog.name}
+            longName={
+              foodLog.name === foodLog.longName ? undefined : foodLog.longName
+            }
             qty={foodLog.selectedQuantity}
             entityType={foodLog.entityType}
             servingUnit={foodLog.selectedUnit}
@@ -160,6 +166,8 @@ export const EditFoodLogScreen = () => {
             foodItems={foodLog.foodItems}
             referenceCode={foodLog.refCustomFoodID}
             enable={false}
+            onAddIngredients={onEditCustomRecipePress}
+            navigateToEditIngredientsScreen={onEditIngredientPress}
           />
           <View style={styles.lastContainer} />
         </View>
@@ -208,6 +216,7 @@ export const EditFoodLogScreen = () => {
             text={from === 'MealLog' ? 'Save' : content.log}
             testId="testButtonSave"
             small
+            isLoading={isSubmitting}
             secondary={false}
             onPress={() => onSavePress()}
           />

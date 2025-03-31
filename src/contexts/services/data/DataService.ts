@@ -28,9 +28,9 @@ import {
   getCustomRecipe,
   deleteCustomRecipe,
   getCustomRecipes,
+  getLatestWeightDB,
 } from '../../../db';
 import {
-  ActivityLevelType,
   CustomFood,
   CustomImageID,
   CustomRecipe,
@@ -51,10 +51,10 @@ const dataService: NutritionDataService = {
   async saveFoodLog(foodLog: FoodLog): Promise<void> {
     return saveFoodLog(await DBHandler.getInstance(), foodLog);
   },
-  async saveCustomFood(foodLog: CustomFood): Promise<void> {
+  async saveCustomFood(foodLog: CustomFood): Promise<string> {
     return saveCustomFood(await DBHandler.getInstance(), foodLog);
   },
-  async saveCustomRecipe(foodLog: CustomFood): Promise<void> {
+  async saveCustomRecipe(foodLog: CustomFood): Promise<string> {
     return saveCustomRecipe(await DBHandler.getInstance(), foodLog);
   },
   async saveWater(water: Water): Promise<void> {
@@ -107,6 +107,9 @@ const dataService: NutritionDataService = {
   async getWeight(startDate: Date, endDate: Date): Promise<Weight[]> {
     return getWeightByStartDateAndEndDate(startDate, endDate);
   },
+  async getLatestWeight(): Promise<Weight | undefined | null> {
+    return getLatestWeightDB();
+  },
 
   async saveFavoriteFoodItem(
     favoriteFoodItem: FavoriteFoodItem
@@ -141,19 +144,14 @@ const dataService: NutritionDataService = {
           const profile: NutritionProfile | undefined = profileString
             ? JSON.parse(profileString ?? '')
             : {
-                age: 26,
                 height: 183,
-                weight: 60,
                 gender: 'male',
                 unitLength: UnitSystem.IMPERIAL,
                 unitsWeight: UnitSystem.IMPERIAL,
-                targetWater: 100,
-                targetWeight: 70,
-                caloriesTarget: 1300,
+                caloriesTarget: 2100,
                 carbsPercentage: 50,
                 fatPercentage: 25,
                 proteinPercentage: 25,
-                activityLevel: ActivityLevelType.active,
               };
           resolve(profile);
         })

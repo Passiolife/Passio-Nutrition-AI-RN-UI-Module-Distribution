@@ -1,9 +1,16 @@
 import { StyleSheet } from 'react-native';
 import { scaleHeight, scaledSize } from '../../utils';
+import type { Branding } from '../../contexts';
 
-export const stylesObj = () =>
+export const stylesObj = ({ primaryColor }: Branding) =>
   StyleSheet.create({
-    headerBodyIcon: { height: scaledSize(24), width: scaledSize(24) },
+    headerBodyIcon: {
+      height: scaledSize(24),
+      width: scaledSize(24),
+    },
+    iconColor: {
+      tintColor: primaryColor,
+    },
     macroContainer: {
       marginVertical: scaleHeight(16),
     },

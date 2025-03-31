@@ -1,19 +1,14 @@
-import {
-  nutrientUnits,
-  sortByNutrientType,
-  type Nutrient,
-  type NutrientType,
-} from '../models';
+import type { Nutrient, NutrientType } from '../models';
 
 export const mergeNutrients = (nutrientsArray: Nutrient[]): Nutrient[] => {
   const mergedMap = new Map<NutrientType, Nutrient>();
-  sortByNutrientType.forEach((type) => {
-    mergedMap.set(type, {
-      amount: 0,
-      id: type,
-      unit: nutrientUnits[type],
-    });
-  });
+  // sortByNutrientType.forEach((type) => {
+  //   mergedMap.set(type, {
+  //     amount: 0,
+  //     id: type,
+  //     unit: nutrientUnits[type],
+  //   });
+  // });
 
   for (const nutrient of nutrientsArray) {
     const { id, amount, unit } = nutrient;

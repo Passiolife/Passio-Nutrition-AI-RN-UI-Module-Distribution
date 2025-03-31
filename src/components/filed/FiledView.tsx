@@ -129,7 +129,7 @@ export const FiledView = React.forwardRef<FiledViewRef, Props>(
   }
 );
 
-const requireNutritionFactStyle = ({ white, gray300 }: Branding) =>
+const requireNutritionFactStyle = ({ text, gray300 }: Branding) =>
   StyleSheet.create({
     formRow: {
       flexDirection: 'row',
@@ -160,8 +160,8 @@ const requireNutritionFactStyle = ({ white, gray300 }: Branding) =>
       flex: 1,
       fontWeight: '400',
       fontSize: 14,
-      backgroundColor: white,
       borderColor: gray300,
+      color: text,
       paddingVertical: scaleHeight(8),
       borderRadius: scaleHeight(4),
       borderWidth: 1,

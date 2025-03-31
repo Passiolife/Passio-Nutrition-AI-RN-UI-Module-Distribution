@@ -49,10 +49,12 @@ export const EditRecipeScreen = () => {
             ref={editRecipeNameRef}
             onEditImagePress={onEditImagePress}
           />
-          <NewEditServingAmountView
-            foodLog={foodLog as FoodLog}
-            onUpdateFoodLog={onUpdateFoodLog}
-          />
+          {foodLog.foodItems.length > 0 && (
+            <NewEditServingAmountView
+              foodLog={foodLog as FoodLog}
+              onUpdateFoodLog={onUpdateFoodLog}
+            />
+          )}
           <IngredientsView
             foodItems={foodLog.foodItems}
             isShowAll

@@ -1,17 +1,21 @@
-import {
+import type {
   PassioAdvisorFoodInfo,
   PassioFoodItem,
-  PassioSDK,
 } from '@passiolife/nutritionai-react-native-sdk-v3';
-import type { FoodLog, MealLabel, ServingUnit } from '..';
+import type { FoodLog, MealLabel, Services, ServingUnit } from '..';
 import { getLogToDate, mealLabelByDate } from './ScaningUtils';
 import {
   convertPassioFoodItemToFoodLog,
   updateQuantityOfFoodLog,
 } from './V3Utils';
+import type { PhotoLoggingResults } from '../screens/photoLoggingResult/usePhotoLogging';
+import RNFS from 'react-native-fs';
+import { generateCustomNutritionFactID } from '../screens/foodCreator/FoodCreator.utils';
+import { Platform } from 'react-native';
 
 export const createFoodLogUsingFoodDataInfo = async (
-  foods: PassioAdvisorFoodInfo[],
+  foods: PhotoLoggingResults[],
+  services: Services,
   date?: Date,
   mealLabel?: MealLabel
 ) => {
@@ -20,18 +24,34 @@ export const createFoodLogUsingFoodDataInfo = async (
   const foodLogs: FoodLog[] = [];
 
   for (const item of foods) {
-    if (item && item.foodDataInfo) {
-      const foodItem = await PassioSDK.fetchFoodItemForDataInfo(
-        item.foodDataInfo,
-        item.weightGrams
-      );
+    if (item && item.passioFoodItem) {
+      const foodItem = item.passioFoodItem;
       if (foodItem) {
         const foodLog = convertPassioFoodItemToFoodLog(
           foodItem,
           logToDate,
           meal
         );
-        foodLogs.push(foodLog);
+        let iconID = foodLog.iconID;
+        let name = foodLog.name;
+
+        if (!iconID && item.assets) {
+          const uri =
+            Platform.OS === 'android' ? `file://${item.assets}` : item.assets;
+          const response = await RNFS.readFile(uri, 'base64');
+          let id = generateCustomNutritionFactID();
+          let customFoodImageID = await services.dataService.saveImage({
+            id: id,
+            base64: response,
+          });
+          iconID = customFoodImageID;
+        }
+
+        if (!name && item.resultType === 'nutritionFacts') {
+          name = 'Scanned Nutrition Label';
+        }
+
+        foodLogs.push({ ...foodLog, iconID: iconID });
       }
     }
   }
@@ -161,7 +181,7 @@ export const getUpdatedCaloriesOfPassioAdvisorFoodInfo = (
   const calories = ratio * advisorInfoWeightGram;
 
   return {
-    calories: calories,
+    calories: passio?.foodDataInfo?.nutritionPreview?.calories ?? calories,
     advisorInfoWeightGram: advisorInfoWeightGram,
   };
 };

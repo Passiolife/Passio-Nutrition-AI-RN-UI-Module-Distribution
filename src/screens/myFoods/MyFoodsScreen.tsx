@@ -10,6 +10,7 @@ import {
 import { BackNavigation, TabBar } from '../../components';
 import CustomFoods from './views/customFoods/CustomFoods';
 import CustomRecipe from './views/customRecipe/CustomRecipe';
+import { MyFavoritesScreen } from '../myFavoritess';
 
 export const MyFoodsScreen = () => {
   const { branding, tab, setTab, selectedTab } = useMyFoodScreen();
@@ -32,7 +33,13 @@ export const MyFoodsScreen = () => {
     <View style={styles.body}>
       <BackNavigation title="My Foods" bottomView={renderTab()} />
       <View style={styles.container}>
-        {tab === 'Custom Foods' ? <CustomFoods /> : <CustomRecipe />}
+        {tab === 'Custom' ? (
+          <CustomFoods />
+        ) : tab === 'Recipe' ? (
+          <CustomRecipe />
+        ) : (
+          <MyFavoritesScreen />
+        )}
       </View>
     </View>
   );

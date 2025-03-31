@@ -3,14 +3,19 @@ import { Image, StyleSheet, View } from 'react-native';
 
 import { BasicButton, Card, Text } from '../../../components';
 import { ICONS } from '../../../assets';
+import { scaleHeight } from '../../../utils';
 interface Props {
   onViewDiaryPress?: () => void;
   onContinueScanningPress?: () => void;
+  action?: string;
+  note?: string;
 }
 
-export const QuickScanItemAddedToDiaryView = ({
+export const ItemAddedToDairyView = ({
   onViewDiaryPress,
   onContinueScanningPress,
+  action = 'Continue Scanning',
+  note = 'View your diary or add more',
 }: Props) => {
   return (
     <Card style={styles.container}>
@@ -19,9 +24,7 @@ export const QuickScanItemAddedToDiaryView = ({
         <Text weight="700" size="_20px" style={styles.title}>
           Item Added To Diary
         </Text>
-        <Text style={styles.description}>
-          View your diary or continue scanning
-        </Text>
+        <Text style={styles.description}>{note}</Text>
       </View>
       <View style={styles.buttonContainer}>
         <BasicButton
@@ -31,7 +34,7 @@ export const QuickScanItemAddedToDiaryView = ({
           text={'View Diary'}
         />
         <BasicButton
-          text="Continue Scanning"
+          text={action}
           onPress={onContinueScanningPress}
           style={styles.button}
         />
@@ -46,7 +49,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     backgroundColor: 'white',
     bottom: 40,
-    paddingVertical: 8,
+    paddingVertical: scaleHeight(18),
+    paddingHorizontal: scaleHeight(18),
     right: 8,
     left: 8,
   },
@@ -83,4 +87,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default QuickScanItemAddedToDiaryView;
+export default ItemAddedToDairyView;

@@ -1,3 +1,5 @@
+import { DateTime } from 'luxon';
+
 var days = [
   'Sunday',
   'Monday',
@@ -45,6 +47,20 @@ export const dateFormatter = (date: Date) => {
   let getYear = date.getFullYear();
 
   return `${dayName}, ${getMonth} ${getDay} ${getYear}`;
+};
+export const dayFormatterPhotoLogging = (date: Date, defaultDate: Date) => {
+  const isCurrentDay = DateTime.fromJSDate(date).hasSame(DateTime.now(), 'day');
+
+  const defaultDateTime =
+    DateTime.fromJSDate(defaultDate).toFormat('dd/MM/yyyy h:mm a');
+  const currentDateTime =
+    DateTime.fromJSDate(date).toFormat('dd/MM/yyyy h:mm a');
+
+  if (isCurrentDay && defaultDateTime === currentDateTime) {
+    return 'Today';
+  } else {
+    return currentDateTime;
+  }
 };
 
 //converted date to 'dd'T'HH:mm:ss'Z'' format

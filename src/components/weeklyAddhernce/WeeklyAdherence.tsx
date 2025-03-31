@@ -16,6 +16,7 @@ import { getMealLogsFormDateToDate } from '../../utils/DataServiceHelper';
 
 interface Props {
   headerDate: DateTime;
+  onDateClick: (date: string | null) => void;
 }
 
 interface DayItem {
@@ -24,7 +25,7 @@ interface DayItem {
   isCurrentMonth: boolean;
 }
 
-const WeeklyAdherence = ({ headerDate }: Props) => {
+const WeeklyAdherence = ({ headerDate, onDateClick }: Props) => {
   const branding = useBranding();
   const styles = calderComponentStyle(branding);
 
@@ -270,6 +271,9 @@ const WeeklyAdherence = ({ headerDate }: Props) => {
             status === 'Logged' && styles.loggedDate,
             isToday(item.isoDate) && styles.todayDateBg,
           ]}
+          onPress={() => {
+            onDateClick?.(item.isoDate);
+          }}
         >
           <Text
             weight="600"
@@ -296,7 +300,7 @@ const WeeklyAdherence = ({ headerDate }: Props) => {
         <TouchableOpacity onPress={toggleCalendarView}>
           <Image
             source={calendarViewMode === 'month' ? ICONS.up : ICONS.down}
-            style={styles.headerBodyIcon}
+            style={styles.arrow}
           />
         </TouchableOpacity>
       </View>
@@ -381,6 +385,7 @@ const calderComponentStyle = ({ primaryColor, indigo50 }: Branding) =>
     icon: {
       width: 24,
       height: 24,
+      tintColor: primaryColor,
     },
     macroContainer: {},
     macroTitle: {
@@ -394,5 +399,14 @@ const calderComponentStyle = ({ primaryColor, indigo50 }: Branding) =>
       justifyContent: 'center',
       alignItems: 'center',
     },
-    headerBodyIcon: { height: scaledSize(24), width: scaledSize(24) },
+
+    headerBodyIcon: {
+      height: scaledSize(24),
+      width: scaledSize(24),
+      tintColor: primaryColor,
+    },
+    arrow: {
+      height: scaledSize(24),
+      width: scaledSize(24),
+    },
   });

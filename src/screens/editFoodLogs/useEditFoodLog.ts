@@ -5,12 +5,13 @@ import {
 import type {
   CustomFood,
   CustomRecipe,
+  FoodItem,
   FoodLog,
   MealLabel,
 } from '../../models';
 import { convertFoodLogsToFavoriteFoodLog } from './../../utils';
 import { useCallback, useEffect, useState, useRef } from 'react';
-
+import { content } from '../../constants/Content';
 import type { EditFoodLogScreenNavigationProps } from './editFoodLogsScreen';
 import { useBranding, useServices } from '../../contexts';
 import { ShowToast } from '../../utils';
@@ -40,9 +41,11 @@ export function useEditFoodLog() {
   const { params } = useRoute<RouteProp<ParamList, 'EditFoodLogScreen'>>();
   const branding = useBranding();
   const navigation = useNavigation<EditFoodLogScreenNavigationProps>();
+  const isSubmittingRef = useRef<boolean>(false);
 
   const [foodLog, setFoodLog] = useState<FoodLog>(params.foodLog);
   const [isFavorite, setFavorite] = useState<boolean>(false);
+  const [isSubmitting, setSubmitting] = useState<boolean>(false);
 
   const {
     eventTimeStamp,
@@ -54,10 +57,6 @@ export function useEditFoodLog() {
 
   const alertCustomFoodRef = useRef<AlertCustomFoodRef>(null);
   const foodNotFoundRef = useRef<FoodNotFoundRef>(null);
-
-  const onUpdateFoodLog = useCallback((item: FoodLog) => {
-    setFoodLog({ ...item });
-  }, []);
 
   const onConfirmDateSelection = (updatedDate: Date) => {
     foodLog.eventTimestamp = new Date(updatedDate).toISOString();
@@ -82,7 +81,9 @@ export function useEditFoodLog() {
   };
 
   const saveFoodLog = async () => {
+    setSubmitting(true);
     await services.dataService.saveFoodLog({ ...foodLog });
+    setSubmitting(false);
   };
 
   const onCreateCustomFood = async (
@@ -195,6 +196,11 @@ export function useEditFoodLog() {
     navigation.push('FoodCreatorScreen', {
       foodLog: customFood,
       onSave: async (item) => {
+        if (isSubmittingRef.current) {
+          return;
+        }
+        isSubmittingRef.current = true;
+
         if (item && isUpdateUponCreating) {
           await services.dataService.saveFoodLog(
             combineCustomFoodAndFoodLog(item, foodLog)
@@ -231,6 +237,7 @@ export function useEditFoodLog() {
             logToMeal: undefined,
           });
         }
+        isSubmittingRef.current = false;
       },
       from: 'FoodDetail',
     });
@@ -244,6 +251,11 @@ export function useEditFoodLog() {
     navigation.push('EditRecipeScreen', {
       recipe: JSON.parse(JSON.stringify(customFood)),
       onSaveLogPress: async (item) => {
+        if (isSubmittingRef.current) {
+          return;
+        }
+        isSubmittingRef.current = true;
+
         if (item && isUpdateUponCreating) {
           const updatedFoodLog = combineCustomFoodAndFoodLog(item, foodLog);
           //  For recipe long name should be empty
@@ -285,6 +297,7 @@ export function useEditFoodLog() {
             });
           }, 50);
         }
+        isSubmittingRef.current = false;
       },
       from: 'FoodDetail',
     });
@@ -440,15 +453,139 @@ export function useEditFoodLog() {
     init();
   }, [foodLog, foodLog.refCode, services.dataService]);
 
+  const recalculateFoodLogServing = useCallback((value: FoodLog) => {
+    const updatedFoodLog = { ...value };
+    const sum = updatedFoodLog.foodItems.reduce(
+      (acc, item) => acc + item.computedWeight.value,
+      0
+    );
+    updatedFoodLog.computedWeight = {
+      value: sum,
+      unit: 'g',
+    };
+    updatedFoodLog.selectedUnit = 'serving';
+    updatedFoodLog.selectedQuantity = 1;
+    updatedFoodLog.servingUnits = [
+      {
+        unit: 'serving',
+        mass: sum,
+      },
+      {
+        unit: 'gram',
+        mass: 1,
+      },
+    ];
+    if (updatedFoodLog.foodItems.length === 1) {
+      updatedFoodLog.name = `${content.recipeWith} ${updatedFoodLog.name}`;
+    }
+    return updatedFoodLog;
+  }, []);
+
+  const addIngredient = useCallback(
+    (foodItem: FoodItem[]) => {
+      const updatedFoodLog = { ...foodLog };
+      foodItem.forEach((i) => {
+        updatedFoodLog.foodItems.push(i);
+      });
+      setFoodLog(recalculateFoodLogServing(updatedFoodLog));
+      ShowToast('Ingredient added successfully');
+      navigation.goBack();
+    },
+    [foodLog, navigation, recalculateFoodLogServing]
+  );
+
+  const deleteIngredient = useCallback(
+    (foodItem: FoodItem) => {
+      const newFoodLog = {
+        ...foodLog,
+        foodItems: foodLog.foodItems.filter(
+          (value) => value.refCode !== foodItem.refCode
+        ),
+      };
+      setFoodLog(recalculateFoodLogServing(newFoodLog));
+    },
+    [foodLog, recalculateFoodLogServing]
+  );
+
+  const updateIngredient = useCallback(
+    (foodLogObj: FoodItem) => {
+      let updatedFoodItems = foodLog.foodItems.map((value) =>
+        value.refCode === foodLogObj.refCode ? foodLogObj : value
+      );
+      let foodLogData: FoodLog = { ...foodLog, foodItems: updatedFoodItems };
+      setFoodLog(recalculateFoodLogServing(foodLogData));
+      navigation.goBack();
+    },
+    [foodLog, recalculateFoodLogServing, navigation]
+  );
+
+  const onUpdateFoodLog = useCallback((item: FoodLog) => {
+    setFoodLog({ ...item });
+  }, []);
+
+  const onAddIngredientPress = () => {
+    navigation.push('FoodSearchScreen', {
+      onSaveData: (item) => {
+        const foodItem = item.foodItems;
+        if (foodItem) {
+          addIngredient(foodItem);
+        }
+      },
+      onEditFoodData: (item) => {
+        if (item.foodItems.length > 1) {
+          addIngredient(item.foodItems);
+        } else {
+          const foodItem = item;
+          if (foodItem) {
+            navigation.push('EditIngredientScreen', {
+              foodItem: {
+                ...foodItem,
+                nutrients: mergeNutrients(
+                  item.foodItems?.flatMap((i) => i.nutrients)
+                ),
+                refCode: foodItem.refCode ?? '',
+                iconId: foodItem?.iconID ?? foodItem.foodItems[0].iconId,
+                computedWeight:
+                  foodItem.computedWeight ??
+                  foodItem.foodItems[0].computedWeight,
+                entityType: 'user-food',
+              },
+              updateIngredient: (updatedIngredient) => {
+                addIngredient([updatedIngredient]);
+              },
+            });
+          }
+        }
+      },
+      from: 'Ingredient',
+    });
+  };
+
+  const onEditIngredientPress = useCallback(
+    (foodItem: FoodItem) => {
+      navigation.push('EditIngredientScreen', {
+        foodItem: { ...foodItem },
+        // deleteIngredient: (food) => {
+        //   deleteIngredient(food);
+        //   navigation.goBack();
+        // },
+        updateIngredient,
+      });
+    },
+    [navigation, updateIngredient]
+  );
+
   return {
     alertCustomFoodRef,
     branding,
     closeDatePicker,
+    deleteIngredient,
     eventTimeStamp,
     foodLog,
     foodNotFoundRef,
     from: params.prevRouteName,
     isFavorite,
+    isSubmitting,
     isHideFavorite: params.prevRouteName === 'Favorites',
     isHideMealTime: params.prevRouteName === 'Favorites',
     isHideTimeStamp: params.prevRouteName === 'Favorites',
@@ -468,5 +605,7 @@ export function useEditFoodLog() {
     onUpdateFavoritePress,
     onUpdateFoodLog,
     openDatePicker,
+    onAddIngredientPress,
+    onEditIngredientPress,
   };
 }

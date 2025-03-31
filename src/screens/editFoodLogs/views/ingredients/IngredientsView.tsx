@@ -22,7 +22,7 @@ interface Props {
   deleteIngredientsItem?: (foodItem: FoodItem) => void;
   navigateToEditIngredientsScreen?: (
     foodItem: FoodItem,
-    deleteIngredientsItem: (foodItem: FoodItem) => void
+    deleteIngredientsItem?: (foodItem: FoodItem) => void
   ) => void;
   type?: 'EditRecipe' | 'Other';
 }
@@ -40,9 +40,7 @@ export const IngredientsView = ({
   const styles = ingredientViewStyle(branding);
 
   const onIngredientClickPress = async (item: FoodItem) => {
-    if (deleteIngredientsItem) {
-      navigateToEditIngredientsScreen?.(item, deleteIngredientsItem);
-    }
+    navigateToEditIngredientsScreen?.(item, deleteIngredientsItem);
   };
 
   return (

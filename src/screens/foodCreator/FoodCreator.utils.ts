@@ -83,7 +83,10 @@ export const createFoodLogUsingFoodCreator = ({
     (key) => {
       let data: Nutrient = {
         id: key as NutrientType,
-        amount: Number(otherNutritionFact[key as NutrientType]) ?? 0,
+        amount:
+          Number(
+            otherNutritionFact[key as NutrientType].replaceAll(',', '.')
+          ) ?? 0,
         unit: nutrientUnits[key as NutrientType],
       };
       return data;
@@ -94,22 +97,22 @@ export const createFoodLogUsingFoodCreator = ({
     ...nutrients,
     {
       id: 'calories',
-      amount: Number(requireNutritionFact?.calories!),
+      amount: Number(requireNutritionFact?.calories.replaceAll(',', '.')!),
       unit: nutrientUnits.calories,
     },
     {
       id: 'fat',
-      amount: Number(requireNutritionFact?.Fat!),
+      amount: Number(requireNutritionFact?.Fat.replaceAll(',', '.')!),
       unit: nutrientUnits.fat,
     },
     {
       id: 'carbs',
-      amount: Number(requireNutritionFact?.Carbs!),
+      amount: Number(requireNutritionFact?.Carbs.replaceAll(',', '.')!),
       unit: nutrientUnits.carbs,
     },
     {
       id: 'protein',
-      amount: Number(requireNutritionFact?.Protein!),
+      amount: Number(requireNutritionFact?.Protein.replaceAll(',', '.')!),
       unit: nutrientUnits.protein,
     },
   ];
@@ -117,7 +120,9 @@ export const createFoodLogUsingFoodCreator = ({
   const factUnits = requireNutritionFact?.Units!;
   const isUnitGramOrML = isGramOrML(factUnits);
   const factWeight = Number(
-    isUnitGramOrML ? Number(requireNutritionFact?.ServingSize!) : weight
+    isUnitGramOrML
+      ? Number(requireNutritionFact?.ServingSize.replaceAll(',', '.')!)
+      : weight.replaceAll(',', '.')
   );
 
   const foodItem: FoodItem = {
@@ -132,10 +137,14 @@ export const createFoodLogUsingFoodCreator = ({
     nutrients: nutrients,
     refCode: '',
     selectedUnit: factUnits!,
-    selectedQuantity: Number(requireNutritionFact?.ServingSize!),
+    selectedQuantity: Number(
+      requireNutritionFact?.ServingSize.replaceAll(',', '.')!
+    ),
     servingSizes: [
       {
-        quantity: Number(requireNutritionFact?.ServingSize!),
+        quantity: Number(
+          requireNutritionFact?.ServingSize.replaceAll(',', '.')!
+        ),
         unit: factUnits,
       },
       {
@@ -145,7 +154,9 @@ export const createFoodLogUsingFoodCreator = ({
     ],
     servingUnits: [
       {
-        mass: factWeight / Number(requireNutritionFact?.ServingSize!),
+        mass:
+          factWeight /
+          Number(requireNutritionFact?.ServingSize.replaceAll(',', '.')!),
         unit: factUnits,
       },
       {
@@ -278,14 +289,6 @@ export const createCustomFoodUsingNutritionFact = (
       id: 'sugarAlcohol',
       amount: facts.sugarAlcohol,
       unit: nutrientUnits.sugarAlcohol,
-    });
-  }
-
-  if (facts.dietaryFiber) {
-    nutrients.push({
-      id: 'fiber',
-      amount: facts.dietaryFiber,
-      unit: nutrientUnits.fiber,
     });
   }
 

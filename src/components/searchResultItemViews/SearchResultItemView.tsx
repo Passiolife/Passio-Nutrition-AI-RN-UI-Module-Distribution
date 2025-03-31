@@ -5,9 +5,10 @@ import { PassioFoodIcon } from '../passio/PassioFoodIcon';
 import type { PassioID } from '@passiolife/nutritionai-react-native-sdk-v3/src/sdk/v2';
 import type { PassioIDEntityType } from '@passiolife/nutritionai-react-native-sdk-v3/src/sdk/v2';
 import React from 'react';
-import styles from './SearchResultItemView.style';
+import { stylesObj } from './SearchResultItemView.style';
 import { Text } from '../texts';
 import { ICONS } from '../../assets';
+import { useBranding } from '../../contexts';
 
 interface Props {
   passioID: PassioID;
@@ -30,6 +31,8 @@ const SearchResultItemView = ({
   imageName,
   isRecipe,
 }: Props) => {
+  const branding = useBranding();
+  const styles = stylesObj(branding);
   return (
     <Card style={styles.shadowContainer}>
       <TouchableOpacity style={styles.mealContainer} onPress={onPressEditor}>

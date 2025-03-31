@@ -14,9 +14,11 @@ import {
   useCameraPermission,
 } from 'react-native-vision-camera';
 import {
+  Alert,
   Dimensions,
   FlatList,
   Image,
+  Linking,
   Platform,
   TouchableOpacity,
   View,
@@ -37,6 +39,7 @@ interface Props {
   recognizePictureRemote: (images: string[]) => void;
   animatedIndex: SharedValue<number>;
   isMultiple?: boolean;
+  isClose?: boolean;
 }
 
 export interface TakePictureRef {
@@ -150,8 +153,28 @@ export const TakePicture = React.forwardRef<TakePictureRef, Props>(
     const { hasPermission, requestPermission } = useCameraPermission();
     const device = useCameraDevice('back');
     const branding = useBranding();
+
     useEffect(() => {
-      requestPermission();
+      const permission = requestPermission();
+      if (!permission) {
+        Alert.alert(
+          'Error',
+          'Permission require for this module, so please enable it or grant permission from setting',
+          [
+            {
+              style: 'cancel',
+              text: 'Cancel',
+            },
+            {
+              onPress: () => {
+                Linking.openSettings();
+              },
+              text: 'Settings', // Navigate to settings or perform another action
+            },
+          ],
+          { cancelable: false } // Prevents closing the alert by tapping outside
+        );
+      }
     }, [hasPermission, requestPermission]);
 
     const animatedStyle = useAnimatedStyle(() => {
@@ -177,7 +200,13 @@ export const TakePicture = React.forwardRef<TakePictureRef, Props>(
     }
 
     return (
-      <SafeAreaView style={{ flex: 1, justifyContent: 'flex-end' }}>
+      <SafeAreaView
+        style={{
+          flex: 1,
+          justifyContent: 'flex-end',
+          backgroundColor: 'black',
+        }}
+      >
         <Camera
           style={{
             position: 'absolute',
@@ -189,6 +218,7 @@ export const TakePicture = React.forwardRef<TakePictureRef, Props>(
           photoQualityBalance="balanced"
           device={device}
           isActive={true}
+          outputOrientation="portrait"
           ref={camera}
           photo={true}
         />
@@ -304,7 +334,7 @@ export const TakePicture = React.forwardRef<TakePictureRef, Props>(
             />
           )}
         </View>
-        {!isMultiple && (
+        {/* {!isMultiple && (
           <TouchableOpacity
             onPress={onCancelPress}
             style={{
@@ -321,7 +351,7 @@ export const TakePicture = React.forwardRef<TakePictureRef, Props>(
               }}
             />
           </TouchableOpacity>
-        )}
+        )} */}
       </SafeAreaView>
     );
   }

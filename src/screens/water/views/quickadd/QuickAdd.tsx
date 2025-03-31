@@ -6,6 +6,8 @@ import { Card } from '../../../../components';
 import { Text } from '../../../../components/texts/Text';
 import { scaleHeight, scaleWidth } from '../../../../utils';
 import { convertOgToMl } from '../../../../screens/nutritionProfile/unitConversions';
+import type { Branding } from '../../../../contexts';
+import { useBranding } from '../../../../contexts';
 
 export const QuickAddTracking = ({
   onPress,
@@ -37,6 +39,9 @@ export const QuickAddTracking = ({
     },
   ];
 
+  const branding = useBranding();
+  const styles = quickAddStyle(branding);
+
   return (
     <Card style={styles.itemsContainer}>
       <Text
@@ -56,7 +61,7 @@ export const QuickAddTracking = ({
             >
               <Image
                 source={item.imageSrc}
-                style={styles.glassImg}
+                style={[styles.glassImg, styles.iconColor]}
                 resizeMode="contain"
               />
               <Text
@@ -79,46 +84,50 @@ export const QuickAddTracking = ({
   );
 };
 
-const styles = StyleSheet.create({
-  itemsContainer: {
-    backgroundColor: 'white',
-    marginVertical: scaleHeight(16),
-  },
-  list: {
-    marginHorizontal: scaleWidth(16),
-    marginVertical: scaleHeight(16),
-  },
-  quickAddTextStyle: {
-    marginTop: scaleHeight(20),
-    paddingHorizontal: scaleWidth(16),
-  },
-  noQuickAddTitle: {
-    paddingHorizontal: scaleWidth(16),
-    marginBottom: scaleHeight(16),
-    alignSelf: 'center',
-  },
-  glassImg: {
-    height: scaleHeight(58),
-    aspectRatio: 0.5,
-    alignItems: 'center',
-    alignSelf: 'center',
-    alignContent: 'center',
-  },
-  imageContainer: {
-    alignItems: 'center',
-    flex: 1,
-    alignSelf: 'center',
-  },
-  contentText: {
-    marginTop: scaleHeight(12),
-    textAlign: 'center',
-  },
-  quickAddList: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    flex: 1,
-    alignItems: 'center',
-    marginHorizontal: scaleWidth(8),
-    marginVertical: scaleHeight(24),
-  },
-});
+const quickAddStyle = ({ primaryColor }: Branding) =>
+  StyleSheet.create({
+    itemsContainer: {
+      backgroundColor: 'white',
+      marginVertical: scaleHeight(16),
+    },
+    list: {
+      marginHorizontal: scaleWidth(16),
+      marginVertical: scaleHeight(16),
+    },
+    quickAddTextStyle: {
+      marginTop: scaleHeight(20),
+      paddingHorizontal: scaleWidth(16),
+    },
+    noQuickAddTitle: {
+      paddingHorizontal: scaleWidth(16),
+      marginBottom: scaleHeight(16),
+      alignSelf: 'center',
+    },
+    glassImg: {
+      height: scaleHeight(58),
+      aspectRatio: 0.5,
+      alignItems: 'center',
+      alignSelf: 'center',
+      alignContent: 'center',
+    },
+    iconColor: {
+      tintColor: primaryColor,
+    },
+    imageContainer: {
+      alignItems: 'center',
+      flex: 1,
+      alignSelf: 'center',
+    },
+    contentText: {
+      marginTop: scaleHeight(12),
+      textAlign: 'center',
+    },
+    quickAddList: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      flex: 1,
+      alignItems: 'center',
+      marginHorizontal: scaleWidth(8),
+      marginVertical: scaleHeight(24),
+    },
+  });

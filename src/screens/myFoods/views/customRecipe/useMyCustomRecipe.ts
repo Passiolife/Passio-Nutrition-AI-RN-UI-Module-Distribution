@@ -17,6 +17,7 @@ export const useMyCustomRecipe = () => {
 
   const [customRecipes, setCustomRecipe] = useState<CustomRecipe[]>();
   const isFocused = useIsFocused();
+  const isSubmitting = useRef<boolean>(false);
 
   useEffect(() => {
     function init() {
@@ -51,9 +52,14 @@ export const useMyCustomRecipe = () => {
   };
 
   const onLogPress = async (food: CustomFood) => {
+    if (isSubmitting.current) {
+      return;
+    }
+    isSubmitting.current = true;
     const log = getFoodLog(food);
     await services.dataService.saveFoodLog(log);
     ShowToast('Added your food into ' + log.meal);
+    isSubmitting.current = false;
   };
 
   const onEditCustomRecipePress = (
@@ -106,18 +112,14 @@ export const useMyCustomRecipe = () => {
     const uuid: string = uuid4.v4() as string;
     navigation.push('EditRecipeScreen', {
       recipe: {
-        name: '',
         uuid: uuid,
         iconID: CUSTOM_USER_RECIPE__PREFIX,
         foodItems: [],
-        selectedUnit: 'g',
-        selectedQuantity: 100,
-        computedWeight: {
-          unit: 'g',
-          value: 100,
-        },
-        servingSizes: [{ unit: 'g', quantity: 100 }],
-        servingUnits: [{ unit: 'g', mass: 1 }],
+        name: '',
+        selectedUnit: 'serving',
+        selectedQuantity: 1,
+        servingSizes: [],
+        servingUnits: [],
       },
       from: 'Recipe',
     });

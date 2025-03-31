@@ -21,6 +21,7 @@ import { DateTime } from 'luxon';
 export interface HomeScreenScreenProps {
   defaultDate?: Date;
   onDateChange?: (defaultDate: Date) => void;
+  navigateToMealLog?: (defaultDate: Date) => void;
 }
 
 const HomeScreen = () => {
@@ -35,6 +36,7 @@ const HomeScreenView = () => {
     remainWater,
     remainWeight,
     unitOfWater,
+    params,
     unitOfWeight,
     name,
     date,
@@ -95,7 +97,16 @@ const HomeScreenView = () => {
       >
         <DailyNutrition foodLogs={foodLogs} />
 
-        <WeeklyAdherence headerDate={DateTime.fromJSDate(date)} />
+        <WeeklyAdherence
+          headerDate={DateTime.fromJSDate(date)}
+          onDateClick={(date) => {
+            if (date) {
+              params?.navigateToMealLog?.(
+                DateTime.fromFormat(date, 'yyyy-MM-dd').toJSDate()
+              );
+            }
+          }}
+        />
 
         <View style={styles.widgetsContainer}>
           <WidgetsCard
@@ -111,6 +122,7 @@ const HomeScreenView = () => {
             widgetTitle="Weight"
             onPressRightIcon={onWeightPress}
             leftIcon={ICONS.blueWeightMachine}
+            info="remain to goal"
             rightIcon={ICONS.newAddPlus}
             value={Math.round(achievedWeight)}
             unitValue={unitOfWeight}

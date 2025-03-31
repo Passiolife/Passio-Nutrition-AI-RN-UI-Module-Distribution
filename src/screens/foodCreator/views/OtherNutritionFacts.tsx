@@ -6,7 +6,12 @@ import { FiledView, FiledViewRef } from '../../../components/filed/FiledView';
 import { FiledSelectionView } from '../../../components/filed/FiledSelectionView';
 import { OtherNutrients } from '../data';
 import { FlatList } from 'react-native';
-import { CustomFood, nutrientName, type NutrientType } from '../../../models';
+import {
+  CustomFood,
+  nutrientName,
+  nutrientUnits,
+  type NutrientType,
+} from '../../../models';
 import { sumNutrients } from '../../../utils/V3Utils';
 
 interface Props {
@@ -121,7 +126,7 @@ export const OtherNutritionFacts = React.forwardRef<
                 <FiledView
                   ref={refs.current[item.label]}
                   label={nutrientName[item.label].toString()}
-                  name={nutrientName[item.label].toString()}
+                  name={`${nutrientName[item.label].toString()} (${nutrientUnits[item.label]})`}
                   // name={item}
                   value={
                     Number.isFinite(item.value)

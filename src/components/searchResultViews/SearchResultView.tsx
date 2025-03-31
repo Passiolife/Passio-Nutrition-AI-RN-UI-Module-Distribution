@@ -35,7 +35,11 @@ const SearchResultView = (props: SearchResultViewProps) => {
     return (
       <SearchResultItemView
         onPressEditor={async () => {
-          const attr = await PassioSDK.fetchFoodItemForDataInfo(item);
+          const attr = await PassioSDK.fetchFoodItemForDataInfo(
+            item,
+            item?.nutritionPreview?.weightQuantity,
+            item?.nutritionPreview?.weightUnit
+          );
           if (attr) {
             onPressEditor(attr);
           }

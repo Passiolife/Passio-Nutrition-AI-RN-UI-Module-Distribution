@@ -3,27 +3,24 @@ import { Image, StyleSheet, View } from 'react-native';
 
 import { BasicButton, Card, Text } from '../../../../components';
 import { ICONS } from '../../../../assets';
-import { screenHeight } from '../../../../utils';
+import { scaleHeight } from '../../../../utils';
 
 interface Props {
-  onScanNutritionFacts?: () => void;
+  onTakePhoto?: () => void;
   onCancelPress?: () => void;
 }
 
-export const BarcodeNotDetect = ({
-  onScanNutritionFacts,
-  onCancelPress,
-}: Props) => {
+export const BarcodeNotDetect = ({ onTakePhoto, onCancelPress }: Props) => {
   return (
     <View style={styles.container}>
       <Card style={styles.card}>
         <View style={styles.contentContainer}>
           <Image source={ICONS.barcodeNotFound} style={styles.icon} />
           <Text weight="700" size="_20px" style={styles.title}>
-            Barcode Not Recognized
+            Barcode Missing Data
           </Text>
           <Text color="gray500" weight="400" style={styles.description}>
-            Try scanning nutrition facts instead.
+            Try taking photos of the nutrition facts label.
           </Text>
         </View>
         <View style={styles.buttonContainers}>
@@ -35,10 +32,10 @@ export const BarcodeNotDetect = ({
             secondary
           />
           <BasicButton
-            onPress={onScanNutritionFacts}
+            onPress={onTakePhoto}
             style={styles.button}
             small
-            text={'Scan Nutrition Facts'}
+            text={'Take Photos'}
           />
         </View>
       </Card>
@@ -51,7 +48,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 0,
     right: 0,
-    top: screenHeight / 3,
+    bottom: scaleHeight(16),
     alignItems: 'center',
     alignContent: 'center',
     alignSelf: 'center',

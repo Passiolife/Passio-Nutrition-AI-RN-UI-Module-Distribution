@@ -52,6 +52,21 @@ export const TabBar = ({ list, onTabSelect, selectedTab }: TabBarProps) => {
             {list[1]}
           </Text>
         </TouchableOpacity>
+        <TouchableOpacity
+          testID="testSuggestionClick"
+          style={styles.touchableTab}
+          onPress={() => {
+            setTab(list[2]);
+            onTabSelect(list[2]);
+          }}
+        >
+          <Text
+            color="secondaryText"
+            style={[styles.tabTex, tab === list[1] && styles.tabSelectText]}
+          >
+            {list[2]}
+          </Text>
+        </TouchableOpacity>
       </View>
       <View style={styles.lineContainer}>
         <View
@@ -59,6 +74,9 @@ export const TabBar = ({ list, onTabSelect, selectedTab }: TabBarProps) => {
         />
         <View
           style={[styles.tabLine, tab === list[1] && styles.tabSelectLine]}
+        />
+        <View
+          style={[styles.tabLine, tab === list[2] && styles.tabSelectLine]}
         />
       </View>
     </View>

@@ -20,11 +20,14 @@ import { ShowToast } from '../../utils';
 import { Alert } from 'react-native';
 import type { SwipeToDeleteRef } from '../../components';
 import { createFoodItemByFavorite } from '../foodCreator/FoodCreator.utils';
+import { convertDateToDBFormat } from '../../utils/DateFormatter';
+import uuid4 from 'react-native-uuid';
 
 export function useFavorites() {
   const services = useServices();
   const isFocused = useIsFocused();
   const branding = useBranding();
+  const isSubmitting = useRef<boolean>(false);
 
   const navigation = useNavigation<FavoritesScreenNavigationProps>();
   const route = useRoute<RouteProp<ParamList, 'FavoritesScreen'>>();
@@ -42,10 +45,14 @@ export function useFavorites() {
     }
   }, [getUpdatedFavoriteFood, isFocused, services]);
 
-  const date = getLogToDate(route.params.logToDate, route.params.logToMeal);
-  const meal = getMealLog(date, route.params.logToMeal);
+  const date = getLogToDate(undefined, undefined);
+  const meal = getMealLog(date, undefined);
 
   const onSaveFoodLogs = async (favoriteFoodItem: FavoriteFoodItem) => {
+    if (isSubmitting.current === true) {
+      return;
+    }
+    isSubmitting.current = true;
     if (route.params.from === 'Recipe') {
       route.params?.addIngredient?.(createFoodItemByFavorite(favoriteFoodItem));
     } else {
@@ -61,6 +68,7 @@ export function useFavorites() {
         screen: 'MealLogScreen',
       });
     }
+    isSubmitting.current = false;
   };
 
   const onDeleteFavoritePress = async (uuid: string) => {
@@ -86,7 +94,8 @@ export function useFavorites() {
   };
 
   const navigateToFavoriteFoodLogEditor = (
-    favoriteFoodItem: FavoriteFoodItem
+    favoriteFoodItem: FavoriteFoodItem,
+    isEdit: boolean
   ) => {
     if (route.params.from === 'Recipe') {
       navigation.push('EditIngredientScreen', {
@@ -98,14 +107,21 @@ export function useFavorites() {
       });
     } else {
       navigation.push('EditFoodLogScreen', {
-        foodLog: favoriteFoodItem,
-        prevRouteName: 'Favorites',
+        foodLog: {
+          ...favoriteFoodItem,
+          meal: meal,
+          uuid: uuid4.v4().toString(),
+          eventTimestamp: convertDateToDBFormat(date),
+        },
+        prevRouteName: isEdit ? 'Favorites' : 'Search',
         onSaveLogPress: (foodLog) => {
-          onUpdateFavoritePress({
-            ...favoriteFoodItem,
-            ...foodLog,
-            meal: meal,
-          });
+          if (isEdit) {
+            onUpdateFavoritePress({
+              ...favoriteFoodItem,
+              ...foodLog,
+              meal: meal,
+            });
+          }
         },
         onDeleteLogPress: (foodLog) => {
           onDeleteFavoritePress(foodLog.uuid);

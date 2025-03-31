@@ -3,7 +3,7 @@ import { COLORS } from '../../../constants';
 import { scaleWidth, scaleHeight } from '../../../utils';
 import type { Branding } from '../../../contexts';
 
-const mealPlanScreenStyle = ({ backgroundColor }: Branding) =>
+const mealPlanScreenStyle = ({ backgroundColor, primaryColor }: Branding) =>
   StyleSheet.create({
     bodyContainer: {
       backgroundColor: backgroundColor,
@@ -23,6 +23,9 @@ const mealPlanScreenStyle = ({ backgroundColor }: Branding) =>
     icon: {
       width: scaleWidth(20),
       height: scaleHeight(20),
+    },
+    iconColor: {
+      tintColor: primaryColor,
     },
     scrollViewStyle: {
       zIndex: 10,

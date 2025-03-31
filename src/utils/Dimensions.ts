@@ -2,8 +2,8 @@ import { Dimensions, Platform } from 'react-native';
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
-export const designWidth = Platform.OS === 'web' ? screenWidth : 375; //to be added acc. to design specification
-export const designHeight = Platform.OS === 'web' ? screenHeight : 812; //to be added acc. to design specification
+export const designWidth = Platform.OS === 'web' ? screenWidth : 428; //to be added acc. to design specification
+export const designHeight = Platform.OS === 'web' ? screenHeight : 926; //to be added acc. to design specification
 
 const scaleWidth = (val: number) => {
   return (screenWidth * val) / designWidth;

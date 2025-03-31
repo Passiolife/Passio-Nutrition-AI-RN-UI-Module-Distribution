@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useServices } from '../../../contexts';
 import type { MealLabel, MealPlan, NutritionProfile } from '../../../models';
 import type { MealPlanScreenNavigationProps } from '../MyPlanScreen';
@@ -21,6 +21,8 @@ export function useMealPlan() {
   const navigation = useNavigation<MealPlanScreenNavigationProps>();
   const { params } = useRoute<RouteProp<ParamList, 'MyPlanScreen'>>();
   const isFocus = useIsFocused();
+  const isSubmitting = useRef<boolean>(false);
+  const [isInfo, setInfo] = useState<boolean>(true);
 
   const nutritionProfileRef = useRef<NutritionProfile | undefined>(undefined);
   const navigateEditFoodLogRef = useRef<boolean>(false);
@@ -41,7 +43,11 @@ export function useMealPlan() {
   }
 
   const convertFoodLog = async (item: PassioMealPlanItem) => {
-    let result = await PassioSDK.fetchFoodItemForDataInfo(item.meal);
+    let result = await PassioSDK.fetchFoodItemForDataInfo(
+      item.meal,
+      item.meal?.nutritionPreview?.servingQuantity,
+      item?.meal?.nutritionPreview?.servingUnit
+    );
 
     let qty = item.meal?.nutritionPreview?.servingQuantity ?? '1';
     let servingUnit = item.meal?.nutritionPreview?.servingUnit ?? '';
@@ -64,10 +70,15 @@ export function useMealPlan() {
   };
 
   const saveFoodLog = async (item: PassioMealPlanItem) => {
+    if (isSubmitting.current) {
+      return;
+    }
+    isSubmitting.current = true;
     const result = await convertFoodLog(item);
     if (result) {
       await services.dataService.saveFoodLog(result);
     }
+    isSubmitting.current = false;
   };
 
   const onAddFoodLogPress = async (item: PassioMealPlanItem) => {
@@ -184,6 +195,10 @@ export function useMealPlan() {
     init();
   }, [day, selectedPassioMealPlan]);
 
+  const onInfoPress = useCallback(() => {
+    setInfo((i) => !i);
+  }, []);
+
   return {
     activeMealPlanName: selectedPassioMealPlan?.mealPlanTitle,
     day,
@@ -196,5 +211,7 @@ export function useMealPlan() {
     onDayChanged,
     onEditFoodLogPress,
     onMultipleLogPress,
+    isInfo,
+    onInfoPress,
   };
 }

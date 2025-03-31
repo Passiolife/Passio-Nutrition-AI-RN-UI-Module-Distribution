@@ -13,14 +13,21 @@ export const BarcodeScanScreen = () => {
   const {
     isLoading,
     quickResult,
+    type,
     resetScanning,
     onCreateCustomWithoutBarcodePress,
+    onBarcodePress,
     onViewExistingPress,
   } = useBarcodeScan();
 
   return (
     <View style={styles.container}>
-      <BackNavigation title="Food Creator" />
+      {type === 'general' ? (
+        <BackNavigation title="Photo Logging" />
+      ) : (
+        <BackNavigation title="Food Creator" />
+      )}
+
       <DetectionCameraView style={styles.camera} />
       {quickResult && quickResult.customFood && (
         <CustomFoodBarcodeDetect
@@ -34,9 +41,7 @@ export const BarcodeScanScreen = () => {
         quickResult.passioIDAttributes && (
           <BarcodeDetect
             onCancelPress={resetScanning}
-            onCreateCustomWithoutBarcodePress={
-              onCreateCustomWithoutBarcodePress
-            }
+            onCreateCustomWithoutBarcodePress={onBarcodePress}
             onViewExistingPress={onViewExistingPress}
           />
         )}

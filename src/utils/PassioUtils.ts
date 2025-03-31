@@ -347,7 +347,7 @@ export function calculateBMR(
   height: number,
   weight: number,
   gender: 'male' | 'female',
-  level: ActivityLevelType
+  level: ActivityLevelType | undefined
 ): number {
   const bmr = getBMR(age, height, weight, gender);
   switch (level) {
@@ -360,6 +360,7 @@ export function calculateBMR(
     case ActivityLevelType.active:
       return bmr * 1.725;
   }
+  return bmr;
 }
 /**
  *

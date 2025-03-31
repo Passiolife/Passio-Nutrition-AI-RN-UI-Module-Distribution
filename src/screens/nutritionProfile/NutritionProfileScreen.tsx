@@ -130,11 +130,7 @@ export const NutritionProfileView = () => {
               style={styles.textInput}
               returnKeyType="done"
               placeholder=""
-              error={
-                age === undefined || age?.toString() === '' || age === 0
-                  ? 'Required'
-                  : ''
-              }
+              error={age?.toString() === '' || age === '0' ? 'Required' : ''}
               keyboardType="numeric"
             />
           </View>
@@ -239,7 +235,9 @@ export const NutritionProfileView = () => {
               containerStyle={styles.containerTextInput}
               placeholder={``}
               returnKeyType="done"
-              error={weight === '' || weight === '0' ? 'Required' : ''}
+              error={
+                targetWeight === '' || targetWeight === '0' ? 'Required' : ''
+              }
               keyboardType="decimal-pad"
             />
           </View>
@@ -273,8 +271,9 @@ export const NutritionProfileView = () => {
             </Text>
             <ListPicker
               value={
-                getCaloriesDeficitWeightLabel(unitsWeight, caloriesDeficit) ??
-                '-'
+                (caloriesDeficit
+                  ? getCaloriesDeficitWeightLabel(unitsWeight, caloriesDeficit)
+                  : '-') ?? '-'
               }
               extraWidth={100}
               title={'Calories level'}
@@ -320,7 +319,7 @@ export const NutritionProfileView = () => {
               color="gray500"
               style={[styles.label, styles.labelMargin]}
             >
-              {'Water Target '}
+              {'Water Level '}
               {unitsWeight === 'imperial' ? '(oz)' : '(ml)'}
             </Text>
             <TextInput
@@ -330,7 +329,9 @@ export const NutritionProfileView = () => {
               containerStyle={styles.containerTextInput}
               placeholder={``}
               returnKeyType="done"
-              error={weight === '' || weight === '0' ? 'Required' : ''}
+              error={
+                targetWater === '' || targetWater === '0' ? 'Required' : ''
+              }
               keyboardType="decimal-pad"
             />
           </View>

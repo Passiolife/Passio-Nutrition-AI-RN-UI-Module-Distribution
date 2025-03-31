@@ -6,7 +6,7 @@ const { width: ScreenWidth } = Dimensions.get('window');
 
 export const ImageScanning = () => {
   const styles = ResponseViewStyle();
-  const content = 'Advisor is analysing...';
+  const content = 'Advisor is analyzing...';
 
   return (
     <TouchableOpacity style={[styles.msgView, styles.receivedMsgView]}>
