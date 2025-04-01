@@ -2,6 +2,10 @@
 
 <img src='./media/header.png'>
 
+[![license MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/passiolife/nutrition-ai-ui-ux/blob/main/LICENSE)
+[![npm package](https://img.shields.io/badge/npm%20package-v3.2.0-green.svg)](https://www.npmjs.com/package/@passiolife/nutrition-ai-ui-ux)
+[![get api key](https://img.shields.io/badge/get%20api%20key-passio.ai-orange.svg)](https://passio.ai/)
+
 ## Overview
 
 This repository provides a ready-to-integrate module that adds AI-driven food tracking to your app. It adds the following features:
