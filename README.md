@@ -4,53 +4,38 @@
 
 ## Overview
 
-This repository provides a ready-to-integrate module that adds AI-driven food tracking to your application. It adds the following key features to your app:
+This repository provides a ready-to-integrate module that adds AI-driven food tracking to your app. It adds the following features:
 
-1. **Daily Nutrition**
+1. **Daily Nutrition Tracking**
 
-   In this feature, users are able to add daily nutrition(logs) through multiple methods:
-   - Photo logging
-   - Scanning barcode
-   - Voice logging
-   - Text search
+   Users are able to add daily nutrition logs via multiple methods:
+   - Photo logging (via gallery or live camera)
+   - Barcode scanning (scanning barcodes from products and adjusting serving sizes as needed)
+   - Voice logging (record meal or a full day of food intake via voice and edit the log before confirming)
+   - Text search (search for food items by name and adjust serving sizes as needed)
+   - Photo logging from Nutrition Facts Label (supports foods where barcode is not available and allows users to log food items from the product labels)
 
-   **Photo Logging:**
-   Users can take photos or select images from their gallery. Our module retrieves food information from the photo for easy logging. Users can also customize serving sizes and options for accurate nutrition tracking. Our photo logging feature able to retrive nutrition infrimation from product lable.
-
-   **Scanning barcode:**
-   Users can scan barcodes to log food items and adjust serving sizes for accurate tracking. If a barcode isn't available, our system able to capture nutrition information from the product label and create a customized food entry. This means the next time users scan the same barcode, the system will retrieve their customized food information automatically.
-
-   **Voice Logging:**
-   Our voice logging feature allows users to record meal descriptions like "I had one blueberry muffin and a cup of green tea for breakfast." The system automatically identifies food items from the voice input and presents them for review. Users can make any necessary adjustments before confirming the entry(if needed). This streamlined approach makes meal tracking effortless and efficient, requiring minimal user input to log complete meals.
-
-   **Text Search:**
-  Our text search feature provides a quick and intuitive way to log food items. Users can simply type the name of a food or meal, and the system will display matching options. The search functionality includes autocomplete suggestions and filters to help users find exactly what they're looking for. Once selected, users can adjust serving sizes and customize their entry before adding it to their daily log. This method is perfect for quickly logging common foods or when other logging methods aren't convenient.
 
 2. **AI Advisor**
 
-   The AI Advisor feature provides users with a powerful nutrition assistant that can answer any nutrition-related questions. Users can inquire about nutritional information, request healthy recipe suggestions, or get dietary advice tailored to their needs. The advisor can shows recipes based on user preferences or available ingredients. Users can also send images of food items to the AI Advisor, which will identify the foods and provide recipe ideas or ingredient information. Additionally, users can seamlessly log foods directly from their conversation with the AI Advisor by providing meal information, making nutrition tracking even more convenient and integrated into the natural flow of using the app.
+   The AI Advisor feature provides users with a nutrition assistant that can answer nutrition-related questions, generate recipes, and provide dietary advice tailored to their needs. Users can also send images of food items to the AI Advisor, which will identify the foods and provide recipe ideas or ingredient information. Additionally, users can seamlessly log foods directly from their conversation with the AI Advisor by providing meal information.
 
   
-3. **Water Intake**
+3. **Water Intake and Weight Tracking**
 
-   The Water Intake feature enables users to monitor their hydration by recording consumption details including quantity, date, and time. Users can view their complete hydration history through a detailed list and analyze weekly patterns via an intuitive chart visualization. For convenience, quick-entry buttons allow for effortless logging with just a few taps. The Dashboard prominently displays both daily water targets and current consumption levels, helping users stay on track with their hydration goals.
+   The Water Intake feature enables users to monitor their hydration by recording consumption details including quantity, date, and time. Users can also track their weight via manual input. 
 
-4. **Weight Tracking**
+4. **Meal Plans**
 
-   The Weight Tracking feature allows users to monitor their weight changes over time by recording measurements with date and time stamps. Users can view their complete weight history through a comprehensive list and analyze trends via an intuitive chart visualization. The system supports multiple weight units (kg, lb) for user convenience. Users can set weight goals and track their progress toward these targets. The Dashboard displays current weight, recent changes, and progress toward goals, helping users stay motivated and informed about their weight management journey.
+   The Meal Plans feature provides users with comprehensive 15-day meal plans tailored to specific dietary needs and health goals. We offer a number of fixed meal plan including Heart Healthy Diet, Ketogenic Diet, Managing Obesity, and many more. We also recently launched a dedicated Meal Plan API (not yet available in the module, but available with your Nutrition-AI Hub subscription via a REST API).
 
-5. **Meal Plans**
+5. **Progress Report**
+     
+   The Progress Report provides insights into nutritional intake over time. Users can view detailed reports of macronutrients and micronutrients with customizable date selection. The intuitive visualization helps track dietary habits and identify trends.
 
-   The Meal Plans feature provides users with comprehensive 15-day meal plans tailored to specific dietary needs and health goals. We offer specialized plans including Heart Healthy Diet, Ketogenic Diet, Managing Obesity, and many more, each customized to the user's profile and nutritional requirements. Each plan includes detailed daily menus with breakfast, lunch, dinner, and snacks, complete with recipes, ingredient lists, and full nutritional information. Users can track their adherence to plans, make substitutions when needed, and receive timely reminders for meal preparation. This structured approach helps users implement sustainable dietary changes aligned with their specific health objectives.
+6. **Nutrition Goals**
 
-6. **Progress Report**
-   
-   The Progress Report feature provides comprehensive insights into users' nutritional intake over time. Users can view detailed reports of macronutrients (calories, protein, fat, carbohydrates) and micronutrients from all their food logs. The feature includes customizable date selection, allowing users to easily analyze their daily nutritional patterns for specific time periods. These reports help users track their dietary habits, identify trends, and make informed adjustments to meet their nutritional goals. The intuitive visualization of data makes it simple for users to understand their nutritional intake at a glance.
-
-   
-7. **Nutrition Goals**
-
-    Nutrition Goals feature calculates BMI and provides customized target macronutrients based on user data. Users can input their activity level (sedentary, moderate, active), desired calorie deficit, and dietary preferences. The system then generates personalized daily targets for calories, protein, fat, and carbohydrates. Users have the flexibility to customize these targets according to their specific needs and preferences. The Dashboard displays current goals alongside actual consumption, helping users track their adherence to nutritional targets. This personalized approach ensures that dietary recommendations align with individual health objectives and lifestyle factors.
+    Nutrition Goals calculates BMI and sets personalized macronutrient targets based on activity level, calorie deficit, and dietary preferences. Users can customize daily targets for calories, protein, fat, and carbs. The Dashboard shows goals vs. actual consumption for easy tracking.
 
 #### After you're done with the integration, you should have a fully functional AI-Powered Nutrition Tracker in your app.
 
@@ -63,15 +48,11 @@ This module is targeting developers and teams with existing apps who want to add
 This module incorporates Passio SDK, adds UI/UX elements, designs and data management layer. It is designed to speed up your integration process while still allowing you to customize the theme and look of the nutrition tracker in your app. You will be able to customize a number of things, including colors, icon colors, branding, and other visual elements to match your app's identity.
 
 However, there are limitations on customizability. Here are some things you will not be able to do:
-- Not able to move any module (like search form) to a different location
+- Not able to move components (e.g., search form) to a different location
 - Not able to remove elements from screens
 - Not able to remove features from the module
 
 If full customizability is important for app, you should use Passio SDK instead of the module.
-
-<br/>
-
-
 
 ## Installation
 
